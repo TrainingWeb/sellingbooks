@@ -14,11 +14,16 @@
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Auth;
 
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', function() {
+    return view('index');  
+})->name('home');
 
 Auth::routes();
 
 Route::get('/token', function(){
     return Auth::user()->createToken('test');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
