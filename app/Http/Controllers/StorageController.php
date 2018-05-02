@@ -37,19 +37,6 @@ class StorageController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'quantity' => 'required',
-            'id_book' => 'required',
-        ], [
-            'quantity.required' => 'Please enter quantity',
-            'id_book.required' => 'Please choose book',
-        ]);
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-        $storage = Storage::create($input);
-        return $this->sendResponse($storage->toArray(), 'Entered successfully');
     }
 
     /**

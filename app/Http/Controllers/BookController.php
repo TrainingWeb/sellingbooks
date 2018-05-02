@@ -7,6 +7,8 @@ use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use Illuminate\Http\Request;
 use Validator;
 use App\Tag;
+use App\History;
+use App\Storage;
 
 class BookController extends APIBaseController
 {
@@ -38,26 +40,22 @@ class BookController extends APIBaseController
      */
     public function store(Request $request)
     {
-        if (Book::where('name', $request->name)->first()) {
-            return $this->sendError('This book already exits, please enter another name !');
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
+            'name' => 'required|unique:books',
             'image' => 'required',
             'price' => 'required',
             'highlights' => 'required',
             'description' => 'required',
-            'quantity' => 'required',
             'id_author' => 'required',
             'id_category' => 'required',
         ], [
             'name.required' => 'Please enter book name',
+            'name.unique' => 'Book already exits, please enter another name !',
             'image.required' => 'Please enter book image',
             'price.required' => 'Please enter price',
             'highlights.required' => 'Please choose type highlights',
             'description.required' => 'Please enter book description',
-            'quantity.required' => 'Please enter quantity this book',
             'id_author.required' => 'Please choose author',
             'id_category.required' => 'Please choose category',
         ]);
@@ -70,7 +68,6 @@ class BookController extends APIBaseController
         $book->price = $input['price'];
         $book->highlights = $input['highlights'];
         $book->description = $input['description'];
-        $book->quantity = $input['quantity'];
         $book->id_author = $input['id_author'];
         $book->id_category = $input['id_category'];
         if ($request->hasFile('image')) {
@@ -80,14 +77,19 @@ class BookController extends APIBaseController
             $book->image = $image;
         }
         $book->save();
-        // if($request->create_tag){
-        //     $tag = new Tag;
-        //     $tag->name = $request->tag_name;
-        //     $tag->slug = str_slug($tag->name);
-        //     $tag->save();
-        // }
-        $book->tags()->attach($request->id_tag);
-        return $this->sendResponse($book->toArray(), 'Book created successfully.');
+
+        $history = new History;
+        $history->status = 'input';
+        $history->quantity = $request->quantity;
+        $history->id_book = $book->id;
+        $history->id_user = $request->user()->id;
+        $history->save();
+        
+        $storage = new Storage;
+        $storage->quantity = $request->quantity;
+        $storage->id_book = $book->id;
+        $storage->save();
+        return $this->sendResponse(['book'=>$book, 'history'=>$history, 'storage'=>$storage], 'Book created successfully.');
     }
 
     /**
@@ -124,26 +126,20 @@ class BookController extends APIBaseController
         if (is_null($book)) {
             return $this->sendError('Book not found.');
         }
-        if ($book->name !== $request->name) {
-            if (Book::where('name', $request->name)->first()) {
-                return $this->sendError('This book already exits, please enter another name !');
-            }
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
+            'name' => 'required|unique:books,name,'. $book->id,
             'price' => 'required',
             'highlights' => 'required',
             'description' => 'required',
-            'quantity' => 'required',
             'id_author' => 'required',
             'id_category' => 'required',
         ], [
             'name.required' => 'Please enter book name',
+            'name.unique' => 'Book already exits, please enter another name !',
             'price.required' => 'Please enter price',
             'highlights.required' => 'Please choose type highlights',
             'description.required' => 'Please enter book description',
-            'quantity.required' => 'Please enter quantity this book',
             'id_author.required' => 'Please choose author',
             'id_category.required' => 'Please choose category',
         ]);
@@ -162,7 +158,6 @@ class BookController extends APIBaseController
         $book->price = $input['price'];
         $book->highlights = $input['highlights'];
         $book->description = $input['description'];
-        $book->quantity = $input['quantity'];
         $book->id_author = $input['id_author'];
         $book->id_category = $input['id_category'];
         $book->save();
@@ -183,6 +178,26 @@ class BookController extends APIBaseController
         }
         $book->delete();
         return $this->sendResponse($id, 'Book deleted successfully');
+    }
+
+    public function addBookQuantity(Request $request, $id)
+    {
+        $storage = Storage::where('id_book', $id)->first();
+        if(is_null($storage)){
+            return $this->sendError('Book not found !');
+        }
+        $oldquantity = $storage->quantity;
+        $storage->quantity = $oldquantity + $request->quantity;
+        $storage->id_book = $id;
+        $storage->save();
+
+        $history = new History;
+        $history->status = 'input';
+        $history->quantity = $request->quantity;
+        $history->id_book = $id;
+        $history->id_user = $request->user()->id;
+        $history->save();
+        return $this->sendResponse(['storage'=>$storage, 'history'=>$history], 'Just updated quantity of the book have id '.$id);
     }
 
 }

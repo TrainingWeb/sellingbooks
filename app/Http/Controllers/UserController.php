@@ -16,7 +16,7 @@ class UserController extends APIBaseController
     {
         $this->user = $user;
     }
-    
+
     public function login(Request $request)
     {
         $email = $request->email;
@@ -30,46 +30,27 @@ class UserController extends APIBaseController
 
     public function create(Request $request)
     {
-        if(User::where('email', $request->email)->first()){
-            return $this->sendError('Email already exits, please enter another email !');
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required',
-            'age' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-            'role' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'email.required' => 'Please enter email',
-            'password.required' => 'Please enter password',
-            'age.required' => 'Please enter age',
-            'address.required' => 'Please enter address',
-            'phone.required' => 'Please enter phone',
-            'role.required' => 'Please enter role',
+            'email.required' => 'Please enter email.',
+            'email.unique' => 'Email alreay exits, please enter another email !',
+            'password.required' => 'Password can not null.',
         ]);
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $user = new User;
-        $user->name = $request->name;
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->move('./images', $file->getClientOriginalName('avatar'));
-            $avatar = $file->getClientOriginalName('avatar');
-            $user->avatar = $avatar;
-        }
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->age = $request->age;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->role = $request->role;
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->role = 0;
+        $user->password = bcrypt($input['password']);
         $user->save();
-        return $this->sendResponse($user, 'Created new user successfully !');
+        return $this->sendResponse($user, 'User created successfully !');
     }
 
     public function update(Request $request)

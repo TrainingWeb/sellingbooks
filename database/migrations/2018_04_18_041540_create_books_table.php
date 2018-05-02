@@ -16,13 +16,12 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image');
             $table->string('price');
             $table->string('promotion_price')->nullable();
             $table->string('highlights')->nullable();
             $table->longtext('description')->nullable();
-            $table->string('quantity')->nullable();
             $table->integer('id_category')->unsigned();
             $table->foreign('id_category')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('id_author')->unsigned();

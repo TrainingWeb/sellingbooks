@@ -2,10 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use App\User;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
+use Closure;
+
 class ProtectedUserLogin extends APIBaseController
 {
     /**
@@ -13,14 +12,17 @@ class ProtectedUserLogin extends APIBaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        if (User::where('id', Auth::guard('api')->id())->first()) {
+        if ($request->user()) {
+            if ($request->user()->role == 2) {
+                return $this->sendError('Your account has been banned ! Please contact us to active.');
+            }
             return $next($request);
-        } else {
-            return $this->sendError('You must login before you do anything !', 401);
         }
+        return $this->sendError('You are must login before manage !');
     }
 }

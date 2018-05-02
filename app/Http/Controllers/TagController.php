@@ -37,20 +37,13 @@ class TagController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $db_tags = Tag::get();
-        foreach ($db_tags as $result) {
-            if ($result->slug == $request->slug) {
-                return $this->sendError('This tag already exits !');
-            }
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
+            'name' => 'required|unique:tags',
             'slug' => 'required',
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {
@@ -58,7 +51,7 @@ class TagController extends APIBaseController
         }
         $tag = new Tag;
         $tag->name = $input['name'];
-        $tag->slug = $input['slug'];
+        $tag->slug = str_slug($input['name']);
         $tag->description = $input['description'];
         $tag->save();
         return $this->sendResponse($tag->toArray(), 'Tag created successfully');
@@ -99,22 +92,12 @@ class TagController extends APIBaseController
         if (is_null($tag)) {
             return $this->sendError('Tag not found.');
         }
-        if ($tag->slug !== $request->slug) {
-            $db_tags = Tag::get();
-            foreach ($db_tags as $result) {
-                if ($result->slug == $request->slug) {
-                    return $this->sendError('This tag already exits !');
-                }
-            }
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'slug' => 'required',
+            'name' => 'required|unique:tags,name,'. $tag->id,
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {

@@ -18,8 +18,16 @@ class Book extends Model
     {
         return $this->belongsTo('App\Author', 'id_author');
     }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'book_tags', 'id_book', 'id_tag');
+    }
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'favorite_books', 'id_book', 'id_user');
     }
 }
