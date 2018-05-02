@@ -10,8 +10,8 @@
 
     <script src="{{ mix('js/app.js') }}" defer></script>
     <!-- Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css"
-    />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons|Roboto+Slab:100,300,400,700' rel="stylesheet"
+        type="text/css" />
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 

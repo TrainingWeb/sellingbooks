@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 //
 
-import Home from "../components/ExampleComponent.vue";
+import Home from "../components/Home.vue";
 
 //
 const router = new VueRouter({
