@@ -67,13 +67,89 @@
         <v-content class="white">
             <router-view></router-view>
         </v-content>
+        <!--  -->
+        <!--  -->
+        <v-footer height="auto">
+            <v-card flat tile class="flex">
+                <v-container>
+                    <v-card-text class="white">
+                        <v-layout>
+                            <v-flex xs3 layout column class="">
+                                <img class="mb-3" width="180" src="storage/images/logo_green.png">
+                                <div class="mb-3" color="grey--text text--darken-2">
+                                    <v-icon size="18px" class="mr-1">fas fa-home</v-icon>
+                                    179 Võ Duy Ninh,TP ĐN
+                                </div>
+                                <div class="mb-3">
+                                    <v-icon size="18px" class="mr-1  ">fas fa-envelope</v-icon>
+                                    bookstore@gmail.com
+                                </div>
+                                <div class="mb-3">
+                                    <v-icon size="18px" class="mr-1">fas fa-phone</v-icon>
+                                    + 01 234 567 88
+                                </div>
+                                <div class="mb-3">
+                                    <v-icon size="18px" class="mr-1 ">fas fa-print</v-icon>
+                                    + 01 234 567 89
+                                </div>
+                            </v-flex>
+                            <v-flex v-for="(col, i) in rows" :key="i" xs3>
+                                <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
+                                <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="i" v-text="child"></div>
+                            </v-flex>
+                            <v-flex xs3 layout column class="">
+                                <div class="body-2 my-3">TÀI KHOẢN CỦA TÔI</div>
+                                <div class="mb-3  ">Chi tiết tài khoản</div>
+                                <div class="mb-3">Lịch sử mua hàng</div>
+                                <v-card-title class="">
+                                    <v-btn v-for=" icon in icons " :key="icon " icon dark class="mx-1">
+                                        <v-icon color="green" size="24px ">{{ icon }}</v-icon>
+                                    </v-btn>
+                                </v-card-title>
+                            </v-flex>
+                        </v-layout>
+                    </v-card-text>
+                </v-container>
+                <v-card-actions class="grey lighten-4 justify-center ">
+                    &copy;2018 — Demo Vue Js
+                </v-card-actions>
+            </v-card>
+        </v-footer>
+
     </v-app>
 </template>
 
 <script>
 export default {
   data: () => ({
-    drawer: null
+    drawer: null,
+    icons: [
+      "fab fa-facebook",
+      "fab fa-twitter",
+      "fab fa-google-plus",
+      "fab fa-linkedin",
+      "fab fa-instagram"
+    ],
+    rows: [
+      {
+        title: "DỊCH VỤ",
+        children: [
+          "Điều khoản và sử dụng",
+          "Thông tin giao hàng",
+          "Chính sách bảo mật",
+          "Dịch vụ khách hàng"
+        ]
+      },
+      {
+        title: "HỖ TRỢ",
+        children: [
+          "Chính sách đổi - trả - hoàn tiền",
+          "Chính sách khách sỉ",
+          "Phương thức vận chuyển",
+          "Phương thức thanh toán"
+        ]
+      }
+    ]
   }),
   props: {
     source: String
@@ -81,7 +157,7 @@ export default {
 };
 </script>
 <style>
-.toolbar-w {
-  max-width: 900px;
+.card__title {
+  margin-left: -25px;
 }
 </style>
