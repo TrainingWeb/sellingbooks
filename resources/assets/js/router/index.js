@@ -4,6 +4,8 @@ Vue.use(VueRouter);
 //
 
 import Home from "../components/ExampleComponent.vue";
+import Detail from "../components/pages/detail.vue";
+import Footer from "../components/pages/footer.vue";
 
 //
 const router = new VueRouter({
@@ -12,8 +14,18 @@ const router = new VueRouter({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/detail",
+      name: "detail",
+      component: Detail
+    },
+    {
+      path: "/footer",
+      name: "footer",
+      component: Footer
     }
-  ],
-  mode: "history"
+  ]
+  // mode: "history"
 });
 export default router;
