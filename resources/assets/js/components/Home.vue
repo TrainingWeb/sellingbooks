@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-carousel hide-controls>
-        <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="i"></v-carousel-item>
+        <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="'key'+ i"></v-carousel-item>
       </v-carousel>
     </v-layout>
     <v-layout align-center class="py-5">
@@ -15,10 +15,10 @@
     <v-container grid-list-xs>
       <v-layout row wrap>
         <v-flex xs12 md6 lg4 v-for="item in book" :key="`4${item}`">
-          <v-card class="border-remove">
-            <v-container fluid grid-list-lg class="pb-0">
+          <v-card flat>
+            <v-container fluid grid-list-lg>
               <v-layout row wrap>
-                <v-flex xs5 class="pa-0">
+                <v-flex xs5 class="pr-0 py-0">
                   <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
                 </v-flex>
                 <v-flex xs7 class="grey lighten-5 pl-3">
@@ -26,7 +26,7 @@
                     <h3>{{item.name}}</h3>
                     <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
                     <span class="green--text text--accent-4 title"> {{item.price}}</span>
-                    <span class="grey--text text--darken-1 title ml-5">
+                    <span class="grey--text text--darken-1 title ml-3">
                       <del>{{item.sale}}</del>
                     </span>
                     <v-divider class="mt-2"></v-divider>
@@ -39,6 +39,105 @@
               </v-layout>
             </v-container>
           </v-card>
+        </v-flex>
+        <v-flex xs12 class="pt-2 mr-1">
+          <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-layout align-center class="py-5">
+      <v-flex text-xs-center>
+        <h2 class="green--text text--accent-4">
+          <v-icon large class="green--text text--accent-4">stars</v-icon>
+          SẢN PHẨM ĐƯỢC GIẢM GIÁ KHỦNG
+        </h2>
+        <p class="grey--text text--darken-1 mt-4">Những sản phẩm giảm giá nhiều nhất trong tháng này</p>
+      </v-flex>
+    </v-layout>
+    <v-container grid-list-xs>
+      <v-layout row wrap>
+        <v-flex md-9>
+          <v-container grid-list-xs>
+            <v-layout row wrap>
+              <v-flex xs9>
+                <v-layout row wrap>
+                  <v-flex md6 v-for="(item,index) in bookSale" :key="`4${index}`">
+                    <v-card flat>
+                      <v-container fluid grid-list-lg>
+                        <v-layout row wrap>
+                          <v-flex xs5 class="pr-0 py-0">
+                            <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
+                          </v-flex>
+                          <v-flex xs7 class="grey lighten-5 pl-3">
+                            <div>
+                              <h3>{{item.name}}</h3>
+                              <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
+                              <span class="green--text text--accent-4 title"> {{item.price}}</span>
+                              <span class="grey--text text--darken-1 title ml-3">
+                                <del>{{item.sale}}</del>
+                              </span>
+                              <v-divider class="mt-2"></v-divider>
+                              <div class="mt-4">
+                                <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
+                                <v-icon class="ml-5">favorite</v-icon>
+                              </div>
+                            </div>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+                  </v-flex>
+                  <v-flex xs12 class="pt-2 mr-1">
+                    <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex xs3>
+                <img class="sale-img" src="https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png" alt="">
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+
+      </v-layout>
+    </v-container>
+    <v-layout align-center class="py-5">
+      <v-flex text-xs-center>
+        <h2 class="green--text text--accent-4">
+          <v-icon large class="green--text text--accent-4">stars</v-icon> SẢN PHẨM MỚI</h2>
+        <p class="grey--text text--darken-1 mt-4">Những sản phẩm mới ra mắt trong tháng này</p>
+      </v-flex>
+    </v-layout>
+    <v-container grid-list-xs>
+      <v-layout row wrap>
+        <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+          <v-card flat>
+            <v-container fluid grid-list-lg>
+              <v-layout row wrap>
+                <v-flex xs5 class="pr-0 py-0">
+                  <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
+                </v-flex>
+                <v-flex xs7 class="grey lighten-5 pl-3">
+                  <div>
+                    <h3>{{item.name}}</h3>
+                    <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
+                    <span class="green--text text--accent-4 title"> {{item.price}}</span>
+                    <span class="grey--text text--darken-1 title ml-3">
+                      <del>{{item.sale}}</del>
+                    </span>
+                    <v-divider class="mt-2"></v-divider>
+                    <div class="mt-4">
+                      <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
+                      <v-icon class="ml-5">favorite</v-icon>
+                    </div>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </v-flex>
+        <v-flex xs12 class="pt-2 mr-1">
+          <h5 class="text-xs-right  green--text text--accent-4" to="/seemore">XEM THÊM</h5>
         </v-flex>
       </v-layout>
     </v-container>
@@ -73,7 +172,7 @@ export default {
             "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
           name: "Cô gái mở đường",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
           author: "Nguyễn Du"
         },
         {
@@ -81,7 +180,7 @@ export default {
             "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
           name: "Dế mèn phiêu lưu kí",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
           author: "Nguyễn Du"
         },
         {
@@ -89,7 +188,7 @@ export default {
             "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
           name: "Truyện kiều",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
           author: "Nguyễn Du"
         },
         {
@@ -97,7 +196,7 @@ export default {
             "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
           name: "Chuyện chưa kể",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
           author: "Nguyễn Du"
         },
         {
@@ -105,7 +204,7 @@ export default {
             "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
           name: "Cô bé bán diêm",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
           author: "Nguyễn Du"
         },
         {
@@ -113,7 +212,41 @@ export default {
             "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
           name: "Mèo con đi học",
           price: "120.000",
-          sale: "",
+          sale: "150.000",
+          author: "Nguyễn Du"
+        }
+      ],
+      bookSale: [
+        {
+          img:
+            "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+          name: "Truyện kiều",
+          price: "120.000",
+          sale: "150.000",
+          author: "Nguyễn Du"
+        },
+        {
+          img:
+            "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
+          name: "Chuyện chưa kể",
+          price: "120.000",
+          sale: "150.000",
+          author: "Nguyễn Du"
+        },
+        {
+          img:
+            "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
+          name: "Cô bé bán diêm",
+          price: "120.000",
+          sale: "150.000",
+          author: "Nguyễn Du"
+        },
+        {
+          img:
+            "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
+          name: "Mèo con đi học",
+          price: "120.000",
+          sale: "150.000",
           author: "Nguyễn Du"
         }
       ]
@@ -126,8 +259,8 @@ export default {
 .carousel__controls {
   background-color: transparent !important;
 }
-
-.border-remove {
-  box-shadow: none !important;
+.sale-img {
+  width: 100%;
+  height: 100%;
 }
 </style>

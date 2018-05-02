@@ -29,13 +29,13 @@
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0">
-                                <v-badge color="red lighten-1" v-model="show" class="p-0">
+                                <v-badge color="red lighten-1" class="p-0">
                                     <span slot="badge" class="caption">6</span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0">
-                                <v-badge color="indigo" v-model="show" class="p-0">
+                                <v-badge color="indigo" class="p-0">
                                     <span slot="badge" class="caption">0</span>
                                     <v-icon color="grey">favorite</v-icon>
                                 </v-badge>
@@ -48,7 +48,7 @@
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
                         <v-toolbar-title>
-                            <v-btn flat class="white--text">Trang chủ</v-btn>
+                            <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
                             <v-btn flat class="white--text">Thể loại</v-btn>
                             <v-btn flat class="white--text">Tác giả</v-btn>
                         </v-toolbar-title>
