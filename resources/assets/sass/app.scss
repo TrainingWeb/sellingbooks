@@ -1,2 +1,8 @@
 // Fonts
 @import "variables"; // Bootstrap
+* {
+  font-family: "Roboto Slab", serif;
+}
+.roboto {
+  font-family: "Roboto", sans-serif !important;
+}
