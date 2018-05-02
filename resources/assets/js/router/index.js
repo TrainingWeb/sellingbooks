@@ -13,6 +13,7 @@ const router = new VueRouter({
       name: "home",
       component: Home
     }
-  ]
+  ],
+  mode: "history"
 });
 export default router;
