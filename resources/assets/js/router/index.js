@@ -2,11 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 //
-
+import Home from "../components/Home.vue";
 import Detail from "../components/pages/detail.vue";
 import Footer from "../components/pages/footer.vue";
-import Home from "../components/Home.vue";
-
+import Listproducts from "../components/pages/listproducts.vue";
 //
 const router = new VueRouter({
   routes: [
@@ -24,8 +23,12 @@ const router = new VueRouter({
       path: "/footer",
       name: "footer",
       component: Footer
+    },
+    {
+      path: "/list-products",
+      name: "listproducts",
+      component: Listproducts
     }
   ]
-  // mode: "history"
 });
 export default router;

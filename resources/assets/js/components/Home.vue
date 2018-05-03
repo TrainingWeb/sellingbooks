@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-carousel hide-controls>
-        <v-carousel-item v-for="(item,i) in items" :src="item.src" :key="'key'+ i"></v-carousel-item>
+        <v-carousel-item v-for="(item,i) in sliders" :src="item.src" :key="'key'+ i"></v-carousel-item>
       </v-carousel>
     </v-layout>
     <v-layout align-center class="py-5">
@@ -14,34 +14,14 @@
     </v-layout>
     <v-container grid-list-xs>
       <v-layout row wrap>
-        <v-flex xs12 md6 lg4 v-for="item in book" :key="`4${item}`">
-          <v-card flat>
-            <v-container fluid grid-list-lg>
-              <v-layout row wrap>
-                <v-flex xs5 class="pr-0 py-0">
-                  <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
-                </v-flex>
-                <v-flex xs7 class="grey lighten-5 pl-3">
-                  <div>
-                    <h3>{{item.name}}</h3>
-                    <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
-                    <span class="green--text text--accent-4 title"> {{item.price}}</span>
-                    <span class="grey--text text--darken-1 title ml-3">
-                      <del>{{item.sale}}</del>
-                    </span>
-                    <v-divider class="mt-2"></v-divider>
-                    <div class="mt-4">
-                      <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
-                      <v-icon class="ml-5">favorite</v-icon>
-                    </div>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
+        <v-flex xs12 md6 lg4 v-for="item in book" :key="`key-${item}`">
+          <book-item :book="item"></book-item>
         </v-flex>
         <v-flex xs12 class="pt-2 mr-1">
-          <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+          <router-link to="/list-products">
+            <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+          </router-link>
+
         </v-flex>
       </v-layout>
     </v-container>
@@ -59,40 +39,19 @@
         <v-flex md-9>
           <v-container grid-list-xs>
             <v-layout row wrap>
-              <v-flex xs9>
+              <v-flex xs12 md9>
                 <v-layout row wrap>
                   <v-flex md6 v-for="(item,index) in bookSale" :key="`4${index}`">
-                    <v-card flat>
-                      <v-container fluid grid-list-lg>
-                        <v-layout row wrap>
-                          <v-flex xs5 class="pr-0 py-0">
-                            <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
-                          </v-flex>
-                          <v-flex xs7 class="grey lighten-5 pl-3">
-                            <div>
-                              <h3>{{item.name}}</h3>
-                              <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
-                              <span class="green--text text--accent-4 title"> {{item.price}}</span>
-                              <span class="grey--text text--darken-1 title ml-3">
-                                <del>{{item.sale}}</del>
-                              </span>
-                              <v-divider class="mt-2"></v-divider>
-                              <div class="mt-4">
-                                <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
-                                <v-icon class="ml-5">favorite</v-icon>
-                              </div>
-                            </div>
-                          </v-flex>
-                        </v-layout>
-                      </v-container>
-                    </v-card>
+                    <book-item :book="item"></book-item>
                   </v-flex>
                   <v-flex xs12 class="pt-2 mr-1">
-                    <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+                    <router-link to="/list-products">
+                      <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+                    </router-link>
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs12 md3>
                 <img class="sale-img" src="https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png" alt="">
               </v-flex>
             </v-layout>
@@ -111,33 +70,13 @@
     <v-container grid-list-xs>
       <v-layout row wrap>
         <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
-          <v-card flat>
-            <v-container fluid grid-list-lg>
-              <v-layout row wrap>
-                <v-flex xs5 class="pr-0 py-0">
-                  <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
-                </v-flex>
-                <v-flex xs7 class="grey lighten-5 pl-3">
-                  <div>
-                    <h3>{{item.name}}</h3>
-                    <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
-                    <span class="green--text text--accent-4 title"> {{item.price}}</span>
-                    <span class="grey--text text--darken-1 title ml-3">
-                      <del>{{item.sale}}</del>
-                    </span>
-                    <v-divider class="mt-2"></v-divider>
-                    <div class="mt-4">
-                      <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
-                      <v-icon class="ml-5">favorite</v-icon>
-                    </div>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
+          <book-item :book=item></book-item>
         </v-flex>
+
         <v-flex xs12 class="pt-2 mr-1">
-          <h5 class="text-xs-right  green--text text--accent-4" to="/seemore">XEM THÊM</h5>
+          <router-link to="/list-products">
+            <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+          </router-link>
         </v-flex>
       </v-layout>
     </v-container>
@@ -149,7 +88,7 @@
 export default {
   data() {
     return {
-      items: [
+      sliders: [
         {
           src:
             "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"

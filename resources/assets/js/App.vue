@@ -25,7 +25,9 @@
             <v-flex xs12 white>
                 <v-container class="pa-0">
                     <v-toolbar flat class="transparent px-0">
-                        <v-toolbar-title>LoGo</v-toolbar-title>
+                        <v-toolbar-title>
+                            <a href="\"> <img src="storage/images/logo_green.png" alt=""></a>
+                        </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0">
