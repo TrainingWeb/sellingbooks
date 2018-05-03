@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-carousel hide-controls>
-        <v-carousel-item v-for="(item,i) in sliders" :src="item.src" :key="'key'+ i"></v-carousel-item>
+        <v-carousel-item v-for="(item,i) in sliders" :src="item.src" :key="'slide'+ i"></v-carousel-item>
       </v-carousel>
     </v-layout>
     <v-layout align-center class="py-5">
@@ -14,14 +14,13 @@
     </v-layout>
     <v-container grid-list-xs>
       <v-layout row wrap>
-        <v-flex xs12 md6 lg4 v-for="item in book" :key="`key-${item}`">
+        <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
         <v-flex xs12 class="pt-2 mr-1">
           <router-link to="/list-products">
             <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
           </router-link>
-
         </v-flex>
       </v-layout>
     </v-container>

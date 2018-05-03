@@ -9,9 +9,8 @@
           <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
         </v-flex>
       </v-layout>
-
       <v-layout row wrap>
-        <v-flex xs12 md6 lg4 v-for="item in books" :key="`book-${item}`">
+        <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
       </v-layout>
@@ -30,10 +29,12 @@ export default {
     breadcrumbs: [
       {
         name: "Trang Chủ",
+        url: "/",
         disabled: false
       },
       {
         name: "Danh sách sản phẩm",
+        url: "/list-products",
         disabled: true
       }
     ],

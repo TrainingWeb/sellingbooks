@@ -7,7 +7,7 @@
                         <h1 class="white--text display-2">{{value.title}}</h1>
                         <v-breadcrumbs divider="/" justify-center>
                             <v-breadcrumbs-item class="color-text" v-for="( breadcrumb,index ) in value.breadcrumbs" :key="'key-$'+index " :disabled="breadcrumb.disabled">
-                                {{ breadcrumb.name }}
+                                <router-link :to="breadcrumb.url" class="url-br">{{ breadcrumb.name }}</router-link>
                             </v-breadcrumbs-item>
                         </v-breadcrumbs>
                     </v-flex>
@@ -27,5 +27,11 @@ export default {
 .banner {
   min-height: 350px;
   width: 100%;
+}
+.url-br {
+  text-decoration: none !important;
+}
+.color-text a {
+  color: white !important;
 }
 </style>
