@@ -2,12 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 //
-
-import Detail from "../components/pages/detail.vue";
 import Home from "../components/Home.vue";
+import Detail from "../components/pages/detail.vue";
 import About from "../components/pages/about.vue";
 import Checkout from "../components/pages/checkout.vue";
-
+import Listproducts from "../components/pages/listproducts.vue";
 //
 const router = new VueRouter({
   routes: [
@@ -30,8 +29,12 @@ const router = new VueRouter({
       path: "/check-out",
       name: "checkout",
       component: Checkout
+    },
+    {
+      path: "/list-products",
+      name: "listproducts",
+      component: Listproducts
     }
   ]
-  // mode: "history"
 });
 export default router;

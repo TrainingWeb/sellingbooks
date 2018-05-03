@@ -10,6 +10,13 @@ import "vuetify/dist/vuetify.min.css";
 import router from "./router";
 import App from "./App.vue";
 
+// Import global components
+import BookItem from "./components/extends/BookItem";
+Vue.component("BookItem", BookItem);
+//
+import VBanner from "./components/extends/Banner";
+Vue.component("VBanner", VBanner);
+//
 Vue.use(Vuetify);
 
 const app = new Vue({

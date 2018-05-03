@@ -25,17 +25,19 @@
             <v-flex xs12 white>
                 <v-container class="pa-0">
                     <v-toolbar flat class="transparent px-0">
-                        <v-toolbar-title>LoGo</v-toolbar-title>
+                        <v-toolbar-title>
+                            <a href="\"> <img src="storage/images/logo_green.png" alt=""></a>
+                        </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0">
-                                <v-badge color="red lighten-1" v-model="show" class="p-0">
+                                <v-badge color="red lighten-1" class="p-0">
                                     <span slot="badge" class="caption">6</span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0">
-                                <v-badge color="indigo" v-model="show" class="p-0">
+                                <v-badge color="indigo" class="p-0">
                                     <span slot="badge" class="caption">0</span>
                                     <v-icon color="grey">favorite</v-icon>
                                 </v-badge>
@@ -48,9 +50,10 @@
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
                         <v-toolbar-title>
-                            <v-btn flat class="white--text">Trang chủ</v-btn>
+                            <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
                             <v-btn flat class="white--text">Thể loại</v-btn>
                             <v-btn flat class="white--text">Tác giả</v-btn>
+                            <v-btn flat class="white--text">Giới thiệu</v-btn>
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
@@ -110,7 +113,7 @@
                         </v-layout>
                     </v-card-text>
                 </v-container>
-                <v-card-actions class="grey lighten-4 justify-center ">
+                <v-card-actions class="grey lighten-3 justify-center ">
                     &copy;2018 — Demo Vue Js
                 </v-card-actions>
             </v-card>
