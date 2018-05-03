@@ -67,33 +67,6 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -169,6 +142,234 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(20)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
 }
 
 
@@ -283,6 +484,33 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11245,242 +11473,14 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(7).setImmediate))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(20)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(7).setImmediate))
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
-module.exports = __webpack_require__(31);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
@@ -11489,14 +11489,14 @@ module.exports = __webpack_require__(31);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -11589,7 +11589,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 8 */
@@ -11782,7 +11782,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(9)))
 
 /***/ }),
 /* 9 */
@@ -29678,7 +29678,7 @@ if(false) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -30147,19 +30147,22 @@ module.exports = function (css) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pages_detail_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pages_detail_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_pages_detail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_pages_detail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_pages_footer_vue__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_pages_footer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_pages_footer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Home_vue__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
 
 
 
@@ -30170,15 +30173,19 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   routes: [{
     path: "/",
     name: "home",
-    component: __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default.a
+    component: __WEBPACK_IMPORTED_MODULE_3__components_Home_vue___default.a
   }, {
     path: "/detail",
     name: "detail",
     component: __WEBPACK_IMPORTED_MODULE_2__components_pages_detail_vue___default.a
   }, {
-    path: "/footer",
-    name: "footer",
-    component: __WEBPACK_IMPORTED_MODULE_3__components_pages_footer_vue___default.a
+    path: "/about",
+    name: "about",
+    component: __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue___default.a
+  }, {
+    path: "/check-out",
+    name: "checkout",
+    component: __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue___default.a
   }]
   // mode: "history"
 });
@@ -32815,57 +32822,19 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-/* 21 */,
-/* 22 */,
-/* 23 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(24)
+  __webpack_require__(18)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(26)
+var __vue_script__ = __webpack_require__(21)
 /* template */
-var __vue_template__ = __webpack_require__(27)
+var __vue_template__ = __webpack_require__(22)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -32904,17 +32873,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 24 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(25);
+var content = __webpack_require__(19);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("e0f4095c", content, false, {});
+var update = __webpack_require__(1)("e0f4095c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -32930,10 +32899,10 @@ if(false) {
 }
 
 /***/ }),
-/* 25 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -32944,11 +32913,48 @@ exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n 
 
 
 /***/ }),
-/* 26 */
+/* 20 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -33068,7 +33074,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       text: "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ.",
-      items: [{
+      comments: [{
         avatar: "./img/author.jpg",
         title: "Võ Đăng Ánh",
         subtitle: "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
@@ -33110,7 +33116,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 27 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -33130,6 +33136,7 @@ var render = function() {
             [
               _c(
                 "v-card",
+                { attrs: { flat: "" } },
                 [
                   _c(
                     "v-container",
@@ -33379,7 +33386,7 @@ var render = function() {
                                 "v-list",
                                 { attrs: { "three-line": "" } },
                                 [
-                                  _vm._l(_vm.items, function(item) {
+                                  _vm._l(_vm.comments, function(item) {
                                     return [
                                       _c(
                                         "v-list-tile",
@@ -33447,8 +33454,14 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-container",
-                { attrs: { "grid-list-xs": "" } },
+                { staticClass: "mt-5", attrs: { "grid-list-xs": "" } },
                 [
+                  _c(
+                    "div",
+                    { staticClass: "headline grey--text text--darken-3" },
+                    [_vm._v("Những sản phẩm liên quan")]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "v-layout",
                     { attrs: { row: "", wrap: "" } },
@@ -33456,7 +33469,7 @@ var render = function() {
                       return _c(
                         "v-flex",
                         {
-                          key: "4" + item,
+                          key: "" + item,
                           attrs: { xs12: "", md6: "", lg4: "" }
                         },
                         [
@@ -33619,19 +33632,870 @@ if (false) {
 }
 
 /***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(24)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(26)
+/* template */
+var __vue_template__ = __webpack_require__(27)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Home.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-85ef4954", Component.options)
+  } else {
+    hotAPI.reload("data-v-85ef4954", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(25);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("de53da26", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-85ef4954\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-85ef4954\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.carousel__controls {\r\n  background-color: transparent !important;\n}\n.border-remove {\r\n  -webkit-box-shadow: none !important;\r\n          box-shadow: none !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      items: [{
+        src: "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
+      }, {
+        src: "http://static.ybox.vn/2017/4/11/7397e6ae-1e80-11e7-a0c9-2e995a9a3302.jpg"
+      }, {
+        src: "http://ptth-hstar.thuathienhue.edu.vn/imgs/Thu_muc_he_thong/_Nam_2014/_Thang_09/p1150951fileminimizer-.jpg"
+      }, {
+        src: "https://cafeandbooks.files.wordpress.com/2015/07/dscn4528.jpg"
+      }],
+      book: [{
+        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
+        name: "Dế mèn phiêu lưu kí",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }, {
+        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+        name: "Truyện kiều",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
+        name: "Chuyện chưa kể",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
+        name: "Cô bé bán diêm",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "",
+        author: "Nguyễn Du"
+      }]
+    };
+  }
+});
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        [
+          _c(
+            "v-carousel",
+            { attrs: { "hide-controls": "" } },
+            _vm._l(_vm.items, function(item, i) {
+              return _c("v-carousel-item", { key: i, attrs: { src: item.src } })
+            })
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "py-5", attrs: { "align-center": "" } },
+        [
+          _c("v-flex", { attrs: { "text-xs-center": "" } }, [
+            _c(
+              "h2",
+              { staticClass: "green--text text--accent-4" },
+              [
+                _c(
+                  "v-icon",
+                  {
+                    staticClass: "green--text text--accent-4",
+                    attrs: { large: "" }
+                  },
+                  [_vm._v("stars")]
+                ),
+                _vm._v(" ĐỘC QUYỀN THÁNG NÀY")
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "grey--text text--darken-1 mt-4" }, [
+              _vm._v("Những sản phẩm bán chạy nhất trong tháng này")
+            ])
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            _vm._l(_vm.book, function(item) {
+              return _c(
+                "v-flex",
+                { key: "4" + item, attrs: { xs12: "", md6: "", lg4: "" } },
+                [
+                  _c(
+                    "v-card",
+                    { staticClass: "border-remove" },
+                    [
+                      _c(
+                        "v-container",
+                        {
+                          staticClass: "pb-0",
+                          attrs: { fluid: "", "grid-list-lg": "" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { staticClass: "pa-0", attrs: { xs5: "" } },
+                                [
+                                  _c("v-card-media", {
+                                    attrs: {
+                                      src: item.img,
+                                      height: "200px",
+                                      "max-width": "130px"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                {
+                                  staticClass: "grey lighten-5 pl-3",
+                                  attrs: { xs7: "" }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c("h3", [_vm._v(_vm._s(item.name))]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-1 mt-1"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Tác giả: " + _vm._s(item.author)
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "green--text text--accent-4 title"
+                                        },
+                                        [_vm._v(" " + _vm._s(item.price))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-1 title ml-5"
+                                        },
+                                        [_c("del", [_vm._v(_vm._s(item.sale))])]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-divider", { staticClass: "mt-2" }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "mt-4" },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            {
+                                              staticClass:
+                                                "mr-5  green--text text--accent-4"
+                                            },
+                                            [_vm._v("add_shopping_cart")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-icon",
+                                            { staticClass: "ml-5" },
+                                            [_vm._v("favorite")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            })
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-85ef4954", module.exports)
+  }
+}
+
+/***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(38)
+  __webpack_require__(29)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(29)
+var __vue_script__ = __webpack_require__(39)
 /* template */
-var __vue_template__ = __webpack_require__(30)
+var __vue_template__ = __webpack_require__(31)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\about.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-56cc4d6e", Component.options)
+  } else {
+    hotAPI.reload("data-v-56cc4d6e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(30);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("bf15f290", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56cc4d6e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./about.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56cc4d6e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./about.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.carousel__controls {\r\n  background-color: transparent !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-container",
+        { staticClass: "px-0" },
+        [
+          _c(
+            "v-card",
+            { attrs: { flat: "" } },
+            [
+              _c(
+                "v-container",
+                {
+                  staticClass: "px-0 ",
+                  staticStyle: { "min-height": "0" },
+                  attrs: { fluid: "", "grid-list-lg": "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "white--text px-0",
+                      attrs: { flat: "", color: "white darken-2" }
+                    },
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { fluid: "", "grid-list-lg": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", md6: "" } },
+                                [
+                                  _c(
+                                    "v-carousel",
+                                    { staticStyle: { height: "350px" } },
+                                    _vm._l(_vm.slideDetail, function(item, i) {
+                                      return _c("v-carousel-item", {
+                                        key: i,
+                                        attrs: { src: item.src }
+                                      })
+                                    })
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-flex", { attrs: { xs12: "", md6: "" } }, [
+                                _c("div", [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "headline grey--text text--darken-3"
+                                    },
+                                    [_vm._v("GIỚI THIỆU")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "grey--text text--accent-4 body-2"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường.Ngoài hoạt động chính là tiệm sách lớn, nhà sách Khai Trí còn sưu tầm nhiều sách báo ngoại ngữ cũng như các bản thảo bằng tiếng Việt. "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "v-container",
+            {
+              staticStyle: { "min-height": "0" },
+              attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+            },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                [
+                  _c(
+                    "v-flex",
+                    [
+                      _c(
+                        "v-card",
+                        {
+                          staticClass: "white--text",
+                          attrs: { flat: "", color: "grey lighten-4" }
+                        },
+                        [
+                          _c(
+                            "v-container",
+                            { attrs: { "grid-list-lg": "" } },
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { row: "", wrap: "" } },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    {
+                                      attrs: { xs12: "", md5: "", "mt-2": "" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "title grey--text text--darken-3"
+                                            },
+                                            [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "grey--text text--darken-2 py-3"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              staticClass:
+                                                "mx-0 green accent-4 white--text"
+                                            },
+                                            [_vm._v(" Tham gia với chúng tôi")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", md7: "" } },
+                                    [
+                                      _c(
+                                        "v-layout",
+                                        { attrs: { row: "", wrap: "" } },
+                                        [
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-1.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-3.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-4.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-56cc4d6e", module.exports)
+  }
+}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(33)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(35)
+/* template */
+var __vue_template__ = __webpack_require__(36)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33670,7 +34534,47 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 29 */
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(34);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("02b3e434", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6dd1125c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6dd1125c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33817,7 +34721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 30 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -34124,6 +35028,7 @@ var render = function() {
             [
               _c(
                 "v-container",
+                { staticClass: "px-0" },
                 [
                   _c(
                     "v-card-text",
@@ -34131,10 +35036,18 @@ var render = function() {
                     [
                       _c(
                         "v-layout",
+                        { attrs: { row: "", wrap: "" } },
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs3: "", layout: "", column: "" } },
+                            {
+                              attrs: {
+                                xs12: "",
+                                md3: "",
+                                layout: "",
+                                column: ""
+                              }
+                            },
                             [
                               _c("img", {
                                 staticClass: "mb-3",
@@ -34228,7 +35141,7 @@ var render = function() {
                           _vm._l(_vm.rows, function(col, i) {
                             return _c(
                               "v-flex",
-                              { key: i, attrs: { xs3: "" } },
+                              { key: i, attrs: { xs12: "", md3: "" } },
                               [
                                 _c("div", {
                                   staticClass: "body-2 title-ft my-3",
@@ -34251,7 +35164,14 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs3: "", layout: "", column: "" } },
+                            {
+                              attrs: {
+                                xs12: "",
+                                md3: "",
+                                layout: "",
+                                column: ""
+                              }
+                            },
                             [
                               _c("div", { staticClass: "body-2 my-3" }, [
                                 _vm._v("TÀI KHOẢN CỦA TÔI")
@@ -34331,105 +35251,14 @@ if (false) {
 }
 
 /***/ }),
-/* 31 */
+/* 37 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 32 */,
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(34)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(36)
-/* template */
-var __vue_template__ = __webpack_require__(37)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\pages\\footer.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f67653ec", Component.options)
-  } else {
-    hotAPI.reload("data-v-f67653ec", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(35);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("50e78bee", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f67653ec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./footer.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f67653ec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./footer.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.title-ft {\r\n  color: #4c4848;\n}\n.info-ft {\r\n  color: #666464;\n}\n.icon {\r\n  color: #27ae61;\n}\n.card__title {\r\n  padding: 0px;\r\n  margin-left: -10px;\n}\n.application .theme--dark.btn,\r\n.theme--dark .btn {\r\n  color: #27ae61;\n}\n.application.theme--light {\r\n  background: #fff;\n}\nimg {\r\n  width: 63%;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 36 */
+/* 38 */,
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34482,292 +35311,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      icons: ["fab fa-facebook", "fab fa-twitter", "fab fa-google-plus", "fab fa-linkedin", "fab fa-instagram"],
-      rows: [{
-        title: "DỊCH VỤ",
-        children: ["Điều khoản và sử dụng", "Thông tin giao hàng", "Chính sách bảo mật", "Dịch vụ khách hàng"]
+      slideDetail: [{
+        src: "storage/images/about-1.jpg"
       }, {
-        title: "HỖ TRỢ",
-        children: ["Chính sách đổi - trả - hoàn tiền", "Chính sách khách sỉ", "Phương thức vận chuyển", "Phương thức thanh toán"]
-        // {
-        //   title: "Company Name",
-        //   children: ["Chi tiết tài khoản", "Lịch sử mua hàng"]
-        // }
+        src: "storage/images/about-2.jpg"
+      }, {
+        src: "storage/images/about-3.jpg"
       }]
     };
   }
 });
 
 /***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-footer",
-    { attrs: { height: "auto" } },
-    [
-      _c(
-        "v-card",
-        { staticClass: "flex", attrs: { flat: "", tile: "" } },
-        [
-          _c(
-            "v-container",
-            [
-              _c(
-                "v-card-text",
-                { staticClass: "white" },
-                [
-                  _c(
-                    "v-layout",
-                    [
-                      _c(
-                        "v-flex",
-                        { attrs: { xs3: "", layout: "", column: "" } },
-                        [
-                          _c("img", {
-                            staticClass: "mb-2",
-                            attrs: { src: "storage/images/logo_green.png" }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3 info-ft " },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-home")]
-                              ),
-                              _vm._v(
-                                "\n                            179 Võ Duy Ninh,TP ĐN\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1  ",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-envelope")]
-                              ),
-                              _vm._v(
-                                "\n                            bookstore@gmail.com\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-phone")]
-                              ),
-                              _vm._v(
-                                "\n                            + 01 234 567 88\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1 ",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-print")]
-                              ),
-                              _vm._v(
-                                "\n                            + 01 234 567 89\n                        "
-                              )
-                            ],
-                            1
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.rows, function(col, i) {
-                        return _c(
-                          "v-flex",
-                          { key: i, attrs: { xs3: "" } },
-                          [
-                            _c("div", {
-                              staticClass: "body-2 title-ft my-3",
-                              domProps: {
-                                textContent: _vm._s(col.title.toUpperCase())
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm._l(col.children, function(child, i) {
-                              return _c("div", {
-                                key: i,
-                                staticClass: "my-3 info-ft",
-                                domProps: { textContent: _vm._s(child) }
-                              })
-                            })
-                          ],
-                          2
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        { attrs: { xs3: "", layout: "", column: "" } },
-                        [
-                          _c("div", { staticClass: "body-2 my-3" }, [
-                            _vm._v("TÀI KHOẢN CỦA TÔI")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 info-ft" }, [
-                            _vm._v("Chi tiết tài khoản")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3" }, [
-                            _vm._v("Lịch sử mua hàng")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-title",
-                            { staticClass: "my-0" },
-                            _vm._l(_vm.icons, function(icon) {
-                              return _c(
-                                "v-btn",
-                                {
-                                  key: icon,
-                                  staticClass: "mx-1 icon ",
-                                  attrs: { icon: "", dark: "" }
-                                },
-                                [
-                                  _c("v-icon", { attrs: { size: "24px " } }, [
-                                    _vm._v(_vm._s(icon))
-                                  ])
-                                ],
-                                1
-                              )
-                            })
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    2
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            { staticClass: "grey lighten-4 justify-center " },
-            [_vm._v("\n            ©2018 — Demo Vue Js\n        ")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f67653ec", module.exports)
-  }
-}
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(39);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("02b3e434", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6dd1125c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6dd1125c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(41)
-}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(43)
+var __vue_script__ = __webpack_require__(42)
 /* template */
-var __vue_template__ = __webpack_require__(44)
+var __vue_template__ = __webpack_require__(41)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -34780,7 +35394,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Home.vue"
+Component.options.__file = "resources\\assets\\js\\components\\pages\\checkout.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34789,9 +35403,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-85ef4954", Component.options)
+    hotAPI.createRecord("data-v-23a82675", Component.options)
   } else {
-    hotAPI.reload("data-v-85ef4954", Component.options)
+    hotAPI.reload("data-v-23a82675", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -34805,44 +35419,96 @@ module.exports = Component.exports
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(42);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("de53da26", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-85ef4954\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-85ef4954\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    [
+      _c(
+        "v-form",
+        {
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: {
+              label: "Tên",
+              rules: _vm.nameRules,
+              counter: 20,
+              required: ""
+            },
+            model: {
+              value: _vm.name,
+              callback: function($$v) {
+                _vm.name = $$v
+              },
+              expression: "name"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "E-mail", rules: _vm.emailRules, required: "" },
+            model: {
+              value: _vm.email,
+              callback: function($$v) {
+                _vm.email = $$v
+              },
+              expression: "email"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              label: "Số Điện Thoại",
+              rules: _vm.phoneRules,
+              required: ""
+            },
+            model: {
+              value: _vm.phone,
+              callback: function($$v) {
+                _vm.phone = $$v
+              },
+              expression: "phone"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Địa chỉ", rules: _vm.addressRules, required: "" },
+            model: {
+              value: _vm.address,
+              callback: function($$v) {
+                _vm.address = $$v
+              },
+              expression: "address"
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23a82675", module.exports)
+  }
 }
 
 /***/ }),
 /* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.carousel__controls {\r\n  background-color: transparent !important;\n}\n.border-remove {\r\n  -webkit-box-shadow: none !important;\r\n          box-shadow: none !important;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34858,295 +35524,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      items: [{
-        src: "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
-      }, {
-        src: "http://static.ybox.vn/2017/4/11/7397e6ae-1e80-11e7-a0c9-2e995a9a3302.jpg"
-      }, {
-        src: "http://ptth-hstar.thuathienhue.edu.vn/imgs/Thu_muc_he_thong/_Nam_2014/_Thang_09/p1150951fileminimizer-.jpg"
-      }, {
-        src: "https://cafeandbooks.files.wordpress.com/2015/07/dscn4528.jpg"
+      valid: false,
+      name: "",
+      nameRules: [function (v) {
+        return !!v || "Name is required";
+      }, function (v) {
+        return v.length <= 10 || "Name must be less than 10 characters";
       }],
-      book: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
+      email: "",
+      emailRules: [function (v) {
+        return !!v || "E-mail is required";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail must be valid"
+        );
       }]
     };
   }
 });
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-layout",
-        [
-          _c(
-            "v-carousel",
-            { attrs: { "hide-controls": "" } },
-            _vm._l(_vm.items, function(item, i) {
-              return _c("v-carousel-item", { key: i, attrs: { src: item.src } })
-            })
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-layout",
-        { staticClass: "py-5", attrs: { "align-center": "" } },
-        [
-          _c("v-flex", { attrs: { "text-xs-center": "" } }, [
-            _c(
-              "h2",
-              { staticClass: "green--text text--accent-4" },
-              [
-                _c(
-                  "v-icon",
-                  {
-                    staticClass: "green--text text--accent-4",
-                    attrs: { large: "" }
-                  },
-                  [_vm._v("stars")]
-                ),
-                _vm._v(" ĐỘC QUYỀN THÁNG NÀY")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "grey--text text--darken-1 mt-4" }, [
-              _vm._v("Những sản phẩm bán chạy nhất trong tháng này")
-            ])
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.book, function(item) {
-              return _c(
-                "v-flex",
-                { key: "4" + item, attrs: { xs12: "", md6: "", lg4: "" } },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "border-remove" },
-                    [
-                      _c(
-                        "v-container",
-                        {
-                          staticClass: "pb-0",
-                          attrs: { fluid: "", "grid-list-lg": "" }
-                        },
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { row: "", wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { staticClass: "pa-0", attrs: { xs5: "" } },
-                                [
-                                  _c("v-card-media", {
-                                    attrs: {
-                                      src: item.img,
-                                      height: "200px",
-                                      "max-width": "130px"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                {
-                                  staticClass: "grey lighten-5 pl-3",
-                                  attrs: { xs7: "" }
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c("h3", [_vm._v(_vm._s(item.name))]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "grey--text text--darken-1 mt-1"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Tác giả: " + _vm._s(item.author)
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "green--text text--accent-4 title"
-                                        },
-                                        [_vm._v(" " + _vm._s(item.price))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "grey--text text--darken-1 title ml-5"
-                                        },
-                                        [_c("del", [_vm._v(_vm._s(item.sale))])]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("v-divider", { staticClass: "mt-2" }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "mt-4" },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            {
-                                              staticClass:
-                                                "mr-5  green--text text--accent-4"
-                                            },
-                                            [_vm._v("add_shopping_cart")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-icon",
-                                            { staticClass: "ml-5" },
-                                            [_vm._v("favorite")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            })
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-85ef4954", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

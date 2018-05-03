@@ -4,8 +4,9 @@ Vue.use(VueRouter);
 //
 
 import Detail from "../components/pages/detail.vue";
-import Footer from "../components/pages/footer.vue";
 import Home from "../components/Home.vue";
+import About from "../components/pages/about.vue";
+import Checkout from "../components/pages/checkout.vue";
 
 //
 const router = new VueRouter({
@@ -21,9 +22,14 @@ const router = new VueRouter({
       component: Detail
     },
     {
-      path: "/footer",
-      name: "footer",
-      component: Footer
+      path: "/about",
+      name: "about",
+      component: About
+    },
+    {
+      path: "/check-out",
+      name: "checkout",
+      component: Checkout
     }
   ]
   // mode: "history"

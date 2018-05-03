@@ -71,10 +71,10 @@
         <!--  -->
         <v-footer height="auto">
             <v-card flat tile class="flex">
-                <v-container>
+                <v-container class="px-0">
                     <v-card-text class="white">
-                        <v-layout>
-                            <v-flex xs3 layout column class="">
+                        <v-layout row wrap>
+                            <v-flex xs12 md3 layout column class="">
                                 <img class="mb-3" width="180" src="storage/images/logo_green.png">
                                 <div class="mb-3" color="grey--text text--darken-2">
                                     <v-icon size="18px" class="mr-1">fas fa-home</v-icon>
@@ -93,11 +93,11 @@
                                     + 01 234 567 89
                                 </div>
                             </v-flex>
-                            <v-flex v-for="(col, i) in rows" :key="i" xs3>
+                            <v-flex v-for="(col, i) in rows" :key="i" xs12 md3>
                                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
                                 <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="i" v-text="child"></div>
                             </v-flex>
-                            <v-flex xs3 layout column class="">
+                            <v-flex xs12 md3 layout column class="">
                                 <div class="body-2 my-3">TÀI KHOẢN CỦA TÔI</div>
                                 <div class="mb-3  ">Chi tiết tài khoản</div>
                                 <div class="mb-3">Lịch sử mua hàng</div>
