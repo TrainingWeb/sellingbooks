@@ -30165,16 +30165,19 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Home_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_pages_detail_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_pages_detail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_pages_detail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_footer_vue__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_footer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_pages_footer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_listproducts_vue__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_listproducts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_pages_listproducts_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_pages_card_vue__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_pages_card_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_pages_card_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
 
 
 
@@ -30191,17 +30194,21 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     name: "detail",
     component: __WEBPACK_IMPORTED_MODULE_3__components_pages_detail_vue___default.a
   }, {
-    path: "/footer",
-    name: "footer",
-    component: __WEBPACK_IMPORTED_MODULE_4__components_pages_footer_vue___default.a
+    path: "/about",
+    name: "about",
+    component: __WEBPACK_IMPORTED_MODULE_4__components_pages_about_vue___default.a
+  }, {
+    path: "/check-out",
+    name: "checkout",
+    component: __WEBPACK_IMPORTED_MODULE_5__components_pages_checkout_vue___default.a
   }, {
     path: "/list-products",
     name: "listproducts",
-    component: __WEBPACK_IMPORTED_MODULE_5__components_pages_listproducts_vue___default.a
+    component: __WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue___default.a
   }, {
     path: "/card",
     name: "card",
-    component: __WEBPACK_IMPORTED_MODULE_6__components_pages_card_vue___default.a
+    component: __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue___default.a
   }]
 });
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -33531,7 +33538,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.white--text {\r\n  color: #424242 !important;\r\n  font-family: roboto slab;\n}\n.favorite {\r\n  color: #fff;\n}\n.add-shopping {\r\n  color: #fff;\n}\n.btn {\r\n  min-width: 0px;\r\n  margin: 0px 3px;\n}\n.btn__content {\r\n  color: #ffffff;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.tabs__container--icons-and-text {\r\n  height: 40px;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n#tab-1 {\r\n  color: #757575;\r\n  font-size: 14px;\n}\n.card__text {\r\n  font-family: roboto slab;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -33656,12 +33663,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       text: "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ.",
-      items: [{
+      comments: [{
         avatar: "./img/author.jpg",
         title: "Võ Đăng Ánh",
         subtitle: "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
@@ -33697,7 +33712,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         price: "120.000",
         sale: "",
         author: "Nguyễn Du"
-      }]
+      }],
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        disabled: false
+      }, {
+        name: "Chi tiết sản phẩm",
+        disabled: true
+      }],
+      namepage: "Chi tiết sản phẩm"
     };
   }
 });
@@ -33711,188 +33734,224 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
+    "div",
     [
       _c(
         "v-layout",
-        { attrs: { row: "", wrap: "" } },
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
         [
           _c(
-            "v-flex",
-            { attrs: { xs12: "" } },
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
             [
               _c(
-                "v-card",
+                "v-flex",
+                { attrs: { xs12: "" } },
                 [
                   _c(
-                    "v-container",
-                    {
-                      staticStyle: { "min-height": "0" },
-                      attrs: { fluid: "", "grid-list-lg": "" }
-                    },
+                    "v-card",
+                    { attrs: { flat: "" } },
                     [
                       _c(
-                        "v-layout",
-                        { attrs: { row: "", wrap: "" } },
+                        "v-container",
+                        {
+                          staticStyle: { "min-height": "0" },
+                          attrs: { fluid: "", "grid-list-lg": "" }
+                        },
                         [
                           _c(
-                            "v-flex",
-                            { attrs: { xs12: "" } },
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
                             [
                               _c(
-                                "v-card",
-                                {
-                                  staticClass: "white--text",
-                                  attrs: { color: "cyan darken-2" }
-                                },
+                                "v-flex",
+                                { attrs: { xs12: "" } },
                                 [
                                   _c(
-                                    "v-container",
+                                    "v-card",
                                     {
-                                      attrs: { fluid: "", "grid-list-lg": "" }
+                                      staticClass: "white--text",
+                                      attrs: { color: "cyan darken-2" }
                                     },
                                     [
                                       _c(
-                                        "v-layout",
-                                        { attrs: { row: "" } },
+                                        "v-container",
+                                        {
+                                          attrs: {
+                                            fluid: "",
+                                            "grid-list-lg": ""
+                                          }
+                                        },
                                         [
                                           _c(
-                                            "v-flex",
-                                            { attrs: { xs4: "" } },
+                                            "v-layout",
+                                            { attrs: { row: "" } },
                                             [
-                                              _c("v-card-media", {
-                                                attrs: {
-                                                  src:
-                                                    "storage/images/book15.png",
-                                                  height: "450px",
-                                                  contain: ""
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c("v-flex", { attrs: { xs8: "" } }, [
-                                            _c(
-                                              "div",
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "headline" },
-                                                  [_vm._v("Your Name")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "grey--text accent-4 body-2"
-                                                  },
-                                                  [
-                                                    _c("span", [
-                                                      _vm._v("Tác giả: ")
-                                                    ]),
-                                                    _vm._v(" Hoàng Anh Vũ")
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "green--text text--accent-4 title mt-3"
-                                                  },
-                                                  [_vm._v("140.000 VNĐ")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("v-divider", {
-                                                  staticClass: "my-3"
-                                                }),
-                                                _vm._v(" "),
-                                                _c("div", [
+                                              _c(
+                                                "v-flex",
+                                                { attrs: { xs4: "" } },
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/book15.png",
+                                                      height: "450px",
+                                                      contain: ""
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-flex",
+                                                { attrs: { xs8: "" } },
+                                                [
                                                   _c(
-                                                    "span",
-                                                    {
-                                                      staticClass:
-                                                        " grey--text text--accent-4body-1"
-                                                    },
+                                                    "div",
                                                     [
-                                                      _vm._v(
-                                                        '"Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]'
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c("a", [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "green--text text--accent-4"
-                                                      },
-                                                      [_vm._v("Xem thêm")]
-                                                    )
-                                                  ])
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("v-divider", {
-                                                  staticClass: "my-3"
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  [
-                                                    _c(
-                                                      "v-btn",
-                                                      {
-                                                        attrs: {
-                                                          color:
-                                                            "green accent-4"
-                                                        }
-                                                      },
-                                                      [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "headline grey--text text--darken-3"
+                                                        },
+                                                        [_vm._v("Your Name")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "grey--text accent-4 body-2"
+                                                        },
+                                                        [
+                                                          _c("span", [
+                                                            _vm._v("Tác giả: ")
+                                                          ]),
+                                                          _vm._v(
+                                                            " Hoàng Anh Vũ"
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "green--text text--accent-4 title mt-3"
+                                                        },
+                                                        [_vm._v("140.000 VNĐ")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("v-divider", {
+                                                        staticClass: "my-3"
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("div", [
                                                         _c(
-                                                          "i",
+                                                          "span",
                                                           {
                                                             staticClass:
-                                                              "material-icons add-shopping mr-2"
+                                                              " grey--text text--accent-4body-1"
                                                           },
                                                           [
                                                             _vm._v(
-                                                              "add_shopping_cart"
+                                                              '"Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]'
                                                             )
                                                           ]
                                                         ),
-                                                        _vm._v("Thêm")
-                                                      ]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "v-btn",
-                                                      {
-                                                        attrs: {
-                                                          color:
-                                                            "green accent-4 "
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "i",
-                                                          {
-                                                            staticClass:
-                                                              "material-icons favorite"
-                                                          },
-                                                          [_vm._v("favorite")]
-                                                        )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ])
+                                                        _vm._v(" "),
+                                                        _c("a", [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "green--text text--accent-4"
+                                                            },
+                                                            [_vm._v("Xem thêm")]
+                                                          )
+                                                        ])
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("v-divider", {
+                                                        staticClass: "my-3"
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        [
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                color:
+                                                                  "green accent-4 white--text "
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "i",
+                                                                {
+                                                                  staticClass:
+                                                                    "material-icons add-shopping mr-2 white--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "add_shopping_cart"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v("Thêm")
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                color:
+                                                                  "green accent-4 "
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "i",
+                                                                {
+                                                                  staticClass:
+                                                                    "material-icons favorite white--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "favorite"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
                                         ],
                                         1
                                       )
@@ -33910,261 +33969,121 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-tabs",
-                { attrs: { "icons-and-text": "", dark: "", color: "white" } },
-                [
-                  _c("v-tabs-slider", { attrs: { color: "yellow" } }),
-                  _vm._v(" "),
-                  _c(
-                    "v-tab",
-                    {
-                      staticClass: "green accent-4",
-                      attrs: { href: "#tab-1" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Chi tiết sản phẩm\n                "
-                      )
-                    ]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-tab",
+                    "v-tabs",
                     {
-                      staticClass: "green accent-4",
-                      attrs: { href: "#tab-2" }
+                      attrs: {
+                        "icons-and-text": "",
+                        dark: "",
+                        color: "white",
+                        height: "40px"
+                      }
                     },
                     [
-                      _vm._v(
-                        "\n                    Nhận xét khách hàng\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-tabs-items",
-                    [
+                      _c("v-tabs-slider", { attrs: { color: "yellow" } }),
+                      _vm._v(" "),
                       _c(
-                        "v-tab-item",
-                        { attrs: { id: "tab-1" } },
+                        "v-tab",
+                        {
+                          staticClass: "green accent-4",
+                          attrs: { href: "#tab-1" }
+                        },
                         [
-                          _c("v-card-text", { staticClass: "roboto" }, [
-                            _vm._v(_vm._s(_vm.text))
-                          ])
-                        ],
-                        1
+                          _vm._v(
+                            "\n                        Chi tiết sản phẩm\n                    "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
-                        "v-tab-item",
-                        { attrs: { id: "tab-2" } },
-                        [
-                          _c(
-                            "v-card",
-                            [
-                              _c(
-                                "v-list",
-                                { attrs: { "three-line": "" } },
-                                [
-                                  _vm._l(_vm.items, function(item) {
-                                    return [
-                                      _c(
-                                        "v-list-tile",
-                                        {
-                                          key: item.title,
-                                          attrs: { avatar: "" }
-                                        },
-                                        [
-                                          _c("v-list-tile-avatar", [
-                                            _c("img", {
-                                              attrs: { src: item.avatar }
-                                            })
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-tile-content",
-                                            [
-                                              _c("v-list-tile-title", {
-                                                domProps: {
-                                                  innerHTML: _vm._s(item.title)
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c("v-list-tile-sub-title", {
-                                                staticClass: "subtitleComment",
-                                                domProps: {
-                                                  innerHTML: _vm._s(
-                                                    item.subtitle
-                                                  )
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-tile-action",
-                                            [
-                                              _c("v-list-tile-action-text", [
-                                                _vm._v(_vm._s(item.action))
-                                              ])
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  })
-                                ],
-                                2
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-container",
-                { attrs: { "grid-list-xs": "" } },
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { row: "", wrap: "" } },
-                    _vm._l(_vm.book, function(item) {
-                      return _c(
-                        "v-flex",
+                        "v-tab",
                         {
-                          key: "4" + item,
-                          attrs: { xs12: "", md6: "", lg4: "" }
+                          staticClass: "green accent-4",
+                          attrs: { href: "#tab-2" }
                         },
                         [
+                          _vm._v(
+                            "\n                        Nhận xét khách hàng\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-tabs-items",
+                        [
                           _c(
-                            "v-card",
-                            { staticClass: "border-remove" },
+                            "v-tab-item",
+                            { attrs: { id: "tab-1" } },
+                            [
+                              _c("v-card-text", { staticClass: "roboto" }, [
+                                _vm._v(_vm._s(_vm.text))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-tab-item",
+                            { attrs: { id: "tab-2" } },
                             [
                               _c(
-                                "v-container",
-                                {
-                                  staticClass: "pb-0",
-                                  attrs: { fluid: "", "grid-list-lg": "" }
-                                },
+                                "v-card",
                                 [
                                   _c(
-                                    "v-layout",
-                                    { attrs: { row: "", wrap: "" } },
+                                    "v-list",
+                                    { attrs: { "three-line": "" } },
                                     [
-                                      _c(
-                                        "v-flex",
-                                        {
-                                          staticClass: "pa-0",
-                                          attrs: { xs5: "" }
-                                        },
-                                        [
-                                          _c("v-card-media", {
-                                            attrs: {
-                                              src: item.img,
-                                              height: "200px",
-                                              "max-width": "130px"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        {
-                                          staticClass: "grey lighten-5 pl-3",
-                                          attrs: { xs7: "" }
-                                        },
-                                        [
+                                      _vm._l(_vm.comments, function(item) {
+                                        return [
                                           _c(
-                                            "div",
+                                            "v-list-tile",
+                                            {
+                                              key: item.title,
+                                              attrs: { avatar: "" }
+                                            },
                                             [
-                                              _c("h3", [
-                                                _vm._v(_vm._s(item.name))
+                                              _c("v-list-tile-avatar", [
+                                                _c("img", {
+                                                  attrs: { src: item.avatar }
+                                                })
                                               ]),
                                               _vm._v(" "),
                                               _c(
-                                                "p",
-                                                {
-                                                  staticClass:
-                                                    "grey--text text--darken-1 mt-1"
-                                                },
+                                                "v-list-tile-content",
                                                 [
-                                                  _vm._v(
-                                                    "Tác giả: " +
-                                                      _vm._s(item.author)
-                                                  )
-                                                ]
+                                                  _c("v-list-tile-title", {
+                                                    domProps: {
+                                                      innerHTML: _vm._s(
+                                                        item.title
+                                                      )
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("v-list-tile-sub-title", {
+                                                    staticClass:
+                                                      "subtitleComment",
+                                                    domProps: {
+                                                      innerHTML: _vm._s(
+                                                        item.subtitle
+                                                      )
+                                                    }
+                                                  })
+                                                ],
+                                                1
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "green--text text--accent-4 title"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    " " + _vm._s(item.price)
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "grey--text text--darken-1 title ml-5"
-                                                },
-                                                [
-                                                  _c("del", [
-                                                    _vm._v(_vm._s(item.sale))
-                                                  ])
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("v-divider", {
-                                                staticClass: "mt-2"
-                                              }),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                { staticClass: "mt-4" },
+                                                "v-list-tile-action",
                                                 [
                                                   _c(
-                                                    "v-icon",
-                                                    {
-                                                      staticClass:
-                                                        "mr-5  green--text text--accent-4"
-                                                    },
+                                                    "v-list-tile-action-text",
                                                     [
                                                       _vm._v(
-                                                        "add_shopping_cart"
+                                                        _vm._s(item.action)
                                                       )
                                                     ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-icon",
-                                                    { staticClass: "ml-5" },
-                                                    [_vm._v("favorite")]
                                                   )
                                                 ],
                                                 1
@@ -34173,9 +34092,9 @@ var render = function() {
                                             1
                                           )
                                         ]
-                                      )
+                                      })
                                     ],
-                                    1
+                                    2
                                   )
                                 ],
                                 1
@@ -34186,7 +34105,171 @@ var render = function() {
                         ],
                         1
                       )
-                    })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-container",
+                    { staticClass: "mt-5", attrs: { "grid-list-xs": "" } },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "headline grey--text text--darken-3" },
+                        [_vm._v("Những sản phẩm liên quan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { row: "", wrap: "" } },
+                        _vm._l(_vm.book, function(item) {
+                          return _c(
+                            "v-flex",
+                            {
+                              key: "" + item,
+                              attrs: { xs12: "", md6: "", lg4: "" }
+                            },
+                            [
+                              _c(
+                                "v-card",
+                                { staticClass: "border-remove" },
+                                [
+                                  _c(
+                                    "v-container",
+                                    {
+                                      staticClass: "pb-0",
+                                      attrs: { fluid: "", "grid-list-lg": "" }
+                                    },
+                                    [
+                                      _c(
+                                        "v-layout",
+                                        { attrs: { row: "", wrap: "" } },
+                                        [
+                                          _c(
+                                            "v-flex",
+                                            {
+                                              staticClass: "pa-0",
+                                              attrs: { xs5: "" }
+                                            },
+                                            [
+                                              _c("v-card-media", {
+                                                attrs: {
+                                                  src: item.img,
+                                                  height: "200px",
+                                                  "max-width": "130px"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            {
+                                              staticClass:
+                                                "grey lighten-5 pl-3",
+                                              attrs: { xs7: "" }
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                [
+                                                  _c("h3", [
+                                                    _vm._v(_vm._s(item.name))
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "grey--text text--darken-1 mt-1"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Tác giả: " +
+                                                          _vm._s(item.author)
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "green--text text--accent-4 title"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        " " + _vm._s(item.price)
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "grey--text text--darken-1 title ml-5"
+                                                    },
+                                                    [
+                                                      _c("del", [
+                                                        _vm._v(
+                                                          _vm._s(item.sale)
+                                                        )
+                                                      ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("v-divider", {
+                                                    staticClass: "mt-2"
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "mt-4" },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          staticClass:
+                                                            "mr-5  green--text text--accent-4"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "add_shopping_cart"
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-icon",
+                                                        { staticClass: "ml-5" },
+                                                        [_vm._v("favorite")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        })
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -34212,379 +34295,11 @@ if (false) {
 }
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(29)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(31)
-/* template */
-var __vue_template__ = __webpack_require__(32)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\pages\\footer.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f67653ec", Component.options)
-  } else {
-    hotAPI.reload("data-v-f67653ec", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(30);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("50e78bee", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f67653ec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./footer.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f67653ec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./footer.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.title-ft {\r\n  color: #4c4848;\n}\n.info-ft {\r\n  color: #666464;\n}\n.icon {\r\n  color: #27ae61;\n}\n.card__title {\r\n  padding: 0px;\r\n  margin-left: -10px;\n}\n.application .theme--dark.btn,\r\n.theme--dark .btn {\r\n  color: #27ae61;\n}\n.application.theme--light {\r\n  background: #fff;\n}\nimg {\r\n  width: 63%;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      icons: ["fab fa-facebook", "fab fa-twitter", "fab fa-google-plus", "fab fa-linkedin", "fab fa-instagram"],
-      rows: [{
-        title: "DỊCH VỤ",
-        children: ["Điều khoản và sử dụng", "Thông tin giao hàng", "Chính sách bảo mật", "Dịch vụ khách hàng"]
-      }, {
-        title: "HỖ TRỢ",
-        children: ["Chính sách đổi - trả - hoàn tiền", "Chính sách khách sỉ", "Phương thức vận chuyển", "Phương thức thanh toán"]
-        // {
-        //   title: "Company Name",
-        //   children: ["Chi tiết tài khoản", "Lịch sử mua hàng"]
-        // }
-      }]
-    };
-  }
-});
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-footer",
-    { attrs: { height: "auto" } },
-    [
-      _c(
-        "v-card",
-        { staticClass: "flex", attrs: { flat: "", tile: "" } },
-        [
-          _c(
-            "v-container",
-            [
-              _c(
-                "v-card-text",
-                { staticClass: "white" },
-                [
-                  _c(
-                    "v-layout",
-                    [
-                      _c(
-                        "v-flex",
-                        { attrs: { xs3: "", layout: "", column: "" } },
-                        [
-                          _c("img", {
-                            staticClass: "mb-2",
-                            attrs: { src: "storage/images/logo_green.png" }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3 info-ft " },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-home")]
-                              ),
-                              _vm._v(
-                                "\n                            179 Võ Duy Ninh,TP ĐN\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1  ",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-envelope")]
-                              ),
-                              _vm._v(
-                                "\n                            bookstore@gmail.com\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-phone")]
-                              ),
-                              _vm._v(
-                                "\n                            + 01 234 567 88\n                        "
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "mb-3" },
-                            [
-                              _c(
-                                "v-icon",
-                                {
-                                  staticClass: "mr-1 ",
-                                  attrs: { size: "18px" }
-                                },
-                                [_vm._v("fas fa-print")]
-                              ),
-                              _vm._v(
-                                "\n                            + 01 234 567 89\n                        "
-                              )
-                            ],
-                            1
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.rows, function(col, i) {
-                        return _c(
-                          "v-flex",
-                          { key: i, attrs: { xs3: "" } },
-                          [
-                            _c("div", {
-                              staticClass: "body-2 title-ft my-3",
-                              domProps: {
-                                textContent: _vm._s(col.title.toUpperCase())
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm._l(col.children, function(child, i) {
-                              return _c("div", {
-                                key: i,
-                                staticClass: "my-3 info-ft",
-                                domProps: { textContent: _vm._s(child) }
-                              })
-                            })
-                          ],
-                          2
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        { attrs: { xs3: "", layout: "", column: "" } },
-                        [
-                          _c("div", { staticClass: "body-2 my-3" }, [
-                            _vm._v("TÀI KHOẢN CỦA TÔI")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 info-ft" }, [
-                            _vm._v("Chi tiết tài khoản")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3" }, [
-                            _vm._v("Lịch sử mua hàng")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-title",
-                            { staticClass: "my-0" },
-                            _vm._l(_vm.icons, function(icon) {
-                              return _c(
-                                "v-btn",
-                                {
-                                  key: icon,
-                                  staticClass: "mx-1 icon ",
-                                  attrs: { icon: "", dark: "" }
-                                },
-                                [
-                                  _c("v-icon", { attrs: { size: "24px " } }, [
-                                    _vm._v(_vm._s(icon))
-                                  ])
-                                ],
-                                1
-                              )
-                            })
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    2
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            { staticClass: "grey lighten-4 justify-center " },
-            [_vm._v("\n            ©2018 — Demo Vue Js\n        ")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f67653ec", module.exports)
-  }
-}
-
-/***/ }),
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
 /* 33 */,
 /* 34 */,
 /* 35 */,
@@ -34686,6 +34401,7 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\r\n", ""])
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -35089,6 +34805,12 @@ var render = function() {
                             "v-btn",
                             { staticClass: "white--text", attrs: { flat: "" } },
                             [_vm._v("Tác giả")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "white--text", attrs: { flat: "" } },
+                            [_vm._v("Giới thiệu")]
                           )
                         ],
                         1
@@ -35135,6 +34857,7 @@ var render = function() {
             [
               _c(
                 "v-container",
+                { staticClass: "px-0" },
                 [
                   _c(
                     "v-card-text",
@@ -35142,10 +34865,18 @@ var render = function() {
                     [
                       _c(
                         "v-layout",
+                        { attrs: { row: "", wrap: "" } },
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs3: "", layout: "", column: "" } },
+                            {
+                              attrs: {
+                                xs12: "",
+                                md3: "",
+                                layout: "",
+                                column: ""
+                              }
+                            },
                             [
                               _c("img", {
                                 staticClass: "mb-3",
@@ -35239,7 +34970,7 @@ var render = function() {
                           _vm._l(_vm.rows, function(col, i) {
                             return _c(
                               "v-flex",
-                              { key: i, attrs: { xs3: "" } },
+                              { key: i, attrs: { xs12: "", md3: "" } },
                               [
                                 _c("div", {
                                   staticClass: "body-2 title-ft my-3",
@@ -35262,7 +34993,14 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs3: "", layout: "", column: "" } },
+                            {
+                              attrs: {
+                                xs12: "",
+                                md3: "",
+                                layout: "",
+                                column: ""
+                              }
+                            },
                             [
                               _c("div", { staticClass: "body-2 my-3" }, [
                                 _vm._v("TÀI KHOẢN CỦA TÔI")
@@ -35318,7 +35056,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-card-actions",
-                { staticClass: "grey lighten-4 justify-center " },
+                { staticClass: "grey lighten-3 justify-center " },
                 [_vm._v("\n                ©2018 — Demo Vue Js\n            ")]
               )
             ],
@@ -36519,6 +36257,1010 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-17647a82", module.exports)
+  }
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(66)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(68)
+/* template */
+var __vue_template__ = __webpack_require__(69)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\about.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-56cc4d6e", Component.options)
+  } else {
+    hotAPI.reload("data-v-56cc4d6e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(67);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("bf15f290", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56cc4d6e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./about.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56cc4d6e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./about.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.carousel__controls {\r\n  background-color: transparent !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      slideDetail: [{
+        src: "storage/images/about-1.jpg"
+      }, {
+        src: "storage/images/about-2.jpg"
+      }, {
+        src: "storage/images/about-3.jpg"
+      }],
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        disabled: false
+      }, {
+        name: "Giới thiệu",
+        disabled: true
+      }],
+      namepage: "Giới Thiệu"
+    };
+  }
+});
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { staticClass: "px-0" },
+        [
+          _c(
+            "v-card",
+            { attrs: { flat: "" } },
+            [
+              _c(
+                "v-container",
+                {
+                  staticClass: "px-0 ",
+                  staticStyle: { "min-height": "0" },
+                  attrs: { fluid: "", "grid-list-lg": "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "white--text px-0",
+                      attrs: { flat: "", color: "white darken-2" }
+                    },
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { fluid: "", "grid-list-lg": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", md6: "" } },
+                                [
+                                  _c(
+                                    "v-carousel",
+                                    { staticStyle: { height: "350px" } },
+                                    _vm._l(_vm.slideDetail, function(item, i) {
+                                      return _c("v-carousel-item", {
+                                        key: i,
+                                        attrs: { src: item.src }
+                                      })
+                                    })
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-flex", { attrs: { xs12: "", md6: "" } }, [
+                                _c("div", [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "headline grey--text text--darken-3"
+                                    },
+                                    [_vm._v("GIỚI THIỆU")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "grey--text text--accent-4 body-2"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường.Ngoài hoạt động chính là tiệm sách lớn, nhà sách Khai Trí còn sưu tầm nhiều sách báo ngoại ngữ cũng như các bản thảo bằng tiếng Việt. "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "v-container",
+            {
+              staticStyle: { "min-height": "0" },
+              attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+            },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                [
+                  _c(
+                    "v-flex",
+                    [
+                      _c(
+                        "v-card",
+                        {
+                          staticClass: "white--text",
+                          attrs: { flat: "", color: "grey lighten-4" }
+                        },
+                        [
+                          _c(
+                            "v-container",
+                            { attrs: { "grid-list-lg": "" } },
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { row: "", wrap: "" } },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    {
+                                      attrs: { xs12: "", md5: "", "mt-2": "" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "title grey--text text--darken-3"
+                                            },
+                                            [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "grey--text text--darken-2 py-3"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              staticClass:
+                                                "mx-0 green accent-4 white--text"
+                                            },
+                                            [_vm._v(" Tham gia với chúng tôi")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", md7: "" } },
+                                    [
+                                      _c(
+                                        "v-layout",
+                                        { attrs: { row: "", wrap: "" } },
+                                        [
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-1.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-3.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs12: "", md4: "" } },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "storage/images/team-4.jpg",
+                                                      height: "220px"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-title",
+                                                    {
+                                                      staticClass:
+                                                        "py-2 subheading",
+                                                      staticStyle: {
+                                                        "margin-left": "0px"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(
+                                                        "\n                                                    Jone Doe\n                                                    "
+                                                      ),
+                                                      _c("v-spacer")
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-56cc4d6e", module.exports)
+  }
+}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(71)
+/* template */
+var __vue_template__ = __webpack_require__(72)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\checkout.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23a82675", Component.options)
+  } else {
+    hotAPI.reload("data-v-23a82675", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      headers: [{
+        text: "Sản phẩm",
+        align: "left",
+        sortable: false,
+        value: "name"
+      }, { text: "Tổng", align: "right", value: "total" }],
+      checkOuts: [{
+        value: false,
+        name: "Bộ sách giáo khoa lớp 9",
+        total: "445.000 NVĐ"
+      }, {
+        value: false,
+        name: "Lịch sử Việt Nam",
+        total: "145.000 NVĐ"
+      }, {
+        value: false,
+        name: "Tin học văn phòng",
+        total: "205.000 NVĐ"
+      }, {
+        value: false,
+        name: "Tổng",
+        total: "785.000 NVĐ"
+      }],
+      valid: false,
+      name: "",
+      nameRules: [function (v) {
+        return !!v || "Name is required";
+      }, function (v) {
+        return v.length <= 10 || "Name must be less than 10 characters";
+      }],
+      email: "",
+      emailRules: [function (v) {
+        return !!v || "E-mail is required";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail must be valid"
+        );
+      }],
+      phone: "",
+      phoneRules: [function (v) {
+        return !!v || "Phone is required";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "Phone must be valid"
+        );
+      }],
+      address: "",
+      addressRules: [function (v) {
+        return !!v || "Address is required";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "Address must be valid"
+        );
+      }],
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        disabled: false
+      }, {
+        name: "Kiểm tra đơn hàng",
+        disabled: true
+      }],
+      namepage: "Kiểm tra đơn hàng"
+    };
+  }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { staticClass: "px-0" },
+        [
+          _c(
+            "v-card",
+            { attrs: { flat: "" } },
+            [
+              _c(
+                "v-container",
+                {
+                  staticClass: "px-0 ",
+                  staticStyle: { "min-height": "0" },
+                  attrs: { fluid: "", "grid-list-lg": "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "white--text px-0",
+                      attrs: { flat: "", color: "white darken-2" }
+                    },
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { fluid: "", "grid-list-lg": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", md6: "" } },
+                                [
+                                  _c(
+                                    "h1",
+                                    {
+                                      staticClass:
+                                        " headline grey--text text--darken-3 text-xs-center"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Vui lòng xác nhận lại thông tin của bạn"
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-form",
+                                    {
+                                      staticClass: "mt-5",
+                                      model: {
+                                        value: _vm.valid,
+                                        callback: function($$v) {
+                                          _vm.valid = $$v
+                                        },
+                                        expression: "valid"
+                                      }
+                                    },
+                                    [
+                                      _c("v-text-field", {
+                                        staticClass: "mb-4",
+                                        attrs: {
+                                          label: "Họ và tên",
+                                          rules: _vm.nameRules,
+                                          counter: 10,
+                                          required: "",
+                                          solo: ""
+                                        },
+                                        model: {
+                                          value: _vm.name,
+                                          callback: function($$v) {
+                                            _vm.name = $$v
+                                          },
+                                          expression: "name"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-text-field", {
+                                        staticClass: "mb-4",
+                                        attrs: {
+                                          label: " Địa chỉ E-mail",
+                                          rules: _vm.emailRules,
+                                          required: "",
+                                          solo: ""
+                                        },
+                                        model: {
+                                          value: _vm.email,
+                                          callback: function($$v) {
+                                            _vm.email = $$v
+                                          },
+                                          expression: "email"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-text-field", {
+                                        staticClass: "mb-4",
+                                        attrs: {
+                                          label: "Số Điện Thoại",
+                                          mask: "phone",
+                                          rules: _vm.phoneRules,
+                                          required: "",
+                                          solo: ""
+                                        },
+                                        model: {
+                                          value: _vm.phone,
+                                          callback: function($$v) {
+                                            _vm.phone = $$v
+                                          },
+                                          expression: "phone"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Địa Chỉ",
+                                          rules: _vm.addressRules,
+                                          required: "",
+                                          solo: ""
+                                        },
+                                        model: {
+                                          value: _vm.address,
+                                          callback: function($$v) {
+                                            _vm.address = $$v
+                                          },
+                                          expression: "address"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", md6: "" } },
+                                [
+                                  _c(
+                                    "h1",
+                                    {
+                                      staticClass:
+                                        "headline grey--text text--darken-3 text-xs-center "
+                                    },
+                                    [
+                                      _vm._v(
+                                        " Đơn hàng của bạn\n                                "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-data-table", {
+                                    staticClass: "elevation-1 mt-5",
+                                    attrs: {
+                                      headers: _vm.headers,
+                                      items: _vm.checkOuts,
+                                      "hide-actions": ""
+                                    },
+                                    scopedSlots: _vm._u([
+                                      {
+                                        key: "items",
+                                        fn: function(props) {
+                                          return [
+                                            _c("td", [
+                                              _vm._v(_vm._s(props.item.name))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "td",
+                                              { staticClass: "text-xs-right" },
+                                              [_vm._v(_vm._s(props.item.total))]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ])
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "mt-3 text-xs-center" },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "green accent-4",
+                                          attrs: { color: "white--text" }
+                                        },
+                                        [_vm._v(" Đặt hàng")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23a82675", module.exports)
   }
 }
 

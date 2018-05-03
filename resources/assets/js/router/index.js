@@ -4,7 +4,8 @@ Vue.use(VueRouter);
 //
 import Home from "../components/Home.vue";
 import Detail from "../components/pages/detail.vue";
-import Footer from "../components/pages/footer.vue";
+import About from "../components/pages/about.vue";
+import Checkout from "../components/pages/checkout.vue";
 import Listproducts from "../components/pages/listproducts.vue";
 import Card from "../components/pages/card.vue";
 //
@@ -21,9 +22,14 @@ const router = new VueRouter({
       component: Detail
     },
     {
-      path: "/footer",
-      name: "footer",
-      component: Footer
+      path: "/about",
+      name: "about",
+      component: About
+    },
+    {
+      path: "/check-out",
+      name: "checkout",
+      component: Checkout
     },
     {
       path: "/list-products",
