@@ -26,10 +26,10 @@ Route::group(['middleware' => ['auth:api', 'RedirectIfAuthenticated']], function
     Route::resource('/admin/users', 'UserController');
     Route::post('/admin/book/updatequantity/{id}', 'BookController@addBookQuantity');
     Route::post('/admin/banneduser/{id}', 'AdminController@bandUser');
+    Route::post('/admin/users/changeroleuser/{id}', 'UserController@changUserRole');
 });
 
-Route::group(['middleware'=> ['auth:api', 'ProtectedUserLogin']], function(){
-    Route::get('/logout', 'UserController@logout')->name('logout');
+Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
     Route::get('/your-orders', 'OrderController@showOrderUser');
     Route::get('/delete-your-order/{id}', 'OrderController@deleteOrderUser');
     Route::put('/edit-your-profile', 'UserController@update');
@@ -39,10 +39,11 @@ Route::group(['middleware'=> ['auth:api', 'ProtectedUserLogin']], function(){
     Route::post('/add-comment/{id}', 'PageController@postComment');
     Route::post('/add-favorite/{id}', 'PageController@postFavorite');
     Route::get('/get-favorite-books', 'PageController@getFavoriteBook');
-    Route::get('/delete-all-your-order', 'OrderController@deleteAllOrderUser');
 });
 
-Route::get('/books{slug}', 'PageController@getBookInfo');
+Route::get('/search/{name}', 'PageController@seemorefromSearch');
+Route::get('/bestsellersbook', 'PageController@bestSellers');
+Route::get('/books/{slug}', 'PageController@getBookInfo');
 Route::get('/featurebooks', 'PageController@featuredBooks');
 Route::get('/discountbooks', 'PageController@discountBooks');
 Route::get('/newbooks', 'PageController@newBooks');
@@ -52,4 +53,5 @@ Route::get('/authors/{slug}', 'PageController@getInfoAuthor');
 Route::get('/categories', 'PageController@getCategoies');
 Route::get('/categories/{slug}', 'PageController@getInfoCategory');
 Route::resource('/home', 'PageController');
+Route::get('/tags/{slug}', 'PageController@getBookwithTag');
 

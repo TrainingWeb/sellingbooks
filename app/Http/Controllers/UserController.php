@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\User;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use App\Http\Controllers\API\APIBaseController as APIBaseController;
 
 class UserController extends APIBaseController
 {
@@ -22,9 +22,10 @@ class UserController extends APIBaseController
         $email = $request->email;
         $password = $request->password;
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            return Auth::user()->createToken('test');
+            $api_token = Auth::user()->createToken('test')->accessToken;
+            return response()->json(['api_token' => $api_token]);
         } else {
-            return $this->sendError('Email or password is not correct !');
+            return $this->sendMessage('Email or password is not correct !');
         }
     }
 
@@ -42,7 +43,7 @@ class UserController extends APIBaseController
             'password.required' => 'Password can not null.',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $user = new User;
         $user->name = $input['name'];
@@ -50,29 +51,22 @@ class UserController extends APIBaseController
         $user->role = 0;
         $user->password = bcrypt($input['password']);
         $user->save();
-        return $this->sendResponse($user, 'User created successfully !');
+        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $api_token = Auth::user()->createToken('test1')->accessToken;
+        return response()->json(['api_token' => $api_token, 'role'=>0, 'message' => 'User created successfully !']);
     }
 
     public function update(Request $request)
     {
-        $user = User::where('id', $request->user()->id)->first();
-        $db_user = User::get();
-        if ($user->email !== $request->email) {
-            foreach ($db_user as $results) {
-                if ($request->email == $results->email) {
-                    return $this->sendError('Email already exits, please enter another email !');
-                }
-            }
-        }
+        $user = User::find($request->user()->id);
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'unique:users,email,' . $user->id,
             'password' => 'required',
             'age' => 'required',
             'address' => 'required',
-            'phone' => 'required',
-            'role' => 'required',
+            'phone' => 'required|unique:users,phone,' . $user->id,
         ], [
             'name.required' => 'Please enter name',
             'email.required' => 'Please enter email',
@@ -80,10 +74,9 @@ class UserController extends APIBaseController
             'age.required' => 'Please enter age',
             'address.required' => 'Please enter address',
             'phone.required' => 'Please enter phone',
-            'role.required' => 'Please enter role',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -97,23 +90,35 @@ class UserController extends APIBaseController
         $user->age = $request->age;
         $user->address = $request->address;
         $user->phone = $request->phone;
+        $user->save();
+        return $this->sendMessage('Updated ' . $user->name . ' successfully !');
+    }
+
+    public function changUserRole(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            return $this->sendErrorNotFound('User not found !');
+        }
         $user->role = $request->role;
         $user->save();
-        return $this->sendResponse($user, 'Updated successfully !');
-    }
-    public function logout()
-    {
-        Auth::logout();
-        return $this->sendMessage('You are just logout !');
+        return $this->sendMessage('Changed role of user ' . $user->name . ' successfully !');
     }
 
     public function show(Request $request)
     {
-        $user = User::where('id', $request->user()->id)->first();
+        $user = User::find($request->user()->id);
         if (is_null($user)) {
-            return $this->sendError('User not found !');
-        } else {
-            return $this->sendData($user);
+            return $this->sendErrorNotFound('User not found !');
         }
+        if ($user->role == 1) {
+            $role = 1;
+        } elseif ($user->role == 0) {
+            $role = 0;
+        } else {
+            $role = null;
+        }
+        return $this->sendData(['user' => $user, 'role' => $role]);
+
     }
 }

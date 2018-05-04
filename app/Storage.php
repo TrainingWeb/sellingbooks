@@ -12,6 +12,6 @@ class Storage extends Model
     
     public function book()
     {
-        return $this->belongsTo('App\Book' , 'id_book');
+        return $this->hasOne('App\Book' , 'id_book');
     }
 }

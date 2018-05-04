@@ -19,10 +19,10 @@ class ProtectedUserLogin extends APIBaseController
     {
         if ($request->user()) {
             if ($request->user()->role == 2) {
-                return $this->sendError('Your account has been banned ! Please contact us to active.');
+                return $this->sendErrorPermission('Your account has been banned ! Please contact us to active.');
             }
             return $next($request);
         }
-        return $this->sendError('You are must login before manage !');
+        return $this->sendErrorAuth('You are must login before manage.');
     }
 }

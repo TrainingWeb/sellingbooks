@@ -19,14 +19,14 @@ class RedirectIfAuthenticated extends APIBaseController
     {
         if ($request->user()) {
             if ($request->user()->role == 2) {
-                return $this->sendError('Your account has been banned ! Please contact us to active.');
+                return $this->sendErrorPermission('Your account has been banned ! Please contact us to active.');
             }
             if ($request->user()->role == 1) {
                 return $next($request);
             } elseif ($request->user()->role == 0) {
-                return $this->sendError('You are have no permission to do this.');
+                return $this->sendErrorPermission('You are have no permission to do this.');
             }
         }
-        return $this->sendError('You are must login before manage !');
+        return $this->sendErrorAuth('You are must login before manage !');
     }
 }

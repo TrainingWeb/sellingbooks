@@ -20,7 +20,7 @@ class Book extends Model
     }
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment', 'id_book');
     }
     public function tags()
     {
@@ -29,5 +29,13 @@ class Book extends Model
     public function users()
     {
         return $this->belongsToMany('App\User', 'favorite_books', 'id_book', 'id_user');
+    }
+    public function orderdetails()
+    {
+        return $this->hasMany('App\OrderDetail', 'id_book');
+    }
+    public function storage()
+    {
+        return $this->hasOne('App\Storage', 'id_book');
     }
 }
