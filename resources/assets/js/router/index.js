@@ -9,6 +9,7 @@ import Checkout from "../components/pages/checkout.vue";
 import Listproducts from "../components/pages/listproducts.vue";
 import Card from "../components/pages/card.vue";
 import Search from "../components/pages/search.vue";
+import Favorite from "../components/pages/favorite.vue";
 //
 const router = new VueRouter({
   routes: [
@@ -46,6 +47,11 @@ const router = new VueRouter({
       path: "/search",
       name: "search",
       component: Search
+    },
+    {
+      path: "/favorite",
+      name: "favorite",
+      component: Favorite
     }
   ]
 });

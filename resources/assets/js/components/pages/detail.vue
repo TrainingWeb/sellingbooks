@@ -30,13 +30,21 @@
                                                             </a>
                                                         </div>
                                                         <v-divider class="my-3"></v-divider>
-                                                        <div>
+                                                        <div class="mx-0">
+
                                                             <v-btn color="green accent-4 white--text ">
                                                                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm</v-btn>
                                                             <v-btn color="green accent-4 ">
                                                                 <i class="material-icons favorite white--text">favorite</i>
                                                             </v-btn>
                                                         </div>
+                                                        <v-layout row wrap class="mt-3">
+                                                            <div class="text-xs-center">
+                                                                <span class="green--text ml-2">Thể loại:</span>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">Sách Giáo Khoa</v-chip>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white">Sách Văn Học</v-chip>
+                                                            </div>
+                                                        </v-layout>
                                                     </div>
                                                 </v-flex>
                                             </v-layout>
@@ -56,7 +64,7 @@
                         </v-tab>
                         <v-tabs-items>
                             <v-tab-item id="tab-1">
-                                <v-card-text class="roboto">{{ text }}</v-card-text>
+                                <v-card-text class="roboto">{{ textDetail }}</v-card-text>
                             </v-tab-item>
                             <v-tab-item id="tab-2">
                                 <v-card>
@@ -71,7 +79,7 @@
                                                     <v-list-tile-sub-title class="subtitleComment" v-html="item.subtitle"></v-list-tile-sub-title>
                                                 </v-list-tile-content>
                                                 <v-list-tile-action>
-                                                    <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+                                                    <v-list-tile-action-text>{{ item.time }}</v-list-tile-action-text>
                                                     <!-- <v-icon color="grey lighten-1">star_border</v-icon> -->
                                                 </v-list-tile-action>
                                             </v-list-tile>
@@ -84,34 +92,8 @@
                     <v-container grid-list-xs class="mt-5">
                         <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
                         <v-layout row wrap>
-
-                            <v-flex xs12 md6 lg4 v-for="item in book" :key="`${item}`">
-
-                                <v-card class="border-remove">
-
-                                    <v-container fluid grid-list-lg class="pb-0">
-                                        <v-layout row wrap>
-                                            <v-flex xs5 class="pa-0">
-                                                <v-card-media :src="item.img" height="200px" max-width="130px"></v-card-media>
-                                            </v-flex>
-                                            <v-flex xs7 class="grey lighten-5 pl-3">
-                                                <div>
-                                                    <h3>{{item.name}}</h3>
-                                                    <p class="grey--text text--darken-1 mt-1">Tác giả: {{item.author}}</p>
-                                                    <span class="green--text text--accent-4 title"> {{item.price}}</span>
-                                                    <span class="grey--text text--darken-1 title ml-5">
-                                                        <del>{{item.sale}}</del>
-                                                    </span>
-                                                    <v-divider class="mt-2"></v-divider>
-                                                    <div class="mt-4">
-                                                        <v-icon class="mr-5  green--text text--accent-4">add_shopping_cart</v-icon>
-                                                        <v-icon class="ml-5">favorite</v-icon>
-                                                    </div>
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-container>
-                                </v-card>
+                            <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`khoa${index}`">
+                                <book-item :book="item"></book-item>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -124,7 +106,7 @@
 export default {
   data() {
     return {
-      text:
+      textDetail:
         "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ.",
       comments: [
         {
@@ -132,20 +114,20 @@ export default {
           title: "Võ Đăng Ánh",
           subtitle:
             "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
-          action: "02:56 PM"
+          time: "02:56 PM"
         },
         {
           avatar: "./img/author.jpg",
           title: "Tô Thị Tuyết Nga",
           subtitle:
             "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
-          action: "03:15 PM"
+          time: "03:15 PM"
         },
         {
           avatar: "./img/user.jpg",
           title: "Nguyễn Thị Thu Thủy",
           subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
-          action: "08:32 PM"
+          time: "08:32 PM"
         }
 
         // { divider: true, inset: true }

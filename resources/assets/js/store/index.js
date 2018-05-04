@@ -11,25 +11,29 @@ const store = new Vuex.Store({
         book: {},
         quantity: 0
       }
-    ]
+    ],
+    favorite: []
   },
   mutations: {
     SET_CART: (state, cart) => {
       // Vue.set(state, "cart", cart);
       state.cart = cart;
     },
+    SET_FAVORITE: (state, favorite) => {
+      state.favorite = favorite;
+    },
     increment(state, count) {
       state.count = count;
-    },
-    SET_VUEX(state, vueX) {
-      state.vueX = vueX;
-      localStorage.vueX = JSON.stringify(vueX);
     }
   },
   actions: {
     setCart({ commit }, val) {
       commit("SET_CART", val);
       localStorage.cart = JSON.stringify(val);
+    },
+    setFavorite({ commit }, val) {
+      commit("SET_FAVORITE", val);
+      localStorage.favorite = JSON.stringify(val);
     }
   }
 });

@@ -20,9 +20,10 @@ Vue.component("VBanner", VBanner);
 //
 
 // Save card
-if (localStorage.cart) store.commit("SET_CART", JSON.parse(localStorage.cart));
 
-//
+if (localStorage.cart) store.commit("SET_CART", JSON.parse(localStorage.cart));
+if (localStorage.favorite)
+  store.commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 Vue.use(Vuetify);
 
 const app = new Vue({
