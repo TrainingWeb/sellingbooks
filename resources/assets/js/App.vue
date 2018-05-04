@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required count min="8" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'password' : 'text'" :rules="[() => ('Mật khẩu là bắt buộc')]"></v-text-field>
+                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -55,13 +55,13 @@
                                     <v-list>
                                         <v-layout wrap>
                                             <v-flex xs12>
-                                                <v-text-field data-vv-name="name" :counter="15" label="Họ và Tên" required></v-text-field>
+                                                <v-text-field :counter="15" label="Họ và Tên" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required count min="8" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'password' : 'text'" :rules="[() => ('Mật khẩu là bắt buộc')]"></v-text-field>
+                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -86,13 +86,13 @@
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
                                 <v-badge color="red lighten-1" class="p-0">
-                                    <span slot="badge" class="caption">6</span>
+                                    <span slot="badge" class="caption"></span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>
-                            <v-btn flat class="caption grey--text  text--darken-1 p-0">
+                            <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/favorite">
                                 <v-badge color="indigo" class="p-0">
-                                    <span slot="badge" class="caption">0</span>
+                                    <span slot="badge" class="caption">{{$store.state.favorite.length}}</span>
                                     <v-icon color="grey">favorite</v-icon>
                                 </v-badge>
                             </v-btn>
@@ -109,7 +109,7 @@
                                 <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
                                 <v-card>
                                     <v-layout row wrap>
-                                        <v-flex xs4 v-for="item in 3" :key="item">
+                                        <v-flex xs4 v-for="(index ,item) in 3" :key="index">
                                             <v-list>
                                                 <v-list-tile avatar v-for="subtiem in 6" :key="item +'-'+ subtiem">
                                                     <v-list-tile-content>
@@ -143,11 +143,12 @@
         <!--  -->
         <v-footer height="auto">
             <v-card flat tile class="flex">
-                <v-container class="px-0">
+                <v-container class="justify-center">
                     <v-card-text class="white">
                         <v-layout row wrap>
-                            <v-flex xs12 md3 layout column class="">
+                            <v-flex xs12 md3>
                                 <img class="mb-3" width="180" src="storage/images/logo_green.png">
+
                                 <div class="mb-3" color="grey--text text--darken-2">
                                     <v-icon size="18px" class="mr-1">fas fa-home</v-icon>
                                     179 Võ Duy Ninh,TP ĐN
@@ -168,13 +169,8 @@
                             <v-flex v-for="(col, i) in rows" :key="i" xs12 md3>
                                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
                                 <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="i" v-text="child"></div>
-                            </v-flex>
-                            <v-flex xs12 md3 layout column class="">
-                                <div class="body-2 my-3">TÀI KHOẢN CỦA TÔI</div>
-                                <div class="mb-3  ">Chi tiết tài khoản</div>
-                                <div class="mb-3">Lịch sử mua hàng</div>
-                                <v-card-title class="">
-                                    <v-btn v-for=" icon in icons " :key="icon " icon dark class="mx-1">
+                                <v-card-title v-if="col.icons">
+                                    <v-btn v-for=" icon in col.icons " :key="icon " icon dark class="mx-1">
                                         <v-icon color="green" size="24px ">{{ icon }}</v-icon>
                                     </v-btn>
                                 </v-card-title>
@@ -195,13 +191,7 @@
 export default {
   data: () => ({
     drawer: null,
-    icons: [
-      "fab fa-facebook",
-      "fab fa-twitter",
-      "fab fa-google-plus",
-      "fab fa-linkedin",
-      "fab fa-instagram"
-    ],
+    icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
     rows: [
       {
         title: "DỊCH VỤ",
@@ -220,8 +210,20 @@ export default {
           "Phương thức vận chuyển",
           "Phương thức thanh toán"
         ]
+      },
+      {
+        title: "TÀI KHOẢN CỦA TÔI",
+        children: ["Chi tiết tài khoản", "Lịch sử mua hàng"],
+        icons: [
+          "fab fa-facebook",
+          "fab fa-twitter",
+          "fab fa-google-plus",
+          "fab fa-linkedin",
+          "fab fa-instagram"
+        ]
       }
     ],
+
     // popover
     register: false,
     login: false,

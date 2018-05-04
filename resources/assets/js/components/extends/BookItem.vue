@@ -18,10 +18,15 @@
                             <del>{{book.sale}}</del>
                         </span>
                         <v-divider class="mt-2"></v-divider>
-                        <div class="mt-4">
-                            <v-icon class="mr-5" color="red">add_shopping_cart</v-icon>
-                            <v-icon class="ml-5">favorite</v-icon>
-                        </div>
+                        <v-card-actions>
+                            <v-btn flat icon color="red" @click="addCart">
+                                <v-icon>add_shopping_cart</v-icon>
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn flat icon color="grey" @click="favorite">
+                                <v-icon>favorite</v-icon>
+                            </v-btn>
+                        </v-card-actions>
                     </div>
                 </v-flex>
             </v-layout>
@@ -31,7 +36,35 @@
 
 <script>
 export default {
-  props: ["book"]
+  props: ["book"],
+  data() {
+    return {};
+  },
+  watch: {},
+  methods: {
+    addCart() {
+      for (let index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].id == this.book.id) {
+          alert(
+            "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+          );
+        }
+      }
+      let cart = this.$store.state.cart;
+      cart.push(this.book);
+      this.$store.dispatch("setCart", cart);
+    },
+    favorite() {
+      for (let index = 0; index < this.$store.state.favorite.length; index++) {
+        if (this.$store.state.favorite[index].id == this.book.id) {
+          alert("Sản phẩm này đã được bạn yêu thích");
+        }
+      }
+      let favorite = this.$store.state.favorite;
+      favorite.push(this.book);
+      this.$store.dispatch("setFavorite", favorite);
+    }
+  }
 };
 </script>
 

@@ -106,85 +106,95 @@ export default {
       ],
       book: [
         {
+          id: 1,
           img:
             "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
           name: "Cô gái mở đường",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         },
         {
+          id: 2,
           img:
             "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
           name: "Dế mèn phiêu lưu kí",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         },
         {
+          id: 3,
           img:
             "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
           name: "Truyện kiều",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         },
         {
+          id: 4,
           img:
             "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
           name: "Chuyện chưa kể",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         },
         {
+          id: 5,
           img:
             "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
           name: "Cô bé bán diêm",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         },
         {
+          id: 6,
           img:
             "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
           name: "Mèo con đi học",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 1500,
           author: "Nguyễn Du"
         }
       ],
       bookSale: [
         {
+          id: 7,
           img:
             "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
           name: "Truyện kiều",
-          price: "120.000",
-          sale: "150.000",
+          price: 686,
+          sale: 46,
           author: "Nguyễn Du"
         },
         {
+          id: 8,
           img:
             "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
           name: "Chuyện chưa kể",
-          price: "120.000",
-          sale: "150.000",
+          price: 120000,
+          sale: 668,
           author: "Nguyễn Du"
         },
         {
+          id: 9,
           img:
             "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
           name: "Cô bé bán diêm",
-          price: "120.000",
-          sale: "150.000",
+          price: 12000,
+          sale: 15005,
           author: "Nguyễn Du"
         },
         {
+          id: 10,
           img:
             "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
           name: "Mèo con đi học",
-          price: "120.000",
-          sale: "150.000",
+          price: 120000,
+          sale: 150000,
           author: "Nguyễn Du"
         }
       ]
