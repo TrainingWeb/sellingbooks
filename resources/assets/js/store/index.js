@@ -6,7 +6,12 @@ const store = new Vuex.Store({
   state: {
     count: 0,
     vueX: [],
-    cart: []
+    cart: [
+      {
+        book: {},
+        quantity: 0
+      }
+    ]
   },
   mutations: {
     SET_CART: (state, cart) => {

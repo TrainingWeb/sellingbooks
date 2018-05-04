@@ -35012,6 +35012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35262,7 +35263,7 @@ var render = function() {
                                     staticClass: "elevation-1 mt-5",
                                     attrs: {
                                       headers: _vm.headers,
-                                      items: _vm.checkOuts,
+                                      items: _vm.$store.state.cart,
                                       "hide-actions": ""
                                     },
                                     scopedSlots: _vm._u([
@@ -35271,13 +35272,26 @@ var render = function() {
                                         fn: function(props) {
                                           return [
                                             _c("td", [
-                                              _vm._v(_vm._s(props.item.name))
+                                              _c("strong", [
+                                                _vm._v(
+                                                  _vm._s(props.item.book.name) +
+                                                    " x" +
+                                                    _vm._s(props.item.quantity)
+                                                )
+                                              ])
                                             ]),
                                             _vm._v(" "),
                                             _c(
                                               "td",
                                               { staticClass: "text-xs-right" },
-                                              [_vm._v(_vm._s(props.item.total))]
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    props.item.book.price *
+                                                      props.item.quantity
+                                                  ) + " "
+                                                )
+                                              ]
                                             )
                                           ]
                                         }
@@ -35861,15 +35875,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sortable: false
       }, { text: "Tên sách", sortable: false }, { text: "Giá tiền", sortable: false }, { text: "Số lượng", sortable: false }, { text: "Tồng tiền", sortable: false }, { sortable: false }],
       qty: 0,
-      sub: 0
+      sub: {}
     };
   },
   methods: {
     total: function total() {
-      console.log(this.$store.state.cart);
-      return this.$store.state.cart.reduce(function (num, item) {
-        return item.price + num;
-      }, 0);
+      for (var index = 0; index < this.$store.state.cart.length; index++) {
+        this.sub = this.$store.state.cart[index].book.price * this.$store.state.cart[index].quantity;
+      }
+      console.log(this.sub);
+      return this.sub;
+    },
+    upadateQty: function upadateQty(id) {
+      var cart = this.$store.state.cart;
+      for (var index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].book.id == id) {
+          Object.assign(id, cart);
+          this.$store.dispatch("setCart", cart);
+        }
+      }
     },
     delCart: function delCart(item) {
       var cart = this.$store.state.cart;
@@ -35926,7 +35950,7 @@ var render = function() {
                       _c("td", { staticClass: "py-2" }, [
                         _c("img", {
                           attrs: {
-                            src: props.item.img,
+                            src: props.item.book.img,
                             alt: "",
                             width: "40px",
                             height: "60px"
@@ -35934,9 +35958,9 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(props.item.name))]),
+                      _c("td", [_vm._v(_vm._s(props.item.book.name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(props.item.price))]),
+                      _c("td", [_vm._v(_vm._s(props.item.book.price))]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -35947,13 +35971,19 @@ var render = function() {
                             [
                               _c(
                                 "v-flex",
-                                { attrs: { xs12: "", md2: "" } },
+                                { attrs: { xs12: "", md3: "" } },
                                 [
                                   _c("v-text-field", {
                                     attrs: {
                                       type: "number",
+                                      flat: "",
                                       solo: "",
-                                      value: "1"
+                                      value: props.item.quantity
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        _vm.upadateQty(props.item.book.id)
+                                      }
                                     }
                                   })
                                 ],
@@ -35966,7 +35996,11 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(props.item.subtotal))]),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(props.item.quantity * props.item.book.price)
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -36668,15 +36702,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36749,7 +36774,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                k48/Võ Duy Ninh, Sơn Trà\n                            "
+                                "\n                            k48/Võ Duy Ninh, Sơn Trà\n                        "
                               )
                             ]
                           ),
@@ -36770,7 +36795,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                0123 456 789\n                            "
+                                "\n                            0123 456 789\n                        "
                               )
                             ]
                           )
@@ -36939,7 +36964,6 @@ var render = function() {
                     "v-toolbar",
                     { staticClass: "green accent-4", attrs: { flat: "" } },
                     [
-                      _vm._v("\n<<<<<<< HEAD\n                        "),
                       _c(
                         "v-toolbar-items",
                         [
@@ -36947,7 +36971,7 @@ var render = function() {
                             "v-btn",
                             {
                               staticClass: "white--text ma-0",
-                              attrs: { flat: "" }
+                              attrs: { flat: "", to: "/" }
                             },
                             [_vm._v("Trang chủ")]
                           ),
@@ -37043,45 +37067,7 @@ var render = function() {
                         ],
                         1
                       ),
-                      _vm._v("\n=======\n                        "),
-                      _c(
-                        "v-toolbar-title",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white--text ma-0",
-                              attrs: { flat: "", to: "/" }
-                            },
-                            [_vm._v("Trang chủ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            { staticClass: "white--text", attrs: { flat: "" } },
-                            [_vm._v("Thể loại")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            { staticClass: "white--text", attrs: { flat: "" } },
-                            [_vm._v("Tác giả")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white--text",
-                              attrs: { flat: "", to: "/about" }
-                            },
-                            [_vm._v("Giới thiệu")]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(
-                        "\n>>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5\n                        "
-                      ),
+                      _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
@@ -37168,7 +37154,7 @@ var render = function() {
                                     [_vm._v("fas fa-home")]
                                   ),
                                   _vm._v(
-                                    "\n                                    179 Võ Duy Ninh,TP ĐN\n                                "
+                                    "\n                                179 Võ Duy Ninh,TP ĐN\n                            "
                                   )
                                 ],
                                 1
@@ -37187,7 +37173,7 @@ var render = function() {
                                     [_vm._v("fas fa-envelope")]
                                   ),
                                   _vm._v(
-                                    "\n                                    bookstore@gmail.com\n                                "
+                                    "\n                                bookstore@gmail.com\n                            "
                                   )
                                 ],
                                 1
@@ -37206,7 +37192,7 @@ var render = function() {
                                     [_vm._v("fas fa-phone")]
                                   ),
                                   _vm._v(
-                                    "\n                                    + 01 234 567 88\n                                "
+                                    "\n                                + 01 234 567 88\n                            "
                                   )
                                 ],
                                 1
@@ -37225,7 +37211,7 @@ var render = function() {
                                     [_vm._v("fas fa-print")]
                                   ),
                                   _vm._v(
-                                    "\n                                    + 01 234 567 89\n                                "
+                                    "\n                                + 01 234 567 89\n                            "
                                   )
                                 ],
                                 1
@@ -37323,11 +37309,7 @@ var render = function() {
               _c(
                 "v-card-actions",
                 { staticClass: "grey lighten-3 justify-center " },
-                [
-                  _vm._v(
-                    "\n                    ©2018 — Demo Vue Js\n                "
-                  )
-                ]
+                [_vm._v("\n                ©2018 — Demo Vue Js\n            ")]
               )
             ],
             1
@@ -37365,7 +37347,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
     count: 0,
     vueX: [],
-    cart: []
+    cart: [{
+      book: {},
+      quantity: 0
+    }]
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -38478,12 +38463,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     addCart: function addCart() {
       for (var index = 0; index < this.$store.state.cart.length; index++) {
-        if (this.$store.state.cart[index].id == this.book.id) {
+        if (this.$store.state.cart[index].book.id == this.book.id) {
           alert("sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
         }
       }
+      var itemBook = {
+        book: this.book,
+        quantity: 2
+      };
       var cart = this.$store.state.cart;
-      cart.push(this.book);
+      cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     }
   }

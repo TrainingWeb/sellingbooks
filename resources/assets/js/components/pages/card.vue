@@ -8,18 +8,18 @@
                 <template slot="items" slot-scope="props">
                     <tr class="py-1">
                         <td class="py-2">
-                            <img :src="props.item.img" alt="" width="40px" height="60px">
+                            <img :src="props.item.book.img" alt="" width="40px" height="60px">
                         </td>
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.price }}</td>
+                        <td>{{ props.item.book.name }}</td>
+                        <td>{{ props.item.book.price }}</td>
                         <td>
                             <v-layout row wrap>
-                                <v-flex xs12 md2>
-                                    <v-text-field type="number" solo value="1"></v-text-field>
+                                <v-flex xs12 md3>
+                                    <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id)"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </td>
-                        <td>{{ props.item.subtotal }}</td>
+                        <td>{{ props.item.quantity * props.item.book.price}}</td>
                         <td>
                             <v-btn flat icon color="red" @click="delCart(props.item)">
                                 <v-icon>clear</v-icon>
@@ -78,12 +78,26 @@ export default {
       { sortable: false }
     ],
     qty: 0,
-    sub: 0
+    sub: {}
   }),
   methods: {
     total() {
-      console.log(this.$store.state.cart);
-      return this.$store.state.cart.reduce((num, item) => item.price + num, 0);
+      for (let index = 0; index < this.$store.state.cart.length; index++) {
+        this.sub =
+          this.$store.state.cart[index].book.price *
+          this.$store.state.cart[index].quantity;
+      }
+      console.log(this.sub);
+      return this.sub;
+    },
+    upadateQty(id) {
+      let cart = this.$store.state.cart;
+      for (let index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].book.id == id) {
+          Object.assign(id, cart);
+          this.$store.dispatch("setCart", cart);
+        }
+      }
     },
     delCart(item) {
       let cart = this.$store.state.cart;
