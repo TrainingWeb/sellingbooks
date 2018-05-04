@@ -15,10 +15,64 @@
                             </span>
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-toolbar-items>
-                            <v-btn flat class="caption grey--text  text--darken-1">Đăng Nhập</v-btn>
-                            <v-btn flat class="caption grey--text  text--darken-1">Đăng Ký</v-btn>
-                        </v-toolbar-items>
+                        <!-- Đăng nhập -->
+                        <v-menu v-model="login" bottom offset-y :max-width="300" :close-on-content-click="false">
+                            <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
+                            <v-card flat>
+                                <v-list class="green accent-4 white--text text-xs-center">
+                                    <span>ĐĂNG NHẬP</span>
+                                </v-list>
+                                <v-divider></v-divider>
+                                <v-container>
+                                    <v-list>
+                                        <v-layout wrap>
+                                            <v-flex xs12>
+                                                <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12>
+                                                <v-text-field label="Mật khẩu" type="password" required count min="8" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'password' : 'text'" :rules="[() => ('Mật khẩu là bắt buộc')]"></v-text-field>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-list>
+                                </v-container>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn flat @click="login = false">Thoát</v-btn>
+                                    <v-btn color="primary" flat @click="login = false">Đăng nhập</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-menu>
+                        <!-- Hết Đăng nhập -->
+                        <!-- Đăng Ký -->
+                        <v-menu v-model="register" bottom offset-y :max-width="300" :close-on-content-click="false">
+                            <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
+                            <v-card flat>
+                                <v-list class="green accent-4 white--text text-xs-center">
+                                    <span>ĐĂNG KÝ</span>
+                                </v-list>
+                                <v-divider></v-divider>
+                                <v-container>
+                                    <v-list>
+                                        <v-layout wrap>
+                                            <v-flex xs12>
+                                                <v-text-field data-vv-name="name" :counter="15" label="Họ và Tên" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12>
+                                                <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12>
+                                                <v-text-field label="Mật khẩu" type="password" required count min="8" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'password' : 'text'" :rules="[() => ('Mật khẩu là bắt buộc')]"></v-text-field>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-list>
+                                </v-container>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn flat @click="register = false">Thoát</v-btn>
+                                    <v-btn color="primary" flat @click="register = false">Đăng ký</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-menu>
                     </v-toolbar>
                 </v-container>
             </v-flex>
@@ -49,7 +103,6 @@
             <v-flex xs12 green accent-4>
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
-<<<<<<< HEAD
                         <v-toolbar-items>
                             <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
                             <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
@@ -71,14 +124,6 @@
                             <v-btn flat class="white--text">Tác giả</v-btn>
                             <v-btn flat class="white--text">Giới thiệu</v-btn>
                         </v-toolbar-items>
-=======
-                        <v-toolbar-title>
-                            <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
-                            <v-btn flat class="white--text">Thể loại</v-btn>
-                            <v-btn flat class="white--text">Tác giả</v-btn>
-                            <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
-                        </v-toolbar-title>
->>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
                             <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>
@@ -176,7 +221,27 @@ export default {
           "Phương thức thanh toán"
         ]
       }
-    ]
+    ],
+    // popover
+    register: false,
+    login: false,
+    message: false,
+    hints: true,
+    //    popover
+    e1: false,
+    e2: false,
+    e3: false,
+    e4: false,
+    password: "Password",
+    emailRegister: [
+      v => !!v || "E-mail là bắt buộc",
+      v =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail Phải hợp lệ"
+    ],
+    name: {
+      required: () => "Tên là bắt buộc"
+    }
   }),
   props: {
     source: String

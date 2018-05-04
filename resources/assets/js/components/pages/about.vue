@@ -3,7 +3,7 @@
         <v-layout xs12>
             <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
         </v-layout>
-        <v-container class="px-0">
+        <v-container class="px-0 mt-4">
             <v-card flat>
                 <v-container fluid style="min-height:0;" grid-list-lg class="px-0 ">
                     <v-card flat color="white darken-2" class="white--text px-0">

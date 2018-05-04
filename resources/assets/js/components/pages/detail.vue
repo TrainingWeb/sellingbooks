@@ -30,13 +30,20 @@
                                                             </a>
                                                         </div>
                                                         <v-divider class="my-3"></v-divider>
-                                                        <div>
+                                                        <div class="mx-0">
                                                             <v-btn color="green accent-4 white--text ">
                                                                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm</v-btn>
                                                             <v-btn color="green accent-4 ">
                                                                 <i class="material-icons favorite white--text">favorite</i>
                                                             </v-btn>
                                                         </div>
+                                                        <v-layout row wrap class="mt-3">
+                                                            <div class="text-xs-center">
+                                                                <span class="green--text ml-2">Thể loại:</span>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">Sách Giáo Khoa</v-chip>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white">Sách Văn Học</v-chip>
+                                                            </div>
+                                                        </v-layout>
                                                     </div>
                                                 </v-flex>
                                             </v-layout>

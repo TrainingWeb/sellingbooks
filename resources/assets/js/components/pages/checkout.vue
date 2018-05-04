@@ -50,7 +50,13 @@ export default {
         sortable: false,
         value: "name"
       },
-      { text: "Tổng", align: "right", value: "total" }
+      {
+        text: "Tổng",
+        align: "right",
+        value: "total",
+        sortable: false,
+        
+      }
     ],
     checkOuts: [
       {
