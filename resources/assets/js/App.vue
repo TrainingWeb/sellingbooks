@@ -49,6 +49,7 @@
             <v-flex xs12 green accent-4>
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
+<<<<<<< HEAD
                         <v-toolbar-items>
                             <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
                             <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
@@ -70,6 +71,14 @@
                             <v-btn flat class="white--text">Tác giả</v-btn>
                             <v-btn flat class="white--text">Giới thiệu</v-btn>
                         </v-toolbar-items>
+=======
+                        <v-toolbar-title>
+                            <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
+                            <v-btn flat class="white--text">Thể loại</v-btn>
+                            <v-btn flat class="white--text">Tác giả</v-btn>
+                            <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
+                        </v-toolbar-title>
+>>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
                             <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>

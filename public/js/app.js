@@ -30173,10 +30173,13 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_pages_listproducts_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
 
 
 
@@ -30209,6 +30212,10 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     path: "/card",
     name: "card",
     component: __WEBPACK_IMPORTED_MODULE_7__components_pages_card_vue___default.a
+  }, {
+    path: "/search",
+    name: "search",
+    component: __WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue___default.a
   }]
 });
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -33715,9 +33722,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       breadcrumbs: [{
         name: "Trang Chủ",
+        url: "/",
         disabled: false
       }, {
         name: "Chi tiết sản phẩm",
+        url: "/list-products",
         disabled: true
       }],
       namepage: "Chi tiết sản phẩm"
@@ -34497,9 +34506,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       breadcrumbs: [{
         name: "Trang Chủ",
+        url: "/",
         disabled: false
       }, {
-        name: "Giới thiệu",
+        name: "Giới Thiệu",
+        url: "/about",
         disabled: true
       }],
       namepage: "Giới Thiệu"
@@ -35041,9 +35052,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       breadcrumbs: [{
         name: "Trang Chủ",
+        url: "/",
         disabled: false
       }, {
         name: "Kiểm tra đơn hàng",
+        url: "/about",
         disabled: true
       }],
       namepage: "Kiểm tra đơn hàng"
@@ -35916,6 +35929,7 @@ var render = function() {
                                 [
                                   _c("v-text-field", {
                                     attrs: {
+                                      type: "number",
                                       name: "input-3",
                                       value: "1",
                                       solo: ""
@@ -35981,7 +35995,7 @@ var render = function() {
                 [
                   _c(
                     "v-btn",
-                    { attrs: { dark: "", color: "green accent-4" } },
+                    { attrs: { dark: "", color: "green accent-4", to: "/" } },
                     [_vm._v(" Tiếp tục mua hàng")]
                   )
                 ],
@@ -35994,7 +36008,13 @@ var render = function() {
                 [
                   _c(
                     "v-btn",
-                    { attrs: { dark: "", color: "green accent-4" } },
+                    {
+                      attrs: {
+                        dark: "",
+                        color: "green accent-4",
+                        to: "/check-out"
+                      }
+                    },
                     [
                       _vm._v(
                         "\n                    thanh toán\n                "
@@ -36260,6 +36280,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36332,7 +36361,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            k48/Võ Duy Ninh, Sơn Trà\n                        "
+                                "\n                                k48/Võ Duy Ninh, Sơn Trà\n                            "
                               )
                             ]
                           ),
@@ -36353,7 +36382,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            0123 456 789\n                        "
+                                "\n                                0123 456 789\n                            "
                               )
                             ]
                           )
@@ -36518,6 +36547,7 @@ var render = function() {
                     "v-toolbar",
                     { staticClass: "green accent-4", attrs: { flat: "" } },
                     [
+                      _vm._v("\n<<<<<<< HEAD\n                        "),
                       _c(
                         "v-toolbar-items",
                         [
@@ -36621,7 +36651,45 @@ var render = function() {
                         ],
                         1
                       ),
-                      _vm._v(" "),
+                      _vm._v("\n=======\n                        "),
+                      _c(
+                        "v-toolbar-title",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "white--text ma-0",
+                              attrs: { flat: "", to: "/" }
+                            },
+                            [_vm._v("Trang chủ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "white--text", attrs: { flat: "" } },
+                            [_vm._v("Thể loại")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "white--text", attrs: { flat: "" } },
+                            [_vm._v("Tác giả")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "white--text",
+                              attrs: { flat: "", to: "/about" }
+                            },
+                            [_vm._v("Giới thiệu")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(
+                        "\n>>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5\n                        "
+                      ),
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
@@ -36708,7 +36776,7 @@ var render = function() {
                                     [_vm._v("fas fa-home")]
                                   ),
                                   _vm._v(
-                                    "\n                                179 Võ Duy Ninh,TP ĐN\n                            "
+                                    "\n                                    179 Võ Duy Ninh,TP ĐN\n                                "
                                   )
                                 ],
                                 1
@@ -36727,7 +36795,7 @@ var render = function() {
                                     [_vm._v("fas fa-envelope")]
                                   ),
                                   _vm._v(
-                                    "\n                                bookstore@gmail.com\n                            "
+                                    "\n                                    bookstore@gmail.com\n                                "
                                   )
                                 ],
                                 1
@@ -36746,7 +36814,7 @@ var render = function() {
                                     [_vm._v("fas fa-phone")]
                                   ),
                                   _vm._v(
-                                    "\n                                + 01 234 567 88\n                            "
+                                    "\n                                    + 01 234 567 88\n                                "
                                   )
                                 ],
                                 1
@@ -36765,7 +36833,7 @@ var render = function() {
                                     [_vm._v("fas fa-print")]
                                   ),
                                   _vm._v(
-                                    "\n                                + 01 234 567 89\n                            "
+                                    "\n                                    + 01 234 567 89\n                                "
                                   )
                                 ],
                                 1
@@ -36863,7 +36931,11 @@ var render = function() {
               _c(
                 "v-card-actions",
                 { staticClass: "grey lighten-3 justify-center " },
-                [_vm._v("\n                ©2018 — Demo Vue Js\n            ")]
+                [
+                  _vm._v(
+                    "\n                    ©2018 — Demo Vue Js\n                "
+                  )
+                ]
               )
             ],
             1
@@ -37345,6 +37417,365 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 62 */,
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(64)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\search.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05bfb797", Component.options)
+  } else {
+    hotAPI.reload("data-v-05bfb797", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("0f99f3f2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05bfb797\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./search.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05bfb797\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./search.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        url: "/",
+        disabled: false
+      }, {
+        name: "Danh sách sản phẩm",
+        url: "/list-products",
+        disabled: true
+      }],
+      e1: null,
+      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      books: [{
+        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
+        name: "Dế mèn phiêu lưu kí",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+        name: "Truyện kiều",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
+        name: "Chuyện chưa kể",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
+        name: "Cô bé bán diêm",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }],
+      namepage: "Kết quả tìm kiếm: ",
+
+      page: 1
+    };
+  }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.filter,
+                      label: "--Chọn--",
+                      "single-line": ""
+                    },
+                    model: {
+                      value: _vm.e1,
+                      callback: function($$v) {
+                        _vm.e1 = $$v
+                      },
+                      expression: "e1"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            _vm._l(_vm.books, function(item, index) {
+              return _c(
+                "v-flex",
+                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
+                [_c("book-item", { attrs: { book: item } })],
+                1
+              )
+            })
+          ),
+          _vm._v(" "),
+          [
+            _c(
+              "div",
+              { staticClass: "text-xs-center mt-5" },
+              [
+                _c("v-pagination", {
+                  attrs: { length: 3 },
+                  model: {
+                    value: _vm.page,
+                    callback: function($$v) {
+                      _vm.page = $$v
+                    },
+                    expression: "page"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-05bfb797", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
