@@ -21,12 +21,13 @@
                                 <v-flex xs12 md6>
                                     <h1 class="headline grey--text text--darken-3 text-xs-center "> Đơn hàng của bạn
                                     </h1>
-                                    <v-data-table :headers="headers" :items="checkOuts" hide-actions class="elevation-1 mt-5">
+                                    <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="elevation-1 mt-5">
                                         <template slot="items" slot-scope="props">
-                                            <td>{{ props.item.name }}</td>
-                                            <td class="text-xs-right">{{ props.item.total }}</td>
+                                            <td>
+                                                <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
+                                            </td>
+                                            <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                                         </template>
-
                                     </v-data-table>
                                     <div class="mt-3 text-xs-center">
                                         <v-btn class="green accent-4" color="white--text"> Đặt hàng</v-btn>

@@ -104,7 +104,7 @@
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
                         <v-toolbar-items>
-                            <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
+                            <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
                             <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
                                 <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
                                 <v-card>

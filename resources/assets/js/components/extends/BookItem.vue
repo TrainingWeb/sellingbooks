@@ -44,14 +44,18 @@ export default {
   methods: {
     addCart() {
       for (let index = 0; index < this.$store.state.cart.length; index++) {
-        if (this.$store.state.cart[index].id == this.book.id) {
+        if (this.$store.state.cart[index].book.id == this.book.id) {
           alert(
             "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
           );
         }
       }
+      let itemBook = {
+        book: this.book,
+        quantity: 2
+      };
       let cart = this.$store.state.cart;
-      cart.push(this.book);
+      cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
     favorite() {
