@@ -109,10 +109,12 @@ export default {
       breadcrumbs: [
         {
           name: "Trang Chủ",
+          url: "/",
           disabled: false
         },
         {
-          name: "Giới thiệu",
+          name: "Giới Thiệu",
+          url: "/about",
           disabled: true
         }
       ],

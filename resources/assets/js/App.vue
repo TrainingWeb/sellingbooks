@@ -50,10 +50,10 @@
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
                         <v-toolbar-title>
-                            <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
+                            <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
                             <v-btn flat class="white--text">Thể loại</v-btn>
                             <v-btn flat class="white--text">Tác giả</v-btn>
-                            <v-btn flat class="white--text">Giới thiệu</v-btn>
+                            <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">

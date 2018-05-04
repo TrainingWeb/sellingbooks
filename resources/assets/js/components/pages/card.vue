@@ -15,7 +15,7 @@
                         <td>
                             <v-layout row wrap>
                                 <v-flex xs12 md2>
-                                    <v-text-field name="input-3" value="1" solo></v-text-field>
+                                    <v-text-field type="number" name="input-3" value="1" solo></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </td>
@@ -38,10 +38,10 @@
             </v-layout>
             <v-layout row wrap class="pt-3 border-top">
                 <v-flex xs6>
-                    <v-btn dark color="green accent-4"> Tiếp tục mua hàng</v-btn>
+                    <v-btn dark color="green accent-4" to="/"> Tiếp tục mua hàng</v-btn>
                 </v-flex>
                 <v-flex xs6 text-xs-right>
-                    <v-btn dark color="green accent-4">
+                    <v-btn dark color="green accent-4" to="/check-out">
                         thanh toán
                     </v-btn>
                 </v-flex>

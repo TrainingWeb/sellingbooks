@@ -104,10 +104,12 @@ export default {
     breadcrumbs: [
       {
         name: "Trang Chủ",
+        url: "/",
         disabled: false
       },
       {
         name: "Kiểm tra đơn hàng",
+        url: "/about",
         disabled: true
       }
     ],

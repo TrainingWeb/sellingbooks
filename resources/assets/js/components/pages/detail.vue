@@ -179,10 +179,12 @@ export default {
       breadcrumbs: [
         {
           name: "Trang Chủ",
+          url: "/",
           disabled: false
         },
         {
           name: "Chi tiết sản phẩm",
+          url: "/list-products",
           disabled: true
         }
       ],
