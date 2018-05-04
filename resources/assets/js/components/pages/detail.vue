@@ -31,7 +31,6 @@
                                                         </div>
                                                         <v-divider class="my-3"></v-divider>
                                                         <div class="mx-0">
-
                                                             <v-btn color="green accent-4 white--text ">
                                                                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm</v-btn>
                                                             <v-btn color="green accent-4 ">

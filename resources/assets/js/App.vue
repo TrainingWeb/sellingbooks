@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field label="Mật khẩu" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -61,7 +61,7 @@
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field label="Mật khẩu" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
