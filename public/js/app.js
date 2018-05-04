@@ -34608,44 +34608,51 @@ var render = function() {
                                 1
                               ),
                               _vm._v(" "),
-                              _c("v-flex", { attrs: { xs12: "", md6: "" } }, [
-                                _c("div", [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "headline grey--text text--darken-3"
-                                    },
-                                    [_vm._v("GIỚI THIỆU")]
-                                  ),
+                              _c(
+                                "v-flex",
+                                {
+                                  staticClass: "pl-5",
+                                  attrs: { xs12: "", md6: "" }
+                                },
+                                [
+                                  _c("div", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "headline grey--text text--darken-3 mb-4"
+                                      },
+                                      [_vm._v("GIỚI THIỆU")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "grey--text text--accent-4 body-2"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường.Ngoài hoạt động chính là tiệm sách lớn, nhà sách Khai Trí còn sưu tầm nhiều sách báo ngoại ngữ cũng như các bản thảo bằng tiếng Việt. "
+                                        )
+                                      ]
+                                    )
+                                  ]),
                                   _vm._v(" "),
                                   _c(
                                     "div",
                                     {
                                       staticClass:
-                                        "grey--text text--accent-4 body-2"
+                                        "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
                                     },
                                     [
                                       _vm._v(
-                                        "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường.Ngoài hoạt động chính là tiệm sách lớn, nhà sách Khai Trí còn sưu tầm nhiều sách báo ngoại ngữ cũng như các bản thảo bằng tiếng Việt. "
+                                        "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
                                       )
                                     ]
                                   )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
-                                    )
-                                  ]
-                                )
-                              ])
+                                ]
+                              )
                             ],
                             1
                           )
@@ -36511,7 +36518,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\r\n", ""]);
+exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-menu {\r\n  left: 0 !important;\r\n  min-width: 100% !important;\n}\r\n", ""]);
 
 // exports
 
@@ -36522,6 +36529,30 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\r\n", ""])
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36718,7 +36749,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            k48/Võ Duy Ninh, Sơn Trà\n                        "
+                                "\n                                k48/Võ Duy Ninh, Sơn Trà\n                            "
                               )
                             ]
                           ),
@@ -36739,7 +36770,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            0123 456 789\n                        "
+                                "\n                                0123 456 789\n                            "
                               )
                             ]
                           )
@@ -36908,6 +36939,111 @@ var render = function() {
                     "v-toolbar",
                     { staticClass: "green accent-4", attrs: { flat: "" } },
                     [
+                      _vm._v("\n<<<<<<< HEAD\n                        "),
+                      _c(
+                        "v-toolbar-items",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "white--text ma-0",
+                              attrs: { flat: "" }
+                            },
+                            [_vm._v("Trang chủ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-menu",
+                            {
+                              attrs: {
+                                "open-on-hover": "",
+                                "offset-y": "",
+                                "full-width": "",
+                                bottom: "",
+                                "close-on-content-click": false,
+                                "content-class": "mega-menu"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "white--text",
+                                  attrs: { slot: "activator", flat: "" },
+                                  slot: "activator"
+                                },
+                                [_vm._v("Thể loại")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-card",
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    _vm._l(3, function(item) {
+                                      return _c(
+                                        "v-flex",
+                                        { key: item, attrs: { xs4: "" } },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(6, function(subtiem) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: item + "-" + subtiem,
+                                                  attrs: { avatar: "" }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          "ITEM MENU " +
+                                                            _vm._s(
+                                                              item +
+                                                                "-" +
+                                                                subtiem
+                                                            )
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    })
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "white--text", attrs: { flat: "" } },
+                            [_vm._v("Tác giả")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { staticClass: "white--text", attrs: { flat: "" } },
+                            [_vm._v("Giới thiệu")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v("\n=======\n                        "),
                       _c(
                         "v-toolbar-title",
                         [
@@ -36943,7 +37079,9 @@ var render = function() {
                         ],
                         1
                       ),
-                      _vm._v(" "),
+                      _vm._v(
+                        "\n>>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5\n                        "
+                      ),
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
@@ -37030,7 +37168,7 @@ var render = function() {
                                     [_vm._v("fas fa-home")]
                                   ),
                                   _vm._v(
-                                    "\n                                179 Võ Duy Ninh,TP ĐN\n                            "
+                                    "\n                                    179 Võ Duy Ninh,TP ĐN\n                                "
                                   )
                                 ],
                                 1
@@ -37049,7 +37187,7 @@ var render = function() {
                                     [_vm._v("fas fa-envelope")]
                                   ),
                                   _vm._v(
-                                    "\n                                bookstore@gmail.com\n                            "
+                                    "\n                                    bookstore@gmail.com\n                                "
                                   )
                                 ],
                                 1
@@ -37068,7 +37206,7 @@ var render = function() {
                                     [_vm._v("fas fa-phone")]
                                   ),
                                   _vm._v(
-                                    "\n                                + 01 234 567 88\n                            "
+                                    "\n                                    + 01 234 567 88\n                                "
                                   )
                                 ],
                                 1
@@ -37087,7 +37225,7 @@ var render = function() {
                                     [_vm._v("fas fa-print")]
                                   ),
                                   _vm._v(
-                                    "\n                                + 01 234 567 89\n                            "
+                                    "\n                                    + 01 234 567 89\n                                "
                                   )
                                 ],
                                 1
@@ -37185,7 +37323,11 @@ var render = function() {
               _c(
                 "v-card-actions",
                 { staticClass: "grey lighten-3 justify-center " },
-                [_vm._v("\n                ©2018 — Demo Vue Js\n            ")]
+                [
+                  _vm._v(
+                    "\n                    ©2018 — Demo Vue Js\n                "
+                  )
+                ]
               )
             ],
             1

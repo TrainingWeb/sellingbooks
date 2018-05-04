@@ -49,12 +49,36 @@
             <v-flex xs12 green accent-4>
                 <v-container class="pa-0">
                     <v-toolbar flat class="green accent-4">
+<<<<<<< HEAD
+                        <v-toolbar-items>
+                            <v-btn flat class="white--text ma-0">Trang chủ</v-btn>
+                            <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
+                                <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
+                                <v-card>
+                                    <v-layout row wrap>
+                                        <v-flex xs4 v-for="item in 3" :key="item">
+                                            <v-list>
+                                                <v-list-tile avatar v-for="subtiem in 6" :key="item +'-'+ subtiem">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>ITEM MENU {{item +'-'+ subtiem}}</v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card>
+                            </v-menu>
+                            <v-btn flat class="white--text">Tác giả</v-btn>
+                            <v-btn flat class="white--text">Giới thiệu</v-btn>
+                        </v-toolbar-items>
+=======
                         <v-toolbar-title>
                             <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
                             <v-btn flat class="white--text">Thể loại</v-btn>
                             <v-btn flat class="white--text">Tác giả</v-btn>
                             <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
                         </v-toolbar-title>
+>>>>>>> f0286f3ed0e8a7733982c9369b75fe6381091bc5
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
                             <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>
@@ -162,5 +186,9 @@ export default {
 <style>
 .card__title {
   margin-left: -25px;
+}
+.mega-menu {
+  left: 0 !important;
+  min-width: 100% !important;
 }
 </style>

@@ -14,9 +14,9 @@
                                         <v-carousel-item v-for="(item,i) in slideDetail" :src="item.src" :key="i"></v-carousel-item>
                                     </v-carousel>
                                 </v-flex>
-                                <v-flex xs12 md6 class="">
+                                <v-flex xs12 md6 class="pl-5">
                                     <div>
-                                        <div class="headline grey--text text--darken-3">GIỚI THIỆU</div>
+                                        <div class="headline grey--text text--darken-3 mb-4">GIỚI THIỆU</div>
                                         <div class="grey--text text--accent-4 body-2">Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường.Ngoài hoạt động chính là tiệm sách lớn, nhà sách Khai Trí còn sưu tầm nhiều sách báo ngoại ngữ cũng như các bản thảo bằng tiếng Việt. </div>
 
                                     </div>
