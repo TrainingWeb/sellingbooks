@@ -4,24 +4,24 @@
             <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
         </v-layout>
         <v-container class="py-5">
-            <v-data-table :headers="headers" :items="books" hide-actions flat>
+            <v-data-table :headers="headers" :items="$store.state.cart" hide-actions flat>
                 <template slot="items" slot-scope="props">
                     <tr class="py-1">
                         <td class="py-2">
                             <img :src="props.item.img" alt="" width="40px" height="60px">
                         </td>
                         <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.total }}</td>
+                        <td>{{ props.item.price }}</td>
                         <td>
                             <v-layout row wrap>
                                 <v-flex xs12 md2>
-                                    <v-text-field type="number" name="input-3" value="1" solo></v-text-field>
+                                    <v-text-field type="number" solo value="1"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </td>
                         <td>{{ props.item.subtotal }}</td>
                         <td>
-                            <v-btn flat icon color="red">
+                            <v-btn flat icon color="red" @click="delCart(props.item)">
                                 <v-icon>clear</v-icon>
                             </v-btn>
                         </td>
@@ -33,7 +33,7 @@
                     <strong class="title" color="black">Tổng tiền</strong>
                 </v-flex>
                 <v-flex xs4 text-xs-right>
-                    <strong color="black">400.000</strong>
+                    <strong color="black">{{total()}}</strong>
                 </v-flex>
             </v-layout>
             <v-layout row wrap class="pt-3 border-top">
@@ -77,25 +77,23 @@ export default {
       { text: "Tồng tiền", sortable: false },
       { sortable: false }
     ],
-    books: [
-      {
-        img:
-          "http://static.ybox.vn/2017/4/11/7397e6ae-1e80-11e7-a0c9-2e995a9a3302.jpg",
-        name: "Cô gái mở đường",
-        total: "100.000",
-        qty: 2,
-        subtotal: "200.000"
-      },
-      {
-        img:
-          "http://static.ybox.vn/2017/4/11/7397e6ae-1e80-11e7-a0c9-2e995a9a3302.jpg",
-        name: "Cô gái mở đường",
-        total: "100.000",
-        qty: 2,
-        subtotal: "200.000"
+    qty: 0,
+    sub: 0
+  }),
+  methods: {
+    total() {
+      console.log(this.$store.state.cart);
+      return this.$store.state.cart.reduce((num, item) => item.price + num, 0);
+    },
+    delCart(item) {
+      let cart = this.$store.state.cart;
+      let index = cart.indexOf(item);
+      if (index >= 0) {
+        cart.splice(index, 1);
+        this.$store.dispatch("setCart", cart);
       }
-    ]
-  })
+    }
+  }
 };
 </script>
 

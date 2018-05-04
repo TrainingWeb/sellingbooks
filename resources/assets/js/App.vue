@@ -32,7 +32,7 @@
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
                                 <v-badge color="red lighten-1" class="p-0">
-                                    <span slot="badge" class="caption">6</span>
+                                    <span slot="badge" class="caption">{{$store.state.cart.length}}</span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>

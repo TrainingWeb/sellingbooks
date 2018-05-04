@@ -9,6 +9,7 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import router from "./router";
 import App from "./App.vue";
+import store from "./store";
 
 // Import global components
 import BookItem from "./components/extends/BookItem";
@@ -17,11 +18,16 @@ Vue.component("BookItem", BookItem);
 import VBanner from "./components/extends/Banner";
 Vue.component("VBanner", VBanner);
 //
+
+// Save card
+if (localStorage.cart) store.commit("SET_CART", JSON.parse(localStorage.cart));
+
+//
 Vue.use(Vuetify);
 
 const app = new Vue({
   el: "#app",
   router,
-  //   store,
+  store,
   render: h => h(App)
 });
