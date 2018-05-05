@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" value="wqfasds" class="input-group--focused" :type="e2 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -61,7 +61,7 @@
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" type="password" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" value="wqfasds" class="input-group--focused" :type="e3 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -86,7 +86,7 @@
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
                                 <v-badge color="red lighten-1" class="p-0">
-                                    <span slot="badge" class="caption"></span>
+                                    <span slot="badge" class="caption">{{$store.state.cart.length}}</span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>
@@ -111,9 +111,10 @@
                                     <v-layout row wrap>
                                         <v-flex xs4 v-for="(index ,item) in 3" :key="index">
                                             <v-list>
-                                                <v-list-tile avatar v-for="subtiem in 6" :key="item +'-'+ subtiem">
+                                                <v-list-tile avatar v-for="subtiem in megamenu" :key="item +'-'+ subtiem">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>ITEM MENU {{item +'-'+ subtiem}}</v-list-tile-title>
+                                                        <v-list-tile-title>{{subtiem.title}}</v-list-tile-title>
+                                                        <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
                                                 </v-list-tile>
                                             </v-list>
@@ -126,7 +127,7 @@
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
-                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>
+                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark v-model="search"></v-text-field>
                         </v-toolbar-items>
                     </v-toolbar>
                 </v-container>
@@ -223,7 +224,16 @@ export default {
         ]
       }
     ],
-
+    megamenu: [
+      {
+        title: "Truyện Tiểu Thuyết",
+        text: "Truyện tình yêu"
+      },
+      {
+        title: "Truyện Tiểu Thuyết2",
+        text: "Truyện tình yêu2"
+      }
+    ],
     // popover
     register: false,
     login: false,
@@ -231,9 +241,7 @@ export default {
     hints: true,
     //    popover
     e1: false,
-    e2: false,
     e3: false,
-    e4: false,
     password: "Password",
     emailRegister: [
       v => !!v || "E-mail là bắt buộc",
@@ -247,7 +255,8 @@ export default {
   }),
   props: {
     source: String
-  }
+  },
+  methods: {}
 };
 </script>
 <style>

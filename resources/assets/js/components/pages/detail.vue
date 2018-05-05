@@ -32,7 +32,7 @@
                                                         <v-divider class="my-3"></v-divider>
                                                         <div class="mx-0">
 
-                                                            <v-btn color="green accent-4 white--text ">
+                                                            <v-btn color="green accent-4 white--text" @click="addCard()">
                                                                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm</v-btn>
                                                             <v-btn color="green accent-4 ">
                                                                 <i class="material-icons favorite white--text">favorite</i>
@@ -158,6 +158,7 @@ export default {
           author: "Nguyễn Du"
         }
       ],
+
       breadcrumbs: [
         {
           name: "Trang Chủ",
@@ -172,6 +173,9 @@ export default {
       ],
       namepage: "Chi tiết sản phẩm"
     };
+  },
+  methods: {
+    addCard() {}
   }
 };
 </script>
