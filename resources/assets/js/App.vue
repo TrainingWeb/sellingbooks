@@ -86,7 +86,7 @@
                         <v-toolbar-items>
                             <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
                                 <v-badge color="red lighten-1" class="p-0">
-                                    <span slot="badge" class="caption"></span>
+                                    <span slot="badge" class="caption">{{$store.state.cart.length}}</span>
                                     <v-icon color="grey">add_shopping_cart</v-icon>
                                 </v-badge>
                             </v-btn>
@@ -122,7 +122,7 @@
                                 </v-card>
                             </v-menu>
                             <v-btn flat class="white--text">Tác giả</v-btn>
-                            <v-btn flat class="white--text">Giới thiệu</v-btn>
+                            <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
