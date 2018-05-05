@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Author;
-use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use App\Http\Controllers\API\APIBaseController as APIBaseController;
 
 class AuthorController extends APIBaseController
 {
@@ -16,11 +16,11 @@ class AuthorController extends APIBaseController
      */
     public function index()
     {
-        $author = Author::paginate(15);
+        $author = Author::paginate(18);
         if (count($author) < 1) {
             return $this->sendMessage('Found 0 author');
         }
-        return $this->sendData($author->toArray());
+        return $this->sendData($author);
     }
 
     /**
@@ -49,7 +49,7 @@ class AuthorController extends APIBaseController
             'email.unique' => 'Email already for another author ! Please enter another email.',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $author = new Author;
         $author->name = $input['name'];
@@ -65,7 +65,7 @@ class AuthorController extends APIBaseController
             $author->avatar = $avatar;
         }
         $author->save();
-        return $this->sendResponse($author->toArray(), 'Author created successfully.');
+        return $this->sendMessage('Author '.$author->name.' created successfully.');
 
     }
 
@@ -79,9 +79,9 @@ class AuthorController extends APIBaseController
     {
         $author = Author::find($id);
         if (is_null($author)) {
-            return $this->sendError('Author not found.');
+            return $this->sendErrorNotFound('Author not found.');
         }
-        return $this->sendData($author->toArray());
+        return $this->sendData($author);
     }
 
     /**
@@ -102,7 +102,7 @@ class AuthorController extends APIBaseController
     {
         $author = Author::find($id);
         if (is_null($author)) {
-            return $this->sendError('Author not found.');
+            return $this->sendErrorNotFound('Author not found.');
         }
         $input = $request->all();
         $validator = Validator::make($input, [
@@ -111,7 +111,7 @@ class AuthorController extends APIBaseController
             'name.required' => 'Please enter name',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $validator = Validator::make($input, [
             'name' => 'unique:authors,name,' . $author->id,
@@ -123,7 +123,7 @@ class AuthorController extends APIBaseController
             'email.unique' => 'Email already for another author ! Please enter another name.',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $author->name = $input['name'];
         $author->slug = str_slug($author->name);
@@ -138,7 +138,7 @@ class AuthorController extends APIBaseController
             $author->avatar = $avatar;
         }
         $author->save();
-        return $this->sendResponse($author->toArray(), 'Author updated successfully.');
+        return $this->sendMessage('Author '.$author->name.' updated successfully.');
     }
 
     /**
@@ -151,9 +151,9 @@ class AuthorController extends APIBaseController
     {
         $author = Author::find($id);
         if (is_null($author)) {
-            return $this->sendError('Author not found.');
+            return $this->sendErrorNotFound('Author not found.');
         }
         $author->delete();
-        return $this->sendResponse($id, 'Author deleted successfully.');
+        return $this->sendMessage('Author '.$id.' deleted successfully.');
     }
 }

@@ -20,7 +20,7 @@ class CategoryController extends APIBaseController
         if (count($categories) < 1) {
             return $this->sendMessage('Found 0 categories');
         }
-        return $this->sendData($categories->toArray());
+        return $this->sendData($categories);
     }
 
     /**
@@ -37,28 +37,24 @@ class CategoryController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $db_cate = Category::get();
-        foreach ($db_cate as $result) {
-            if ($request->slug == $result->slug) {
-                return $this->sendError('This category already exits, please enter another name & slug !');
-            }
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'slug' => 'required',
+            'name' => 'required|unique:categories',
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
-        $category = Category::create($input);
+        $category = new Category;
+        $category->name = $input['name'];
+        $category->id_group = $input['id_group'];
+        $category->slug = str_slug($input['name']);
+        $category->description = $input['description'];
         $category->save();
-        return $this->sendResponse($category->toArray(), 'Category created successfully');
+        return $this->sendMessage('Category '.$category->name.' created successfully');
     }
 
     /**
@@ -71,9 +67,9 @@ class CategoryController extends APIBaseController
     {
         $category = Category::find($id);
         if (is_null($category)) {
-            return $this->sendError('Category not found.');
+            return $this->sendErrorNotFound('Category not found.');
         }
-        return $this->sendData($category->toArray());
+        return $this->sendData($category);
     }
 
     /**
@@ -94,34 +90,25 @@ class CategoryController extends APIBaseController
     {
         $category = Category::find($id);
         if (is_null($category)) {
-            return $this->sendError('Category not found.');
-        }
-        if($category->slug !== $request->slug){
-            $db_cate = Category::get();
-            foreach($db_cate as $result){
-                if($request->slug == $result->slug){
-                    return $this->sendError('This category already exits, please enter another name & slug !');
-                }
-            }
+            return $this->sendErrorNotFound('Category not found.');
         }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'slug' => 'required',
+            'name' => 'required|unique:categories,name,'. $category->id,
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $category->name = $input['name'];
-        $category->slug = $input['slug'];
+        $category->id_group = $input['id_group'];
+        $category->slug = str_slug($input['name']);
         $category->description = $input['description'];
         $category->save();
-        return $this->sendResponse($category->toArray(), 'Category updated successfully');
+        return $this->sendMessage('Category '.$category->name.' updated successfully');
     }
 
     /**
@@ -134,15 +121,15 @@ class CategoryController extends APIBaseController
     {
         $category = Category::find($id);
         if (is_null($category)) {
-            return $this->sendError('Category not found.');
+            return $this->sendErrorNotFound('Category not found.');
         }
         $category->delete();
-        return $this->sendResponse($id, 'Category deleted successfully');
+        return $this->sendMessage('Category '.$id.' deleted successfully');
     }
 
     public function categorywithcountbooks()
     {
         $countbook = Category::withCount('books')->paginate(10);
-        return $this->sendData($countbook->toArray());
+        return $this->sendData($countbook);
     }
 }

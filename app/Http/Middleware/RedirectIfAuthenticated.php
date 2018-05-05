@@ -2,9 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
+use Closure;
 
 class RedirectIfAuthenticated extends APIBaseController
 {
@@ -18,12 +17,16 @@ class RedirectIfAuthenticated extends APIBaseController
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if($request->user()->role == 1){
-            return $next($request);
-        }elseif($request->user()->role == 0){
-            return $this->sendError('You are have no permission to do this.');
-        }elseif(!$request->user()->token()){
-            return $this->sendError('You are must login before manage !');
+        if ($request->user()) {
+            if ($request->user()->role == 2) {
+                return $this->sendErrorPermission('Your account has been banned ! Please contact us to active.');
+            }
+            if ($request->user()->role == 1) {
+                return $next($request);
+            } elseif ($request->user()->role == 0) {
+                return $this->sendErrorPermission('You are have no permission to do this.');
+            }
         }
+        return $this->sendErrorAuth('You are must login before manage !');
     }
 }

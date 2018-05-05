@@ -20,7 +20,7 @@ class TagController extends APIBaseController
         if (count($tags) < 1) {
             return $this->sendMessage('Found 0 tags');
         }
-        return $this->sendData($tags->toArray());
+        return $this->sendData($tags);
     }
 
     /**
@@ -37,31 +37,24 @@ class TagController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $db_tags = Tag::get();
-        foreach ($db_tags as $result) {
-            if ($result->slug == $request->slug) {
-                return $this->sendError('This tag already exits !');
-            }
-        }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
+            'name' => 'required|unique:tags',
             'slug' => 'required',
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $tag = new Tag;
         $tag->name = $input['name'];
-        $tag->slug = $input['slug'];
+        $tag->slug = str_slug($input['name']);
         $tag->description = $input['description'];
         $tag->save();
-        return $this->sendResponse($tag->toArray(), 'Tag created successfully');
+        return $this->sendMessage('Tag '.$tag->id.' created successfully');
     }
 
     /**
@@ -74,9 +67,9 @@ class TagController extends APIBaseController
     {
         $tag = Tag::find($id);
         if (is_null($tag)) {
-            return $this->sendError('Tag not found.');
+            return $this->sendErrorNotFound('Tag not found.');
         }
-        return $this->sendData($tag->toArray());
+        return $this->sendData($tag);
     }
 
     /**
@@ -97,32 +90,22 @@ class TagController extends APIBaseController
     {
         $tag = Tag::find($id);
         if (is_null($tag)) {
-            return $this->sendError('Tag not found.');
-        }
-        if ($tag->slug !== $request->slug) {
-            $db_tags = Tag::get();
-            foreach ($db_tags as $result) {
-                if ($result->slug == $request->slug) {
-                    return $this->sendError('This tag already exits !');
-                }
-            }
+            return $this->sendErrorNotFound('Tag not found.');
         }
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'slug' => 'required',
+            'name' => 'required|unique:tags,name,'. $tag->id,
             'description' => 'required',
         ], [
             'name.required' => 'Please enter name',
-            'slug.required' => 'Please enter slug',
             'description.required' => 'Please enter description',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
 
         $tag->update($input);
-        return $this->sendResponse($tag->toArray(), 'Tag updated successfully');
+        return $this->sendMessage('Tag '.$tag->name.' updated successfully');
     }
 
     /**
@@ -135,9 +118,9 @@ class TagController extends APIBaseController
     {
         $tag = Tag::find($id);
         if (is_null($tag)) {
-            return $this->sendError('Tag not found.');
+            return $this->sendErrorNotFound('Tag not found.');
         }
         $tag->delete();
-        return $this->sendResponse($id, 'Tag deleted successfully');
+        return $this->sendMessage('Tag '.$id.' deleted successfully');
     }
 }

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\History;
+use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use Illuminate\Http\Request;
 
-class HistoryController extends Controller
+class HistoryController extends APIBaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,11 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        return History::all();
+        $history = History::paginate(16);
+        if (count($history) < 1) {
+            return $this->sendMessage('Found 0 history');
+        }
+        return $this->sendData($history);
     }
 
     /**
@@ -29,16 +34,6 @@ class HistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $history = new History;
-        $history->status = $request->status;
-        $history->quantity = $request->quantity;
-        $history->id_book = $request->id_book;
-        $history->id_user = $request->id_user;
-        $history->save();
-        return response()->json($history, 201);
-    }
 
     /**
      * Display the specified resource.
@@ -46,10 +41,6 @@ class HistoryController extends Controller
      * @param  \App\History  $history
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return History::find($id);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -65,12 +56,6 @@ class HistoryController extends Controller
      * @param  \App\History  $history
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $history = History::findOrFail($id);
-        $history->update($request->all());
-        return response()->json($history, 200);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -80,9 +65,12 @@ class HistoryController extends Controller
      */
     public function destroy($id)
     {
-        $history = History::findOrFail($id);
+        $history = History::find($id);
+        if (is_null($history)) {
+            return $this->sendErrorNotFound('History not found !');
+        }
         $history->delete();
 
-        return response()->json(null, 204);
+        return $this->sendMessage('Deleted '.$id.' history successfully !');
     }
 }
