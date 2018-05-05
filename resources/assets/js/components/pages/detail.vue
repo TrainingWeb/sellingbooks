@@ -12,7 +12,7 @@
                                 <v-flex xs12>
                                     <v-card color="cyan darken-2" class="white--text">
                                         <v-container fluid grid-list-lg>
-                                            <v-layout row>
+                                            <v-layout row v-for="(item,index) in bookDetail" :key="`BookDetail-${index}`">
                                                 <v-flex xs4>
                                                     <v-card-media :src="bookDetail.img" height="450px" contain></v-card-media>
                                                 </v-flex>
@@ -31,10 +31,9 @@
                                                         </div>
                                                         <v-divider class="my-3"></v-divider>
                                                         <div class="mx-0">
-                                                            <v-btn color="green accent-4 white--text" @click="addCartDetail">
-                                                                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
-                                                            </v-btn>
-                                                            <v-btn color="green accent-4" @click="addCartFavorite">
+                                                            <v-btn color="green accent-4 white--text" @click="addCart">
+                                                                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm</v-btn>
+                                                            <v-btn color="green accent-4 " @click="favorite">
                                                                 <i class="material-icons favorite white--text">favorite</i>
                                                             </v-btn>
                                                         </div>
@@ -64,7 +63,7 @@
                         </v-tab>
                         <v-tabs-items>
                             <v-tab-item id="tab-1">
-                                <v-card-text class="roboto">{{ bookDetail.textDetail }}</v-card-text>
+                                <v-card-text class="roboto">{{ textDetail }}</v-card-text>
                             </v-tab-item>
                             <v-tab-item id="tab-2">
                                 <v-card>
@@ -83,9 +82,6 @@
                                                     <!-- <v-icon color="grey lighten-1">star_border</v-icon> -->
                                                 </v-list-tile-action>
                                             </v-list-tile>
-                                        </template>
-                                        <template>
-                                            <v-text-field name="input-1-3" label="Hint Text" single-line></v-text-field>
                                         </template>
                                     </v-list>
                                 </v-card>
@@ -109,19 +105,20 @@
 export default {
   data() {
     return {
-      bookDetail: {
-        img:
-          "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: 12000,
-        detail:
-          "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
-        sale: 1500,
-        author: "Nguyễn Du",
-        textDetail:
-          "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ."
-      },
-
+      bookDetail: [
+        {
+          img:
+            "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+          name: "Cô gái mở đường",
+          price: 12000,
+          detail:
+            "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
+          sale: 1500,
+          author: "Nguyễn Du"
+        }
+      ],
+      textDetail:
+        "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ.",
       comments: [
         {
           avatar: "./img/author.jpg",
@@ -189,34 +186,7 @@ export default {
     };
   },
   methods: {
-    addCartDetail() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert(
-            "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
-          );
-          return;
-        }
-      }
-      let itemBook = {
-        book: this.bookDetail,
-        quantity: 1
-      };
-      let cart = this.$store.state.cart;
-      cart.push(itemBook);
-      this.$store.dispatch("setCart", cart);
-    },
-    addCartFavorite() {
-      for (var index in this.$store.state.favorite) {
-        if (this.$store.state.favorite[index].id == this.book.id) {
-          alert("Sản phẩm này đã được bạn yêu thích");
-        }
-        return;
-      }
-      let favorite = this.$store.state.favorite;
-      favorite.push(this.book);
-      this.$store.dispatch("setFavorite", favorite);
-    }
+    addCard() {}
   }
 };
 </script>

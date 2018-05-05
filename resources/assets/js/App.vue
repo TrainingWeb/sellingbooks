@@ -109,7 +109,7 @@
                                 <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
                                 <v-card>
                                     <v-layout row wrap>
-                                        <!-- <v-flex xs4 v-for="(index ,item) in 3" :key="`key-$`+index">
+                                        <v-flex xs4 v-for="(index ,item) in 3" :key="index">
                                             <v-list>
                                                 <v-list-tile avatar v-for="subtiem in megamenu" :key="item +'-'+ subtiem">
                                                     <v-list-tile-content>
@@ -118,7 +118,7 @@
                                                     </v-list-tile-content>
                                                 </v-list-tile>
                                             </v-list>
-                                        </v-flex> -->
+                                        </v-flex>
                                     </v-layout>
                                 </v-card>
                             </v-menu>
@@ -127,7 +127,7 @@
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
-                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>
+                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark v-model="search"></v-text-field>
                         </v-toolbar-items>
                     </v-toolbar>
                 </v-container>
@@ -167,11 +167,11 @@
                                     + 01 234 567 89
                                 </div>
                             </v-flex>
-                            <v-flex v-for="(col, i) in rows" :key="`col-$`+i" xs12 md3>
+                            <v-flex v-for="(col, i) in rows" :key="i" xs12 md3>
                                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
-                                <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="`child-$`+i" v-text="child"></div>
+                                <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="i" v-text="child"></div>
                                 <v-card-title v-if="col.icons">
-                                    <v-btn v-for=" (icon,index) in col.icons " :key="`key-`+index" icon dark class="mx-1">
+                                    <v-btn v-for=" icon in col.icons " :key="icon " icon dark class="mx-1">
                                         <v-icon color="green" size="24px ">{{ icon }}</v-icon>
                                     </v-btn>
                                 </v-card-title>
@@ -240,7 +240,7 @@ export default {
     message: false,
     hints: true,
     //    popover
-    e2: false,
+    e1: false,
     e3: false,
     password: "Password",
     emailRegister: [

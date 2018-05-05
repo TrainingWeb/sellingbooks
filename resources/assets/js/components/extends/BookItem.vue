@@ -43,18 +43,16 @@ export default {
   watch: {},
   methods: {
     addCart() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
+      for (let index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].book.id == this.book.id) {
           alert(
             "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
           );
-          return;
         }
       }
-      //
       let itemBook = {
         book: this.book,
-        quantity: 1
+        quantity: 2
       };
       let cart = this.$store.state.cart;
       cart.push(itemBook);
@@ -65,7 +63,6 @@ export default {
         if (this.$store.state.favorite[index].id == this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
         }
-        return;
       }
       let favorite = this.$store.state.favorite;
       favorite.push(this.book);
