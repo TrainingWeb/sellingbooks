@@ -33683,11 +33683,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      bookDetail: [{
+        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: 12000,
+        detail: "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
+        sale: 1500,
+        author: "Nguyễn Du"
+      }],
       textDetail: "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ.",
       comments: [{
         avatar: "./img/author.jpg",
@@ -33814,10 +33821,16 @@ var render = function() {
                                             "grid-list-lg": ""
                                           }
                                         },
-                                        [
-                                          _c(
+                                        _vm._l(_vm.bookDetail, function(
+                                          item,
+                                          index
+                                        ) {
+                                          return _c(
                                             "v-layout",
-                                            { attrs: { row: "" } },
+                                            {
+                                              key: "BookDetail-" + index,
+                                              attrs: { row: "" }
+                                            },
                                             [
                                               _c(
                                                 "v-flex",
@@ -33825,8 +33838,7 @@ var render = function() {
                                                 [
                                                   _c("v-card-media", {
                                                     attrs: {
-                                                      src:
-                                                        "storage/images/book15.png",
+                                                      src: _vm.bookDetail.img,
                                                       height: "450px",
                                                       contain: ""
                                                     }
@@ -33848,7 +33860,14 @@ var render = function() {
                                                           staticClass:
                                                             "headline grey--text text--darken-3"
                                                         },
-                                                        [_vm._v("Your Name")]
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.bookDetail
+                                                                .name
+                                                            )
+                                                          )
+                                                        ]
                                                       ),
                                                       _vm._v(" "),
                                                       _c(
@@ -33862,7 +33881,10 @@ var render = function() {
                                                             _vm._v("Tác giả: ")
                                                           ]),
                                                           _vm._v(
-                                                            " Hoàng Anh Vũ"
+                                                            _vm._s(
+                                                              _vm.bookDetail
+                                                                .author
+                                                            )
                                                           )
                                                         ]
                                                       ),
@@ -33873,7 +33895,15 @@ var render = function() {
                                                           staticClass:
                                                             "green--text text--accent-4 title mt-3"
                                                         },
-                                                        [_vm._v("140.000 VNĐ")]
+                                                        [
+                                                          _vm._v(
+                                                            " " +
+                                                              _vm._s(
+                                                                _vm.bookDetail
+                                                                  .price
+                                                              )
+                                                          )
+                                                        ]
                                                       ),
                                                       _vm._v(" "),
                                                       _c("v-divider", {
@@ -33889,7 +33919,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _vm._v(
-                                                              '"Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]'
+                                                              _vm._s(
+                                                                _vm.bookDetail
+                                                                  .detail
+                                                              )
                                                             )
                                                           ]
                                                         ),
@@ -33922,11 +33955,8 @@ var render = function() {
                                                                   "green accent-4 white--text"
                                                               },
                                                               on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  _vm.addCard()
-                                                                }
+                                                                click:
+                                                                  _vm.addCart
                                                               }
                                                             },
                                                             [
@@ -33952,6 +33982,10 @@ var render = function() {
                                                               attrs: {
                                                                 color:
                                                                   "green accent-4 "
+                                                              },
+                                                              on: {
+                                                                click:
+                                                                  _vm.favorite
                                                               }
                                                             },
                                                             [
@@ -34051,8 +34085,7 @@ var render = function() {
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
+                                        })
                                       )
                                     ],
                                     1
@@ -36911,6 +36944,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37015,7 +37056,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            k48/Võ Duy Ninh, Sơn Trà\n                        "
+                                "\n                                k48/Võ Duy Ninh, Sơn Trà\n                            "
                               )
                             ]
                           ),
@@ -37036,7 +37077,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            0123 456 789\n                        "
+                                "\n                                0123 456 789\n                            "
                               )
                             ]
                           )
@@ -37118,6 +37159,9 @@ var render = function() {
                                             "v-flex",
                                             { attrs: { xs12: "" } },
                                             [
+                                              _vm._v(
+                                                "\n<<<<<<< HEAD\n                                                "
+                                              ),
                                               _c("v-text-field", {
                                                 staticClass:
                                                   "input-group--focused",
@@ -37137,7 +37181,34 @@ var render = function() {
                                                     ? "password"
                                                     : "text"
                                                 }
-                                              })
+                                              }),
+                                              _vm._v(
+                                                "\n=======\n                                                "
+                                              ),
+                                              _c("v-text-field", {
+                                                attrs: {
+                                                  label: "Mật khẩu",
+                                                  required: "",
+                                                  min: "8",
+                                                  "append-icon": _vm.e4
+                                                    ? "visibility"
+                                                    : "visibility_off",
+                                                  "append-icon-cb": function() {
+                                                    return (_vm.e4 = !_vm.e4)
+                                                  },
+                                                  rules: [
+                                                    function() {
+                                                      return "Mật khẩu là bắt buộc"
+                                                    }
+                                                  ],
+                                                  type: _vm.e4
+                                                    ? "password"
+                                                    : "text"
+                                                }
+                                              }),
+                                              _vm._v(
+                                                "\n>>>>>>> 30f08355f0c1111c145f9b7ee88a640d0b4b93e2\n                                            "
+                                              )
                                             ],
                                             1
                                           )
@@ -37279,6 +37350,9 @@ var render = function() {
                                             "v-flex",
                                             { attrs: { xs12: "" } },
                                             [
+                                              _vm._v(
+                                                "\n<<<<<<< HEAD\n                                                "
+                                              ),
                                               _c("v-text-field", {
                                                 staticClass:
                                                   "input-group--focused",
@@ -37298,7 +37372,34 @@ var render = function() {
                                                     ? "password"
                                                     : "text"
                                                 }
-                                              })
+                                              }),
+                                              _vm._v(
+                                                "\n=======\n                                                "
+                                              ),
+                                              _c("v-text-field", {
+                                                attrs: {
+                                                  label: "Mật khẩu",
+                                                  required: "",
+                                                  min: "8",
+                                                  "append-icon": _vm.e4
+                                                    ? "visibility"
+                                                    : "visibility_off",
+                                                  "append-icon-cb": function() {
+                                                    return (_vm.e4 = !_vm.e4)
+                                                  },
+                                                  rules: [
+                                                    function() {
+                                                      return "Mật khẩu là bắt buộc"
+                                                    }
+                                                  ],
+                                                  type: _vm.e4
+                                                    ? "password"
+                                                    : "text"
+                                                }
+                                              }),
+                                              _vm._v(
+                                                "\n>>>>>>> 30f08355f0c1111c145f9b7ee88a640d0b4b93e2\n                                            "
+                                              )
                                             ],
                                             1
                                           )
@@ -37591,7 +37692,10 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-btn",
-                            { staticClass: "white--text", attrs: { flat: "" } },
+                            {
+                              staticClass: "white--text",
+                              attrs: { flat: "", to: "/detail" }
+                            },
                             [_vm._v("Giới thiệu")]
                           )
                         ],
@@ -37681,7 +37785,7 @@ var render = function() {
                                   [_vm._v("fas fa-home")]
                                 ),
                                 _vm._v(
-                                  "\n                                179 Võ Duy Ninh,TP ĐN\n                            "
+                                  "\n                                    179 Võ Duy Ninh,TP ĐN\n                                "
                                 )
                               ],
                               1
@@ -37700,7 +37804,7 @@ var render = function() {
                                   [_vm._v("fas fa-envelope")]
                                 ),
                                 _vm._v(
-                                  "\n                                bookstore@gmail.com\n                            "
+                                  "\n                                    bookstore@gmail.com\n                                "
                                 )
                               ],
                               1
@@ -37719,7 +37823,7 @@ var render = function() {
                                   [_vm._v("fas fa-phone")]
                                 ),
                                 _vm._v(
-                                  "\n                                + 01 234 567 88\n                            "
+                                  "\n                                    + 01 234 567 88\n                                "
                                 )
                               ],
                               1
@@ -37738,7 +37842,7 @@ var render = function() {
                                   [_vm._v("fas fa-print")]
                                 ),
                                 _vm._v(
-                                  "\n                                + 01 234 567 89\n                            "
+                                  "\n                                    + 01 234 567 89\n                                "
                                 )
                               ],
                               1
@@ -37810,7 +37914,11 @@ var render = function() {
               _c(
                 "v-card-actions",
                 { staticClass: "grey lighten-3 justify-center " },
-                [_vm._v("\n                ©2018 — Demo Vue Js\n            ")]
+                [
+                  _vm._v(
+                    "\n                    ©2018 — Demo Vue Js\n                "
+                  )
+                ]
               )
             ],
             1

@@ -22,7 +22,6 @@ class CreateBooksTable extends Migration
             $table->string('promotion_price')->nullable();
             $table->string('highlights')->nullable();
             $table->longtext('description')->nullable();
-            $table->string('quantity')->nullable();
             $table->integer('id_category')->unsigned();
             $table->foreign('id_category')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('id_author')->unsigned();

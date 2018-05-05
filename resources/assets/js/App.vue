@@ -123,7 +123,7 @@
                                 </v-card>
                             </v-menu>
                             <v-btn flat class="white--text">Tác giả</v-btn>
-                            <v-btn flat class="white--text">Giới thiệu</v-btn>
+                            <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">

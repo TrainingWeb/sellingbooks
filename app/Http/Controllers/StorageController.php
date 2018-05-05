@@ -20,7 +20,7 @@ class StorageController extends APIBaseController
         if (count($storage) < 1) {
             return $this->sendMessage('Found 0 storage');
         }
-        return $this->sendData($storage->toArray());
+        return $this->sendData($storage);
     }
 
     /**
@@ -37,19 +37,6 @@ class StorageController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'quantity' => 'required',
-            'id_book' => 'required',
-        ], [
-            'quantity.required' => 'Please enter quantity',
-            'id_book.required' => 'Please choose book',
-        ]);
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-        $storage = Storage::create($input);
-        return $this->sendResponse($storage->toArray(), 'Entered successfully');
     }
 
     /**
@@ -62,9 +49,9 @@ class StorageController extends APIBaseController
     {
         $storage = Storage::find($id);
         if(is_null($storage)){
-            return $this->sendError('Storage not found.');
+            return $this->sendErrorNotFound('Storage not found.');
         }
-        return $this->sendData($storage->toArray());
+        return $this->sendData($storage);
     }
 
     /**
@@ -85,7 +72,7 @@ class StorageController extends APIBaseController
     {
         $storage = Storage::find($id);
         if(is_null($storage)){
-            return $this->sendError('Storage not found.');
+            return $this->sendErrorNotFound('Storage not found.');
         }
         $input = $request->all();
         $validator = Validator::make($input, [
@@ -96,12 +83,12 @@ class StorageController extends APIBaseController
             'id_book.required' => 'Please choose book',
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $storage->quantity = $input['quantity'];
         $storage->id_book = $input['id_book'];
         $storage->save();
-        return $this->sendResponse($storage->toArray(), 'Storage updated successfully');
+        return $this->sendMessage('Storage '.$id.' updated successfully');
     }
 
     /**
@@ -114,9 +101,9 @@ class StorageController extends APIBaseController
     {
         $storage = Storage::find($id);
         if(is_null($storage)){
-            return $this->sendError('Storage not found.');
+            return $this->sendErrorNotFound('Storage not found.');
         }
         $storage->delete();
-        return $this->sendResponse($id, 'Storage deleted successfully');
+        return $this->sendMessage('Storage '.$id.' deleted successfully');
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\History;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\Order;
+use App\OrderDetail;
+use App\Storage;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends APIBaseController
 {
@@ -17,11 +19,11 @@ class OrderController extends APIBaseController
      */
     public function index()
     {
-        $orders = Order::paginate(20);
+        $orders = Order::paginate(16);
         if (is_null($orders)) {
-            return $this->Error('Found 0 orders !');
+            return $this->sendMessage('Found 0 orders !');
         }
-        return $this->sendData($orders->toArray());
+        return $this->sendData($orders);
     }
 
     /**
@@ -29,10 +31,6 @@ class OrderController extends APIBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,15 +38,6 @@ class OrderController extends APIBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $order = new Order;
-        $order->total = $request->total;
-        $order->status = $request->status;
-        $order->id_user = $request->user()->id;
-        $order->save();
-        return $this->sendResponse($order, 'Ordered successfully !');
-    }
 
     /**
      * Display the specified resource.
@@ -60,9 +49,9 @@ class OrderController extends APIBaseController
     {
         $order = Order::find($id);
         if (is_null($order)) {
-            return $this->sendError('Order not found !');
+            return $this->sendErrorNotFound('Order not found !');
         } else {
-            return $this->sendData($order->toArray());
+            return $this->sendData($order);
         }
     }
 
@@ -70,35 +59,27 @@ class OrderController extends APIBaseController
     {
         $orders = Order::where('id_user', $request->user()->id)->get();
         if (is_null($orders)) {
-            return $this->sendError('You are have 0 !');
-        } else {
-            return $this->sendData($orders->toArray());
+            return $this->sendMessage('You are have 0 order !');
         }
+        return $this->sendData($orders);
     }
 
     public function deleteOrderUser(Request $request, $id)
     {
         $order = Order::find($id);
         if (is_null($order)) {
-            return $this->sendError('Order not found !');
+            return $this->sendErrorNotFound('Order not found !');
         }
-        if ($order->status !== 'accept') {
+        if ($order->status == 'waiting' || $order->status == 'cancel') {
             if ($request->user()->id == $order->id_user) {
                 $order->delete();
-                return $this->sendResponse($id, 'Just deleted your order !');
+                return $this->sendMessage('Just deleted order ' . $id . ' !');
             } else {
-                return $this->sendError('Cannot delete order of another user !');
+                return $this->sendErrorPermisstion('Cannot delete order of another user !');
             }
         } elseif ($order->status == 'accept') {
-            return $this->sendMessage('Your order has been approved ! You cannot cancel this order !');
+            return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
         }
-    }
-
-    public function deleteAllOrderUser()
-    {
-        $user = User::with('orders')->find(Auth::guard('api')->id());
-        $user->orders()->delete();
-        return $this->sendResponse($user->orders(), 'Deleted successfully !');
     }
 
     /**
@@ -116,15 +97,52 @@ class OrderController extends APIBaseController
      */
     public function update(Request $request, $id)
     {
-
         $order = Order::find($id);
         if (is_null($order)) {
-            return $this->sendError('Order not found.');
+            return $this->sendErrorNotFound('Order not found.');
+        }
+        if ($order->status == 'sold') {
+            return $this->sendMessage('This order has been sold !');
+        } elseif ($order->status == 'accept') {
+            if ($request->status == 'accept') {
+                return $this->sendMessage('This order has been accepted !');
+            } elseif ($request->status == 'cancel') {
+                return $this->sendMessage('Order ' . $id . ' has been accepted ! Just delete to stop');
+            } elseif ($order->status == 'sold') {
+                return $this->sendMessage('Added to total revenue');
+            }
         }
         $order->status = $request->status;
         $order->id_user = $request->user()->id;
         $order->save();
-        return $this->sendResponse($order->toArray(), 'Order updated successfully');
+        if ($order->status == 'cancel') {
+            return $this->sendMessage('Order has been cancel successfully');
+        }
+        $orderdetails = OrderDetail::where('id_order', $order->id)->get();
+        $idbook = array();
+        foreach ($orderdetails as $orderdetail) {
+            $storage = Storage::where('id_book', $orderdetail->id_book)->first();
+            if ($orderdetail->quantity > $storage->quantity) {
+                $idbook[] = $orderdetail->id_book;
+            }
+        }
+        if ($idbook) {
+            return $this->sendResponse($idbook, 'Have a book not enought to sells, please check quantity before sells !');
+        }
+        foreach ($orderdetails as $odd) {
+            $storage = Storage::where('id_book', $odd['id_book'])->first();
+            $old = $storage['quantity'];
+            $storage['quantity'] = ($old - $odd['quantity']);
+            $storage->save();
+
+            $history = new History;
+            $history->status = 'selling';
+            $history->quantity = $odd['quantity'];
+            $history->id_book = $odd['id_book'];
+            $history->id_user = $request->user()->id;
+            $history->save();
+        }
+        return $this->sendMessage('Order ' . $id . ' accept successfully');
     }
 
     /**
@@ -133,21 +151,39 @@ class OrderController extends APIBaseController
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $order = Order::find($id);
         if (is_null($order)) {
-            return $this->sendError('Order not found !');
-        } else {
-            $order->delete();
-            return $this->sendResponse($id, 'Deleted successfully !');
+            return $this->sendErrorNotFound('Order not found !');
         }
+        if ($order->status == 'sold') {
+            return $this->sendMessage('Can not delete this order ! Because this order has been sold !');
+        } elseif ($order->status == 'accept') {
+            $orderdetails = OrderDetail::where('id_order', $order->id)->get();
+            foreach ($orderdetails as $orderdetail) {
+                $storage = Storage::where('id_book', $orderdetail->id_book)->first();
+                $oldQuantity = $storage->quantity;
+                $storage->quantity = $oldQuantity + $orderdetail->quantity;
+                $storage->save();
+
+                $history = new History;
+                $history->status = 'cancel';
+                $history->quantity = $orderdetail->quantity;
+                $history->id_book = $orderdetail->id_book;
+                $history->id_user = $request->user()->id;
+                $history->save();
+            }
+        }
+        $order->status = 'cancel';
+        $order->save();
+        return $this->sendMessage('Order cancel successfully !');
     }
 
     public function Total(Request $request)
     {
         if ($request->startday && $request->finishday && $request->month && $request->year) {
-            return $this->sendError('Please check it with day to day, month/year or just year !');
+            return $this->sendMessage('Please check it with day to day, month/year or just year !');
         }
         if ($request->startday && $request->finishday) {
             $total = Order::whereBetween('created_at', [$request->startday, $request->finishday])->sum('total');

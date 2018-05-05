@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password' ,'avatar', 'age', 'address', 'phone', 'role', 'api_token'
+        'name', 'email', 'password' ,'avatar', 'age', 'address', 'phone', 'role'
     ];
 
     /**
@@ -25,11 +25,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'role', 'api_token'
+        'password', 'remember_token', 'role'
     ];
 
     public function orders()
     {
         return $this->hasMany('App\Order', 'id_user');
+    }
+    public function books()
+    {
+        return $this->belongsToMany('App\Book', 'favorite_books', 'id_user', 'id_book');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }

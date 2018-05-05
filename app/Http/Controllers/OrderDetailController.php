@@ -14,7 +14,11 @@ class OrderDerailController extends Controller
      */
     public function index()
     {
-        //
+        $orderdetails = OrderDetail::paginate(16);
+        if(count($orderdetails)<1){
+            return $this->sendMessage('Found 0 order details !');
+        }
+        return $this->sendData($orderdetails);
     }
 
     /**
@@ -78,8 +82,12 @@ class OrderDerailController extends Controller
      * @param  \App\Order_derail  $order_derail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order_derail $order_derail)
+    public function destroy($id)
     {
-        //
+        $orderdetail = OrderDetail::find($id);
+        if(is_null($orderdetail)){
+            return $this->sendErrorNotFound('Order Detail not found !');
+        }
+        return $this->sendMessage('Deleted order detail '.$id.' successfully !');
     }
 }
