@@ -20,7 +20,7 @@
                             <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
                             <v-card flat>
                                 <v-list class="green accent-4 white--text text-xs-center">
-                                    <span>ĐĂNG NHẬP</span>
+                                    <span class="">ĐĂNG NHẬP</span>
                                 </v-list>
                                 <v-divider></v-divider>
                                 <v-container>
@@ -122,7 +122,7 @@
                                 </v-card>
                             </v-menu>
                             <v-btn flat class="white--text">Tác giả</v-btn>
-                            <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
+                            <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">

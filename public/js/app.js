@@ -33683,6 +33683,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -33744,6 +33751,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       namepage: "Chi tiết sản phẩm"
     };
+  },
+
+  methods: {
+    addCart: function addCart() {
+      for (var index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].book.id == this.book.id) {
+          alert("sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+        }
+      }
+      var itemBook = {
+        book: this.book,
+        quantity: 2
+      };
+      var cart = this.$store.state.cart;
+      cart.push(itemBook);
+      this.$store.dispatch("setCart", cart);
+    },
+    favorite: function favorite() {
+      for (var index = 0; index < this.$store.state.favorite.length; index++) {
+        if (this.$store.state.favorite[index].id == this.book.id) {
+          alert("Sản phẩm này đã được bạn yêu thích");
+        }
+      }
+      var favorite = this.$store.state.favorite;
+      favorite.push(this.book);
+      this.$store.dispatch("setFavorite", favorite);
+    }
   }
 });
 
@@ -33833,7 +33867,7 @@ var render = function() {
                                                 [
                                                   _c("v-card-media", {
                                                     attrs: {
-                                                      src: _vm.bookDetail.img,
+                                                      src: item.img,
                                                       height: "450px",
                                                       contain: ""
                                                     }
@@ -33857,10 +33891,7 @@ var render = function() {
                                                         },
                                                         [
                                                           _vm._v(
-                                                            _vm._s(
-                                                              _vm.bookDetail
-                                                                .name
-                                                            )
+                                                            _vm._s(item.name)
                                                           )
                                                         ]
                                                       ),
@@ -33876,27 +33907,51 @@ var render = function() {
                                                             _vm._v("Tác giả: ")
                                                           ]),
                                                           _vm._v(
-                                                            _vm._s(
-                                                              _vm.bookDetail
-                                                                .author
-                                                            )
+                                                            _vm._s(item.author)
                                                           )
                                                         ]
                                                       ),
                                                       _vm._v(" "),
                                                       _c(
-                                                        "div",
+                                                        "v-layout",
                                                         {
-                                                          staticClass:
-                                                            "green--text text--accent-4 title mt-3"
+                                                          attrs: {
+                                                            row: "",
+                                                            wrap: ""
+                                                          }
                                                         },
                                                         [
-                                                          _vm._v(
-                                                            " " +
-                                                              _vm._s(
-                                                                _vm.bookDetail
-                                                                  .price
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "green--text text--accent-4 title mt-3"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                " " +
+                                                                  _vm._s(
+                                                                    item.price
+                                                                  )
                                                               )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "grey--text text--darken-1 title my-3 mx-3 "
+                                                            },
+                                                            [
+                                                              _c("del", [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    item.sale
+                                                                  )
+                                                                )
+                                                              ])
+                                                            ]
                                                           )
                                                         ]
                                                       ),
@@ -33915,8 +33970,7 @@ var render = function() {
                                                           [
                                                             _vm._v(
                                                               _vm._s(
-                                                                _vm.bookDetail
-                                                                  .detail
+                                                                item.detail
                                                               )
                                                             )
                                                           ]
@@ -37109,7 +37163,7 @@ var render = function() {
                                   staticClass:
                                     "green accent-4 white--text text-xs-center"
                                 },
-                                [_c("span", [_vm._v("ĐĂNG NHẬP")])]
+                                [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
                               ),
                               _vm._v(" "),
                               _c("v-divider"),
@@ -37617,7 +37671,7 @@ var render = function() {
                             "v-btn",
                             {
                               staticClass: "white--text",
-                              attrs: { flat: "", to: "/detail" }
+                              attrs: { flat: "", to: "/about" }
                             },
                             [_vm._v("Giới thiệu")]
                           )

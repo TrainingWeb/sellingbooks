@@ -14,17 +14,24 @@
                                         <v-container fluid grid-list-lg>
                                             <v-layout row v-for="(item,index) in bookDetail" :key="`BookDetail-${index}`">
                                                 <v-flex xs4>
-                                                    <v-card-media :src="bookDetail.img" height="450px" contain></v-card-media>
+                                                    <v-card-media :src="item.img" height="450px" contain></v-card-media>
                                                 </v-flex>
                                                 <v-flex xs8>
                                                     <div>
-                                                        <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
+                                                        <div class="headline grey--text text--darken-3">{{item.name}}</div>
                                                         <div class="grey--text accent-4 body-2">
-                                                            <span>Tác giả: </span>{{bookDetail.author}}</div>
-                                                        <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
+                                                            <span>Tác giả: </span>{{item.author}}</div>
+
+                                                        <v-layout row wrap>
+                                                            <div class="green--text text--accent-4 title mt-3"> {{item.price}}</div>
+                                                            <span class="grey--text text--darken-1 title my-3 mx-3 ">
+                                                                <del>{{item.sale}}</del>
+                                                            </span>
+                                                        </v-layout>
+
                                                         <v-divider class="my-3"></v-divider>
                                                         <div>
-                                                            <span class=" grey--text text--accent-4body-1">{{bookDetail.detail}}</span>
+                                                            <span class=" grey--text text--accent-4body-1">{{item.detail}}</span>
                                                             <a>
                                                                 <span class="green--text text--accent-4">Xem thêm</span>
                                                             </a>
@@ -183,6 +190,34 @@ export default {
       ],
       namepage: "Chi tiết sản phẩm"
     };
+  },
+  methods: {
+    addCart() {
+      for (let index = 0; index < this.$store.state.cart.length; index++) {
+        if (this.$store.state.cart[index].book.id == this.book.id) {
+          alert(
+            "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+          );
+        }
+      }
+      let itemBook = {
+        book: this.book,
+        quantity: 2
+      };
+      let cart = this.$store.state.cart;
+      cart.push(itemBook);
+      this.$store.dispatch("setCart", cart);
+    },
+    favorite() {
+      for (let index = 0; index < this.$store.state.favorite.length; index++) {
+        if (this.$store.state.favorite[index].id == this.book.id) {
+          alert("Sản phẩm này đã được bạn yêu thích");
+        }
+      }
+      let favorite = this.$store.state.favorite;
+      favorite.push(this.book);
+      this.$store.dispatch("setFavorite", favorite);
+    }
   }
 };
 </script>
