@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" value="wqfasds" class="input-group--focused" :type="e2 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -61,7 +61,7 @@
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field label="Mật khẩu" required min="8" :append-icon="e4 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e4 = !e4)" :rules="[() => ('Mật khẩu là bắt buộc')]" :type="e4 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" value="wqfasds" class="input-group--focused" :type="e3 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -109,15 +109,16 @@
                                 <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
                                 <v-card>
                                     <v-layout row wrap>
-                                        <v-flex xs4 v-for="(index ,item) in 3" :key="index">
+                                        <!-- <v-flex xs4 v-for="(index ,item) in 3" :key="`key-$`+index">
                                             <v-list>
-                                                <v-list-tile avatar v-for="subtiem in 6" :key="item +'-'+ subtiem">
+                                                <v-list-tile avatar v-for="subtiem in megamenu" :key="item +'-'+ subtiem">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>ITEM MENU {{item +'-'+ subtiem}}</v-list-tile-title>
+                                                        <v-list-tile-title>{{subtiem.title}}</v-list-tile-title>
+                                                        <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
                                                 </v-list-tile>
                                             </v-list>
-                                        </v-flex>
+                                        </v-flex> -->
                                     </v-layout>
                                 </v-card>
                             </v-menu>
@@ -151,7 +152,7 @@
 
                                 <div class="mb-3" color="grey--text text--darken-2">
                                     <v-icon size="18px" class="mr-1">fas fa-home</v-icon>
-                                    179 Võ Duy Ninh,TP ĐN
+                                    79 Võ Duy Ninh,TP ĐN
                                 </div>
                                 <div class="mb-3">
                                     <v-icon size="18px" class="mr-1  ">fas fa-envelope</v-icon>
@@ -166,11 +167,11 @@
                                     + 01 234 567 89
                                 </div>
                             </v-flex>
-                            <v-flex v-for="(col, i) in rows" :key="i" xs12 md3>
+                            <v-flex v-for="(col, i) in rows" :key="`col-$`+i" xs12 md3>
                                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
-                                <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="i" v-text="child"></div>
+                                <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="`child-$`+i" v-text="child"></div>
                                 <v-card-title v-if="col.icons">
-                                    <v-btn v-for=" icon in col.icons " :key="icon " icon dark class="mx-1">
+                                    <v-btn v-for=" (icon,index) in col.icons " :key="`key-`+index" icon dark class="mx-1">
                                         <v-icon color="green" size="24px ">{{ icon }}</v-icon>
                                     </v-btn>
                                 </v-card-title>
@@ -223,17 +224,24 @@ export default {
         ]
       }
     ],
-
+    megamenu: [
+      {
+        title: "Truyện Tiểu Thuyết",
+        text: "Truyện tình yêu"
+      },
+      {
+        title: "Truyện Tiểu Thuyết2",
+        text: "Truyện tình yêu2"
+      }
+    ],
     // popover
     register: false,
     login: false,
     message: false,
     hints: true,
     //    popover
-    e1: false,
     e2: false,
     e3: false,
-    e4: false,
     password: "Password",
     emailRegister: [
       v => !!v || "E-mail là bắt buộc",
@@ -247,7 +255,8 @@ export default {
   }),
   props: {
     source: String
-  }
+  },
+  methods: {}
 };
 </script>
 <style>

@@ -15,11 +15,11 @@
                         <td>
                             <v-layout row wrap>
                                 <v-flex xs12 md3>
-                                    <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id)"></v-text-field>
+                                    <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </td>
-                        <td>{{ props.item.quantity * props.item.book.price}}</td>
+                        <td> {{props.item.book.price *props.item.quantity}}</td>
                         <td>
                             <v-btn flat icon color="red" @click="delCart(props.item)">
                                 <v-icon>clear</v-icon>
@@ -33,7 +33,7 @@
                     <strong class="title" color="black">Tổng tiền</strong>
                 </v-flex>
                 <v-flex xs4 text-xs-right>
-                    <strong color="black">{{total()}}</strong>
+                    <strong color="black"></strong>
                 </v-flex>
             </v-layout>
             <v-layout row wrap class="pt-3 border-top">
@@ -81,21 +81,13 @@ export default {
     sub: {}
   }),
   methods: {
-    total() {
-      for (let index = 0; index < this.$store.state.cart.length; index++) {
-        this.sub =
-          this.$store.state.cart[index].book.price *
-          this.$store.state.cart[index].quantity;
-      }
-      console.log(this.sub);
-      return this.sub;
-    },
-    upadateQty(id) {
+    upadateQty(id, e) {
       let cart = this.$store.state.cart;
       for (let index = 0; index < this.$store.state.cart.length; index++) {
         if (this.$store.state.cart[index].book.id == id) {
-          Object.assign(id, cart);
+          this.$store.state.cart[index].quantity = e;
           this.$store.dispatch("setCart", cart);
+          break;
         }
       }
     },

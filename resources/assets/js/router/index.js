@@ -10,6 +10,8 @@ import Listproducts from "../components/pages/listproducts.vue";
 import Card from "../components/pages/card.vue";
 import Search from "../components/pages/search.vue";
 import Favorite from "../components/pages/favorite.vue";
+import Tags from "../components/pages/tags.vue";
+
 //
 const router = new VueRouter({
   routes: [
@@ -52,6 +54,11 @@ const router = new VueRouter({
       path: "/favorite",
       name: "favorite",
       component: Favorite
+    },
+    {
+      path: "/tags",
+      name: "tags",
+      component: Tags
     }
   ]
 });
