@@ -23,7 +23,7 @@
             </td>
             <td>
               <v-flex xs12 md3 class="mx-0 my-3">
-                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
+                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQantity(props.item.book.id, $event)"></v-text-field>
               </v-flex>
             </td>
             <td>
@@ -102,10 +102,10 @@ export default {
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
-    upadateQty(val) {
+    upadateQantity(id, e) {
       let favorite = this.$store.state.favorite;
       for (let index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].book.id == val.id) {
+        if (this.$store.state.favorite[index].book.id == id) {
           this.$store.state.favorite[index].quantity = e;
           this.$store.dispatch("setFavorite", favorite);
           break;

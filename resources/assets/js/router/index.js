@@ -10,13 +10,10 @@ import Listproducts from "../components/pages/listproducts.vue";
 import Card from "../components/pages/card.vue";
 import Search from "../components/pages/search.vue";
 import Favorite from "../components/pages/favorite.vue";
-<<<<<<< HEAD
 import Listcategory from "../components/pages/listcategory.vue";
 import Listauthor from "../components/pages/listauthor.vue";
-=======
 import Tags from "../components/pages/tags.vue";
 
->>>>>>> bea850a81d987a90c348136e47f08ad2b5915a1f
 //
 const router = new VueRouter({
   routes: [
@@ -61,7 +58,6 @@ const router = new VueRouter({
       component: Favorite
     },
     {
-<<<<<<< HEAD
       path: "/list-category",
       name: "listcategory",
       component: Listcategory
@@ -70,11 +66,11 @@ const router = new VueRouter({
       path: "/list-author",
       name: "listauthor",
       component: Listauthor
-=======
+    },
+    {
       path: "/tags",
       name: "tags",
       component: Tags
->>>>>>> bea850a81d987a90c348136e47f08ad2b5915a1f
     }
   ]
 });

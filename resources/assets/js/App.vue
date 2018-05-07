@@ -177,12 +177,7 @@
                                     </v-layout>
                                 </v-card>
                             </v-menu>
-<<<<<<< HEAD
-                            <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
-=======
-                            <v-btn flat class="white--text">Tác giả</v-btn>
                             <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
->>>>>>> bea850a81d987a90c348136e47f08ad2b5915a1f
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
