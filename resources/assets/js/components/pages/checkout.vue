@@ -21,14 +21,23 @@
                                 <v-flex xs12 md6>
                                     <h1 class="headline grey--text text--darken-3 text-xs-center "> Đơn hàng của bạn
                                     </h1>
-                                    <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="elevation-1 mt-5">
+                                    <v-data-table flat :headers="headers" :items="$store.state.cart" hide-actions class="elevation-1 mt-5">
                                         <template slot="items" slot-scope="props">
                                             <td>
                                                 <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
                                             </td>
                                             <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                                         </template>
+
                                     </v-data-table>
+                                    <template>
+                                        <v-layout row wrap>
+                                            <v-flex sx12 md10 class="green--text text--accent-4 subheading ">Thanh toán:</v-flex>
+                                            <v-flex sx12 md2 class="grey--text text--darken-1 title px-0">
+                                                ....
+                                            </v-flex>
+                                        </v-layout>
+                                    </template>
                                     <div class="mt-3 text-xs-center">
                                         <v-btn class="green accent-4" color="white--text"> Đặt hàng</v-btn>
                                     </div>
@@ -52,11 +61,10 @@ export default {
         value: "name"
       },
       {
-        text: "Tổng",
+        text: "Giá tiền",
         align: "right",
         value: "total",
-        sortable: false,
-        
+        sortable: false
       }
     ],
     checkOuts: [

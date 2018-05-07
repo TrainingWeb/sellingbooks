@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" value="wqfasds" class="input-group--focused" :type="e2 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Mật khẩu" hint="Nhập tối đa 8 ký tự" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -61,7 +61,7 @@
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" value="wqfasds" class="input-group--focused" :type="e3 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Mật khẩu" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" :type="e3 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>

@@ -67,8 +67,12 @@ export default {
           return;
         }
       }
+      let itemBook = {
+        book: this.book,
+        quantity: 1
+      };
       let favorite = this.$store.state.favorite;
-      favorite.push(this.book);
+      favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
     }
   }
