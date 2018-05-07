@@ -10,7 +10,12 @@ const store = new Vuex.Store({
         quantity: 0
       }
     ],
-    favorite: []
+    favorite: [
+      {
+        book: {},
+        quantity: 0
+      }
+    ]
   },
   mutations: {
     SET_CART: (state, cart) => {

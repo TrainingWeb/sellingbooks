@@ -81,16 +81,6 @@ export default {
     sub: 0
   }),
   methods: {
-    // totalbook(id) {
-    //   let cart = this.$store.state.cart;
-    //   for (let index = 0; index < this.$store.state.cart.length; index++) {
-    //     if (this.$store.state.cart[index].book.id == id) {
-    //       this.sub =
-    //         this.$store.state.cart[index].book.price *
-    //         this.$store.state.cart[index].quantity;
-    //     }
-    //   }
-    // },
     upadateQty(id, e) {
       let cart = this.$store.state.cart;
       for (var index in this.$store.state.cart) {

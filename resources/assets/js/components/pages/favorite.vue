@@ -8,33 +8,37 @@
         <template slot="items" slot-scope="props">
           <tr class="py-1">
             <td class="py-2">
-              <img :src="props.item.img" alt="" width="100px" height="150px">
+              <img :src="props.item.book.img" alt="" width="80px" height="120px">
             </td>
-            <td class="title text-xs-left" color="red">{{ props.item.name }}</td>
+            <td>
+              <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
+            </td>
             <td>
               <v-layout row wrap>
-                <div class="green--text text--accent-4 title mt-3"> {{props.item.price}}</div>
-                <span class="grey--text text--darken-1 title mt-3 ml-3">
-                  <del>{{props.item.sale}}</del>
+                <div class="green--text text--accent-4 title "> {{props.item.book.price}}</div>
+                <span class="grey--text text--darken-1 title ml-3">
+                  <del>{{props.item.book.sale}}</del>
                 </span>
               </v-layout>
-              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite">
+            </td>
+            <td>
+              <v-flex xs12 md3 class="mx-0 my-3">
+                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
+              </v-flex>
+            </td>
+            <td>
+              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item.book)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
-            <td class="justify-center layout px-0">
-              <v-btn icon class="my-5" @click="deleteItem(props.item)">
-                <v-icon color="pink">clear</v-icon>
+            <td class="text-xs-center layout px-0 py-5">
+              <v-btn icon class="" @click="deleteItem(props.item)">
+                <v-icon class="red--text text--darken-4">clear</v-icon>
               </v-btn>
             </td>
           </tr>
         </template>
       </v-data-table>
-      <template>
-        <div class="text-xs-center mt-5">
-          <v-pagination :length="3" v-model="page"></v-pagination>
-        </div>
-      </template>
     </v-container>
   </div>
 </template>
@@ -51,6 +55,8 @@ export default {
         value: "name"
       },
 
+      { text: "Giá tiền", value: "", sortable: false },
+      { text: "Số lượng", value: "", sortable: false },
       { text: "Chọn mua", value: "", sortable: false },
       { text: "", value: "", sortable: false }
     ],
@@ -79,22 +85,32 @@ export default {
         this.$store.dispatch("setFavorite", favorite);
       }
     },
-    addCartPageFavorite() {
+    addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
+        if (this.$store.state.cart[index].book.id === val.id) {
           alert(
-            "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
           );
           return;
         }
       }
       let itemBook = {
-        book: this.bookDetail,
+        book: val,
         quantity: 1
       };
       let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+    },
+    upadateQty(val) {
+      let favorite = this.$store.state.favorite;
+      for (let index = 0; index < this.$store.state.favorite.length; index++) {
+        if (this.$store.state.favorite[index].book.id == val.id) {
+          this.$store.state.favorite[index].quantity = e;
+          this.$store.dispatch("setFavorite", favorite);
+          break;
+        }
+      }
     }
   }
 };

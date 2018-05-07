@@ -21,7 +21,12 @@
                                                         <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
                                                         <div class="grey--text accent-4 body-2">
                                                             <span>Tác giả: </span>{{bookDetail.author}}</div>
-                                                        <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
+                                                        <v-layout row wrap class="mx-0">
+                                                            <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
+                                                            <span class="grey--text text--darken-1 title mt-3 ml-3">
+                                                                <del>{{bookDetail.sale}}</del>
+                                                            </span>
+                                                        </v-layout>
                                                         <v-divider class="my-3"></v-divider>
                                                         <div>
                                                             <span class=" grey--text text--accent-4body-1">{{bookDetail.detail}}</span>
@@ -30,19 +35,23 @@
                                                             </a>
                                                         </div>
                                                         <v-divider class="my-3"></v-divider>
-                                                        <div class="mx-0">
-                                                            <v-btn color="green accent-4 white--text" @click="addCartDetail">
+                                                        <div>
+                                                            <v-btn class="mx-0" color="green accent-4 white--text" @click="addCartDetail">
                                                                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
                                                             </v-btn>
-                                                            <v-btn color="green accent-4" @click="addCartFavorite">
+                                                            <v-btn color="green accent-4" @click="addFavoriteDetail">
                                                                 <i class="material-icons favorite white--text">favorite</i>
                                                             </v-btn>
                                                         </div>
                                                         <v-layout row wrap class="mt-3">
                                                             <div class="text-xs-center">
-                                                                <span class="green--text ml-2">Thể loại:</span>
-                                                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">Sách Giáo Khoa</v-chip>
-                                                                <v-chip color="grey--text text--darken-1" text-color="white">Sách Văn Học</v-chip>
+                                                                <span class="green--text ml-2">Tags:</span>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
+                                                                    <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Giáo Khoa </router-link>
+                                                                </v-chip>
+                                                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
+                                                                    <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Văn Học </router-link>
+                                                                </v-chip>
                                                             </div>
                                                         </v-layout>
                                                     </div>
@@ -69,24 +78,29 @@
                             <v-tab-item id="tab-2">
                                 <v-card>
                                     <v-list three-line>
-                                        <template v-for="item in comments">
-                                            <v-list-tile avatar :key="item.title">
+
+                                        <template>
+                                            <v-list-tile v-for="item in comments" avatar :key="item.title">
                                                 <v-list-tile-avatar>
                                                     <img :src="item.avatar">
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
-                                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                                                    <v-list-tile-title v-html="item.name"></v-list-tile-title>
                                                     <v-list-tile-sub-title class="subtitleComment" v-html="item.subtitle"></v-list-tile-sub-title>
                                                 </v-list-tile-content>
                                                 <v-list-tile-action>
                                                     <v-list-tile-action-text>{{ item.time }}</v-list-tile-action-text>
-                                                    <!-- <v-icon color="grey lighten-1">star_border</v-icon> -->
+
                                                 </v-list-tile-action>
                                             </v-list-tile>
                                         </template>
-                                        <template>
-                                            <v-text-field name="input-1-3" label="Hint Text" single-line></v-text-field>
-                                        </template>
+                                        <v-layout row wrap>
+                                            <v-text-field v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
+                                            <div>
+                                                <v-btn color="green accent-4 white--text" @click="saveComment">Gửi</v-btn>
+                                            </div>
+                                        </v-layout>
+
                                     </v-list>
                                 </v-card>
                             </v-tab-item>
@@ -95,8 +109,8 @@
                     <v-container grid-list-xs class="mt-5">
                         <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
                         <v-layout row wrap>
-                            <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`khoa${index}`">
-                                <book-item :book="item"></book-item>
+                            <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+                                <book-item :book=item></book-item>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -109,6 +123,7 @@
 export default {
   data() {
     return {
+      commenttext: "",
       bookDetail: {
         img:
           "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
@@ -125,21 +140,21 @@ export default {
       comments: [
         {
           avatar: "./img/author.jpg",
-          title: "Võ Đăng Ánh",
+          name: "Võ Đăng Ánh",
           subtitle:
             "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
           time: "02:56 PM"
         },
         {
           avatar: "./img/author.jpg",
-          title: "Tô Thị Tuyết Nga",
+          name: "Tô Thị Tuyết Nga",
           subtitle:
             "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
           time: "03:15 PM"
         },
         {
           avatar: "./img/user.jpg",
-          title: "Nguyễn Thị Thu Thủy",
+          name: "Nguyễn Thị Thu Thủy",
           subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
           time: "08:32 PM"
         }
@@ -185,7 +200,8 @@ export default {
           disabled: true
         }
       ],
-      namepage: "Chi tiết sản phẩm"
+      namepage: "Chi tiết sản phẩm",
+      currentComment: null
     };
   },
   methods: {
@@ -193,7 +209,7 @@ export default {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === this.book.id) {
           alert(
-            "sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
           );
           return;
         }
@@ -206,16 +222,29 @@ export default {
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
-    addCartFavorite() {
+    addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].id == this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
           return;
         }
       }
+      let itemBook = {
+        book: this.bookDetail,
+        quantity: 1
+      };
       let favorite = this.$store.state.favorite;
-      favorite.push(this.book);
+      favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+    },
+    saveComment() {
+      this.comments.push({
+        avatar: "./img/author.jpg",
+        name: "Tô Thị Tuyết Nga",
+        subtitle: this.commenttext,
+        time: "03:15 PM"
+      });
+      this.commenttext = "";
     }
   }
 };
@@ -239,4 +268,3 @@ export default {
   color: #757575 !important;
 }
 </style>
-

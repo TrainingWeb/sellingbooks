@@ -20,7 +20,7 @@
                             <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
                             <v-card flat>
                                 <v-list class="green accent-4 white--text text-xs-center">
-                                    <span>ĐĂNG NHẬP</span>
+                                    <span class="">ĐĂNG NHẬP</span>
                                 </v-list>
                                 <v-divider></v-divider>
                                 <v-container>
@@ -30,7 +30,7 @@
                                                 <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" value="wqfasds" class="input-group--focused" :type="e2 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Mật khẩu" hint="Nhập tối đa 8 ký tự" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -61,7 +61,7 @@
                                                 <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-text-field name="input-10-2" label="Enter your password" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" value="wqfasds" class="input-group--focused" :type="e3 ? 'password' : 'text'"></v-text-field>
+                                                <v-text-field name="input-10-2" label="Mật khẩu" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" :type="e3 ? 'password' : 'text'"></v-text-field>
                                             </v-flex>
                                         </v-layout>
                                     </v-list>
@@ -177,7 +177,12 @@
                                     </v-layout>
                                 </v-card>
                             </v-menu>
+<<<<<<< HEAD
                             <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
+=======
+                            <v-btn flat class="white--text">Tác giả</v-btn>
+                            <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
+>>>>>>> bea850a81d987a90c348136e47f08ad2b5915a1f
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
@@ -206,7 +211,7 @@
 
                                 <div class="mb-3" color="grey--text text--darken-2">
                                     <v-icon size="18px" class="mr-1">fas fa-home</v-icon>
-                                    179 Võ Duy Ninh,TP ĐN
+                                    79 Võ Duy Ninh,TP ĐN
                                 </div>
                                 <div class="mb-3">
                                     <v-icon size="18px" class="mr-1  ">fas fa-envelope</v-icon>

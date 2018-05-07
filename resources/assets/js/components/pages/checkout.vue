@@ -28,6 +28,7 @@
                                             </td>
                                             <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                                         </template>
+
                                     </v-data-table>
                                     <template>
                                         <v-layout row wrap>
@@ -60,7 +61,7 @@ export default {
         value: "name"
       },
       {
-        text: "Tổng",
+        text: "Giá tiền",
         align: "right",
         value: "total",
         sortable: false
