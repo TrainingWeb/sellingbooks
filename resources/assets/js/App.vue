@@ -109,25 +109,79 @@
                                 <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
                                 <v-card>
                                     <v-layout row wrap>
-                                        <!-- <v-flex xs4 v-for="(index ,item) in 3" :key="`key-$`+index">
+                                        <v-flex xs4 text-xs-center>
                                             <v-list>
-                                                <v-list-tile avatar v-for="subtiem in megamenu" :key="item +'-'+ subtiem">
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu" :key="`key-$`+index" exact :to="`/list-category?type=`+subtiem.text">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>{{subtiem.title}}</v-list-tile-title>
+                                                        <v-list-tile-title>
+                                                            {{subtiem.text}}
+                                                        </v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                        <v-flex xs4>
+                                            <v-list>
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu2" :key="`key2-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                                                    <v-list-tile-content>
                                                         <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
                                                 </v-list-tile>
                                             </v-list>
-                                        </v-flex> -->
+                                        </v-flex>
+                                        <v-flex xs4>
+                                            <v-list>
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu3" :key="`key3-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
                                     </v-layout>
                                 </v-card>
                             </v-menu>
-                            <v-btn flat class="white--text">Tác giả</v-btn>
+                            <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
+                                <v-btn slot="activator" flat class="white--text">Tác giả</v-btn>
+                                <v-card>
+                                    <v-layout row wrap>
+                                        <v-flex xs4 text-xs-center>
+                                            <v-list>
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors" :key="`key-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            {{subtiem.text}}
+                                                        </v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                        <v-flex xs4>
+                                            <v-list>
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors2" :key="`key2-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                        <v-flex xs4>
+                                            <v-list>
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors3" :key="`key3-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card>
+                            </v-menu>
                             <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
-                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark></v-text-field>
+                            <v-text-field label="Tìm kiếm" :append-icon="'search'" dark @keyup.enter="textSearch" v-model="search" color="white"></v-text-field>
                         </v-toolbar-items>
                     </v-toolbar>
                 </v-container>
@@ -226,12 +280,110 @@ export default {
     ],
     megamenu: [
       {
-        title: "Truyện Tiểu Thuyết",
-        text: "Truyện tình yêu"
+        id: 1,
+        text: "tình Yêu Không có lỗi"
       },
       {
-        title: "Truyện Tiểu Thuyết2",
-        text: "Truyện tình yêu2"
+        id: 2,
+        text: "ngôn tình "
+      },
+      {
+        id: 3,
+        text: "Xuyên không"
+      },
+      {
+        id: 4,
+        text: "Truyện cổ tích"
+      }
+    ],
+    megamenu2: [
+      {
+        id: 5,
+        text: "tình Yêu Không có lỗi2"
+      },
+      {
+        id: 6,
+        text: "ngôn tình 2"
+      },
+      {
+        id: 7,
+        text: "Xuyên không 2"
+      },
+      {
+        id: 8,
+        text: "Truyện cổ tích 2"
+      }
+    ],
+    megamenu3: [
+      {
+        id: 9,
+        text: "tình Yêu Không có lỗi 3"
+      },
+      {
+        id: 10,
+        text: "ngôn tình 3"
+      },
+      {
+        id: 11,
+        text: "Xuyên không 3"
+      },
+      {
+        id: 12,
+        text: "Truyện cổ tích 3"
+      }
+    ],
+    authors: [
+      {
+        id: 1,
+        text: "Vũ trọng Phụng"
+      },
+      {
+        id: 2,
+        text: "Nguyễn Du"
+      },
+      {
+        id: 3,
+        text: "Nguyên Hồng"
+      },
+      {
+        id: 4,
+        text: "Tô Hoài"
+      }
+    ],
+    authors2: [
+      {
+        id: 5,
+        text: "Cẩm Vân"
+      },
+      {
+        id: 6,
+        text: "Tản Đà"
+      },
+      {
+        id: 7,
+        text: "Phan Bội Châu"
+      },
+      {
+        id: 8,
+        text: "Hồ Chí Minh"
+      }
+    ],
+    authors3: [
+      {
+        id: 9,
+        text: "Nguyễn Trãi"
+      },
+      {
+        id: 10,
+        text: "Nguyễn Ngọc Ký"
+      },
+      {
+        id: 11,
+        text: "Ngô Tất Tố"
+      },
+      {
+        id: 12,
+        text: "Văn Cao"
       }
     ],
     // popover
@@ -251,12 +403,18 @@ export default {
     ],
     name: {
       required: () => "Tên là bắt buộc"
-    }
+    },
+    search: null
   }),
   props: {
     source: String
   },
-  methods: {}
+  methods: {
+    textSearch() {
+      console.log("Đã vào rồi ");
+      window.location = `#/search?keyword=${this.search}`;
+    }
+  }
 };
 </script>
 <style>

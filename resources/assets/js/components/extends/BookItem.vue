@@ -23,7 +23,7 @@
                                 <v-icon>add_shopping_cart</v-icon>
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn flat icon color="grey" @click="favorite">
+                            <v-btn flat icon color="grey" @click="addItemfavorite">
                                 <v-icon>favorite</v-icon>
                             </v-btn>
                         </v-card-actions>
@@ -60,12 +60,12 @@ export default {
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
-    favorite() {
-      for (let index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].id == this.book.id) {
+    addItemfavorite() {
+      for (var index in this.$store.state.favorite) {
+        if (this.$store.state.favorite[index].id === this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
+          return;
         }
-        return;
       }
       let favorite = this.$store.state.favorite;
       favorite.push(this.book);

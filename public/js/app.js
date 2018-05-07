@@ -11480,7 +11480,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
-module.exports = __webpack_require__(73);
+module.exports = __webpack_require__(78);
 
 
 /***/ }),
@@ -11496,12 +11496,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -11527,7 +11527,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("VBanner", __WEBPACK_IMPOR
 // Save card
 
 if (localStorage.cart) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_CART", JSON.parse(localStorage.cart));
+//
 if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
+//
+
+//
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -30184,10 +30188,16 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_pages_search_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_pages_favorite_vue__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_pages_favorite_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_pages_favorite_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_listcategory_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_listcategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_pages_listcategory_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
+
 
 
 
@@ -30230,6 +30240,14 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     path: "/favorite",
     name: "favorite",
     component: __WEBPACK_IMPORTED_MODULE_9__components_pages_favorite_vue___default.a
+  }, {
+    path: "/list-category",
+    name: "listcategory",
+    component: __WEBPACK_IMPORTED_MODULE_10__components_pages_listcategory_vue___default.a
+  }, {
+    path: "/list-author",
+    name: "listauthor",
+    component: __WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue___default.a
   }]
 });
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -33772,8 +33790,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].id == this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
+          return;
         }
-        return;
       }
       var favorite = this.$store.state.favorite;
       favorite.push(this.book);
@@ -35018,6 +35036,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35032,25 +35058,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         align: "right",
         value: "total",
         sortable: false
+      }],
 
-      }],
-      checkOuts: [{
-        value: false,
-        name: "Bộ sách giáo khoa lớp 9",
-        total: "445.000 NVĐ"
-      }, {
-        value: false,
-        name: "Lịch sử Việt Nam",
-        total: "145.000 NVĐ"
-      }, {
-        value: false,
-        name: "Tin học văn phòng",
-        total: "205.000 NVĐ"
-      }, {
-        value: false,
-        name: "Tổng",
-        total: "785.000 NVĐ"
-      }],
       valid: false,
       name: "",
       nameRules: [function (v) {
@@ -35090,6 +35099,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       namepage: "Kiểm tra đơn hàng"
     };
+  },
+  computed: {
+    total: function total() {
+      return this.$store.state.cart.reduce(function (total, p) {
+        return total + p.book.price * p.quantity;
+      }, 0);
+    }
   }
 });
 
@@ -35275,7 +35291,8 @@ var render = function() {
                                     attrs: {
                                       headers: _vm.headers,
                                       items: _vm.$store.state.cart,
-                                      "hide-actions": ""
+                                      "hide-actions": "",
+                                      flat: ""
                                     },
                                     scopedSlots: _vm._u([
                                       {
@@ -35310,6 +35327,41 @@ var render = function() {
                                     ])
                                   }),
                                   _vm._v(" "),
+                                  [
+                                    _c(
+                                      "v-layout",
+                                      { attrs: { row: "", wrap: "" } },
+                                      [
+                                        _c(
+                                          "v-flex",
+                                          {
+                                            staticClass:
+                                              "green--text text--accent-4 subheading ",
+                                            attrs: { sx12: "", md10: "" }
+                                          },
+                                          [_vm._v("Thanh toán:")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-flex",
+                                          {
+                                            staticClass:
+                                              "grey--text text--darken-1 title px-0",
+                                            attrs: { sx12: "", md2: "" }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(_vm.total) +
+                                                "\n                                        "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  _vm._v(" "),
                                   _c(
                                     "div",
                                     { staticClass: "mt-3 text-xs-center" },
@@ -35326,7 +35378,7 @@ var render = function() {
                                     1
                                   )
                                 ],
-                                1
+                                2
                               )
                             ],
                             1
@@ -35498,108 +35550,126 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
       books: [{
+        id: 20,
         img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
         name: "Cô gái mở đường",
-        price: "120.000",
+        price: 120,
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 21,
         img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
         name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
+        price: 120,
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 22,
         img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
         name: "Truyện kiều",
-        price: "120.000",
+        price: 120,
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 23,
         img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
         name: "Chuyện chưa kể",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 24,
         img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
         name: "Cô bé bán diêm",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 25,
         img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 26,
         img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 27,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 28,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 29,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 30,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 31,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 32,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 33,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 34,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 35,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 36,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
         name: "Mèo con đi học",
         price: "120.000",
         sale: "150.000",
         author: "Nguyễn Du"
       }, {
+        id: 37,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
         name: "Mèo con đi học",
         price: "120.000",
@@ -35886,25 +35956,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sortable: false
       }, { text: "Tên sách", sortable: false }, { text: "Giá tiền", sortable: false }, { text: "Số lượng", sortable: false }, { text: "Tồng tiền", sortable: false }, { sortable: false }],
       qty: 0,
-      sub: {}
+      sub: 0
     };
   },
   methods: {
-    totalbook: function totalbook(id) {
-      var cart = this.$store.state.cart;
-      for (var index = 0; index < this.$store.state.cart.length; index++) {
-        if (this.$store.state.cart[index].book.id == id) {
-          this.sub = this.$store.state.cart[index].book.price * this.$store.state.cart[index].quantity;
-        }
-      }
-    },
+    // totalbook(id) {
+    //   let cart = this.$store.state.cart;
+    //   for (let index = 0; index < this.$store.state.cart.length; index++) {
+    //     if (this.$store.state.cart[index].book.id == id) {
+    //       this.sub =
+    //         this.$store.state.cart[index].book.price *
+    //         this.$store.state.cart[index].quantity;
+    //     }
+    //   }
+    // },
     upadateQty: function upadateQty(id, e) {
       var cart = this.$store.state.cart;
-      for (var index = 0; index < this.$store.state.cart.length; index++) {
+      for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id == id) {
+          console.log("vẫn giảm đc");
           this.$store.state.cart[index].quantity = e;
           this.$store.dispatch("setCart", cart);
-          break;
+          return;
         }
       }
     },
@@ -35915,6 +35988,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cart.splice(index, 1);
         this.$store.dispatch("setCart", cart);
       }
+    }
+  },
+  computed: {
+    total: function total() {
+      return this.$store.state.cart.reduce(function (total, p) {
+        return total + p.book.price * p.quantity;
+      }, 0);
     }
   }
 });
@@ -35991,7 +36071,8 @@ var render = function() {
                                       type: "number",
                                       flat: "",
                                       solo: "",
-                                      value: props.item.quantity
+                                      value: props.item.quantity,
+                                      min: "1"
                                     },
                                     on: {
                                       input: function($event) {
@@ -36058,7 +36139,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("v-flex", { attrs: { xs4: "", "text-xs-right": "" } }, [
-                _c("strong", { attrs: { color: "black" } })
+                _c("strong", { attrs: { color: "black" } }, [
+                  _vm._v(_vm._s(_vm.total))
+                ])
               ])
             ],
             1
@@ -36254,7 +36337,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: "/",
         disabled: false
       }, {
-        name: "Danh sách sản phẩm",
+        name: "",
         url: "/list-products",
         disabled: true
       }],
@@ -36369,10 +36452,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sale: "150.000",
         author: "Nguyễn Du"
       }],
-      namepage: "Kết quả tìm kiếm: ",
+      namepage: "",
 
       page: 1
     };
+  },
+  mounted: function mounted() {
+    this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
+    this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
   }
 });
 
@@ -36598,10 +36685,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      headers: [{ text: "", value: "img", sortable: false }, {
+        text: "Tên sách",
+        align: "left",
+        sortable: false,
+        value: "name"
+      }, { text: "Chọn mua", value: "", sortable: false }, { text: "", value: "", sortable: false }],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -36615,6 +36729,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       namepage: "Sản phẩm yêu thích",
       page: 1
     };
+  },
+  methods: {
+    deleteItem: function deleteItem(item) {
+      var favorite = this.$store.state.favorite;
+      var index = favorite.indexOf(item);
+      if (index >= 0) {
+        favorite.splice(index, 1);
+        this.$store.dispatch("setFavorite", favorite);
+      }
+    },
+    addCartPageFavorite: function addCartPageFavorite() {
+      for (var index in this.$store.state.cart) {
+        if (this.$store.state.cart[index].book.id === this.book.id) {
+          alert("sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+          return;
+        }
+      }
+      var itemBook = {
+        book: this.bookDetail,
+        quantity: 1
+      };
+      var cart = this.$store.state.cart;
+      cart.push(itemBook);
+      this.$store.dispatch("setCart", cart);
+    }
   }
 });
 
@@ -36645,18 +36784,116 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.$store.state.favorite, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
-              )
-            })
-          ),
+          _c("v-data-table", {
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.$store.state.favorite,
+              "hide-actions": "",
+              flat: ""
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c("tr", { staticClass: "py-1" }, [
+                      _c("td", { staticClass: "py-2" }, [
+                        _c("img", {
+                          attrs: {
+                            src: props.item.img,
+                            alt: "",
+                            width: "100px",
+                            height: "150px"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "title text-xs-left",
+                          attrs: { color: "red" }
+                        },
+                        [_vm._v(_vm._s(props.item.name))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("v-layout", { attrs: { row: "", wrap: "" } }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "green--text text--accent-4 title mt-3"
+                              },
+                              [_vm._v(" " + _vm._s(props.item.price))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "grey--text text--darken-1 title mt-3 ml-3"
+                              },
+                              [_c("del", [_vm._v(_vm._s(props.item.sale))])]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-0 my-3",
+                              attrs: { color: "green accent-4 white--text" },
+                              on: { click: _vm.addCartPageFavorite }
+                            },
+                            [
+                              _c(
+                                "i",
+                                {
+                                  staticClass:
+                                    "material-icons add-shopping mr-2 white--text"
+                                },
+                                [_vm._v("add_shopping_cart")]
+                              ),
+                              _vm._v("Thêm\n            ")
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "justify-center layout px-0" },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "my-5",
+                              attrs: { icon: "" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteItem(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _c("v-icon", { attrs: { color: "pink" } }, [
+                                _vm._v("clear")
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                }
+              }
+            ])
+          }),
           _vm._v(" "),
           [
             _c(
@@ -36724,6 +36961,371 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources\\assets\\js\\components\\pages\\listcategory.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4af50a4b", Component.options)
+  } else {
+    hotAPI.reload("data-v-4af50a4b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(58);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("30f023ca", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4af50a4b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./listcategory.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4af50a4b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./listcategory.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        url: "/",
+        disabled: false
+      }, {
+        name: "",
+        url: "/list-products",
+        disabled: true
+      }],
+      e1: null,
+      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      books: [{
+        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
+        name: "Dế mèn phiêu lưu kí",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+        name: "Truyện kiều",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
+        name: "Chuyện chưa kể",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
+        name: "Cô bé bán diêm",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }],
+      namepage: "Danh sách sản phẩm",
+      page: 1
+    };
+  },
+  watch: {
+    "$route.query.type": function $routeQueryType(val) {
+      this.breadcrumbs[1].name = "" + this.$route.query.type;
+    }
+  },
+  mounted: function mounted() {
+    this.breadcrumbs[1].name = "" + this.$route.query.type;
+  }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.filter,
+                      label: "--Chọn--",
+                      "single-line": ""
+                    },
+                    model: {
+                      value: _vm.e1,
+                      callback: function($$v) {
+                        _vm.e1 = $$v
+                      },
+                      expression: "e1"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            _vm._l(_vm.books, function(item, index) {
+              return _c(
+                "v-flex",
+                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
+                [_c("book-item", { attrs: { book: item } })],
+                1
+              )
+            })
+          ),
+          _vm._v(" "),
+          [
+            _c(
+              "div",
+              { staticClass: "text-xs-center mt-5" },
+              [
+                _c("v-pagination", {
+                  attrs: { length: 3 },
+                  model: {
+                    value: _vm.page,
+                    callback: function($$v) {
+                      _vm.page = $$v
+                    },
+                    expression: "page"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4af50a4b", module.exports)
+  }
+}
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(62)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(64)
+/* template */
+var __vue_template__ = __webpack_require__(65)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources\\assets\\js\\App.vue"
 
 /* hot reload */
@@ -36746,13 +37348,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 57 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(58);
+var content = __webpack_require__(63);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -36772,7 +37374,7 @@ if(false) {
 }
 
 /***/ }),
-/* 58 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -36786,11 +37388,65 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 
 /***/ }),
-/* 59 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36999,11 +37655,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icons: ["fab fa-facebook", "fab fa-twitter", "fab fa-google-plus", "fab fa-linkedin", "fab fa-instagram"]
       }],
       megamenu: [{
-        title: "Truyện Tiểu Thuyết",
-        text: "Truyện tình yêu"
+        id: 1,
+        text: "tình Yêu Không có lỗi"
       }, {
-        title: "Truyện Tiểu Thuyết2",
-        text: "Truyện tình yêu2"
+        id: 2,
+        text: "ngôn tình "
+      }, {
+        id: 3,
+        text: "Xuyên không"
+      }, {
+        id: 4,
+        text: "Truyện cổ tích"
+      }],
+      megamenu2: [{
+        id: 5,
+        text: "tình Yêu Không có lỗi2"
+      }, {
+        id: 6,
+        text: "ngôn tình 2"
+      }, {
+        id: 7,
+        text: "Xuyên không 2"
+      }, {
+        id: 8,
+        text: "Truyện cổ tích 2"
+      }],
+      megamenu3: [{
+        id: 9,
+        text: "tình Yêu Không có lỗi 3"
+      }, {
+        id: 10,
+        text: "ngôn tình 3"
+      }, {
+        id: 11,
+        text: "Xuyên không 3"
+      }, {
+        id: 12,
+        text: "Truyện cổ tích 3"
+      }],
+      authors: [{
+        id: 1,
+        text: "Vũ trọng Phụng"
+      }, {
+        id: 2,
+        text: "Nguyễn Du"
+      }, {
+        id: 3,
+        text: "Nguyên Hồng"
+      }, {
+        id: 4,
+        text: "Tô Hoài"
+      }],
+      authors2: [{
+        id: 5,
+        text: "Cẩm Vân"
+      }, {
+        id: 6,
+        text: "Tản Đà"
+      }, {
+        id: 7,
+        text: "Phan Bội Châu"
+      }, {
+        id: 8,
+        text: "Hồ Chí Minh"
+      }],
+      authors3: [{
+        id: 9,
+        text: "Nguyễn Trãi"
+      }, {
+        id: 10,
+        text: "Nguyễn Ngọc Ký"
+      }, {
+        id: 11,
+        text: "Ngô Tất Tố"
+      }, {
+        id: 12,
+        text: "Văn Cao"
       }],
       // popover
       register: false,
@@ -37024,17 +37751,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         required: function required() {
           return "Tên là bắt buộc";
         }
-      }
+      },
+      search: null
     };
   },
   props: {
     source: String
   },
-  methods: {}
+  methods: {
+    textSearch: function textSearch() {
+      console.log("Đã vào rồi ");
+      window.location = "#/search?keyword=" + this.search;
+    }
+  }
 });
 
 /***/ }),
-/* 60 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -37599,9 +38332,150 @@ var render = function() {
                               _c(
                                 "v-card",
                                 [
-                                  _c("v-layout", {
-                                    attrs: { row: "", wrap: "" }
-                                  })
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs4: "",
+                                            "text-xs-center": ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.megamenu, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-category?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          "\n                                                        " +
+                                                            _vm._s(
+                                                              subtiem.text
+                                                            ) +
+                                                            "\n                                                    "
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs4: "" } },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.megamenu2, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key2-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-category?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          _vm._s(subtiem.text)
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs4: "" } },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.megamenu3, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key3-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-category?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          _vm._s(subtiem.text)
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
                               )
@@ -37610,9 +38484,180 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-btn",
-                            { staticClass: "white--text", attrs: { flat: "" } },
-                            [_vm._v("Tác giả")]
+                            "v-menu",
+                            {
+                              attrs: {
+                                "open-on-hover": "",
+                                "offset-y": "",
+                                "full-width": "",
+                                bottom: "",
+                                "close-on-content-click": false,
+                                "content-class": "mega-menu"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "white--text",
+                                  attrs: { slot: "activator", flat: "" },
+                                  slot: "activator"
+                                },
+                                [_vm._v("Tác giả")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-card",
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        {
+                                          attrs: {
+                                            xs4: "",
+                                            "text-xs-center": ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.authors, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-author?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          "\n                                                        " +
+                                                            _vm._s(
+                                                              subtiem.text
+                                                            ) +
+                                                            "\n                                                    "
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs4: "" } },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.authors2, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key2-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-author?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          _vm._s(subtiem.text)
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs4: "" } },
+                                        [
+                                          _c(
+                                            "v-list",
+                                            _vm._l(_vm.authors3, function(
+                                              subtiem,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "v-list-tile",
+                                                {
+                                                  key: "key3-$" + index,
+                                                  attrs: {
+                                                    avatar: "",
+                                                    exact: "",
+                                                    to:
+                                                      "/list-author?type=" +
+                                                      subtiem.text
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-list-tile-content",
+                                                    [
+                                                      _c("v-list-tile-title", [
+                                                        _vm._v(
+                                                          _vm._s(subtiem.text)
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            })
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
                           ),
                           _vm._v(" "),
                           _c(
@@ -37637,7 +38682,32 @@ var render = function() {
                             attrs: {
                               label: "Tìm kiếm",
                               "append-icon": "search",
-                              dark: ""
+                              dark: "",
+                              color: "white"
+                            },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !("button" in $event) &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.textSearch($event)
+                              }
+                            },
+                            model: {
+                              value: _vm.search,
+                              callback: function($$v) {
+                                _vm.search = $$v
+                              },
+                              expression: "search"
                             }
                           })
                         ],
@@ -37858,13 +38928,13 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(67);
 
 
 
@@ -37875,8 +38945,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       book: {},
       quantity: 0
     }],
-    favorite: [],
-    seach: {}
+    favorite: []
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -37884,9 +38953,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_FAVORITE: function SET_FAVORITE(state, favorite) {
       state.favorite = favorite;
-    },
-    SET_SEARCH: function SET_SEARCH(state, seach) {
-      state.seach = seach;
     }
   },
   actions: {
@@ -37901,19 +38967,13 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
-    },
-    setSeach: function setSeach(_ref3, val) {
-      var commit = _ref3.commit;
-
-      commit("SET_SEARCH", val);
-      localStorage.favorite = JSON.stringify(val);
     }
   }
 });
 /* harmony default export */ __webpack_exports__["a"] = (store);
 
 /***/ }),
-/* 62 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38858,19 +39918,19 @@ var index_esm = {
 
 
 /***/ }),
-/* 63 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(64)
+  __webpack_require__(69)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(66)
+var __vue_script__ = __webpack_require__(71)
 /* template */
-var __vue_template__ = __webpack_require__(67)
+var __vue_template__ = __webpack_require__(72)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38909,13 +39969,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 64 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -38935,7 +39995,7 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -38949,7 +40009,7 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 
 /***/ }),
-/* 66 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39015,12 +40075,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
-    favorite: function favorite() {
-      for (var index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].id == this.book.id) {
+    addItemfavorite: function addItemfavorite() {
+      for (var index in this.$store.state.favorite) {
+        if (this.$store.state.favorite[index].id === this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
+          return;
         }
-        return;
       }
       var favorite = this.$store.state.favorite;
       favorite.push(this.book);
@@ -39030,7 +40090,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 67 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -39123,7 +40183,7 @@ var render = function() {
                             "v-btn",
                             {
                               attrs: { flat: "", icon: "", color: "grey" },
-                              on: { click: _vm.favorite }
+                              on: { click: _vm.addItemfavorite }
                             },
                             [_c("v-icon", [_vm._v("favorite")])],
                             1
@@ -39157,19 +40217,19 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(69)
+  __webpack_require__(74)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(71)
+var __vue_script__ = __webpack_require__(76)
 /* template */
-var __vue_template__ = __webpack_require__(72)
+var __vue_template__ = __webpack_require__(77)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -39208,13 +40268,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 69 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -39234,7 +40294,7 @@ if(false) {
 }
 
 /***/ }),
-/* 70 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -39248,7 +40308,7 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 
 /***/ }),
-/* 71 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39278,7 +40338,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 72 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -39363,10 +40423,376 @@ if (false) {
 }
 
 /***/ }),
-/* 73 */
+/* 78 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 79 */,
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(81)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(83)
+/* template */
+var __vue_template__ = __webpack_require__(84)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\listauthor.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f9dd6cd0", Component.options)
+  } else {
+    hotAPI.reload("data-v-f9dd6cd0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(82);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("39059638", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f9dd6cd0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./listauthor.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f9dd6cd0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./listauthor.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      breadcrumbs: [{
+        name: "Trang Chủ",
+        url: "/",
+        disabled: false
+      }, {
+        name: "",
+        url: "/list-products",
+        disabled: true
+      }],
+      e1: null,
+      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      books: [{
+        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
+        name: "Dế mèn phiêu lưu kí",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+        name: "Truyện kiều",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
+        name: "Chuyện chưa kể",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
+        name: "Cô bé bán diêm",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }, {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
+        name: "Mèo con đi học",
+        price: "120.000",
+        sale: "150.000",
+        author: "Nguyễn Du"
+      }],
+      namepage: "Tác giả",
+      page: 1
+    };
+  },
+  watch: {
+    "$route.query.type": function $routeQueryType(val) {
+      this.breadcrumbs[1].name = "" + this.$route.query.type;
+    }
+  },
+  mounted: function mounted() {
+    this.breadcrumbs[1].name = "" + this.$route.query.type;
+  }
+});
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.filter,
+                      label: "--Chọn--",
+                      "single-line": ""
+                    },
+                    model: {
+                      value: _vm.e1,
+                      callback: function($$v) {
+                        _vm.e1 = $$v
+                      },
+                      expression: "e1"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            _vm._l(_vm.books, function(item, index) {
+              return _c(
+                "v-flex",
+                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
+                [_c("book-item", { attrs: { book: item } })],
+                1
+              )
+            })
+          ),
+          _vm._v(" "),
+          [
+            _c(
+              "div",
+              { staticClass: "text-xs-center mt-5" },
+              [
+                _c("v-pagination", {
+                  attrs: { length: 3 },
+                  model: {
+                    value: _vm.page,
+                    callback: function($$v) {
+                      _vm.page = $$v
+                    },
+                    expression: "page"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f9dd6cd0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -10,8 +10,7 @@ const store = new Vuex.Store({
         quantity: 0
       }
     ],
-    favorite: [],
-    seach: {}
+    favorite: []
   },
   mutations: {
     SET_CART: (state, cart) => {
@@ -19,9 +18,6 @@ const store = new Vuex.Store({
     },
     SET_FAVORITE: (state, favorite) => {
       state.favorite = favorite;
-    },
-    SET_SEARCH: (state, seach) => {
-      state.seach = seach;
     }
   },
   actions: {
@@ -31,10 +27,6 @@ const store = new Vuex.Store({
     },
     setFavorite({ commit }, val) {
       commit("SET_FAVORITE", val);
-      localStorage.favorite = JSON.stringify(val);
-    },
-    setSeach({ commit }, val) {
-      commit("SET_SEARCH", val);
       localStorage.favorite = JSON.stringify(val);
     }
   }

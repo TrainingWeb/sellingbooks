@@ -15,7 +15,7 @@
                         <td>
                             <v-layout row wrap>
                                 <v-flex xs12 md3>
-                                    <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
+                                    <v-text-field type="number" flat solo :value="props.item.quantity" min="1" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </td>
@@ -33,7 +33,7 @@
                     <strong class="title" color="black">Tổng tiền</strong>
                 </v-flex>
                 <v-flex xs4 text-xs-right>
-                    <strong color="black"></strong>
+                    <strong color="black">{{total}}</strong>
                 </v-flex>
             </v-layout>
             <v-layout row wrap class="pt-3 border-top">
@@ -78,26 +78,27 @@ export default {
       { sortable: false }
     ],
     qty: 0,
-    sub: {}
+    sub: 0
   }),
   methods: {
-    totalbook(id) {
-      let cart = this.$store.state.cart;
-      for (let index = 0; index < this.$store.state.cart.length; index++) {
-        if (this.$store.state.cart[index].book.id == id) {
-          this.sub =
-            this.$store.state.cart[index].book.price *
-            this.$store.state.cart[index].quantity;
-        }
-      }
-    },
+    // totalbook(id) {
+    //   let cart = this.$store.state.cart;
+    //   for (let index = 0; index < this.$store.state.cart.length; index++) {
+    //     if (this.$store.state.cart[index].book.id == id) {
+    //       this.sub =
+    //         this.$store.state.cart[index].book.price *
+    //         this.$store.state.cart[index].quantity;
+    //     }
+    //   }
+    // },
     upadateQty(id, e) {
       let cart = this.$store.state.cart;
-      for (let index = 0; index < this.$store.state.cart.length; index++) {
+      for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id == id) {
+          console.log("vẫn giảm đc");
           this.$store.state.cart[index].quantity = e;
           this.$store.dispatch("setCart", cart);
-          break;
+          return;
         }
       }
     },
@@ -108,6 +109,13 @@ export default {
         cart.splice(index, 1);
         this.$store.dispatch("setCart", cart);
       }
+    }
+  },
+  computed: {
+    total() {
+      return this.$store.state.cart.reduce((total, p) => {
+        return total + p.book.price * p.quantity;
+      }, 0);
     }
   }
 };

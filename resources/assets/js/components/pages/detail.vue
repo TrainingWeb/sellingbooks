@@ -210,8 +210,8 @@ export default {
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].id == this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
+          return;
         }
-        return;
       }
       let favorite = this.$store.state.favorite;
       favorite.push(this.book);

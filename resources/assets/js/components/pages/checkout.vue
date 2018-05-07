@@ -21,7 +21,7 @@
                                 <v-flex xs12 md6>
                                     <h1 class="headline grey--text text--darken-3 text-xs-center "> Đơn hàng của bạn
                                     </h1>
-                                    <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="elevation-1 mt-5">
+                                    <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="elevation-1 mt-5" flat>
                                         <template slot="items" slot-scope="props">
                                             <td>
                                                 <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
@@ -29,6 +29,14 @@
                                             <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                                         </template>
                                     </v-data-table>
+                                    <template>
+                                        <v-layout row wrap>
+                                            <v-flex sx12 md10 class="green--text text--accent-4 subheading ">Thanh toán:</v-flex>
+                                            <v-flex sx12 md2 class="grey--text text--darken-1 title px-0">
+                                                {{total}}
+                                            </v-flex>
+                                        </v-layout>
+                                    </template>
                                     <div class="mt-3 text-xs-center">
                                         <v-btn class="green accent-4" color="white--text"> Đặt hàng</v-btn>
                                     </div>
@@ -55,32 +63,10 @@ export default {
         text: "Tổng",
         align: "right",
         value: "total",
-        sortable: false,
-        
+        sortable: false
       }
     ],
-    checkOuts: [
-      {
-        value: false,
-        name: "Bộ sách giáo khoa lớp 9",
-        total: "445.000 NVĐ"
-      },
-      {
-        value: false,
-        name: "Lịch sử Việt Nam",
-        total: "145.000 NVĐ"
-      },
-      {
-        value: false,
-        name: "Tin học văn phòng",
-        total: "205.000 NVĐ"
-      },
-      {
-        value: false,
-        name: "Tổng",
-        total: "785.000 NVĐ"
-      }
-    ],
+
     valid: false,
     name: "",
     nameRules: [
@@ -121,6 +107,13 @@ export default {
       }
     ],
     namepage: "Kiểm tra đơn hàng"
-  })
+  }),
+  computed: {
+    total() {
+      return this.$store.state.cart.reduce((total, p) => {
+        return total + p.book.price * p.quantity;
+      }, 0);
+    }
+  }
 };
 </script>
