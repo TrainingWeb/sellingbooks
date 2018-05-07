@@ -23,11 +23,11 @@
             </td>
             <td>
               <v-flex xs12 md3 class="mx-0 my-3">
-                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQty(props.item.book.id, $event)"></v-text-field>
+                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQtyFv(props.item.book.id, $event)"></v-text-field>
               </v-flex>
             </td>
             <td>
-              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item.book)">
+              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
@@ -95,17 +95,17 @@ export default {
         }
       }
       let itemBook = {
-        book: val,
-        quantity: 1
+        book: val.book,
+        quantity: val.quantity
       };
       let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
     },
-    upadateQty(val) {
+    upadateQtyFv(id, e) {
       let favorite = this.$store.state.favorite;
-      for (let index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].book.id == val.id) {
+      for (var index in this.$store.state.favorite) {
+        if (this.$store.state.favorite[index].book.id == id) {
           this.$store.state.favorite[index].quantity = e;
           this.$store.dispatch("setFavorite", favorite);
           break;

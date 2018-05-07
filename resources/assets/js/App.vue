@@ -111,7 +111,7 @@
                                     <v-layout row wrap>
                                         <v-flex xs4 text-xs-center>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu" :key="`key-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu" :key="`keyCatetgory1-$`+index" exact :to="`/list-category?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>
                                                             {{subtiem.text}}
@@ -122,7 +122,7 @@
                                         </v-flex>
                                         <v-flex xs4>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu2" :key="`key2-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu2" :key="`keyCatetgory2-$`+index" exact :to="`/list-category?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
@@ -131,7 +131,7 @@
                                         </v-flex>
                                         <v-flex xs4>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu3" :key="`key3-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in megamenu3" :key="`keyCatetgory3-$`+index" exact :to="`/list-category?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
@@ -147,7 +147,7 @@
                                     <v-layout row wrap>
                                         <v-flex xs4 text-xs-center>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in authors" :key="`key-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>
                                                             {{subtiem.text}}
@@ -158,7 +158,7 @@
                                         </v-flex>
                                         <v-flex xs4>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in authors2" :key="`key2-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors2" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
@@ -167,7 +167,7 @@
                                         </v-flex>
                                         <v-flex xs4>
                                             <v-list>
-                                                <v-list-tile avatar v-for="(subtiem,index) in authors3" :key="`key3-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                                                <v-list-tile avatar v-for="(subtiem,index) in authors3" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.text">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
                                                     </v-list-tile-content>
@@ -177,12 +177,7 @@
                                     </v-layout>
                                 </v-card>
                             </v-menu>
-<<<<<<< HEAD
-                            <v-btn flat class="white--text" to="/detail">Giới thiệu</v-btn>
-=======
-                            <v-btn flat class="white--text">Tác giả</v-btn>
                             <v-btn flat class="white--text" to="/about">Giới thiệu</v-btn>
->>>>>>> bea850a81d987a90c348136e47f08ad2b5915a1f
                         </v-toolbar-items>
                         <v-spacer></v-spacer>
                         <v-toolbar-items class="hidden-sm-and-down">
@@ -230,7 +225,7 @@
                                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
                                 <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="`child-$`+i" v-text="child"></div>
                                 <v-card-title v-if="col.icons">
-                                    <v-btn v-for=" (icon,index) in col.icons " :key="`key-`+index" icon dark class="mx-1">
+                                    <v-btn v-for=" (icon,index) in col.icons " :key="`footer-`+index" icon dark class="mx-1">
                                         <v-icon color="green" size="24px ">{{ icon }}</v-icon>
                                     </v-btn>
                                 </v-card-title>

@@ -62,7 +62,7 @@ export default {
     },
     addItemfavorite() {
       for (var index in this.$store.state.favorite) {
-        if (this.$store.state.favorite[index].id === this.book.id) {
+        if (this.$store.state.favorite[index].book.id === this.book.id) {
           alert("Sản phẩm này đã được bạn yêu thích");
           return;
         }
