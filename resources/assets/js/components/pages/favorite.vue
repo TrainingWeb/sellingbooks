@@ -32,9 +32,25 @@
               </v-btn>
             </td>
             <td class="text-xs-center layout px-0 py-5">
-              <v-btn icon class="" @click="deleteItem(props.item)">
+              <!-- <v-btn icon class="" @click="deleteItem(props.item)">
                 <v-icon class="red--text text--darken-4">clear</v-icon>
-              </v-btn>
+              </v-btn> -->
+              <v-layout row justify-center>
+                <v-dialog flat v-model="dialogDelete" persistent max-width="290">
+                  <v-btn icon slot="activator">
+                    <v-icon class="red--text text--darken-4">clear</v-icon>
+                  </v-btn>
+                  <v-card flat>
+                    <v-card-title class="subheading ml-0 green accent-4 white--text">Thông báo !</v-card-title>
+                    <v-card-text class="body-1">Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="green darken-1" flat @click.native="dialogDelete = false">Hủy</v-btn>
+                      <v-btn color="green darken-1" @click="deleteItem(props.item)" flat @click.native="dialogDelete = false">Xóa</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-layout>
             </td>
           </tr>
         </template>
@@ -74,7 +90,8 @@ export default {
     ],
     e1: null,
     namepage: "Sản phẩm yêu thích",
-    page: 1
+    page: 1,
+    dialogDelete: false
   }),
   methods: {
     deleteItem(item) {
