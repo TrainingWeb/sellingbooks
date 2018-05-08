@@ -4,18 +4,9 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
-    cart: [
-      {
-        book: {},
-        quantity: 0
-      }
-    ],
-    favorite: [
-      {
-        book: {},
-        quantity: 0
-      }
-    ]
+    cart: [],
+    favorite: [],
+    selected: []
   },
   mutations: {
     SET_CART: (state, cart) => {
@@ -23,6 +14,9 @@ const store = new Vuex.Store({
     },
     SET_FAVORITE: (state, favorite) => {
       state.favorite = favorite;
+    },
+    SET_SELECTED: (state, selected) => {
+      state.selected = selected;
     }
   },
   actions: {
@@ -33,6 +27,10 @@ const store = new Vuex.Store({
     setFavorite({ commit }, val) {
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
+    },
+    setSelected({ commit }, val) {
+      commit("SET_SELECTED", val);
+      localStorage.selected = JSON.stringify(val);
     }
   }
 });

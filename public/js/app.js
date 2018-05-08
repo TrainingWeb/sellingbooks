@@ -11530,7 +11530,7 @@ if (localStorage.cart) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].c
 //
 if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 //
-
+if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
@@ -30194,7 +30194,7 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_pages_listauthor_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__);
 
 
@@ -33105,13 +33105,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -33130,57 +33123,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
         name: "Cô gái mở đường",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }, {
         id: 2,
         img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
         name: "Dế mèn phiêu lưu kí",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }, {
         id: 3,
         img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
         name: "Truyện kiều",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }, {
         id: 4,
         img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
         name: "Chuyện chưa kể",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }, {
         id: 5,
         img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
         name: "Cô bé bán diêm",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }, {
         id: 6,
         img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
         name: "Mèo con đi học",
         price: 12000,
-        sale: 1500,
+        sale: 15000,
         author: "Nguyễn Du"
       }],
       bookSale: [{
         id: 7,
         img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
         name: "Truyện kiều",
-        price: 686,
-        sale: 46,
+        price: 600,
+        sale: 900,
         author: "Nguyễn Du"
       }, {
         id: 8,
         img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
         name: "Chuyện chưa kể",
         price: 120000,
-        sale: 668,
+        sale: 240000,
         author: "Nguyễn Du"
       }, {
         id: 9,
@@ -33217,7 +33210,6 @@ var render = function() {
         [
           _c(
             "v-carousel",
-            { attrs: { "hide-controls": "" } },
             _vm._l(_vm.sliders, function(item, i) {
               return _c("v-carousel-item", {
                 key: "slide" + i,
@@ -33272,7 +33264,7 @@ var render = function() {
                   "v-flex",
                   {
                     key: "khoa" + index,
-                    attrs: { xs12: "", md6: "", lg4: "" }
+                    attrs: { xs12: "", sm6: "", md6: "", lg4: "" }
                   },
                   [_c("book-item", { attrs: { book: item } })],
                   1
@@ -33334,7 +33326,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-container",
-        { attrs: { "grid-list-xs": "" } },
+        { attrs: { "grid-list-lg": "" } },
         [
           _c(
             "v-layout",
@@ -33342,87 +33334,62 @@ var render = function() {
             [
               _c(
                 "v-flex",
-                { attrs: { "md-9": "" } },
+                { attrs: { xs12: "", md9: "" } },
                 [
                   _c(
-                    "v-container",
-                    { attrs: { "grid-list-xs": "" } },
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
                     [
+                      _vm._l(_vm.bookSale, function(item, index) {
+                        return _c(
+                          "v-flex",
+                          {
+                            key: "4" + index,
+                            attrs: { xs12: "", sm6: "", md6: "" }
+                          },
+                          [_c("book-item", { attrs: { book: item } })],
+                          1
+                        )
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "v-layout",
-                        { attrs: { row: "", wrap: "" } },
+                        "v-flex",
+                        { staticClass: "pt-2 mr-1", attrs: { xs12: "" } },
                         [
                           _c(
-                            "v-flex",
-                            { attrs: { xs12: "", md9: "" } },
+                            "router-link",
+                            { attrs: { to: "/list-products" } },
                             [
                               _c(
-                                "v-layout",
-                                { attrs: { row: "", wrap: "" } },
-                                [
-                                  _vm._l(_vm.bookSale, function(item, index) {
-                                    return _c(
-                                      "v-flex",
-                                      { key: "4" + index, attrs: { md6: "" } },
-                                      [
-                                        _c("book-item", {
-                                          attrs: { book: item }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-flex",
-                                    {
-                                      staticClass: "pt-2 mr-1",
-                                      attrs: { xs12: "" }
-                                    },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        { attrs: { to: "/list-products" } },
-                                        [
-                                          _c(
-                                            "h5",
-                                            {
-                                              staticClass:
-                                                "text-xs-right  green--text text--accent-4"
-                                            },
-                                            [_vm._v("XEM THÊM")]
-                                          )
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                2
+                                "h5",
+                                {
+                                  staticClass:
+                                    "text-xs-right  green--text text--accent-4"
+                                },
+                                [_vm._v("XEM THÊM")]
                               )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-flex", { attrs: { xs12: "", md3: "" } }, [
-                            _c("img", {
-                              staticClass: "sale-img",
-                              attrs: {
-                                src:
-                                  "https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png",
-                                alt: ""
-                              }
-                            })
-                          ])
+                            ]
+                          )
                         ],
                         1
                       )
                     ],
-                    1
+                    2
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("v-flex", { attrs: { xs12: "", md3: "" } }, [
+                _c("img", {
+                  staticClass: "sale-img",
+                  attrs: {
+                    src:
+                      "https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png",
+                    alt: ""
+                  }
+                })
+              ])
             ],
             1
           )
@@ -33473,7 +33440,7 @@ var render = function() {
                   "v-flex",
                   {
                     key: "Book-" + index,
-                    attrs: { xs12: "", md6: "", lg4: "" }
+                    attrs: { xs12: "", sm6: "", md6: "", lg4: "" }
                   },
                   [_c("book-item", { attrs: { book: item } })],
                   1
@@ -35226,10 +35193,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      dialogDel: false,
       headers: [{
         text: "Sản phẩm",
         align: "left",
@@ -35532,15 +35520,112 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "mt-3 text-xs-right mr-0" },
+                                    { staticClass: "mt-3 text-xs-right " },
                                     [
                                       _c(
                                         "v-btn",
                                         {
-                                          staticClass: "green accent-4",
-                                          attrs: { color: "white--text" }
+                                          attrs: {
+                                            dark: "",
+                                            color: "green accent-4"
+                                          },
+                                          nativeOn: {
+                                            click: function($event) {
+                                              $event.stopPropagation()
+                                              _vm.dialogDel = true
+                                            }
+                                          }
                                         },
-                                        [_vm._v(" Đặt hàng")]
+                                        [
+                                          _vm._v(
+                                            "\n                    Đặt hàng\n                  "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-layout",
+                                        {
+                                          attrs: {
+                                            row: "",
+                                            "justify-center": ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-dialog",
+                                            {
+                                              attrs: { "max-width": "290" },
+                                              model: {
+                                                value: _vm.dialogDel,
+                                                callback: function($$v) {
+                                                  _vm.dialogDel = $$v
+                                                },
+                                                expression: "dialogDel"
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c(
+                                                    "v-toolbar",
+                                                    {
+                                                      attrs: {
+                                                        color: "green accent-4",
+                                                        dark: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-toolbar-title", [
+                                                        _vm._v("Thông báo")
+                                                      ])
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("v-card-text", [
+                                                    _vm._v(
+                                                      "Bạn đã đặt hàng thành công"
+                                                    ),
+                                                    _c("br")
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-actions",
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            color:
+                                                              "green accent-4",
+                                                            flat: "flat",
+                                                            to: "/"
+                                                          },
+                                                          nativeOn: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.dialogDel = false
+                                                            }
+                                                          }
+                                                        },
+                                                        [_vm._v("OK")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
                                       )
                                     ],
                                     1
@@ -35702,6 +35787,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35721,127 +35808,127 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         id: 20,
         img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
         name: "Cô gái mở đường",
-        price: 120,
-        sale: "150.000",
+        price: 120000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 21,
         img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
         name: "Dế mèn phiêu lưu kí",
-        price: 120,
-        sale: "150.000",
+        price: 150000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 22,
         img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
         name: "Truyện kiều",
-        price: 120,
-        sale: "150.000",
+        price: 120000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 23,
         img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
         name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "150.000",
+        price: 200000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 24,
         img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
         name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "150.000",
+        price: 100000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 25,
         img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 300000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 26,
         img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 90000,
         author: "Nguyễn Du"
       }, {
         id: 27,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 90000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 28,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 100000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 29,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 120000,
+        sale: 150000,
         author: "Nguyễn Du"
       }, {
         id: 30,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 20000,
+        sale: 30000,
         author: "Nguyễn Du"
       }, {
         id: 31,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 32,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 33,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 34,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 35,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 36,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }, {
         id: 37,
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
         name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
+        price: 50000,
+        sale: 70000,
         author: "Nguyễn Du"
       }],
       namepage: "Danh sách sản phẩm",
@@ -35907,16 +35994,26 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.books, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
+            "v-container",
+            { attrs: { "grid-list-xs": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                _vm._l(_vm.books, function(item, index) {
+                  return _c(
+                    "v-flex",
+                    {
+                      key: "khoa" + index,
+                      attrs: { xs12: "", md6: "", lg4: "" }
+                    },
+                    [_c("book-item", { attrs: { book: item } })],
+                    1
+                  )
+                })
               )
-            })
+            ],
+            1
           ),
           _vm._v(" "),
           [
@@ -36104,10 +36201,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      dialogDel: false,
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -36145,6 +36261,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cart.splice(index, 1);
         this.$store.dispatch("setCart", cart);
       }
+      this.dialogDel = false;
+    },
+    formatPrice: function formatPrice(price) {
+      var val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   computed: {
@@ -36210,7 +36331,11 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(props.item.book.name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(props.item.book.price))]),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(_vm.formatPrice(props.item.book.price)) + " đ"
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -36253,7 +36378,12 @@ var render = function() {
                       _c("td", [
                         _vm._v(
                           " " +
-                            _vm._s(props.item.book.price * props.item.quantity)
+                            _vm._s(
+                              _vm.formatPrice(
+                                props.item.book.price * props.item.quantity
+                              )
+                            ) +
+                            " đ"
                         )
                       ]),
                       _vm._v(" "),
@@ -36261,16 +36391,111 @@ var render = function() {
                         "td",
                         [
                           _c(
-                            "v-btn",
-                            {
-                              attrs: { flat: "", icon: "", color: "red" },
-                              on: {
-                                click: function($event) {
-                                  _vm.delCart(props.item)
-                                }
-                              }
-                            },
-                            [_c("v-icon", [_vm._v("clear")])],
+                            "v-layout",
+                            { attrs: { row: "", "justify-center": "" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { flat: "", icon: "", color: "red" },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      $event.stopPropagation()
+                                      _vm.dialogDel = true
+                                    }
+                                  }
+                                },
+                                [_c("v-icon", [_vm._v("clear")])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-dialog",
+                                {
+                                  attrs: { "max-width": "290" },
+                                  model: {
+                                    value: _vm.dialogDel,
+                                    callback: function($$v) {
+                                      _vm.dialogDel = $$v
+                                    },
+                                    expression: "dialogDel"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c(
+                                        "v-toolbar",
+                                        {
+                                          attrs: {
+                                            color: "green accent-4",
+                                            dark: ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-toolbar-title", [
+                                            _vm._v("Thông báo")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-card-text", [
+                                        _vm._v("Bạn có chắc chắn xóa sách :"),
+                                        _c("br"),
+                                        _vm._v(" "),
+                                        _c("strong", [
+                                          _vm._v(_vm._s(props.item.book.name))
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-actions",
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "green accent-4",
+                                                flat: "flat"
+                                              },
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  _vm.dialogDel = false
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("HỦY")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "green accent-4",
+                                                flat: "flat"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.delCart(props.item)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("OK")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
                             1
                           )
                         ],
@@ -36297,7 +36522,7 @@ var render = function() {
               _vm._v(" "),
               _c("v-flex", { attrs: { xs4: "", "text-xs-right": "" } }, [
                 _c("strong", { attrs: { color: "black" } }, [
-                  _vm._v(_vm._s(_vm.total))
+                  _vm._v(_vm._s(_vm.formatPrice(_vm.total)) + " đ")
                 ])
               ])
             ],
@@ -36334,11 +36559,7 @@ var render = function() {
                         to: "/check-out"
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                    thanh toán\n                "
-                      )
-                    ]
+                    [_vm._v("\n          thanh toán\n        ")]
                   )
                 ],
                 1
@@ -36887,12 +37108,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ text: "", value: "img", sortable: false }, {
+      headers: [{ sortable: false }, {
         text: "Tên sách",
         align: "left",
-        sortable: false,
-        value: "name"
-      }, { text: "Giá tiền", value: "", sortable: false }, { text: "Số lượng", value: "", sortable: false }, { text: "Chọn mua", value: "", sortable: false }, { text: "", value: "", sortable: false }],
+        sortable: false
+      }, { text: "Giá tiền", sortable: false }, { text: "Số lượng", sortable: false }, { text: "Chọn mua", sortable: false }, { sortable: false }],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -38341,7 +38561,7 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -39845,7 +40065,7 @@ var render = function() {
                               "v-flex",
                               {
                                 key: "col-$" + i,
-                                attrs: { xs12: "", sm6: "", lg3: "" }
+                                attrs: { xs12: "", md3: "" }
                               },
                               [
                                 _c("div", {
@@ -39944,14 +40164,9 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
-    cart: [{
-      book: {},
-      quantity: 0
-    }],
-    favorite: [{
-      book: {},
-      quantity: 0
-    }]
+    cart: [],
+    favorite: [],
+    selected: []
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -39959,6 +40174,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_FAVORITE: function SET_FAVORITE(state, favorite) {
       state.favorite = favorite;
+    },
+    SET_SELECTED: function SET_SELECTED(state, selected) {
+      state.selected = selected;
     }
   },
   actions: {
@@ -39973,6 +40191,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
+    },
+    setSelected: function setSelected(_ref3, val) {
+      var commit = _ref3.commit;
+
+      commit("SET_SELECTED", val);
+      localStorage.selected = JSON.stringify(val);
     }
   }
 });
@@ -41009,7 +41233,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: black;\n}\r\n", ""]);
+exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: black;\n}\n.hover-card:hover {\r\n  border: solid 1px #00c853 !important;\r\n  -webkit-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  -webkit-transition-property: -webkit-box-shadow;\r\n  transition-property: -webkit-box-shadow;\r\n  transition-property: box-shadow;\r\n  transition-property: box-shadow, -webkit-box-shadow;\n}\n.hover-card {\r\n  border: solid 1px #f5f5f5 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -41020,6 +41244,14 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41068,7 +41300,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addCart: function addCart() {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert("sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+          this.$store.state.cart[index].quantity = this.$store.state.cart[index].quantity + 1;
           return;
         }
       }
@@ -41080,21 +41312,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      alert("Chúc mừng bạn thêm giỏ hàng thành công");
     },
-    addItemfavorite: function addItemfavorite() {
+    addItemfavorite: function addItemfavorite(id) {
+      var i = this.$store.state.selected.indexOf(id);
+      var favorite = this.$store.state.favorite;
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].book.id === this.book.id) {
-          alert("Sản phẩm này đã được bạn yêu thích");
-          return;
+          if (i > -1) {
+            console.log("không đỏ");
+            favorite.splice(this.$store.state.favorite[index], 1);
+            this.$store.dispatch("setFavorite", favorite);
+            this.$store.state.selected.splice(i, 1);
+            this.$store.dispatch("setSelected", selected);
+            return;
+          }
         }
       }
+      console.log("Đỏ");
+
       var itemBook = {
         book: this.book,
         quantity: 1
       };
-      var favorite = this.$store.state.favorite;
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+      this.$store.state.selected.push(id);
+      this.$store.dispatch("setSelected", selected);
+    },
+    formatPrice: function formatPrice(price) {
+      var val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   }
 });
@@ -41113,26 +41361,28 @@ var render = function() {
     [
       _c(
         "v-container",
-        { attrs: { fluid: "", "grid-list-lg": "" } },
+        { attrs: { fluid: "", "grid-list-lg": "", "py-0": "", "pb-4": "" } },
         [
           _c(
             "v-layout",
-            { attrs: { row: "", wrap: "" } },
+            {
+              staticClass: "hover-card",
+              attrs: { row: "", wrap: "", "offset-sm3": "" }
+            },
             [
               _c(
                 "v-flex",
-                { staticClass: "pr-0 py-0", attrs: { xs5: "" } },
+                {
+                  staticClass: " py-0 px-0",
+                  attrs: { xs12: "", sm5: "", md5: "" }
+                },
                 [
                   _c(
                     "router-link",
                     { staticClass: "link-book", attrs: { to: "/detail" } },
                     [
                       _c("v-card-media", {
-                        attrs: {
-                          src: _vm.book.img,
-                          height: "200px",
-                          "max-width": "130px"
-                        }
+                        attrs: { src: _vm.book.img, height: "180px" }
                       })
                     ],
                     1
@@ -41143,7 +41393,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-flex",
-                { staticClass: "grey lighten-5 pl-3", attrs: { xs7: "" } },
+                {
+                  staticClass: "grey lighten-5 pl-3",
+                  attrs: { xs12: "", sm7: "", md7: "" }
+                },
                 [
                   _c(
                     "div",
@@ -41161,15 +41414,54 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c(
-                        "span",
-                        { staticClass: "green--text text--accent-4 title" },
-                        [_vm._v(" " + _vm._s(_vm.book.price))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "grey--text text--darken-1 title ml-3" },
-                        [_c("del", [_vm._v(_vm._s(_vm.book.sale))])]
+                        "v-card-actions",
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "green--text text--accent-4 title" },
+                            [
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.formatPrice(_vm.book.price)) +
+                                  "\n              "
+                              ),
+                              _c(
+                                "span",
+                                {
+                                  staticStyle: {
+                                    "text-decoration": "underline"
+                                  }
+                                },
+                                [_vm._v("đ")]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "grey--text text--darken-1 " },
+                            [
+                              _c("del", [
+                                _vm._v(
+                                  _vm._s(_vm.formatPrice(_vm.book.sale)) +
+                                    "\n                "
+                                ),
+                                _c(
+                                  "span",
+                                  {
+                                    staticStyle: {
+                                      "text-decoration": "underline"
+                                    }
+                                  },
+                                  [_vm._v("đ")]
+                                )
+                              ])
+                            ]
+                          )
+                        ],
+                        1
                       ),
                       _vm._v(" "),
                       _c("v-divider", { staticClass: "mt-2" }),
@@ -41193,9 +41485,23 @@ var render = function() {
                             "v-btn",
                             {
                               attrs: { flat: "", icon: "", color: "grey" },
-                              on: { click: _vm.addItemfavorite }
+                              on: {
+                                click: function($event) {
+                                  _vm.addItemfavorite(_vm.book.id)
+                                }
+                              }
                             },
-                            [_c("v-icon", [_vm._v("favorite")])],
+                            [
+                              _vm.$store.state.selected.indexOf(_vm.book.id) < 0
+                                ? _c(
+                                    "v-icon",
+                                    { attrs: { color: "grey lighten-1" } },
+                                    [_vm._v("favorite")]
+                                  )
+                                : _c("v-icon", { attrs: { color: "red" } }, [
+                                    _vm._v("favorite")
+                                  ])
+                            ],
                             1
                           )
                         ],
@@ -41443,333 +41749,11 @@ if (false) {
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(119)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(92)
-/* template */
-var __vue_template__ = __webpack_require__(91)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\pages\\forgotpassword.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3e515aad", Component.options)
-  } else {
-    hotAPI.reload("data-v-3e515aad", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-container",
-    { attrs: { "fill-height": "", fluid: "" } },
-    [
-      _c(
-        "v-layout",
-        { attrs: { "align-center": "", "justify-center": "" } },
-        [
-          _c(
-            "v-card",
-            { attrs: { width: "300px", height: "250px" } },
-            [
-              _c(
-                "v-list",
-                { staticClass: "green accent-4 white--text text-xs-center" },
-                [_c("span", {}, [_vm._v("QUÊN MẬT KHẨU")])]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-container",
-                [
-                  [
-                    _c(
-                      "v-form",
-                      {
-                        ref: "form",
-                        attrs: { "lazy-validation": "" },
-                        model: {
-                          value: _vm.valid,
-                          callback: function($$v) {
-                            _vm.valid = $$v
-                          },
-                          expression: "valid"
-                        }
-                      },
-                      [
-                        _c("v-text-field", {
-                          staticClass: "mt-3",
-                          attrs: {
-                            rules: _vm.emailRules,
-                            label: "E-mail",
-                            required: ""
-                          },
-                          on: {
-                            keyup: function($event) {
-                              if (
-                                !("button" in $event) &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              return _vm.forgotPassword($event)
-                            }
-                          },
-                          model: {
-                            value: _vm.email,
-                            callback: function($$v) {
-                              _vm.email = $$v
-                            },
-                            expression: "email"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-xs-right mt-5" },
-                          [
-                            _c("v-btn", { attrs: { flat: "", to: "/" } }, [
-                              _vm._v("TRANG CHỦ")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                attrs: { disabled: !_vm.valid },
-                                on: { click: _vm.forgotPassword }
-                              },
-                              [_vm._v("\n                Gửi\n              ")]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-dialog",
-                    {
-                      attrs: { persistent: "", "max-width": "290" },
-                      model: {
-                        value: _vm.dialogForgotPassword,
-                        callback: function($$v) {
-                          _vm.dialogForgotPassword = $$v
-                        },
-                        expression: "dialogForgotPassword"
-                      }
-                    },
-                    [
-                      _c(
-                        "v-card",
-                        [
-                          _c("v-card-title", { staticClass: "headline ml-1" }, [
-                            _vm._v("Thông báo !")
-                          ]),
-                          _vm._v(" "),
-                          _c("v-card-text", [
-                            _vm._v(
-                              "Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-actions",
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    color: "green darken-1",
-                                    flat: "",
-                                    to: "/"
-                                  },
-                                  nativeOn: {
-                                    click: function($event) {
-                                      _vm.dialogForgotPassword = false
-                                    }
-                                  }
-                                },
-                                [_vm._v("Đóng")]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3e515aad", module.exports)
-  }
-}
-
-/***/ }),
-/* 92 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      dialogForgotPassword: false,
-      valid: true,
-      email: "",
-      emailRules: [function (v) {
-        return !!v || "E-mail là bắt buộc";
-      }, function (v) {
-        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
-        );
-      }]
-    };
-  },
-  methods: {
-    forgotPassword: function forgotPassword() {
-      this.dialogForgotPassword = true;
-    },
-    submit: function submit() {
-      if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          email: this.email
-        });
-      }
-    },
-    clear: function clear() {
-      this.$refs.form.reset();
-    }
-  }
-});
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
-var bind = __webpack_require__(95);
-var isBuffer = __webpack_require__(102);
+var bind = __webpack_require__(92);
+var isBuffer = __webpack_require__(103);
 
 /*global toString:true*/
 
@@ -42072,14 +42056,14 @@ module.exports = {
 
 
 /***/ }),
-/* 94 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(93);
-var normalizeHeaderName = __webpack_require__(104);
+var utils = __webpack_require__(90);
+var normalizeHeaderName = __webpack_require__(105);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -42095,10 +42079,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(96);
+    adapter = __webpack_require__(93);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(96);
+    adapter = __webpack_require__(93);
   }
   return adapter;
 }
@@ -42176,7 +42160,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 95 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42194,19 +42178,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 96 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
-var settle = __webpack_require__(105);
-var buildURL = __webpack_require__(107);
-var parseHeaders = __webpack_require__(108);
-var isURLSameOrigin = __webpack_require__(109);
-var createError = __webpack_require__(97);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(110);
+var utils = __webpack_require__(90);
+var settle = __webpack_require__(106);
+var buildURL = __webpack_require__(108);
+var parseHeaders = __webpack_require__(109);
+var isURLSameOrigin = __webpack_require__(110);
+var createError = __webpack_require__(94);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(111);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -42303,7 +42287,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(111);
+      var cookies = __webpack_require__(112);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -42381,13 +42365,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 97 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(106);
+var enhanceError = __webpack_require__(107);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -42406,7 +42390,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 98 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42418,7 +42402,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 99 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42444,22 +42428,194 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 100 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(101);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(98)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(100)
+/* template */
+var __vue_template__ = __webpack_require__(120)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\forgotpassword.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3e515aad", Component.options)
+  } else {
+    hotAPI.reload("data-v-3e515aad", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(99);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("7ea07246", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3e515aad\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forgotpassword.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3e515aad\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forgotpassword.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialogForgotPassword: false,
+      valid: true,
+      email: "",
+      emailRules: [function (v) {
+        return !!v || "E-mail là bắt buộc";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+        );
+      }]
+    };
+  },
+  methods: {
+    forgotPassword: function forgotPassword() {
+      this.dialogForgotPassword = true;
+    },
+    submit: function submit() {
+      if (this.$refs.form.validate()) {
+        // Native form submission is not yet supported
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
+          email: this.email
+        });
+      }
+    },
+    clear: function clear() {
+      this.$refs.form.reset();
+    }
+  }
+});
 
 /***/ }),
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(102);
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
-var utils = __webpack_require__(93);
-var bind = __webpack_require__(95);
-var Axios = __webpack_require__(103);
-var defaults = __webpack_require__(94);
+var utils = __webpack_require__(90);
+var bind = __webpack_require__(92);
+var Axios = __webpack_require__(104);
+var defaults = __webpack_require__(91);
 
 /**
  * Create an instance of Axios
@@ -42492,15 +42648,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(99);
-axios.CancelToken = __webpack_require__(117);
-axios.isCancel = __webpack_require__(98);
+axios.Cancel = __webpack_require__(96);
+axios.CancelToken = __webpack_require__(118);
+axios.isCancel = __webpack_require__(95);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(118);
+axios.spread = __webpack_require__(119);
 
 module.exports = axios;
 
@@ -42509,7 +42665,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports) {
 
 /*!
@@ -42536,16 +42692,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(94);
-var utils = __webpack_require__(93);
-var InterceptorManager = __webpack_require__(112);
-var dispatchRequest = __webpack_require__(113);
+var defaults = __webpack_require__(91);
+var utils = __webpack_require__(90);
+var InterceptorManager = __webpack_require__(113);
+var dispatchRequest = __webpack_require__(114);
 
 /**
  * Create a new instance of Axios
@@ -42622,13 +42778,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -42641,13 +42797,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(97);
+var createError = __webpack_require__(94);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -42674,7 +42830,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42702,13 +42858,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -42775,13 +42931,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -42835,13 +42991,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -42910,7 +43066,7 @@ module.exports = (
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42953,13 +43109,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -43013,13 +43169,13 @@ module.exports = (
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -43072,18 +43228,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
-var transformData = __webpack_require__(114);
-var isCancel = __webpack_require__(98);
-var defaults = __webpack_require__(94);
-var isAbsoluteURL = __webpack_require__(115);
-var combineURLs = __webpack_require__(116);
+var utils = __webpack_require__(90);
+var transformData = __webpack_require__(115);
+var isCancel = __webpack_require__(95);
+var defaults = __webpack_require__(91);
+var isAbsoluteURL = __webpack_require__(116);
+var combineURLs = __webpack_require__(117);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -43165,13 +43321,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(93);
+var utils = __webpack_require__(90);
 
 /**
  * Transform the data for a request or a response
@@ -43192,7 +43348,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43213,7 +43369,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43234,13 +43390,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(99);
+var Cancel = __webpack_require__(96);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -43298,7 +43454,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43332,44 +43488,194 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(120);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("7ea07246", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3e515aad\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forgotpassword.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3e515aad\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forgotpassword.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
 /* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { attrs: { "fill-height": "", fluid: "" } },
+    [
+      _c(
+        "v-layout",
+        { attrs: { "align-center": "", "justify-center": "" } },
+        [
+          _c(
+            "v-card",
+            { attrs: { width: "300px", height: "250px" } },
+            [
+              _c(
+                "v-list",
+                { staticClass: "green accent-4 white--text text-xs-center" },
+                [_c("span", {}, [_vm._v("QUÊN MẬT KHẨU")])]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-container",
+                [
+                  [
+                    _c(
+                      "v-form",
+                      {
+                        ref: "form",
+                        attrs: { "lazy-validation": "" },
+                        model: {
+                          value: _vm.valid,
+                          callback: function($$v) {
+                            _vm.valid = $$v
+                          },
+                          expression: "valid"
+                        }
+                      },
+                      [
+                        _c("v-text-field", {
+                          staticClass: "mt-3",
+                          attrs: {
+                            rules: _vm.emailRules,
+                            label: "E-mail",
+                            required: ""
+                          },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.forgotPassword($event)
+                            }
+                          },
+                          model: {
+                            value: _vm.email,
+                            callback: function($$v) {
+                              _vm.email = $$v
+                            },
+                            expression: "email"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-xs-right mt-5" },
+                          [
+                            _c("v-btn", { attrs: { flat: "", to: "/" } }, [
+                              _vm._v("TRANG CHỦ")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { disabled: !_vm.valid },
+                                on: { click: _vm.forgotPassword }
+                              },
+                              [_vm._v("\n                Gửi\n              ")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { persistent: "", "max-width": "290" },
+                      model: {
+                        value: _vm.dialogForgotPassword,
+                        callback: function($$v) {
+                          _vm.dialogForgotPassword = $$v
+                        },
+                        expression: "dialogForgotPassword"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", { staticClass: "headline ml-1" }, [
+                            _vm._v("Thông báo !")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-card-text", [
+                            _vm._v(
+                              "Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "green darken-1",
+                                    flat: "",
+                                    to: "/"
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.dialogForgotPassword = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Đóng")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3e515aad", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
