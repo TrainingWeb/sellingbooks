@@ -47,18 +47,16 @@
 export default {
   data: () => ({
     headers: [
-      { text: "", value: "img", sortable: false },
+      { sortable: false },
       {
         text: "Tên sách",
         align: "left",
-        sortable: false,
-        value: "name"
+        sortable: false
       },
-
-      { text: "Giá tiền", value: "", sortable: false },
-      { text: "Số lượng", value: "", sortable: false },
-      { text: "Chọn mua", value: "", sortable: false },
-      { text: "", value: "", sortable: false }
+      { text: "Giá tiền", sortable: false },
+      { text: "Số lượng", sortable: false },
+      { text: "Chọn mua", sortable: false },
+      { sortable: false }
     ],
     breadcrumbs: [
       {
@@ -72,9 +70,7 @@ export default {
         disabled: true
       }
     ],
-    e1: null,
-    namepage: "Sản phẩm yêu thích",
-    page: 1
+    namepage: "Sản phẩm yêu thích"
   }),
   methods: {
     deleteItem(item) {

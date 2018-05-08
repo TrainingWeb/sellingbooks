@@ -26,7 +26,8 @@ if (localStorage.cart) store.commit("SET_CART", JSON.parse(localStorage.cart));
 if (localStorage.favorite)
   store.commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 //
-
+if (localStorage.selected)
+  store.commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 Vue.use(Vuetify);
 
