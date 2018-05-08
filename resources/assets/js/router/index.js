@@ -13,6 +13,7 @@ import Favorite from "../components/pages/favorite.vue";
 import Listcategory from "../components/pages/listcategory.vue";
 import Listauthor from "../components/pages/listauthor.vue";
 import Tags from "../components/pages/tags.vue";
+import Forgotpassword from "../components/pages/forgotpassword.vue";
 
 //
 const router = new VueRouter({
@@ -71,6 +72,11 @@ const router = new VueRouter({
       path: "/tags",
       name: "tags",
       component: Tags
+    },
+    {
+      path: "/forgotpassword",
+      name: "forgotpassword",
+      component: Forgotpassword
     }
   ]
 });

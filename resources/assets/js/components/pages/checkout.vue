@@ -35,9 +35,6 @@
                     <template slot="footer">
                       <td>
                         <strong>Thanh toán</strong>
-                        <!--  -->
-
-                        <!--  -->
                       </td>
                       <td class="text-xs-right">
                         <strong>{{total}}</strong>

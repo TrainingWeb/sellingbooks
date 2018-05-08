@@ -16,7 +16,7 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- Đăng nhập -->
-            <v-menu v-model="login" bottom offset-y :max-width="300" :close-on-content-click="false">
+            <v-menu v-model="login" bottom offset-y :max-width="350" :close-on-content-click="false">
               <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
               <v-card flat>
                 <v-list class="green accent-4 white--text text-xs-center">
@@ -24,27 +24,26 @@
                 </v-list>
                 <v-divider></v-divider>
                 <v-container>
-                  <v-list>
-                    <v-layout wrap>
-                      <v-flex xs12>
-                        <v-text-field :counter="15" label="Tên đăng nhập" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-text-field name="input-10-2" label="Mật khẩu" hint="Nhập tối đa 8 ký tự" min="8" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
-                      </v-flex>
-                    </v-layout>
-                  </v-list>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-flex xs12>
+                      <v-text-field v-model="emailLogin" :rules="emailRules" label="E-mail" required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field v-model="passLogin" required name="input-10-2" label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                    </v-flex>
+                    <div>
+                      <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
+                      <v-btn class="text-xs-center" :disabled="!valid" @click="login = false">
+                        Đăng nhập
+                      </v-btn>
+                    </div>
+                  </v-form>
                 </v-container>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn flat @click="login = false">Thoát</v-btn>
-                  <v-btn color="primary" flat @click="login = false">Đăng nhập</v-btn>
-                </v-card-actions>
               </v-card>
             </v-menu>
             <!-- Hết Đăng nhập -->
             <!-- Đăng Ký -->
-            <v-menu v-model="register" bottom offset-y :max-width="300" :close-on-content-click="false">
+            <v-menu fluid v-model="register" bottom offset-y :max-width="350" :close-on-content-click="false">
               <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
               <v-card flat>
                 <v-list class="green accent-4 white--text text-xs-center">
@@ -52,25 +51,24 @@
                 </v-list>
                 <v-divider></v-divider>
                 <v-container>
-                  <v-list>
-                    <v-layout wrap>
-                      <v-flex xs12>
-                        <v-text-field :counter="15" label="Họ và Tên" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-text-field label="Địa chỉ Email" type="email" required :rules="emailRegister"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-text-field name="input-10-2" label="Mật khẩu" hint="At least 8 characters" min="8" :append-icon="e3 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e3 = !e3)" :type="e3 ? 'password' : 'text'"></v-text-field>
-                      </v-flex>
-                    </v-layout>
-                  </v-list>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-flex xs12>
+                      <v-text-field v-model="name" :rules="nameRules" label="Tên" required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field v-model="emailRegister" :rules="emailRules" label="E-mail" required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field v-model="passRegister" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                    </v-flex>
+                    <div>
+                      <v-btn flat>Đóng</v-btn>
+                      <v-btn :disabled="!valid" @click="register = false">
+                        Đăng ký
+                      </v-btn>
+                    </div>
+                  </v-form>
                 </v-container>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn flat @click="register = false">Thoát</v-btn>
-                  <v-btn color="primary" flat @click="register = false">Đăng ký</v-btn>
-                </v-card-actions>
               </v-card>
             </v-menu>
           </v-toolbar>
@@ -145,8 +143,8 @@
                 <v-btn slot="activator" flat class="white--text">Tác giả</v-btn>
                 <v-card>
                   <v-layout row wrap>
-                    <v-flex xs4>
-                      <v-list text-xs-center>
+                    <v-flex xs4 text-xs-center>
+                      <v-list>
                         <v-list-tile avatar v-for="(subtiem,index) in authors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.text">
                           <v-list-tile-content>
                             <v-list-tile-title>
@@ -201,7 +199,7 @@
         <v-container class="justify-center">
           <v-card-text class="white">
             <v-layout row wrap>
-              <v-flex xs12 md3>
+              <v-flex xs12 sm6 lg3>
                 <img class="mb-3" width="180" src="storage/images/logo_green.png">
 
                 <div class="mb-3" color="grey--text text--darken-2">
@@ -243,8 +241,28 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: () => ({
+    valid: true,
+    name: "",
+    nameRules: [v => !!v || "Tên là bắt buộc"],
+    passLogin: "",
+    passRegister: "",
+    passRules: [
+      v => !!v || "Mật khẩu là bắt buộc",
+      v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
+    ],
+    emailRegister: "",
+    emailLogin: "",
+    emailRules: [
+      v => !!v || "E-mail là bắt buộc",
+      v =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail phải hợp lệ"
+    ],
+    password: "",
+
     drawer: null,
     icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
     rows: [
@@ -395,15 +413,7 @@ export default {
     e2: false,
     e3: false,
     password: "Password",
-    emailRegister: [
-      v => !!v || "E-mail là bắt buộc",
-      v =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-        "E-mail Phải hợp lệ"
-    ],
-    name: {
-      required: () => "Tên là bắt buộc"
-    },
+
     search: null
   }),
   props: {
@@ -413,7 +423,14 @@ export default {
     textSearch() {
       console.log("Đã vào rồi ");
       window.location = `#/search?keyword=${this.search}`;
-      this.search = "";
+    },
+    submit() {
+      if (this.$refs.form.validate()) {
+        axios.post("/api/submit", {
+          name: this.name,
+          email: this.email
+        });
+      }
     }
   }
 };

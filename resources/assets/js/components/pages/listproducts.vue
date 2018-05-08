@@ -210,7 +210,6 @@ export default {
       }
     ],
     namepage: "Danh sách sản phẩm",
-
     page: 1
   })
 };

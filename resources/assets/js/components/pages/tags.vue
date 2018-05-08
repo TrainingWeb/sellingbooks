@@ -5,14 +5,11 @@
     </v-layout>
     <v-container>
       <v-layout row wrap>
-<<<<<<< HEAD
-=======
         <v-flex xs12 md3 class="pl-3 pb-3">
           <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
->>>>>>> 9a4a5cc4440eb05001fb3a483fee4924a1d69c8f
         <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
