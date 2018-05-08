@@ -27,7 +27,7 @@
               </v-flex>
             </td>
             <td>
-              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item.book)">
+              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
@@ -95,8 +95,8 @@ export default {
         }
       }
       let itemBook = {
-        book: val,
-        quantity: 1
+        book: val.book,
+        quantity: val.quantity
       };
       let cart = this.$store.state.cart;
       cart.push(itemBook);
