@@ -43,7 +43,7 @@
             </v-menu>
             <!-- Hết Đăng nhập -->
             <!-- Đăng Ký -->
-            <v-menu fluid v-model="register" bottom offset-y :max-width="350" :close-on-content-click="false">
+            <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
               <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
               <v-card flat>
                 <v-list class="green accent-4 white--text text-xs-center">

@@ -38985,7 +38985,7 @@ var render = function() {
                             fluid: "",
                             bottom: "",
                             "offset-y": "",
-                            "max-width": 350,
+                            "max-width": 400,
                             "close-on-content-click": false
                           },
                           model: {
