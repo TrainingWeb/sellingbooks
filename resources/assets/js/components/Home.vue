@@ -14,11 +14,11 @@
     </v-layout>
     <v-container grid-list-xs>
       <v-layout row wrap>
-        <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in book" :key="`khoa${index}`">
+        <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in featuredbooks" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
         <v-flex xs12 class="pt-2 mr-1">
-          <router-link to="/list-products">
+          <router-link to="/list-products?type=featuredbooks">
             <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
           </router-link>
         </v-flex>
@@ -37,18 +37,18 @@
       <v-layout row wrap>
         <v-flex xs12 md9>
           <v-layout row wrap>
-            <v-flex xs12 sm6 md6 v-for="(item,index) in bookSale" :key="`4${index}`">
+            <v-flex xs12 sm6 md6 v-for="(item,index) in discountbooks" :key="`4${index}`">
               <book-item :book="item"></book-item>
             </v-flex>
             <v-flex xs12 class="pt-2 mr-1">
-              <router-link to="/list-products">
+              <router-link to="/list-products?type=discountbooks">
                 <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
               </router-link>
             </v-flex>
           </v-layout>
         </v-flex>
         <v-flex xs12 md3>
-          <img class="sale-img" src="https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png" alt="">
+          <img class="sale-img" src="storage/images/quang-cao.jpg" alt="">
         </v-flex>
       </v-layout>
     </v-container>
@@ -61,12 +61,12 @@
     </v-layout>
     <v-container grid-list-xs>
       <v-layout row wrap>
-        <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+        <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in newbooks" :key="`Book-${index}`">
           <book-item :book=item></book-item>
         </v-flex>
 
         <v-flex xs12 class="pt-2 mr-1">
-          <router-link to="/list-products">
+          <router-link to="/list-products?type=newbooks">
             <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
           </router-link>
         </v-flex>
@@ -80,6 +80,10 @@
 export default {
   data() {
     return {
+      featuredbooks: {},
+      discountbooks: {},
+      newbooks: {},
+
       sliders: [
         {
           src:
@@ -192,6 +196,19 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    loadFeaturedBooks() {
+      window.axios.get("/index").then(res => {
+        this.featuredbooks = res.data.data.featuredbooks;
+        console.log(res.data);
+        this.discountbooks = res.data.data.discountbooks;
+        this.newbooks = res.data.data.newbooks;
+      });
+    }
+  },
+  mounted() {
+    this.loadFeaturedBooks();
   }
 };
 </script>

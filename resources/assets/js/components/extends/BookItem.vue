@@ -4,7 +4,7 @@
       <v-layout row wrap offset-sm3 class="hover-card">
         <v-flex xs12 sm5 md5 class=" py-0 px-0">
           <router-link to="/detail" class="link-book">
-            <v-card-media :src="book.img" height="180px"></v-card-media>
+            <v-card-media :src="'/storage/images/'+book.image" height="180px"></v-card-media>
           </router-link>
         </v-flex>
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">
@@ -12,14 +12,14 @@
             <router-link to="/detail" class="link-book">
               <h3>{{book.name}}</h3>
             </router-link>
-            <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author}}</p>
+            <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>
             <v-card-actions>
-              <div class="green--text text--accent-4 title"> {{formatPrice(book.price)}}
+              <div class="green--text text--accent-4 title"> {{formatPrice(book.promotion_price)}}
                 <span style="text-decoration: underline">đ</span>
               </div>
               <v-spacer></v-spacer>
               <div class="grey--text text--darken-1 ">
-                <del>{{formatPrice(book.sale)}}
+                <del>{{formatPrice(book.price)}}
                   <span style="text-decoration: underline">đ</span>
                 </del>
               </div>
