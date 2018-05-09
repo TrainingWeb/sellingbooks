@@ -29,8 +29,10 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        $token = new PasswordReset;
-        $token->email;
-        return $this->markdown('emails.resetpassword');
+        $passwordreset = new PasswordReset;
+        $passwordreset->email = request()->email;
+        $passwordreset->token = bcrypt(str_random(60));
+        $passwordreset->save();
+        return $this->markdown('emails.resetpassword')->with(["token"=>$passwordreset->token]);
     }
 }
