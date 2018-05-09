@@ -261,9 +261,7 @@ export default {
   background-color: #fff !important;
   border-color: #fff !important;
 }
-.card {
-  box-shadow: none;
-}
+
 .application.theme--light {
   background: #fff;
 }

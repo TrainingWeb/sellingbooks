@@ -84,7 +84,7 @@
             <v-toolbar-items>
               <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
                 <v-badge color="red lighten-1" class="p-0">
-                  <span slot="badge" class="caption">{{$store.state.cart.length}}</span>
+                  <span slot="badge" class="caption">{{totalCard}}</span>
                   <v-icon color="grey">add_shopping_cart</v-icon>
                 </v-badge>
               </v-btn>
@@ -423,7 +423,9 @@ export default {
     textSearch() {
       console.log("Đã vào rồi ");
       window.location = `#/search?keyword=${this.search}`;
+      this.search = "";
     },
+
     submit() {
       if (this.$refs.form.validate()) {
         axios.post("/api/submit", {
@@ -431,6 +433,13 @@ export default {
           email: this.email
         });
       }
+    }
+  },
+  computed: {
+    totalCard() {
+      return this.$store.state.cart.reduce((total, p) => {
+        return total + p.quantity;
+      }, 0);
     }
   }
 };
