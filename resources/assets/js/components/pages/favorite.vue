@@ -21,20 +21,14 @@
                 </span>
               </v-layout>
             </td>
-            <td>
-              <v-flex xs12 md3 class="mx-0 my-3">
-                <v-text-field type="number" flat solo :value="props.item.quantity" @input="upadateQantity(props.item.book.id, $event)"></v-text-field>
-              </v-flex>
-            </td>
+
             <td>
               <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
             <td class="text-xs-center layout px-0 py-5">
-              <!-- <v-btn icon class="" @click="deleteItem(props.item)">
-                <v-icon class="red--text text--darken-4">clear</v-icon>
-              </v-btn> -->
+
               <v-layout row justify-center>
                 <v-dialog flat v-model="dialogDelete" persistent max-width="290">
                   <v-btn icon slot="activator">
@@ -70,7 +64,6 @@ export default {
         sortable: false
       },
       { text: "Giá tiền", sortable: false },
-      { text: "Số lượng", sortable: false },
       { text: "Chọn mua", sortable: false },
       { sortable: false }
     ],
@@ -103,9 +96,8 @@ export default {
     addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === val.id) {
-          alert(
-            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
-          );
+          this.$store.state.cart[index].quantity =
+            this.$store.state.cart[index].quantity + 1;
           return;
         }
       }
