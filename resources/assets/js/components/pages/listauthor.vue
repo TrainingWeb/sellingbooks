@@ -9,11 +9,13 @@
           <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
-          <book-item :book="item"></book-item>
-        </v-flex>
-      </v-layout>
+      <v-container grid-list-xs>
+        <v-layout row wrap>
+          <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
+            <book-item :book="item"></book-item>
+          </v-flex>
+        </v-layout>
+      </v-container>
       <template>
         <div class="text-xs-center mt-5">
           <v-pagination :length="3" v-model="page"></v-pagination>

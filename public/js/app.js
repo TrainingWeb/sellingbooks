@@ -34257,7 +34257,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -36907,6 +36907,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36925,7 +36935,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       page: 1,
       headers: [{
         sortable: false
-      }, { text: "Tên sách", sortable: false }, { text: "Giá tiền", sortable: false }, { text: "Số lượng", sortable: false }, { text: "Tồng tiền", sortable: false }, { sortable: false }],
+      }, { sortable: false }, { text: "Tên sách", sortable: false }, { text: "Giá tiền", sortable: false }, { text: "Số lượng", sortable: false }, { text: "Tồng tiền", sortable: false }],
       qty: 0,
       sub: 0
     };
@@ -36933,10 +36943,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     upadateQty: function upadateQty(id, e) {
       var cart = this.$store.state.cart;
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id == id) {
+      for (var index in cart) {
+        if (cart[index].book.id == id) {
           console.log("vẫn giảm đc");
-          this.$store.state.cart[index].quantity = e;
+          cart[index].quantity = e;
           this.$store.dispatch("setCart", cart);
           return;
         }
@@ -36945,11 +36955,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     delCart: function delCart(item) {
       var cart = this.$store.state.cart;
       var index = cart.indexOf(item);
+      this.dialogDel = false;
       if (index >= 0) {
         cart.splice(index, 1);
         this.$store.dispatch("setCart", cart);
       }
-      this.dialogDel = false;
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
@@ -36993,228 +37003,237 @@ var render = function() {
         "v-container",
         { staticClass: "py-5" },
         [
-          _c("v-data-table", {
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.$store.state.cart,
-              "hide-actions": "",
-              flat: ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c("tr", { staticClass: "py-1" }, [
-                      _c("td", { staticClass: "py-2" }, [
-                        _c("img", {
-                          attrs: {
-                            src: props.item.book.img,
-                            alt: "",
-                            width: "40px",
-                            height: "60px"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(props.item.book.name))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(_vm.formatPrice(props.item.book.price)) + " đ"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { row: "", wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", md3: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      type: "number",
-                                      flat: "",
-                                      solo: "",
-                                      value: props.item.quantity,
-                                      min: "1"
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        _vm.upadateQty(
-                                          props.item.book.id,
-                                          $event
-                                        )
+          _c(
+            "v-data-table",
+            {
+              attrs: {
+                headers: _vm.headers,
+                items: _vm.$store.state.cart,
+                "hide-actions": "",
+                flat: ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "items",
+                  fn: function(props) {
+                    return [
+                      _c("tr", { staticClass: "py-1" }, [
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { row: "", "justify-center": "" } },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { flat: "", icon: "", color: "red" },
+                                    nativeOn: {
+                                      click: function($event) {
+                                        $event.stopPropagation()
+                                        _vm.dialogDel = true
                                       }
                                     }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              _vm.formatPrice(
-                                props.item.book.price * props.item.quantity
-                              )
-                            ) +
-                            " đ"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { row: "", "justify-center": "" } },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { flat: "", icon: "", color: "red" },
-                                  nativeOn: {
-                                    click: function($event) {
-                                      $event.stopPropagation()
-                                      _vm.dialogDel = true
+                                  },
+                                  [_c("v-icon", [_vm._v("clear")])],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-dialog",
+                                  {
+                                    attrs: { "max-width": "290" },
+                                    model: {
+                                      value: _vm.dialogDel,
+                                      callback: function($$v) {
+                                        _vm.dialogDel = $$v
+                                      },
+                                      expression: "dialogDel"
                                     }
-                                  }
-                                },
-                                [_c("v-icon", [_vm._v("clear")])],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-dialog",
-                                {
-                                  attrs: { "max-width": "290" },
-                                  model: {
-                                    value: _vm.dialogDel,
-                                    callback: function($$v) {
-                                      _vm.dialogDel = $$v
-                                    },
-                                    expression: "dialogDel"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "v-card",
-                                    [
-                                      _c(
-                                        "v-toolbar",
-                                        {
-                                          attrs: {
-                                            color: "green accent-4",
-                                            dark: ""
-                                          }
-                                        },
-                                        [
-                                          _c("v-toolbar-title", [
-                                            _vm._v("Thông báo")
-                                          ])
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c("v-card-text", [
-                                        _vm._v("Bạn có chắc chắn xóa sách :"),
-                                        _c("br"),
+                                  },
+                                  [
+                                    _c(
+                                      "v-card",
+                                      [
+                                        _c(
+                                          "v-toolbar",
+                                          {
+                                            attrs: {
+                                              color: "green accent-4",
+                                              dark: ""
+                                            }
+                                          },
+                                          [
+                                            _c("v-toolbar-title", [
+                                              _vm._v("Thông báo")
+                                            ])
+                                          ],
+                                          1
+                                        ),
                                         _vm._v(" "),
-                                        _c("strong", [
-                                          _vm._v(_vm._s(props.item.book.name))
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-card-actions",
-                                        [
-                                          _c("v-spacer"),
+                                        _c("v-card-text", [
+                                          _vm._v("Bạn có chắc chắn xóa sách :"),
+                                          _c("br"),
                                           _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                color: "green accent-4",
-                                                flat: "flat"
-                                              },
-                                              nativeOn: {
-                                                click: function($event) {
-                                                  _vm.dialogDel = false
+                                          _c("strong", [
+                                            _vm._v(_vm._s(props.item.book.name))
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card-actions",
+                                          [
+                                            _c("v-spacer"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  color: "green accent-4",
+                                                  flat: "flat"
+                                                },
+                                                nativeOn: {
+                                                  click: function($event) {
+                                                    _vm.dialogDel = false
+                                                  }
                                                 }
-                                              }
-                                            },
-                                            [_vm._v("HỦY")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                color: "green accent-4",
-                                                flat: "flat"
                                               },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.delCart(props.item)
+                                              [_vm._v("HỦY")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  color: "green accent-4",
+                                                  flat: "flat"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.delCart(props.item)
+                                                  }
                                                 }
-                                              }
-                                            },
-                                            [_vm._v("OK")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
+                                              },
+                                              [_vm._v("OK")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "py-2" }, [
+                          _c("img", {
+                            attrs: {
+                              src: props.item.book.img,
+                              alt: "",
+                              width: "40px",
+                              height: "60px"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.book.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm.formatPrice(props.item.book.price)) +
+                              " đ"
                           )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { row: "", wrap: "" } },
+                              [
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", md3: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        type: "number",
+                                        flat: "",
+                                        solo: "",
+                                        value: props.item.quantity,
+                                        min: "1"
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          _vm.upadateQty(
+                                            props.item.book.id,
+                                            $event
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-right" }, [
+                          _vm._v(
+                            " " +
+                              _vm._s(
+                                _vm.formatPrice(
+                                  props.item.book.price * props.item.quantity
+                                )
+                              ) +
+                              " đ"
+                          )
+                        ])
+                      ])
+                    ]
+                  }
                 }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { staticClass: "py-4 border-top", attrs: { row: "", wrap: "" } },
+              ])
+            },
             [
-              _c("v-flex", { attrs: { xs6: "" } }, [
+              _c("template", { slot: "footer" }, [
                 _c(
-                  "strong",
-                  { staticClass: "title", attrs: { color: "black" } },
-                  [_vm._v("Tổng tiền")]
+                  "td",
+                  { staticClass: "py-3", attrs: { colspan: "100%" } },
+                  [
+                    _c(
+                      "v-card-actions",
+                      { staticClass: "pr-0" },
+                      [
+                        _c("strong", [_vm._v("Tổng tiền")]),
+                        _vm._v(" "),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("strong", { staticClass: "mr-0" }, [
+                          _vm._v(_vm._s(_vm.formatPrice(_vm.total)) + " đ")
+                        ])
+                      ],
+                      1
+                    )
+                  ],
+                  1
                 )
-              ]),
-              _vm._v(" "),
-              _c("v-flex", { attrs: { xs4: "", "text-xs-right": "" } }, [
-                _c("strong", { attrs: { color: "black" } }, [
-                  _vm._v(_vm._s(_vm.formatPrice(_vm.total)) + " đ")
-                ])
               ])
             ],
-            1
+            2
           ),
           _vm._v(" "),
           _c(
@@ -37369,6 +37388,8 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -37586,16 +37607,26 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.books, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
+            "v-container",
+            { attrs: { "grid-list-xs": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                _vm._l(_vm.books, function(item, index) {
+                  return _c(
+                    "v-flex",
+                    {
+                      key: "khoa" + index,
+                      attrs: { xs12: "", md6: "", lg4: "" }
+                    },
+                    [_c("book-item", { attrs: { book: item } })],
+                    1
+                  )
+                })
               )
-            })
+            ],
+            1
           ),
           _vm._v(" "),
           [
@@ -37822,7 +37853,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addCartPageFavorite: function addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === val.id) {
-          this.$store.state.cart[index].quantity = this.$store.state.cart[index].quantity + 1;
+          alert("Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
           return;
         }
       }
@@ -38242,6 +38273,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -38437,16 +38470,26 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.books, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
+            "v-container",
+            { attrs: { "grid-list-xs": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                _vm._l(_vm.books, function(item, index) {
+                  return _c(
+                    "v-flex",
+                    {
+                      key: "khoa" + index,
+                      attrs: { xs12: "", md6: "", lg4: "" }
+                    },
+                    [_c("book-item", { attrs: { book: item } })],
+                    1
+                  )
+                })
               )
-            })
+            ],
+            1
           ),
           _vm._v(" "),
           [
@@ -38582,6 +38625,8 @@ exports.push([module.i, "\n.primary {\r\n  background-color: #00c853 !important;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -38802,16 +38847,26 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.books, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
+            "v-container",
+            { attrs: { "grid-list-xs": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                _vm._l(_vm.books, function(item, index) {
+                  return _c(
+                    "v-flex",
+                    {
+                      key: "khoa" + index,
+                      attrs: { xs12: "", md6: "", lg4: "" }
+                    },
+                    [_c("book-item", { attrs: { book: item } })],
+                    1
+                  )
+                })
               )
-            })
+            ],
+            1
           ),
           _vm._v(" "),
           [
@@ -38972,6 +39027,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -39065,16 +39122,26 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            _vm._l(_vm.books, function(item, index) {
-              return _c(
-                "v-flex",
-                { key: "khoa" + index, attrs: { xs12: "", md6: "", lg4: "" } },
-                [_c("book-item", { attrs: { book: item } })],
-                1
+            "v-container",
+            { attrs: { "grid-list-xs": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { row: "", wrap: "" } },
+                _vm._l(_vm.books, function(item, index) {
+                  return _c(
+                    "v-flex",
+                    {
+                      key: "khoa" + index,
+                      attrs: { xs12: "", md6: "", lg4: "" }
+                    },
+                    [_c("book-item", { attrs: { book: item } })],
+                    1
+                  )
+                })
               )
-            })
+            ],
+            1
           ),
           _vm._v(" "),
           [
@@ -40837,6 +40904,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     textSearch: function textSearch() {
       console.log("Đã vào rồi ");
       window.location = "#/search?keyword=" + this.search;
+      this.search = "";
     },
     submit: function submit() {
       if (this.$refs.form.validate()) {
@@ -40845,6 +40913,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           email: this.email
         });
       }
+    }
+  },
+  computed: {
+    totalCard: function totalCard() {
+      return this.$store.state.cart.reduce(function (total, p) {
+        return total + p.quantity;
+      }, 0);
     }
   }
 });
@@ -41323,11 +41398,7 @@ var render = function() {
                                       attrs: { slot: "badge" },
                                       slot: "badge"
                                     },
-                                    [
-                                      _vm._v(
-                                        _vm._s(_vm.$store.state.cart.length)
-                                      )
-                                    ]
+                                    [_vm._v(_vm._s(_vm.totalCard))]
                                   ),
                                   _vm._v(" "),
                                   _c("v-icon", { attrs: { color: "grey" } }, [
@@ -43181,19 +43252,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
   data: function data() {
-    return {};
+    return {
+      snackbar: false,
+      timeout: 3000,
+      love: false
+    };
   },
 
   watch: {},
   methods: {
     addCart: function addCart() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          this.$store.state.cart[index].quantity = this.$store.state.cart[index].quantity + 1;
+      var cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === this.book.id) {
+          cart[index].quantity = cart[index].quantity + 1;
+          this.snackbar = true;
           return;
         }
       }
@@ -43202,22 +43285,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         book: this.book,
         quantity: 1
       };
-      var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
-      alert("Chúc mừng bạn thêm giỏ hàng thành công");
+      this.snackbar = true;
     },
-    addItemfavorite: function addItemfavorite(id) {
-      var i = this.$store.state.selected.indexOf(id);
+    addItemfavorite: function addItemfavorite() {
       var favorite = this.$store.state.favorite;
-      for (var index in this.$store.state.favorite) {
-        if (this.$store.state.favorite[index].book.id === this.book.id) {
+      for (var index in favorite) {
+        if (favorite[index].book.id === this.book.id) {
           if (i > -1) {
             console.log("không đỏ");
-            favorite.splice(this.$store.state.favorite[index], 1);
-            this.$store.dispatch("setFavorite", favorite);
-            this.$store.state.selected.splice(i, 1);
-            this.$store.dispatch("setSelected", selected);
+            favorite.splice(favorite[index], 1);
+            love: false, this.$store.dispatch("setFavorite", favorite);
             return;
           }
         }
@@ -43226,12 +43305,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var itemBook = {
         book: this.book,
-        quantity: 1
+        quantity: 1,
+        love: true
       };
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
-      this.$store.state.selected.push(id);
-      this.$store.dispatch("setSelected", selected);
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
@@ -43372,6 +43450,43 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
+                          _c(
+                            "v-snackbar",
+                            {
+                              attrs: {
+                                timeout: _vm.timeout,
+                                top: "",
+                                color: "green accent-4"
+                              },
+                              model: {
+                                value: _vm.snackbar,
+                                callback: function($$v) {
+                                  _vm.snackbar = $$v
+                                },
+                                expression: "snackbar"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n              Thêm vào giỏ hàng thành công\n              "
+                              ),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { flat: "", icon: "", color: "white" },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.snackbar = false
+                                    }
+                                  }
+                                },
+                                [_c("v-icon", [_vm._v("clear")])],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
                           _c("v-spacer"),
                           _vm._v(" "),
                           _c(
@@ -43380,12 +43495,12 @@ var render = function() {
                               attrs: { flat: "", icon: "", color: "grey" },
                               on: {
                                 click: function($event) {
-                                  _vm.addItemfavorite(_vm.book.id)
+                                  _vm.addItemfavorite()
                                 }
                               }
                             },
                             [
-                              _vm.$store.state.selected.indexOf(_vm.book.id) < 0
+                              !_vm.love
                                 ? _c(
                                     "v-icon",
                                     { attrs: { color: "grey lighten-1" } },

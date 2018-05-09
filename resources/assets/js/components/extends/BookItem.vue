@@ -29,9 +29,15 @@
               <v-btn flat icon color="red" @click="addCart">
                 <v-icon>add_shopping_cart</v-icon>
               </v-btn>
+              <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
+                Thêm vào giỏ hàng thành công
+                <v-btn flat icon color="white" @click.native="snackbar = false">
+                  <v-icon>clear</v-icon>
+                </v-btn>
+              </v-snackbar>
               <v-spacer></v-spacer>
-              <v-btn flat icon color="grey" @click="addItemfavorite(book.id)">
-                <v-icon v-if="$store.state.selected.indexOf(book.id) < 0" color="grey lighten-1">favorite</v-icon>
+              <v-btn flat icon color="grey" @click="addItemfavorite()">
+                <v-icon v-if="!love" color="grey lighten-1">favorite</v-icon>
                 <v-icon v-else color="red">favorite</v-icon>
               </v-btn>
             </v-card-actions>
@@ -46,15 +52,20 @@
 export default {
   props: ["book"],
   data() {
-    return {};
+    return {
+      snackbar: false,
+      timeout: 3000,
+      love: false
+    };
   },
   watch: {},
   methods: {
     addCart() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          this.$store.state.cart[index].quantity =
-            this.$store.state.cart[index].quantity + 1;
+      let cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === this.book.id) {
+          cart[index].quantity = cart[index].quantity + 1;
+          this.snackbar = true;
           return;
         }
       }
@@ -63,22 +74,18 @@ export default {
         book: this.book,
         quantity: 1
       };
-      let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
-      alert("Chúc mừng bạn thêm giỏ hàng thành công");
+      this.snackbar = true;
     },
-    addItemfavorite(id) {
-      const i = this.$store.state.selected.indexOf(id);
+    addItemfavorite() {
       let favorite = this.$store.state.favorite;
-      for (var index in this.$store.state.favorite) {
-        if (this.$store.state.favorite[index].book.id === this.book.id) {
+      for (var index in favorite) {
+        if (favorite[index].book.id === this.book.id) {
           if (i > -1) {
             console.log("không đỏ");
-            favorite.splice(this.$store.state.favorite[index], 1);
-            this.$store.dispatch("setFavorite", favorite);
-            this.$store.state.selected.splice(i, 1);
-            this.$store.dispatch("setSelected", selected);
+            favorite.splice(favorite[index], 1);
+            love: false, this.$store.dispatch("setFavorite", favorite);
             return;
           }
         }
@@ -87,12 +94,11 @@ export default {
 
       let itemBook = {
         book: this.book,
-        quantity: 1
+        quantity: 1,
+        love: true
       };
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
-      this.$store.state.selected.push(id);
-      this.$store.dispatch("setSelected", selected);
     },
     formatPrice(price) {
       let val = (price / 1).toFixed(0).replace(".", ",");
