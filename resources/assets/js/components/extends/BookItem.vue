@@ -3,13 +3,13 @@
     <v-container fluid grid-list-lg py-0 pb-4>
       <v-layout row wrap offset-sm3 class="hover-card">
         <v-flex xs12 sm5 md5 class=" py-0 px-0">
-          <router-link to="/detail" class="link-book">
+          <router-link :to="`/detail?type=`+book.slug" class="link-book">
             <v-card-media :src="'/storage/images/'+book.image" height="180px"></v-card-media>
           </router-link>
         </v-flex>
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">
           <div>
-            <router-link to="/detail" class="link-book">
+            <router-link :to="`/detail?type=`+book.slug" class="link-book">
               <h3>{{book.name}}</h3>
             </router-link>
             <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>

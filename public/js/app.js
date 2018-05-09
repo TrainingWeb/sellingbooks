@@ -12358,7 +12358,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(121);
+module.exports = __webpack_require__(120);
 
 
 /***/ }),
@@ -12377,9 +12377,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12411,7 +12411,7 @@ if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default *
 if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
-__webpack_require__(109);
+__webpack_require__(119);
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: "#app",
@@ -34425,15 +34425,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       commenttext: "",
-      bookDetail: {
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: 12000,
-        detail: "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
-        sale: 1500,
-        author: "Nguyễn Du",
-        textDetail: "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ."
-      },
+      bookDetail: {},
 
       comments: [{
         avatar: "./img/author.jpg",
@@ -34453,25 +34445,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // { divider: true, inset: true }
       }],
-      book: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "",
-        author: "Nguyễn Du"
-      }],
+      book: {},
 
       breadcrumbs: [{
         name: "Trang Chủ",
@@ -34528,6 +34502,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.commenttext = "";
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
+      _this.bookDetail = response.data.data.book;
+      _this.book = response.data.data.samebooks;
+      console.log("đây là tác phẩm", response.data.data.samebooks);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -34611,7 +34596,9 @@ var render = function() {
                                                 [
                                                   _c("v-card-media", {
                                                     attrs: {
-                                                      src: _vm.bookDetail.img,
+                                                      src:
+                                                        "/storage/images/" +
+                                                        _vm.bookDetail.image,
                                                       height: "450px",
                                                       contain: ""
                                                     }
@@ -34656,7 +34643,7 @@ var render = function() {
                                                           _vm._v(
                                                             _vm._s(
                                                               _vm.bookDetail
-                                                                .author
+                                                                .author.name
                                                             )
                                                           )
                                                         ]
@@ -34726,7 +34713,7 @@ var render = function() {
                                                             _vm._v(
                                                               _vm._s(
                                                                 _vm.bookDetail
-                                                                  .detail
+                                                                  .description
                                                               )
                                                             )
                                                           ]
@@ -34993,7 +34980,7 @@ var render = function() {
                             { attrs: { id: "tab-1" } },
                             [
                               _c("v-card-text", { staticClass: "roboto" }, [
-                                _vm._v(_vm._s(_vm.bookDetail.textDetail))
+                                _vm._v(_vm._s(_vm.bookDetail.description))
                               ])
                             ],
                             1
@@ -36521,7 +36508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [],
+      books: {},
       namepage: "Danh sách sản phẩm",
       page: 1
     };
@@ -36532,6 +36519,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var type = this.$route.query.type;
     window.axios.get("/books/type/" + type + "?page=" + this.$route.query.page || 1).then(function (res) {
       _this.books = res.data.data;
+      console.log("mang chị thuy", res.data.data);
     });
   }
 });
@@ -38221,115 +38209,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }],
+      listCatagory: {},
       namepage: "Danh sách sản phẩm",
       page: 1
     };
@@ -38340,7 +38220,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.breadcrumbs[1].name = "" + this.$route.query.type;
+
+    window.axios.get("/categories/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
+      _this.listCatagory = response.data.data.data;
+      console.log("đây là tác phẩm", _this.listauthor);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -38407,7 +38296,7 @@ var render = function() {
               _c(
                 "v-layout",
                 { attrs: { row: "", wrap: "" } },
-                _vm._l(_vm.books, function(item, index) {
+                _vm._l(_vm.listCatagory, function(item, index) {
                   return _c(
                     "v-flex",
                     {
@@ -38709,7 +38598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       namepage: "Tác giả",
       page: 1,
-      listauthor: {}
+      listauthor: []
     };
   },
   watch: {
@@ -38723,8 +38612,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.breadcrumbs[1].name = "" + this.$route.query.type;
 
     window.axios.get("/authors/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-      _this.listauthor = response.data.data.books.data;
-      console.log("đây là tác phâme", response.data.data.books.data);
+      _this.listauthor = response.data.data.data;
+      console.log("đây là tác phẩm", _this.listauthor);
     }).catch(function (error) {
       console.log(error);
     });
@@ -38798,7 +38687,7 @@ var render = function() {
                   return _c(
                     "v-flex",
                     {
-                      key: "khoa" + index,
+                      key: "khoaauthor-" + index,
                       attrs: { xs12: "", md6: "", lg4: "" }
                     },
                     [_c("book-item", { attrs: { book: item } })],
@@ -40710,6 +40599,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40792,6 +40699,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     window.axios.get("/index").then(function (response) {
       _this.dataApp = response.data.data;
+      console.log(response.data.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -41380,6 +41288,278 @@ var render = function() {
                                   attrs: { slot: "activator", flat: "" },
                                   slot: "activator"
                                 },
+                                [_vm._v("Danh mục")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-card",
+                                [
+                                  _vm.dataApp.menucategories
+                                    ? _c(
+                                        "v-layout",
+                                        { attrs: { row: "", wrap: "" } },
+                                        [
+                                          _c(
+                                            "v-flex",
+                                            {
+                                              attrs: {
+                                                xs4: "",
+                                                "text-xs-center": ""
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c("v-list-tile", [
+                                                    _c(
+                                                      "strong",
+                                                      {
+                                                        staticClass: "headline"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.dataApp
+                                                              .menucategories[0]
+                                                              .name
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _vm._l(
+                                                    _vm.dataApp
+                                                      .menucategories[0]
+                                                      .categories,
+                                                    function(subtiem, index) {
+                                                      return _c(
+                                                        "v-list-tile",
+                                                        {
+                                                          key:
+                                                            "keyauthor1-$" +
+                                                            index,
+                                                          attrs: {
+                                                            avatar: "",
+                                                            exact: "",
+                                                            to:
+                                                              "/list-category?type=" +
+                                                              subtiem.slug
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [
+                                                              _c(
+                                                                "v-list-tile-title",
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                            " +
+                                                                      _vm._s(
+                                                                        subtiem.name
+                                                                      ) +
+                                                                      "\n                          "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    }
+                                                  )
+                                                ],
+                                                2
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs4: "" } },
+                                            [
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c("v-list-tile", [
+                                                    _c(
+                                                      "strong",
+                                                      {
+                                                        staticClass: "headline"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          " " +
+                                                            _vm._s(
+                                                              _vm.dataApp
+                                                                .menucategories[1]
+                                                                .name
+                                                            )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _vm._l(
+                                                    _vm.dataApp
+                                                      .menucategories[1]
+                                                      .categories,
+                                                    function(subtiem, index) {
+                                                      return _c(
+                                                        "v-list-tile",
+                                                        {
+                                                          key:
+                                                            "keyauthor1-$" +
+                                                            index,
+                                                          attrs: {
+                                                            avatar: "",
+                                                            exact: "",
+                                                            to:
+                                                              "/list-category?type=" +
+                                                              subtiem.slug
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [
+                                                              _c(
+                                                                "v-list-tile-title",
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                            " +
+                                                                      _vm._s(
+                                                                        subtiem.name
+                                                                      ) +
+                                                                      "\n                          "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    }
+                                                  )
+                                                ],
+                                                2
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-flex",
+                                            { attrs: { xs4: "" } },
+                                            [
+                                              _c(
+                                                "v-list",
+                                                [
+                                                  _c("v-list-tile", [
+                                                    _c(
+                                                      "strong",
+                                                      {
+                                                        staticClass: "headline"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.dataApp
+                                                              .menucategories[2]
+                                                              .name
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _vm._l(
+                                                    _vm.dataApp
+                                                      .menucategories[2]
+                                                      .categories,
+                                                    function(subtiem, index) {
+                                                      return _c(
+                                                        "v-list-tile",
+                                                        {
+                                                          key:
+                                                            "keyauthor1-$" +
+                                                            index,
+                                                          attrs: {
+                                                            avatar: "",
+                                                            exact: "",
+                                                            to:
+                                                              "/list-category?type=" +
+                                                              subtiem.slug
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [
+                                                              _c(
+                                                                "v-list-tile-title",
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                            " +
+                                                                      _vm._s(
+                                                                        subtiem.name
+                                                                      ) +
+                                                                      "\n                          "
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    }
+                                                  )
+                                                ],
+                                                2
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-menu",
+                            {
+                              attrs: {
+                                "open-on-hover": "",
+                                "offset-y": "",
+                                "full-width": "",
+                                bottom: "",
+                                "close-on-content-click": false,
+                                "content-class": "mega-menu"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "white--text",
+                                  attrs: { slot: "activator", flat: "" },
+                                  slot: "activator"
+                                },
                                 [_vm._v("Tác giả")]
                               ),
                               _vm._v(" "),
@@ -41403,44 +41583,46 @@ var render = function() {
                                               _c(
                                                 "v-list",
                                                 _vm._l(
-                                                  _vm.dataApp.menuauthors.first,
+                                                  _vm.dataApp.menuauthors,
                                                   function(subtiem, index) {
-                                                    return _c(
-                                                      "v-list-tile",
-                                                      {
-                                                        key:
-                                                          "keyauthor1-$" +
-                                                          index,
-                                                        attrs: {
-                                                          avatar: "",
-                                                          exact: "",
-                                                          to:
-                                                            "/list-author?type=" +
-                                                            subtiem.slug
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "v-list-tile-content",
+                                                    return index < 5
+                                                      ? _c(
+                                                          "v-list-tile",
+                                                          {
+                                                            key:
+                                                              "keyauthor1-$" +
+                                                              index,
+                                                            attrs: {
+                                                              avatar: "",
+                                                              exact: "",
+                                                              to:
+                                                                "/list-author?type=" +
+                                                                subtiem.slug
+                                                            }
+                                                          },
                                                           [
                                                             _c(
-                                                              "v-list-tile-title",
+                                                              "v-list-tile-content",
                                                               [
-                                                                _vm._v(
-                                                                  "\n                            " +
-                                                                    _vm._s(
-                                                                      subtiem.name
-                                                                    ) +
-                                                                    "\n                          "
+                                                                _c(
+                                                                  "v-list-tile-title",
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                            " +
+                                                                        _vm._s(
+                                                                          subtiem.name
+                                                                        ) +
+                                                                        "\n                          "
+                                                                    )
+                                                                  ]
                                                                 )
-                                                              ]
+                                                              ],
+                                                              1
                                                             )
                                                           ],
                                                           1
                                                         )
-                                                      ],
-                                                      1
-                                                    )
+                                                      : _vm._e()
                                                   }
                                                 )
                                               )
@@ -41450,48 +41632,57 @@ var render = function() {
                                           _vm._v(" "),
                                           _c(
                                             "v-flex",
-                                            { attrs: { xs4: "" } },
+                                            {
+                                              attrs: {
+                                                xs4: "",
+                                                "text-xs-center": ""
+                                              }
+                                            },
                                             [
                                               _c(
                                                 "v-list",
                                                 _vm._l(
-                                                  _vm.dataApp.menuauthors
-                                                    .second,
+                                                  _vm.dataApp.menuauthors,
                                                   function(subtiem, index) {
-                                                    return _c(
-                                                      "v-list-tile",
-                                                      {
-                                                        key:
-                                                          "keyauthor2-$" +
-                                                          index,
-                                                        attrs: {
-                                                          avatar: "",
-                                                          exact: "",
-                                                          to:
-                                                            "/list-author?type=" +
-                                                            subtiem.slug
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "v-list-tile-content",
+                                                    return index >= 5 &&
+                                                      index < 10
+                                                      ? _c(
+                                                          "v-list-tile",
+                                                          {
+                                                            key:
+                                                              "keyauthor1-$" +
+                                                              index,
+                                                            attrs: {
+                                                              avatar: "",
+                                                              exact: "",
+                                                              to:
+                                                                "/list-author?type=" +
+                                                                subtiem.slug
+                                                            }
+                                                          },
                                                           [
                                                             _c(
-                                                              "v-list-tile-title",
+                                                              "v-list-tile-content",
                                                               [
-                                                                _vm._v(
-                                                                  _vm._s(
-                                                                    subtiem.name
-                                                                  )
+                                                                _c(
+                                                                  "v-list-tile-title",
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                            " +
+                                                                        _vm._s(
+                                                                          subtiem.name
+                                                                        ) +
+                                                                        "\n                          "
+                                                                    )
+                                                                  ]
                                                                 )
-                                                              ]
+                                                              ],
+                                                              1
                                                             )
                                                           ],
                                                           1
                                                         )
-                                                      ],
-                                                      1
-                                                    )
+                                                      : _vm._e()
                                                   }
                                                 )
                                               )
@@ -41501,47 +41692,56 @@ var render = function() {
                                           _vm._v(" "),
                                           _c(
                                             "v-flex",
-                                            { attrs: { xs4: "" } },
+                                            {
+                                              attrs: {
+                                                xs4: "",
+                                                "text-xs-center": ""
+                                              }
+                                            },
                                             [
                                               _c(
                                                 "v-list",
                                                 _vm._l(
-                                                  _vm.dataApp.menuauthors.third,
+                                                  _vm.dataApp.menuauthors,
                                                   function(subtiem, index) {
-                                                    return _c(
-                                                      "v-list-tile",
-                                                      {
-                                                        key:
-                                                          "keyauthor3-$" +
-                                                          index,
-                                                        attrs: {
-                                                          avatar: "",
-                                                          exact: "",
-                                                          to:
-                                                            "/list-author?type=" +
-                                                            subtiem.slug
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "v-list-tile-content",
+                                                    return index >= 10
+                                                      ? _c(
+                                                          "v-list-tile",
+                                                          {
+                                                            key:
+                                                              "keyauthor1-$" +
+                                                              index,
+                                                            attrs: {
+                                                              avatar: "",
+                                                              exact: "",
+                                                              to:
+                                                                "/list-author?type=" +
+                                                                subtiem.slug
+                                                            }
+                                                          },
                                                           [
                                                             _c(
-                                                              "v-list-tile-title",
+                                                              "v-list-tile-content",
                                                               [
-                                                                _vm._v(
-                                                                  _vm._s(
-                                                                    subtiem.name
-                                                                  )
+                                                                _c(
+                                                                  "v-list-tile-title",
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                            " +
+                                                                        _vm._s(
+                                                                          subtiem.name
+                                                                        ) +
+                                                                        "\n                          "
+                                                                    )
+                                                                  ]
                                                                 )
-                                                              ]
+                                                              ],
+                                                              1
                                                             )
                                                           ],
                                                           1
                                                         )
-                                                      ],
-                                                      1
-                                                    )
+                                                      : _vm._e()
                                                   }
                                                 )
                                               )
@@ -42831,27 +43031,16 @@ var index_esm = {
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.axios = __webpack_require__(6);
-
-window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
-var api = "/api";
-window.axios.defaults.baseURL = "" + host + api;
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(111)
+  __webpack_require__(110)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(113)
+var __vue_script__ = __webpack_require__(112)
 /* template */
-var __vue_template__ = __webpack_require__(114)
+var __vue_template__ = __webpack_require__(113)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42890,13 +43079,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(112);
+var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -42916,7 +43105,7 @@ if(false) {
 }
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -42930,7 +43119,7 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43046,7 +43235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43077,7 +43266,10 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    { staticClass: "link-book", attrs: { to: "/detail" } },
+                    {
+                      staticClass: "link-book",
+                      attrs: { to: "/detail?type=" + _vm.book.slug }
+                    },
                     [
                       _c("v-card-media", {
                         attrs: {
@@ -43104,7 +43296,10 @@ var render = function() {
                     [
                       _c(
                         "router-link",
-                        { staticClass: "link-book", attrs: { to: "/detail" } },
+                        {
+                          staticClass: "link-book",
+                          attrs: { to: "/detail?type=" + _vm.book.slug }
+                        },
                         [_c("h3", [_vm._v(_vm._s(_vm.book.name))])]
                       ),
                       _vm._v(" "),
@@ -43273,19 +43468,19 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(116)
+  __webpack_require__(115)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(118)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43324,13 +43519,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(116);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43350,7 +43545,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -43364,7 +43559,7 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43394,7 +43589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43479,8 +43674,18 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */,
-/* 121 */
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+window.axios = __webpack_require__(6);
+
+window.axios.defaults.headers.post["Content-Type"] = "application/json";
+var host = "http://sellingbooks.local";
+var api = "/api";
+window.axios.defaults.baseURL = "" + host + api;
+
+/***/ }),
+/* 120 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
