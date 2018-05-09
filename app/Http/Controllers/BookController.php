@@ -19,7 +19,7 @@ class BookController extends APIBaseController
      */
     public function index()
     {
-        $books = Book::paginate(18);
+        $books = Book::whereIn('highlights', [0, 1])->paginate(18);
         if (count($books) < 1) {
             return $this->sendMessage('Found 0 book');
         }
@@ -43,7 +43,7 @@ class BookController extends APIBaseController
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'required|mimes:jpeg,bmp,png',
             'price' => 'required',
             'highlights' => 'required',
             'description' => 'required',
@@ -52,6 +52,7 @@ class BookController extends APIBaseController
         ], [
             'name.required' => 'Please enter book name',
             'image.required' => 'Please enter book image',
+            'image.mimes' => 'Image must be image type',
             'price.required' => 'Please enter price',
             'highlights.required' => 'Please choose type highlights',
             'description.required' => 'Please enter book description',
@@ -69,12 +70,11 @@ class BookController extends APIBaseController
         $book->description = $input['description'];
         $book->id_author = $input['id_author'];
         $book->id_category = $input['id_category'];
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $file->move('./images', $file->getClientOriginalName('image'));
-            $image = $file->getClientOriginalName('image');
-            $book->image = $image;
-        }
+        $file = $request->file('image');
+        $file->store('/public/images');
+        $name = $file->getClientOriginalName('image');
+        $book->image = $name;
+        $book->save();
         if ($request->id_tag) {
             $book->tags()->attach($request->id_tag);
         }
@@ -88,7 +88,6 @@ class BookController extends APIBaseController
             $tag->save();
             $tag->books()->attach($book->id);
         }
-        $book->save();
         if (count(Book::where('slug', $book->slug)->get()) > 1) {
             $oldSlug = $book->slug;
             $book->slug = $oldSlug . '.' . $book->id;
@@ -106,7 +105,7 @@ class BookController extends APIBaseController
         $storage->quantity = $request->quantity;
         $storage->id_book = $book->id;
         $storage->save();
-        return $this->sendMessage('Book '.$book->name.' created successfully.');
+        return $this->sendMessage('Book ' . $book->name . ' created successfully.');
     }
 
     /**
@@ -117,7 +116,7 @@ class BookController extends APIBaseController
      */
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = Book::whereIn('highlights', [0, 1])->find($id);
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found.');
         }
@@ -139,7 +138,7 @@ class BookController extends APIBaseController
      */
     public function update(Request $request, $id)
     {
-        $book = Book::find($id);
+        $book = Book::whereIn('highlights', [0, 1])->find($id);
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found.');
         }
@@ -166,9 +165,9 @@ class BookController extends APIBaseController
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $file->move('./images', $file->getClientOriginalName('image'));
-            $image = $file->getClientOriginalName('image');
-            $book->image = $image;
+            $file->store('/public/images');
+            $name = $file->getClientOriginalName('image');
+            $book->image = $name;
         }
         $book->name = $input['name'];
         $book->slug = str_slug($input['name']);
@@ -191,7 +190,7 @@ class BookController extends APIBaseController
             $tag->save();
             $tag->books()->attach($book->id);
         }
-        return $this->sendMessage('Book '.$book->name.' updated successfully');
+        return $this->sendMessage('Book ' . $book->name . ' updated successfully');
     }
 
     /**
@@ -202,31 +201,15 @@ class BookController extends APIBaseController
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $book = Book::whereIn('highlights', [0, 1])->find($id);
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found.');
         }
-        $book->delete();
-        return $this->sendMessage('Book '.$id.' deleted successfully');
-    }
-
-    public function addBookQuantity(Request $request, $id)
-    {
-        $storage = Storage::where('id_book', $id)->first();
-        if (is_null($storage)) {
-            return $this->sendErrorNotFound('Book not found !');
+        if ($book->highlights == 2) {
+            return $this->sendErrorNotFound('Book not found.');
         }
-        $oldquantity = $storage->quantity;
-        $storage->quantity = $oldquantity + $request->quantity;
-        $storage->id_book = $id;
-        $storage->save();
-
-        $history = new History;
-        $history->status = 'input';
-        $history->quantity = $request->quantity;
-        $history->id_book = $id;
-        $history->id_user = $request->user()->id;
-        $history->save();
-        return $this->sendMessage('Just updated '.$request->quantity.' quantity of the book have id '.$id.'');
+        $book->highlights = 2;
+        $book->save();
+        return $this->sendMessage('Book ' . $id . ' hidden successfully');
     }
 }

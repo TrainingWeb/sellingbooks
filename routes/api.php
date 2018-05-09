@@ -10,48 +10,60 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-Route::post('/register', 'UserController@create');
-Route::post('/login', 'UserController@login')->name('login');
+// Auth::routes();
+
+Route::post('/register', 'PageController@createUser');
+Route::post('/login', 'PageController@login');
 
 Route::group(['middleware' => ['auth:api', 'RedirectIfAuthenticated']], function () {
-    Route::get('/admin/doanhthu', 'OrderController@Total');
+
+    Route::resource('/admin/users', 'UserController');
     Route::resource('/admin/orders', 'OrderController');
     Route::resource('/admin/authors', 'AuthorController');
     Route::resource('/admin/books', 'BookController');
     Route::resource('/admin/categories', 'CategoryController');
-    Route::get('/admin/categorycountbooks', 'CategoryController@categorywithcountbooks');
-    Route::get('/admin/bookquantity', 'AdminController@bookquantity');
     Route::resource('/admin/storages', 'StorageController');
     Route::resource('/admin/tags', 'TagController');
-    Route::resource('/admin/users', 'UserController');
-    Route::post('/admin/book/updatequantity/{id}', 'BookController@addBookQuantity');
-    Route::post('/admin/banneduser/{id}', 'AdminController@bandUser');
-    Route::post('/admin/users/changeroleuser/{id}', 'UserController@changUserRole');
+
+    Route::get('/admin', 'AdminController@index');
+    Route::get('/admin/doanhthu', 'AdminController@Total');
+    Route::get('/admin/hiddenbooks', 'AdminController@getHiddenBook');
+    Route::post('/admin/editstoragequantity/{id}', 'AdminController@editStorage');
+    Route::post('/admin/book/updatequantity/{id}', 'AdminController@addBookQuantity');
+    Route::post('/admin/users/banneduser/{id}', 'AdminController@bandUser');
+    Route::post('/admin/users/changeroleuser/{id}', 'AdminController@changUserRole');
 });
 
 Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
-    Route::get('/your-orders', 'OrderController@showOrderUser');
-    Route::get('/delete-your-order/{id}', 'OrderController@deleteOrderUser');
-    Route::put('/edit-your-profile', 'UserController@update');
-    Route::get('/your-profile', 'UserController@show');
-    Route::post('/finish-checkout', 'PageController@checkout');
+    Route::get('/your-profile', 'PageController@showInfoUser');
+
+    Route::get('/your-orders', 'PageController@showOrderUser');
+    Route::put('/edit-your-profile', 'PageController@updateUser');
+    Route::get('/delete-your-order/{id}', 'PageController@deleteOrderUser');
+
     Route::post('/check-info', 'PageController@checkInfo');
+    Route::post('/finish-checkout', 'PageController@checkout');
+
     Route::post('/add-comment/{id}', 'PageController@postComment');
+    Route::post('/edit-comment/{id}', 'PageController@editComment');
+    Route::get('/delete-comment/{id}', 'PageController@deleteComment');
+
     Route::post('/add-favorite/{id}', 'PageController@postFavorite');
     Route::get('/get-favorite-books', 'PageController@getFavoriteBook');
+    Route::get('/removefavorite/{id}', 'PageController@removeFavorite');
 });
 
-Route::get('/search/{name}', 'PageController@seemorefromSearch');
-Route::get('/bestsellersbook', 'PageController@bestSellers');
-Route::get('/books/{slug}', 'PageController@getBookInfo');
-Route::get('/featurebooks', 'PageController@featuredBooks');
-Route::get('/discountbooks', 'PageController@discountBooks');
-Route::get('/newbooks', 'PageController@newBooks');
 Route::post('/search', 'PageController@search');
+Route::get('/index', 'PageController@index');
+Route::get('/books/featurebooks', 'PageController@featuredBooks');
+Route::get('/books/discountbooks', 'PageController@discountBooks');
+Route::get('/books/newbooks', 'PageController@newBooks');
+Route::get('/books/{slug}', 'PageController@getBookInfo');
 Route::get('/authors', 'PageController@getAuthors');
 Route::get('/authors/{slug}', 'PageController@getInfoAuthor');
 Route::get('/categories', 'PageController@getCategoies');
 Route::get('/categories/{slug}', 'PageController@getInfoCategory');
-Route::resource('/home', 'PageController');
-Route::get('/tags/{slug}', 'PageController@getBookwithTag');
+Route::get('/tags/{slug}', 'PageController@tagInfo');
 
+Route::post('/sendmail', 'PageController@sendMail');
+Route::post('/password/reset/{token}', 'PageController@resetPassword');
