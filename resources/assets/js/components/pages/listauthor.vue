@@ -11,7 +11,7 @@
       </v-layout>
       <v-container grid-list-xs>
         <v-layout row wrap>
-          <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
+          <v-flex xs12 md6 lg4 v-for="(item,index) in listauthor" :key="`khoa${index}`">
             <book-item :book="item"></book-item>
           </v-flex>
         </v-layout>
@@ -192,7 +192,8 @@ export default {
       }
     ],
     namepage: "Tác giả",
-    page: 1
+    page: 1,
+    listauthor: {}
   }),
   watch: {
     "$route.query.type"(val) {
@@ -201,6 +202,18 @@ export default {
   },
   mounted() {
     this.breadcrumbs[1].name = `${this.$route.query.type}`;
+
+    window.axios
+      .get(
+        "/authors/" + this.$route.query.type + "?slug=" + this.$route.query.type
+      )
+      .then(response => {
+        this.listauthor = response.data.data.books.data;
+        console.log("đây là tác phâme", response.data.data.books.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

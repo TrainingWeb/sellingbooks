@@ -101,18 +101,19 @@
       <v-flex xs12 green accent-4>
         <v-container class="pa-0">
           <v-toolbar flat class="green accent-4">
+
             <v-toolbar-items>
               <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
-              <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
-                <v-btn slot="activator" flat class="white--text">Thể loại</v-btn>
+              <!-- <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
+                <v-btn slot="activator" flat class="white--text">Danh mục</v-btn>
                 <v-card>
-                  <v-layout row wrap>
+                  <v-layout row wrap v-if="dataApp.menuauthors">
                     <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in megamenu" :key="`keyCatetgory1-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.first" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.name">
                           <v-list-tile-content>
                             <v-list-tile-title>
-                              {{subtiem.text}}
+                              {{subtiem.name}}
                             </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
@@ -120,35 +121,36 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in megamenu2" :key="`keyCatetgory2-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.second" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.name">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in megamenu3" :key="`keyCatetgory3-$`+index" exact :to="`/list-category?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in  dataApp.menuauthors.third" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.name">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
                   </v-layout>
                 </v-card>
-              </v-menu>
+              </v-menu> -->
+              <!-- tác gia -->
               <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
                 <v-btn slot="activator" flat class="white--text">Tác giả</v-btn>
                 <v-card>
-                  <v-layout row wrap>
+                  <v-layout row wrap v-if="dataApp.menuauthors">
                     <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in authors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.first" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
                             <v-list-tile-title>
-                              {{subtiem.text}}
+                              {{subtiem.name}}
                             </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
@@ -156,18 +158,18 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in authors2" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.second" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in authors3" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.text">
+                        <v-list-tile avatar v-for="(subtiem,index) in  dataApp.menuauthors.third" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.text}}</v-list-tile-title>
+                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
@@ -296,114 +298,6 @@ export default {
         ]
       }
     ],
-    megamenu: [
-      {
-        id: 1,
-        text: "tình Yêu Không có lỗi"
-      },
-      {
-        id: 2,
-        text: "ngôn tình "
-      },
-      {
-        id: 3,
-        text: "Xuyên không"
-      },
-      {
-        id: 4,
-        text: "Truyện cổ tích"
-      }
-    ],
-    megamenu2: [
-      {
-        id: 5,
-        text: "tình Yêu Không có lỗi2"
-      },
-      {
-        id: 6,
-        text: "ngôn tình 2"
-      },
-      {
-        id: 7,
-        text: "Xuyên không 2"
-      },
-      {
-        id: 8,
-        text: "Truyện cổ tích 2"
-      }
-    ],
-    megamenu3: [
-      {
-        id: 9,
-        text: "tình Yêu Không có lỗi 3"
-      },
-      {
-        id: 10,
-        text: "ngôn tình 3"
-      },
-      {
-        id: 11,
-        text: "Xuyên không 3"
-      },
-      {
-        id: 12,
-        text: "Truyện cổ tích 3"
-      }
-    ],
-    authors: [
-      {
-        id: 1,
-        text: "Vũ trọng Phụng"
-      },
-      {
-        id: 2,
-        text: "Nguyễn Du"
-      },
-      {
-        id: 3,
-        text: "Nguyên Hồng"
-      },
-      {
-        id: 4,
-        text: "Tô Hoài"
-      }
-    ],
-    authors2: [
-      {
-        id: 5,
-        text: "Cẩm Vân"
-      },
-      {
-        id: 6,
-        text: "Tản Đà"
-      },
-      {
-        id: 7,
-        text: "Phan Bội Châu"
-      },
-      {
-        id: 8,
-        text: "Hồ Chí Minh"
-      }
-    ],
-    authors3: [
-      {
-        id: 9,
-        text: "Nguyễn Trãi"
-      },
-      {
-        id: 10,
-        text: "Nguyễn Ngọc Ký"
-      },
-      {
-        id: 11,
-        text: "Ngô Tất Tố"
-      },
-      {
-        id: 12,
-        text: "Văn Cao"
-      }
-    ],
     // popover
     register: false,
     login: false,
@@ -413,7 +307,8 @@ export default {
     e2: false,
     e3: false,
     password: "Password",
-
+    dataApp: {},
+    listauthor: {},
     search: null
   }),
   props: {
@@ -444,10 +339,9 @@ export default {
   },
   mounted() {
     window.axios
-      .post("/search?name=a")
+      .get("/index")
       .then(response => {
-        // this.items = response.data;
-        console.log(response.data);
+        this.dataApp = response.data.data;
       })
       .catch(function(error) {
         console.log(error);
@@ -462,5 +356,8 @@ export default {
 .mega-menu {
   left: 0 !important;
   min-width: 100% !important;
+}
+#inspire {
+  overflow-x: hidden;
 }
 </style>
