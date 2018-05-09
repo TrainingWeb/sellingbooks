@@ -41,7 +41,6 @@ class PageController extends APIBaseController
         // for menu
         $menucategories = Group::with('categories')->get();
         $menuauthors = Author::take(15)->get();
-        // return $menuauthors;
         // for menu
         $tagtrendings = Tag::withCount('books')->orderBy('books_count', 'DECS')->take(20)->get();
         $featuredbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->where('highlights', 1)->take(6)->get();
@@ -149,8 +148,8 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('tags')->paginate(9);
-        return $this->sendData(['author' => $author, 'books' => $books]);
+        $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->paginate(9);
+        return $this->sendData($books);
     }
 
     public function getCategoies()
@@ -168,8 +167,8 @@ class PageController extends APIBaseController
         if (is_null($category)) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('tags')->paginate(9);
-        return $this->sendData(['category' => $category, 'books' => $books]);
+        $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('author')->with('tags')->paginate(9);
+        return $this->sendData($books);
     }
 
     public function postComment(Request $request, $id)
