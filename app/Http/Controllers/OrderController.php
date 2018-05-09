@@ -55,32 +55,7 @@ class OrderController extends APIBaseController
         }
     }
 
-    public function showOrderUser(Request $request)
-    {
-        $orders = Order::where('id_user', $request->user()->id)->get();
-        if (is_null($orders)) {
-            return $this->sendMessage('You are have 0 order !');
-        }
-        return $this->sendData($orders);
-    }
-
-    public function deleteOrderUser(Request $request, $id)
-    {
-        $order = Order::find($id);
-        if (is_null($order)) {
-            return $this->sendErrorNotFound('Order not found !');
-        }
-        if ($order->status == 'waiting' || $order->status == 'cancel') {
-            if ($request->user()->id == $order->id_user) {
-                $order->delete();
-                return $this->sendMessage('Just deleted order ' . $id . ' !');
-            } else {
-                return $this->sendErrorPermisstion('Cannot delete order of another user !');
-            }
-        } elseif ($order->status == 'accept') {
-            return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
-        }
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -108,8 +83,10 @@ class OrderController extends APIBaseController
                 return $this->sendMessage('This order has been accepted !');
             } elseif ($request->status == 'cancel') {
                 return $this->sendMessage('Order ' . $id . ' has been accepted ! Just delete to stop');
-            } elseif ($order->status == 'sold') {
-                return $this->sendMessage('Added to total revenue');
+            } elseif ($request->status == 'sold') {
+                $order->status = $request->status;
+                $order->save();
+                return $this->sendMessage('Added to total revenue successfully !');
             }
         }
         $order->status = $request->status;
@@ -157,45 +134,35 @@ class OrderController extends APIBaseController
         if (is_null($order)) {
             return $this->sendErrorNotFound('Order not found !');
         }
-        if ($order->status == 'sold') {
-            return $this->sendMessage('Can not delete this order ! Because this order has been sold !');
-        } elseif ($order->status == 'accept') {
-            $orderdetails = OrderDetail::where('id_order', $order->id)->get();
-            foreach ($orderdetails as $orderdetail) {
-                $storage = Storage::where('id_book', $orderdetail->id_book)->first();
-                $oldQuantity = $storage->quantity;
-                $storage->quantity = $oldQuantity + $orderdetail->quantity;
-                $storage->save();
+        switch ($order->status) {
+            case 'sold':
+                return $this->sendMessage('This order cannot be cancel !');
+            case 'cancel':
+                return $this->sendMessage('This order has been cancel !');
+            case 'waiting':
+                $order->status = 'cancel';
+                $order->save();
+                return $this->sendMessage('Cancel successfully !');
+            case 'accept':
+                $orderdetails = OrderDetail::where('id_order', $order->id)->get();
+                foreach ($orderdetails as $orderdetail) {
+                    $storage = Storage::where('id_book', $orderdetail->id_book)->first();
+                    $oldQuantity = $storage->quantity;
+                    $storage->quantity = $oldQuantity + $orderdetail->quantity;
+                    $storage->save();
 
-                $history = new History;
-                $history->status = 'cancel';
-                $history->quantity = $orderdetail->quantity;
-                $history->id_book = $orderdetail->id_book;
-                $history->id_user = $request->user()->id;
-                $history->save();
-            }
+                    $history = new History;
+                    $history->status = 'cancel';
+                    $history->quantity = $orderdetail->quantity;
+                    $history->id_book = $orderdetail->id_book;
+                    $history->id_user = $request->user()->id;
+                    $history->save();
+                }
+                $order->status = 'cancel';
+                $order->save();
+                return $this->sendMessage('Order cancel successfully !');
         }
-        $order->status = 'cancel';
-        $order->save();
-        return $this->sendMessage('Order cancel successfully !');
     }
 
-    public function Total(Request $request)
-    {
-        if ($request->startday && $request->finishday && $request->month && $request->year) {
-            return $this->sendMessage('Please check it with day to day, month/year or just year !');
-        }
-        if ($request->startday && $request->finishday) {
-            $total = Order::whereBetween('created_at', [$request->startday, $request->finishday])->sum('total');
-            return $this->sendResponse($total, 'Total in ' . $request->startday . ' to ' . $request->finishday);
-        } elseif ($request->month && $request->year) {
-            $total = Order::whereMonth('created_at', $request->month)->whereYear('created_at', $request->year)->sum('total');
-            return $this->sendResponse($total, 'Total in ' . $request->month . '/' . $request->year);
-        } elseif ($request->year) {
-            $total = Order::whereYear('created_at', $request->year)->sum('total');
-            return $this->sendResponse($total, 'Total in ' . $request->year);
-        }
-        $total = Order::sum('total');
-        return $this->sendResponse($total, 'Total revenue');
-    }
+    
 }

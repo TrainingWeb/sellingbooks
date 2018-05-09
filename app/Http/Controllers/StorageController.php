@@ -68,28 +68,28 @@ class StorageController extends APIBaseController
      * @param  \App\Storage  $storage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $storage = Storage::find($id);
-        if(is_null($storage)){
-            return $this->sendErrorNotFound('Storage not found.');
-        }
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'quantity' => 'required',
-            'id_book' => 'required',
-        ], [
-            'quantity.required' => 'Please enter quantity',
-            'id_book.required' => 'Please choose book',
-        ]);
-        if ($validator->fails()) {
-            return $this->sendErrorValidation('Validation Error.', $validator->errors());
-        }
-        $storage->quantity = $input['quantity'];
-        $storage->id_book = $input['id_book'];
-        $storage->save();
-        return $this->sendMessage('Storage '.$id.' updated successfully');
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     $storage = Storage::find($id);
+    //     if(is_null($storage)){
+    //         return $this->sendErrorNotFound('Storage not found.');
+    //     }
+    //     $input = $request->all();
+    //     $validator = Validator::make($input, [
+    //         'quantity' => 'required',
+    //         'id_book' => 'required',
+    //     ], [
+    //         'quantity.required' => 'Please enter quantity',
+    //         'id_book.required' => 'Please choose book',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return $this->sendErrorValidation('Validation Error.', $validator->errors());
+    //     }
+    //     $storage->quantity = $input['quantity'];
+    //     $storage->id_book = $input['id_book'];
+    //     $storage->save();
+    //     return $this->sendMessage('Storage '.$id.' updated successfully');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -97,13 +97,13 @@ class StorageController extends APIBaseController
      * @param  \App\Storage  $storage
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $storage = Storage::find($id);
-        if(is_null($storage)){
-            return $this->sendErrorNotFound('Storage not found.');
-        }
-        $storage->delete();
-        return $this->sendMessage('Storage '.$id.' deleted successfully');
-    }
+    // public function destroy($id)
+    // {
+    //     $storage = Storage::find($id);
+    //     if(is_null($storage)){
+    //         return $this->sendErrorNotFound('Storage not found.');
+    //     }
+    //     $storage->delete();
+    //     return $this->sendMessage('Storage '.$id.' deleted successfully');
+    // }
 }

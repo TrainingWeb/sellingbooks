@@ -12,6 +12,6 @@ class Group extends Model
 
     public function categories()
     {
-        return $this->hasMany('App\Category');
+        return $this->hasMany('App\Category', 'id_group');
     }
 }

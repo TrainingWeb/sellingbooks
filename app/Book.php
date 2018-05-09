@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $fillable = [
-        'id', 'name', 'slug', 'image', 'price', 'promotion_price', 'highlights', 'description', 'quantity', 'id_category', 'id_author', 'id_tag'
+        'id', 'name', 'slug', 'image', 'price', 'promotion_price', 'highlights', 'description', 'quantity', 'id_category', 'id_author', 'id_tag',
     ];
 
     public function category()
@@ -28,7 +28,7 @@ class Book extends Model
     }
     public function users()
     {
-        return $this->belongsToMany('App\User', 'favorite_books', 'id_book', 'id_user');
+        return $this->belongsToMany('App\User', 'favorite_books', 'id_user', 'id_book');
     }
     public function orderdetails()
     {

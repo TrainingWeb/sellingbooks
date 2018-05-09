@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use Validator;
 use App\Author;
+use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\API\APIBaseController as APIBaseController;
+use Validator;
 
 class AuthorController extends APIBaseController
 {
@@ -60,12 +60,12 @@ class AuthorController extends APIBaseController
         $author->email = $input['email'];
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
-            $file->move('./images', $file->getClientOriginalName('avatar'));
-            $avatar = $file->getClientOriginalName('avatar');
-            $author->avatar = $avatar;
+            $file->store('/public/images');
+            $name = $file->getClientOriginalName('avatar');
+            $author->avatar = $name;
         }
         $author->save();
-        return $this->sendMessage('Author '.$author->name.' created successfully.');
+        return $this->sendMessage('Author ' . $author->name . ' created successfully.');
 
     }
 
@@ -133,12 +133,12 @@ class AuthorController extends APIBaseController
         $author->email = $input['email'];
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
-            $file->move('./images', $file->getClientOriginalName('avatar'));
-            $avatar = $file->getClientOriginalName('avatar');
-            $author->avatar = $avatar;
+            $file->store('/public/images');
+            $name = $file->getClientOriginalName('avatar');
+            $author->avatar = $name;
         }
         $author->save();
-        return $this->sendMessage('Author '.$author->name.' updated successfully.');
+        return $this->sendMessage('Author ' . $author->name . ' updated successfully.');
     }
 
     /**
@@ -154,6 +154,6 @@ class AuthorController extends APIBaseController
             return $this->sendErrorNotFound('Author not found.');
         }
         $author->delete();
-        return $this->sendMessage('Author '.$id.' deleted successfully.');
+        return $this->sendMessage('Author ' . $id . ' deleted successfully.');
     }
 }

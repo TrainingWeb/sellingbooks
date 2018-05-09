@@ -6,7 +6,9 @@ use App\Author;
 use App\Book;
 use App\Category;
 use App\Comment;
+use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
+use App\Mail\ResetPassword;
 use App\Order;
 use App\OrderDetail;
 use App\Storage;
@@ -14,107 +16,97 @@ use App\Tag;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Mail;
 use Validator;
+use App\PasswordReset;
 
 class PageController extends APIBaseController
 {
+
+    public function login(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            $api_token = Auth::user()->createToken('test')->accessToken;
+            return response()->json(['api_token' => $api_token]);
+        } else {
+            return $this->sendMessage('Email or password is not correct !');
+        }
+    }
+
     public function index(Request $request)
     {
         // for menu
-        $tieuthuyet = Category::where('id_group', 1)->take(5)->get();
-        $kinhdoanh = Category::where('id_group', 2)->take(5)->get();
-        $lichsu = Category::where('id_group', 3)->take(5)->get();
-        $menuauthors = Author::take(15)->get();
-        // end
+        $groups = Group::with('categories')->get();
+        $results = Author::take(15)->get();
+        $st = $results->slice(0, 5);
+        $nd = $results->slice(5, 5);
+        $th = $results->slice(10, 5);
+        $menuauthors = array("first" => $st, "second" => $nd, "third" => $th);
         $tagtrendings = Tag::withCount('books')->orderBy('books_count', 'DECS')->take(20)->get();
         $featuredbooks = Book::with('storage')->where('highlights', 1)->take(6)->get();
-        $discountbooks = Book::with('storage')->take(4)->orderBy('promotion_price', 'DESC')->get();
+        $discountbooks = Book::whereIn('highlights', [0, 1])->with('storage')->take(4)->orderBy('promotion_price', 'DESC')->get();
         $nowymd = Carbon::tomorrow();
         $ago7days = Carbon::tomorrow()->subDays(7);
-        $newbooks = Book::with('storage')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+        $newbooks = Book::whereIn('highlights', [0, 1])->with('storage')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
         return $this->sendData([
             'tagtrendings' => $tagtrendings,
             'featuredbooks' => $featuredbooks,
             'discountbooks' => $discountbooks,
             'newbooks' => $newbooks,
-            'tieuthuyet' => $tieuthuyet,
-            'kinhdoanh' => $kinhdoanh,
-            'lichsu' => $lichsu,
+            'groups' => $groups,
             'menuauthors' => $menuauthors,
         ]);
     }
 
-    public function getBookwithTag($slug)
+    public function tagInfo($slug)
     {
-        $books = null;
-        $results = Tag::with('books')->where('slug', $slug)->first();
-        if (is_null($results)) {
+        $tag = Tag::with('books')->where('slug', $slug)->first();
+        if (is_null($tag)) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        $tag = Tag::where('slug', $slug)->first();
-        if (count($results->books) > 0) {
-            foreach ($results->books as $item) {
-                $books[] = ($item)->paginate(18);
-            }
-        }
-        return $this->sendData(['tag' => $tag, 'books' => $books]);
+        return $this->sendData(['tag' => $tag]);
     }
 
     public function search()
     {
-        $books = Book::where([
-            ['name', 'LIKE', '%' . request()->name . '%'],
-        ])->take(12)->get();
-        $authors = Author::where([
-            ['name', 'LIKE', '%' . request()->name . '%'],
-        ])->paginate(6);
-        $categories = Category::where([
-            ['name', 'LIKE', '%' . request()->name . '%'],
-        ])->paginate(6);
-        return $this->sendData(['books' => $books, 'authors' => $authors, 'categories' => $categories]);
-    }
-
-    public function seemorefromSearch($name)
-    {
-        $featuredauthors = null;
-        $books = Book::where([
-            ['name', 'LIKE', '%' . $name . '%'],
-        ])->with('tags')->paginate(18);
-        foreach ($books as $book) {
-            foreach ($book->tags as $item) {
-                $tags[] = $item;
-            }
+        $authorbooks = Book::whereIn('highlights', [0, 1])->whereHas('author', function ($query) {
+            $query->where('name', 'LIKE', '%' . request()->name . '%');
+        })->get();
+        foreach ($authorbooks as $items1) {
+            $items01[] = $items1->id;
         }
-        $results = Book::with('author')->where('highlights', 1)->where([
-            ['name', 'LIKE', '%' . $name . '%'],
+        $catebooks = Book::whereIn('highlights', [0, 1])->whereHas('category', function ($query) {
+            $query->where('name', 'LIKE', '%' . request()->name . '%');
+        })->get();
+        foreach ($catebooks as $items2) {
+            $items02[] = $items2->id;
+        }
+        $books = Book::whereIn('highlights', [0, 1])->where([
+            ['name', 'LIKE', '%' . request()->name . '%'],
         ])->get();
-        foreach ($results as $item) {
-            $featuredauthors[] = ($item->author)->take(6)->get();
+        foreach ($books as $items3) {
+            $items03[] = $items3->id;
         }
-        return $this->sendData(['books' => $books, 'featuredauthors' => $featuredauthors, 'tags' => $tags]);
+        $done = $items01 + $items02 + $items03;
+        $books = Book::whereIn('id', $done)->paginate(18);
+        return $this->sendData(['books' => $books]);
     }
 
     public function featuredBooks()
     {
-        $featuredbooks = Book::where('highlights', 1)->paginate(18);
+        $featuredbooks = Book::whereIn('highlights', [0, 1])->with('tags')->paginate(18);
         if (count($featuredbooks) < 1) {
             return $this->sendMessage('Found 0 feature books.');
         }
-        return $this->sendData($featuredbooks);
-    }
-
-    public function bestSellers()
-    {
-        $books = Book::withCount('orderdetails')->orderBy('orderdetails_count', 'DECS')->take(5)->get();
-        if (count($books) < 1) {
-            return $this->sendMessage('Found 0 books.');
-        }
-        return $this->sendData($books);
+        return $this->sendData(['featuredbooks' => $featuredbooks]);
     }
 
     public function discountBooks()
     {
-        $discountbooks = Book::orderBy('promotion_price', 'DESC')->paginate(18);
+        $discountbooks = Book::whereIn('highlights', [0, 1])->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
         if (count($discountbooks) < 1) {
             return $this->sendMessage('Found 0 discount books.');
         }
@@ -125,7 +117,7 @@ class PageController extends APIBaseController
     {
         $nowymd = Carbon::tomorrow();
         $ago7days = Carbon::tomorrow()->subDays(7);
-        $newbooks = Book::whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+        $newbooks = Book::whereIn('highlights', [0, 1])->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
         if (count($newbooks) < 1) {
             return $this->sendMessage('Found 0 new books.');
         }
@@ -134,7 +126,7 @@ class PageController extends APIBaseController
 
     public function getBookInfo($slug)
     {
-        $book = Book::with('comments')->where('slug', $slug)->first();
+        $book = Book::whereIn('highlights', [0, 1])->with('comments')->where('slug', $slug)->first();
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found !');
         }
@@ -157,13 +149,8 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        $books = Book::where('id_author', $author->id)->with('tags')->paginate(9);
-        foreach ($books as $book) {
-            foreach ($book->tags as $item) {
-                $tags[] = $item;
-            }
-        }
-        return $this->sendData(['author' => $author, 'books' => $books, 'tags' => $tags]);
+        $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('tags')->paginate(9);
+        return $this->sendData(['author' => $author, 'books' => $books]);
     }
 
     public function getCategoies()
@@ -181,13 +168,8 @@ class PageController extends APIBaseController
         if (is_null($category)) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        $books = Book::where('id_category', $category->id)->with('tags')->paginate(9);
-        foreach ($books as $book) {
-            foreach ($book->tags as $item) {
-                $tags[] = $item;
-            }
-        }
-        return $this->sendData(['category' => $category, 'books' => $books, 'tags' => $tags]);
+        $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('tags')->paginate(9);
+        return $this->sendData(['category' => $category, 'books' => $books]);
     }
 
     public function postComment(Request $request, $id)
@@ -218,12 +200,57 @@ class PageController extends APIBaseController
         }
     }
 
+    public function showOrderUser(Request $request)
+    {
+        $orders = Order::where('id_user', $request->user()->id)->get();
+        if (is_null($orders)) {
+            return $this->sendMessage('You are have 0 order !');
+        }
+        return $this->sendData($orders);
+    }
+
+    public function deleteOrderUser(Request $request, $id)
+    {
+        $order = Order::find($id);
+        if (is_null($order)) {
+            return $this->sendErrorNotFound('Order not found !');
+        }
+        if ($order->status == 'waiting' || $order->status == 'cancel') {
+            if ($request->user()->id == $order->id_user) {
+                $order->status = 'cancel';
+                $order->save();
+                return $this->sendMessage('Just deleted order ' . $id . ' !');
+            } else {
+                return $this->sendErrorPermisstion('Cannot delete order of another user !');
+            }
+        } elseif ($order->status == 'accept') {
+            return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
+        } elseif ($order->status == 'sold') {
+            return $this->sendMessage('Your order has been done ! Let us keep that.');
+        }
+    }
+
+    public function editComment(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+        if (!$comment) {
+            return $this->sendErrorNotFound('Comment not found !');
+        }
+        if ($request->user()->id == $comment->id_user) {
+            $comment->content = $request->content;
+            $comment->save();
+            return $this->sendMessage('Edited successfully !');
+        } else {
+            return $this->sendErrorPermission('You have no permission to do this !');
+        }
+    }
+
     public function postFavorite(Request $request, $id)
     {
-        if (!Book::find($id)) {
+        if (!Book::whereIn('highlights', [0, 1])->find($id)) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $user = User::find($request->user()->id);
+        $user = User::whereIn('role', [0, 1])->find($request->user()->id);
         $results = $user->books()->get();
         foreach ($results as $result) {
             $items[] = $result->id;
@@ -237,42 +264,26 @@ class PageController extends APIBaseController
         return $this->sendMessage('Add favorite successfully !');
     }
 
+    public function removeFavorite(Request $request, $id)
+    {
+        $user = User::with('books')->find($request->user()->id);
+        foreach ($user->books as $results) {
+            if ($id == $results->id) {
+                $user->books()->detach($id);
+                return $this->sendMessage('Unlike successfully this book !');
+            }
+        }
+        return $this->sendErrorNotFound('Cannot found this book in your favorite list !');
+    }
+
     public function getFavoriteBook(Request $request)
     {
         $user = User::find($request->user()->id);
         $books = $user->books()->with('tags')->paginate(18);
         if (count($books) < 1) {
-            return $this->sendMessage('Found 0 books !');
+            return $this->sendResponse($user, 'Found 0 book');
         }
-        foreach ($books as $book) {
-            foreach ($book->tags as $item) {
-                $tags[] = $item;
-            }
-        }
-        return $this->sendData(['user' => $user, 'books' => $books, 'tags' => $tags]);
-    }
-
-    public function postFeedback(Request $request)
-    {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'content1' => 'required',
-            'content2' => 'required',
-        ], [
-            'name.required' => 'You must login to do this !',
-            'content1.required' => 'Content 1 can not blank !',
-            'content2.required' => 'Content 2 can not blank !',
-        ]);
-        if ($validator->fails()) {
-            return $this->sendErrorValidation('Validation Error.', $validator->errors());
-        }
-        $feedback = new Feedback;
-        $feedback->name = $request->user()->name;
-        $feedback->content1 = $input['content1'];
-        $feedback->content2 = $input['content2'];
-        $feedback->save();
-        return $this->sendMessage('Feedback successfully !');
+        return $this->sendData(['user' => $user, 'books' => $books]);
     }
 
     public function checkInfo(Request $request)
@@ -295,10 +306,88 @@ class PageController extends APIBaseController
         return $this->sendMessage('Update user successfully !');
     }
 
+    public function showInfoUser(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        if (is_null($user)) {
+            return $this->sendErrorNotFound('User not found !');
+        }
+        if ($user->role == 1) {
+            $role = 1;
+        } elseif ($user->role == 0) {
+            $role = 0;
+        } else {
+            $role = null;
+        }
+        return $this->sendData(['user' => $user, 'role' => $role]);
+
+    }
+
+    public function updateUser(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'unique:users,email,' . $user->id,
+            'password' => 'required',
+            'phone' => 'unique:users,phone,' . $user->id,
+        ], [
+            'name.required' => 'Please enter name',
+            'email.required' => 'Please enter email',
+            'password.required' => 'Please enter password',
+            'phone.unique' => 'This phone number already exits ! Please enter another phone number,' . $user->id,
+        ]);
+        if ($validator->fails()) {
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
+        }
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $file->store('/public/images');
+            $name = $file->getClientOriginalName('avatar');
+            $user->avatar = $name;
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->birthday = $request->birthday;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
+        return $this->sendMessage('Updated ' . $user->name . ' successfully !');
+    }
+
+    public function createUser(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Please enter name',
+            'email.required' => 'Please enter email.',
+            'email.unique' => 'Email alreay exits, please enter another email !',
+            'password.required' => 'Password can not null.',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
+        }
+        $user = new User;
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->role = 0;
+        $user->password = bcrypt($input['password']);
+        $user->save();
+        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $api_token = Auth::user()->createToken('test1')->accessToken;
+        return response()->json(['api_token' => $api_token, 'role' => 0, 'message' => 'User created successfully !']);
+    }
+
     public function checkout(Request $request)
     {
         $quantity = $request->quantity;
-        $books = Book::whereIn('id', $request->id)->get();
+        $books = Book::whereIn('highlights', [0, 1])->whereIn('id', $request->id)->get();
         $idbook = array();
         foreach ($books as $key => $book) {
             $storage = Storage::where('id_book', $book->id)->first();
@@ -329,7 +418,7 @@ class PageController extends APIBaseController
             $order_detail->id_order = $order->id;
             $order_detail->id_book = $book->id;
             $order_detail->quantity = $quantity[$key];
-            $item = Book::find($book->id);
+            $item = Book::whereIn('highlights', [0, 1])->find($book->id);
             if ($item->promotion_price) {
                 $order_detail->price = $item->promotion_price;
             } elseif (is_null($item->promotion_price)) {
@@ -340,4 +429,30 @@ class PageController extends APIBaseController
 
         return $this->sendMessage('Order successfully !');
     }
+
+    public function sendMail(Request $request)
+    {
+        $passwordreset = new PasswordReset;
+        $passwordreset->email = $request->email;
+        $passwordreset->token = bcrypt(str_random(60));
+        $passwordreset->save();
+        Mail::to($request->email)->send(new ResetPassword(), ["token"=>$passwordreset->token,"email"=>$passwordreset->email]);
+    }
+
+    // public function resetPassword()
+    // {
+    //     return response()->json(['token' => $token, 'email' => $request->email]);
+    // }
+
+    // public function reset(Request $request)
+    // {
+    //     $response = $this->broker()->reset(
+    //         $this->credentials($request), function ($user, $password) {
+    //             $this->resetPassword($user, $password);
+    //         }
+    //     );
+    //     return $response == Password::PASSWORD_RESET
+    //     ? $this->sendResetResponse($response)
+    //     : $this->sendResetFailedResponse($request, $response);
+    // }
 }
