@@ -13,7 +13,7 @@
               <h3>{{book.name}}</h3>
             </router-link>
             <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>
-            <v-card-actions>
+            <v-card-actions v-if="book.promotion_price">
               <div class="green--text text--accent-4 title"> {{formatPrice(book.promotion_price)}}
                 <span style="text-decoration: underline">đ</span>
               </div>
@@ -22,6 +22,14 @@
                 <del>{{formatPrice(book.price)}}
                   <span style="text-decoration: underline">đ</span>
                 </del>
+              </div>
+            </v-card-actions>
+
+            <v-card-actions v-else>
+              <div class="grey--text text--darken-1 ">
+                <div class="green--text text--accent-4 title">{{formatPrice(book.price)}}
+                  <span style="text-decoration: underline">đ</span>
+                </div>
               </div>
             </v-card-actions>
             <v-divider class="mt-2"></v-divider>

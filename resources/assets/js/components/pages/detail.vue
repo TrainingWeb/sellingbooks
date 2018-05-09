@@ -171,6 +171,9 @@ export default {
       page: 1
     };
   },
+  mounted() {
+    window.axios.get("/book/{slug}");
+  },
   methods: {
     addCartDetail() {
       for (var index in this.$store.state.cart) {

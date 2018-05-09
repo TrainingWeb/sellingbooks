@@ -14,12 +14,18 @@
               <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
             </td>
             <td>
-              <v-layout row wrap>
-                <div class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}</div>
+              <div v-if="props.item.book.promotion_price">
+                <span class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}</span>
                 <span class="grey--text text--darken-1 title ml-3">
                   <del>{{formatPrice(props.item.book.price)}}</del>
                 </span>
-              </v-layout>
+              </div>
+              <div v-else>
+                <span class="green--text text--accent-4 title ml-3">
+                  {{formatPrice(props.item.book.price)}}
+                </span>
+              </div>
+
             </td>
             <td>
               <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
