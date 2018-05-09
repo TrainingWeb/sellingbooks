@@ -8,27 +8,25 @@
         <template slot="items" slot-scope="props">
           <tr class="py-1">
             <td class="py-2">
-              <img :src="props.item.book.img" alt="" width="80px" height="120px">
+              <img :src="'/storage/images/'+props.item.book.image" alt="" width="80px" height="120px">
             </td>
             <td>
               <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
             </td>
             <td>
               <v-layout row wrap>
-                <div class="green--text text--accent-4 title "> {{props.item.book.price}}</div>
+                <div class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}</div>
                 <span class="grey--text text--darken-1 title ml-3">
-                  <del>{{props.item.book.sale}}</del>
+                  <del>{{formatPrice(props.item.book.price)}}</del>
                 </span>
               </v-layout>
             </td>
-
             <td>
               <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
             <td class="text-xs-center layout px-0 py-5">
-
               <v-layout row justify-center>
                 <v-dialog flat v-model="dialogDelete" persistent max-width="290">
                   <v-btn icon slot="activator">
@@ -85,6 +83,13 @@ export default {
     dialogDelete: false
   }),
   methods: {
+    favoriteBooks() {
+      window.axios.get("/index").then(res => {});
+    },
+    formatPrice(price) {
+      let val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     deleteItem(item) {
       let favorite = this.$store.state.favorite;
       let index = favorite.indexOf(item);
@@ -96,8 +101,9 @@ export default {
     addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === val.id) {
-          this.$store.state.cart[index].quantity =
-            this.$store.state.cart[index].quantity + 1;
+          alert(
+            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+          );
           return;
         }
       }
@@ -134,5 +140,8 @@ export default {
 .primary {
   background-color: #00c853 !important;
   border-color: #00c853 !important;
+}
+.dialog {
+  box-shadow: none;
 }
 </style> 

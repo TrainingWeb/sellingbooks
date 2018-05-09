@@ -442,17 +442,7 @@ export default {
       }, 0);
     }
   },
-  mounted() {
-    window.axios
-      .post("/search?name=a")
-      .then(response => {
-        // this.items = response.data;
-        console.log(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+  mounted() {}
 };
 </script>
 <style>

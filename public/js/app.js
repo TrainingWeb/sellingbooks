@@ -12358,7 +12358,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(121);
+module.exports = __webpack_require__(120);
 
 
 /***/ }),
@@ -12377,9 +12377,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12411,7 +12411,7 @@ if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default *
 if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
-__webpack_require__(109);
+__webpack_require__(119);
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: "#app",
@@ -33798,6 +33798,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      featuredbooks: {},
+      discountbooks: {},
+      newbooks: {},
+
       sliders: [{
         src: "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
       }, {
@@ -33880,6 +33884,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         author: "Nguyễn Du"
       }]
     };
+  },
+
+  methods: {
+    loadFeaturedBooks: function loadFeaturedBooks() {
+      var _this = this;
+
+      window.axios.get("/index").then(function (res) {
+        _this.featuredbooks = res.data.data.featuredbooks;
+        console.log(res.data);
+        _this.discountbooks = res.data.data.discountbooks;
+        _this.newbooks = res.data.data.newbooks;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.loadFeaturedBooks();
   }
 });
 
@@ -33948,7 +33968,7 @@ var render = function() {
             "v-layout",
             { attrs: { row: "", wrap: "" } },
             [
-              _vm._l(_vm.book, function(item, index) {
+              _vm._l(_vm.featuredbooks, function(item, index) {
                 return _c(
                   "v-flex",
                   {
@@ -33964,15 +33984,20 @@ var render = function() {
                 "v-flex",
                 { staticClass: "pt-2 mr-1", attrs: { xs12: "" } },
                 [
-                  _c("router-link", { attrs: { to: "/list-products" } }, [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "text-xs-right  green--text text--accent-4"
-                      },
-                      [_vm._v("XEM THÊM")]
-                    )
-                  ])
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/list-products?type=featuredbooks" } },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass:
+                            "text-xs-right  green--text text--accent-4"
+                        },
+                        [_vm._v("XEM THÊM")]
+                      )
+                    ]
+                  )
                 ],
                 1
               )
@@ -34029,7 +34054,7 @@ var render = function() {
                     "v-layout",
                     { attrs: { row: "", wrap: "" } },
                     [
-                      _vm._l(_vm.bookSale, function(item, index) {
+                      _vm._l(_vm.discountbooks, function(item, index) {
                         return _c(
                           "v-flex",
                           {
@@ -34047,7 +34072,9 @@ var render = function() {
                         [
                           _c(
                             "router-link",
-                            { attrs: { to: "/list-products" } },
+                            {
+                              attrs: { to: "/list-products?type=discountbooks" }
+                            },
                             [
                               _c(
                                 "h5",
@@ -34072,11 +34099,7 @@ var render = function() {
               _c("v-flex", { attrs: { xs12: "", md3: "" } }, [
                 _c("img", {
                   staticClass: "sale-img",
-                  attrs: {
-                    src:
-                      "https://hcplteenscene.files.wordpress.com/2011/03/book-sale.png",
-                    alt: ""
-                  }
+                  attrs: { src: "storage/images/quang-cao.jpg", alt: "" }
                 })
               ])
             ],
@@ -34124,7 +34147,7 @@ var render = function() {
             "v-layout",
             { attrs: { row: "", wrap: "" } },
             [
-              _vm._l(_vm.book, function(item, index) {
+              _vm._l(_vm.newbooks, function(item, index) {
                 return _c(
                   "v-flex",
                   {
@@ -34140,15 +34163,20 @@ var render = function() {
                 "v-flex",
                 { staticClass: "pt-2 mr-1", attrs: { xs12: "" } },
                 [
-                  _c("router-link", { attrs: { to: "/list-products" } }, [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "text-xs-right  green--text text--accent-4"
-                      },
-                      [_vm._v("XEM THÊM")]
-                    )
-                  ])
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/list-products?type=newbooks" } },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass:
+                            "text-xs-right  green--text text--accent-4"
+                        },
+                        [_vm._v("XEM THÊM")]
+                      )
+                    ]
+                  )
                 ],
                 1
               )
@@ -34258,7 +34286,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -36493,136 +36521,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [{
-        id: 20,
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: 120000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 21,
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: 150000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 22,
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: 120000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 23,
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: 200000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 24,
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: 100000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 25,
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: 300000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 26,
-        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 90000,
-        author: "Nguyễn Du"
-      }, {
-        id: 27,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
-        name: "Mèo con đi học",
-        price: 90000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 28,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
-        name: "Mèo con đi học",
-        price: 100000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 29,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
-        name: "Mèo con đi học",
-        price: 120000,
-        sale: 150000,
-        author: "Nguyễn Du"
-      }, {
-        id: 30,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
-        name: "Mèo con đi học",
-        price: 20000,
-        sale: 30000,
-        author: "Nguyễn Du"
-      }, {
-        id: 31,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 32,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 33,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 34,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 35,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 36,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }, {
-        id: 37,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
-        name: "Mèo con đi học",
-        price: 50000,
-        sale: 70000,
-        author: "Nguyễn Du"
-      }],
+      books: [],
       namepage: "Danh sách sản phẩm",
       page: 1
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var type = this.$route.query.type;
+    window.axios.get("/books/type/" + type + "?page=" + this.$route.query.page || 1).then(function (res) {
+      _this.books = res.data.data;
+    });
   }
 });
 
@@ -36970,7 +36880,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     total: function total() {
       return this.$store.state.cart.reduce(function (total, p) {
-        return total + p.book.price * p.quantity;
+        return total + p.book.promotion_price * p.quantity;
       }, 0);
     }
   }
@@ -37137,7 +37047,7 @@ var render = function() {
                         _c("td", { staticClass: "py-2" }, [
                           _c("img", {
                             attrs: {
-                              src: props.item.book.img,
+                              src: "/storage/images/" + props.item.book.image,
                               alt: "",
                               width: "40px",
                               height: "60px"
@@ -37149,8 +37059,9 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(
-                            _vm._s(_vm.formatPrice(props.item.book.price)) +
-                              " đ"
+                            _vm._s(
+                              _vm.formatPrice(props.item.book.promotion_price)
+                            ) + " đ"
                           )
                         ]),
                         _vm._v(" "),
@@ -37197,7 +37108,8 @@ var render = function() {
                             " " +
                               _vm._s(
                                 _vm.formatPrice(
-                                  props.item.book.price * props.item.quantity
+                                  props.item.book.promotion_price *
+                                    props.item.quantity
                                 )
                               ) +
                               " đ"
@@ -37752,7 +37664,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\n.dialog {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\r\n", ""]);
 
 // exports
 
@@ -37763,8 +37675,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -37843,6 +37753,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   methods: {
+    favoriteBooks: function favoriteBooks() {
+      window.axios.get("/index").then(function (res) {});
+    },
+    formatPrice: function formatPrice(price) {
+      var val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     deleteItem: function deleteItem(item) {
       var favorite = this.$store.state.favorite;
       var index = favorite.indexOf(item);
@@ -37922,7 +37839,7 @@ var render = function() {
                       _c("td", { staticClass: "py-2" }, [
                         _c("img", {
                           attrs: {
-                            src: props.item.book.img,
+                            src: "/storage/images/" + props.item.book.image,
                             alt: "",
                             width: "80px",
                             height: "120px"
@@ -37956,7 +37873,16 @@ var render = function() {
                               {
                                 staticClass: "green--text text--accent-4 title "
                               },
-                              [_vm._v(" " + _vm._s(props.item.book.price))]
+                              [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.formatPrice(
+                                        props.item.book.promotion_price
+                                      )
+                                    )
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -37967,7 +37893,11 @@ var render = function() {
                               },
                               [
                                 _c("del", [
-                                  _vm._v(_vm._s(props.item.book.sale))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatPrice(props.item.book.price)
+                                    )
+                                  )
                                 ])
                               ]
                             )
@@ -40923,14 +40853,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 0);
     }
   },
-  mounted: function mounted() {
-    window.axios.post("/search?name=a").then(function (response) {
-      // this.items = response.data;
-      console.log(response.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -43124,27 +43047,16 @@ var index_esm = {
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.axios = __webpack_require__(6);
-
-window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
-var api = "/api";
-window.axios.defaults.baseURL = "" + host + api;
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(111)
+  __webpack_require__(110)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(113)
+var __vue_script__ = __webpack_require__(112)
 /* template */
-var __vue_template__ = __webpack_require__(114)
+var __vue_template__ = __webpack_require__(113)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43183,13 +43095,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(112);
+var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43209,7 +43121,7 @@ if(false) {
 }
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -43223,7 +43135,7 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43339,7 +43251,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43373,7 +43285,10 @@ var render = function() {
                     { staticClass: "link-book", attrs: { to: "/detail" } },
                     [
                       _c("v-card-media", {
-                        attrs: { src: _vm.book.img, height: "180px" }
+                        attrs: {
+                          src: "/storage/images/" + _vm.book.image,
+                          height: "180px"
+                        }
                       })
                     ],
                     1
@@ -43401,7 +43316,7 @@ var render = function() {
                       _c(
                         "p",
                         { staticClass: "grey--text text--darken-1 mt-1" },
-                        [_vm._v("Tác giả: " + _vm._s(_vm.book.author))]
+                        [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
                       ),
                       _vm._v(" "),
                       _c(
@@ -43413,7 +43328,9 @@ var render = function() {
                             [
                               _vm._v(
                                 " " +
-                                  _vm._s(_vm.formatPrice(_vm.book.price)) +
+                                  _vm._s(
+                                    _vm.formatPrice(_vm.book.promotion_price)
+                                  ) +
                                   "\n              "
                               ),
                               _c(
@@ -43436,7 +43353,7 @@ var render = function() {
                             [
                               _c("del", [
                                 _vm._v(
-                                  _vm._s(_vm.formatPrice(_vm.book.sale)) +
+                                  _vm._s(_vm.formatPrice(_vm.book.price)) +
                                     "\n                "
                                 ),
                                 _c(
@@ -43561,19 +43478,19 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(116)
+  __webpack_require__(115)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(118)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43612,13 +43529,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(116);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43638,7 +43555,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -43652,7 +43569,7 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43682,7 +43599,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43767,8 +43684,18 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */,
-/* 121 */
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+window.axios = __webpack_require__(6);
+
+window.axios.defaults.headers.post["Content-Type"] = "application/json";
+var host = "http://sellingbookstore.test";
+var api = "/api";
+window.axios.defaults.baseURL = "" + host + api;
+
+/***/ }),
+/* 120 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
