@@ -117,13 +117,10 @@ class PageController extends APIBaseController
                         return $this->sendMessage('Found 0 new books.');
                     }
                     break;
-                default:
-                    throw new Exception("Không tìm thấy kiểu sách");
-                    break;
             }
             return response()->json($books);
         } catch (Exception $e) {
-            return $thí->sendErrorNotFound($e);
+            return $this->sendErrorNotFound('Không tìm thấy kiểu sách');
         }
     }
 

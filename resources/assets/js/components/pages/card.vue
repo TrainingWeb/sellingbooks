@@ -31,10 +31,10 @@
               </v-layout>
             </td>
             <td class="py-2">
-              <img :src="props.item.book.img" alt="" width="40px" height="60px">
+              <img :src="'/storage/images/'+props.item.book.image" alt="" width="40px" height="60px">
             </td>
             <td>{{ props.item.book.name }}</td>
-            <td>{{ formatPrice(props.item.book.price) }} đ</td>
+            <td>{{ formatPrice(props.item.book.promotion_price) }} đ</td>
             <td>
               <v-layout row wrap>
                 <v-flex xs12 md3>
@@ -42,7 +42,7 @@
                 </v-flex>
               </v-layout>
             </td>
-            <td class="text-xs-right"> {{formatPrice(props.item.book.price*props.item.quantity)}} đ</td>
+            <td class="text-xs-right"> {{formatPrice(props.item.book.promotion_price *props.item.quantity)}} đ</td>
           </tr>
         </template>
         <template slot="footer">
@@ -138,7 +138,7 @@ export default {
   computed: {
     total() {
       return this.$store.state.cart.reduce((total, p) => {
-        return total + p.book.price * p.quantity;
+        return total + p.book.promotion_price * p.quantity;
       }, 0);
     }
   }
