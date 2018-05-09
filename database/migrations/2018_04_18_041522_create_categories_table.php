@@ -18,8 +18,6 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longtext('description')->nullable();
-            $table->integer('id_group')->unsigned();
-            $table->foreign('id_group')->references('id')->on('groups')->onDelete('cascade');
             $table->timestamps();
         });
     }

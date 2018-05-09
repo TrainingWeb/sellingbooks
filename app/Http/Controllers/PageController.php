@@ -6,7 +6,6 @@ use App\Author;
 use App\Book;
 use App\Category;
 use App\Comment;
-use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\Mail\ResetPassword;
 use App\Order;
@@ -19,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use Validator;
-use App\PasswordReset;
 
 class PageController extends APIBaseController
 {
@@ -39,24 +37,29 @@ class PageController extends APIBaseController
     public function index(Request $request)
     {
         // for menu
-        $groups = Group::with('categories')->get();
-        $results = Author::take(15)->get();
-        $st = $results->slice(0, 5);
-        $nd = $results->slice(5, 5);
-        $th = $results->slice(10, 5);
-        $menuauthors = array("first" => $st, "second" => $nd, "third" => $th);
+        $categories = Category::take(15)->get();
+        $stcategories = $categories->slice(0, 5);
+        $ndcategories = $categories->slice(5, 5);
+        $thcategories = $categories->slice(10, 5);
+        $menucategories = array("first" => $stcategories, "second" => $ndcategories, "third" => $thcategories);
+        $authors = Author::take(15)->get();
+        $stauthors = $authors->slice(0, 5);
+        $ndauthors = $authors->slice(5, 5);
+        $thauthors = $authors->slice(10, 5);
+        $menuauthors = array("first" => $stauthors, "second" => $ndauthors, "third" => $thauthors);
+        // for menu
         $tagtrendings = Tag::withCount('books')->orderBy('books_count', 'DECS')->take(20)->get();
-        $featuredbooks = Book::with('storage')->where('highlights', 1)->take(6)->get();
-        $discountbooks = Book::whereIn('highlights', [0, 1])->with('storage')->take(4)->orderBy('promotion_price', 'DESC')->get();
+        $featuredbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->where('highlights', 1)->take(6)->get();
+        $discountbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->take(4)->orderBy('promotion_price', 'DESC')->get();
         $nowymd = Carbon::tomorrow();
         $ago7days = Carbon::tomorrow()->subDays(7);
-        $newbooks = Book::whereIn('highlights', [0, 1])->with('storage')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+        $newbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
         return $this->sendData([
             'tagtrendings' => $tagtrendings,
             'featuredbooks' => $featuredbooks,
             'discountbooks' => $discountbooks,
             'newbooks' => $newbooks,
-            'groups' => $groups,
+            'menucategories' => $menucategories,
             'menuauthors' => $menuauthors,
         ]);
     }
@@ -97,7 +100,7 @@ class PageController extends APIBaseController
 
     public function featuredBooks()
     {
-        $featuredbooks = Book::whereIn('highlights', [0, 1])->with('tags')->paginate(18);
+        $featuredbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->paginate(18);
         if (count($featuredbooks) < 1) {
             return $this->sendMessage('Found 0 feature books.');
         }
@@ -106,7 +109,7 @@ class PageController extends APIBaseController
 
     public function discountBooks()
     {
-        $discountbooks = Book::whereIn('highlights', [0, 1])->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
+        $discountbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
         if (count($discountbooks) < 1) {
             return $this->sendMessage('Found 0 discount books.');
         }
@@ -117,7 +120,7 @@ class PageController extends APIBaseController
     {
         $nowymd = Carbon::tomorrow();
         $ago7days = Carbon::tomorrow()->subDays(7);
-        $newbooks = Book::whereIn('highlights', [0, 1])->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+        $newbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
         if (count($newbooks) < 1) {
             return $this->sendMessage('Found 0 new books.');
         }
@@ -126,7 +129,7 @@ class PageController extends APIBaseController
 
     public function getBookInfo($slug)
     {
-        $book = Book::whereIn('highlights', [0, 1])->with('comments')->where('slug', $slug)->first();
+        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('comments')->where('slug', $slug)->first();
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found !');
         }
@@ -136,7 +139,7 @@ class PageController extends APIBaseController
 
     public function getAuthors()
     {
-        $authors = Author::paginate(15);
+        $authors = Author::withCount('books')->paginate(15);
         if (is_null($authors)) {
             return $this->sendMessage('Found 0 authors !');
         }
@@ -155,7 +158,7 @@ class PageController extends APIBaseController
 
     public function getCategoies()
     {
-        $categories = Category::paginate(20);
+        $categories = Category::withCount('books')->paginate(20);
         if (is_null($categories)) {
             return $this->sendMessage('Found 0 categories');
         }
@@ -202,11 +205,11 @@ class PageController extends APIBaseController
 
     public function showOrderUser(Request $request)
     {
-        $orders = Order::where('id_user', $request->user()->id)->get();
-        if (is_null($orders)) {
+        $user = User::with('orders')->find($request->user()->id);
+        if (is_null($user->orders)) {
             return $this->sendMessage('You are have 0 order !');
         }
-        return $this->sendData($orders);
+        return $this->sendData($user);
     }
 
     public function deleteOrderUser(Request $request, $id)
@@ -432,27 +435,21 @@ class PageController extends APIBaseController
 
     public function sendMail(Request $request)
     {
-        $passwordreset = new PasswordReset;
-        $passwordreset->email = $request->email;
-        $passwordreset->token = bcrypt(str_random(60));
-        $passwordreset->save();
-        Mail::to($request->email)->send(new ResetPassword(), ["token"=>$passwordreset->token,"email"=>$passwordreset->email]);
+        Mail::to($request->email)->send(new ResetPassword());
     }
 
-    // public function resetPassword()
+    // public function resetPassword(Request $request)
     // {
-    //     return response()->json(['token' => $token, 'email' => $request->email]);
-    // }
-
-    // public function reset(Request $request)
-    // {
-    //     $response = $this->broker()->reset(
-    //         $this->credentials($request), function ($user, $password) {
-    //             $this->resetPassword($user, $password);
-    //         }
-    //     );
-    //     return $response == Password::PASSWORD_RESET
-    //     ? $this->sendResetResponse($response)
-    //     : $this->sendResetFailedResponse($request, $response);
+    //     $passwordreset = PasswordReset::where('token', $request->token);
+    //     if($passwordreset->email !== $request->email){
+    //         return $this->sendMessage('This token is not correct !');
+    //     }
+    //     $user = User::where('email', $request->email)->first();
+    //     if($request->password !== $request->confirm_password){
+    //         return $this->sendMessage('Password confirm must in the same !');
+    //     }
+    //     $user->password = $request->password;
+    //     $user->save();
+    //     return $this->sendMessage('Your account has been reset password !');
     // }
 }

@@ -3,7 +3,7 @@
 
 Click here to reset your password !
 
-@component('mail::button', ['url' => 'http://selling-books.local/password/reset?token='.$token.'?email='.$email])
+@component('mail::button', ['url' => 'http://selling-books.local/password/reset?token='.$token])
 Reset your password
 @endcomponent
 
