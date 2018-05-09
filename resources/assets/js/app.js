@@ -30,6 +30,7 @@ if (localStorage.selected)
   store.commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 Vue.use(Vuetify);
+require("./axios");
 
 const app = new Vue({
   el: "#app",
