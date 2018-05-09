@@ -1,26 +1,28 @@
 <template>
-    <div>
-        <v-layout xs12>
-            <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
+  <div>
+    <v-layout xs12>
+      <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
+    </v-layout>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 md3 class="pl-3 pb-3">
+          <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
+        </v-flex>
+      </v-layout>
+      <v-container grid-list-xs>
+        <v-layout row wrap>
+          <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
+            <book-item :book="item"></book-item>
+          </v-flex>
         </v-layout>
-        <v-container>
-            <v-layout row wrap>
-                <v-flex xs12 md3 class="pl-3 pb-3">
-                    <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
-                </v-flex>
-            </v-layout>
-            <v-layout row wrap>
-                <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
-                    <book-item :book="item"></book-item>
-                </v-flex>
-            </v-layout>
-            <template>
-                <div class="text-xs-center mt-5">
-                    <v-pagination :length="3" v-model="page"></v-pagination>
-                </div>
-            </template>
-        </v-container>
-    </div>
+      </v-container>
+      <template>
+        <div class="text-xs-center mt-5">
+          <v-pagination :length="3" v-model="page"></v-pagination>
+        </div>
+      </template>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -33,7 +35,7 @@ export default {
         disabled: false
       },
       {
-        name: "Danh sách sản phẩm",
+        name: "",
         url: "/list-products",
         disabled: true
       }
@@ -189,10 +191,17 @@ export default {
         author: "Nguyễn Du"
       }
     ],
-    namepage: "Kết quả tìm kiếm: ",
-
+    namepage: "Danh sách sản phẩm",
     page: 1
-  })
+  }),
+  watch: {
+    "$route.query.type"(val) {
+      this.breadcrumbs[1].name = `${this.$route.query.type}`;
+    }
+  },
+  mounted() {
+    this.breadcrumbs[1].name = `${this.$route.query.type}`;
+  }
 };
 </script>
 
