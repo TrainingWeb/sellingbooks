@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
 
 Route::post('/search', 'PageController@search');
 Route::get('/index', 'PageController@index');
-Route::get('/books/featurebooks', 'PageController@featuredBooks');
+Route::get('/books/featuredbooks', 'PageController@featuredBooks');
 Route::get('/books/discountbooks', 'PageController@discountBooks');
 Route::get('/books/newbooks', 'PageController@newBooks');
 Route::get('/books/{slug}', 'PageController@getBookInfo');
