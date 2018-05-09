@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use Validator;
+use Exception; 
 
 class PageController extends APIBaseController
 {
@@ -41,12 +42,14 @@ class PageController extends APIBaseController
         $stcategories = $categories->slice(0, 5);
         $ndcategories = $categories->slice(5, 5);
         $thcategories = $categories->slice(10, 5);
-        $menucategories = array("first" => $stcategories, "second" => $ndcategories, "third" => $thcategories);
+        return $menucategories = ["first" => $stcategories, "second" => $ndcategories, "third" => $thcategories];
+
         $authors = Author::take(15)->get();
         $stauthors = $authors->slice(0, 5);
         $ndauthors = $authors->slice(5, 5);
         $thauthors = $authors->slice(10, 5);
         $menuauthors = array("first" => $stauthors, "second" => $ndauthors, "third" => $thauthors);
+        // return $menuauthors;
         // for menu
         $tagtrendings = Tag::withCount('books')->orderBy('books_count', 'DECS')->take(20)->get();
         $featuredbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->where('highlights', 1)->take(6)->get();
@@ -98,33 +101,38 @@ class PageController extends APIBaseController
         return $this->sendData(['books' => $books]);
     }
 
-    public function featuredBooks()
+    public function typeBooks($type)
     {
-        $featuredbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->paginate(18);
-        if (count($featuredbooks) < 1) {
-            return $this->sendMessage('Found 0 feature books.');
+        try {
+            switch ($type) {
+                case 'discoutbooks':
+                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->paginate(18);
+                    if (count($books) < 1) {
+                        return $this->sendMessage('Found 0 feature books.');
+                    }
+                    break;
+                case 'featuredbooks':
+                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
+                    if (count($books) < 1) {
+                        return $this->sendMessage('Found 0 discount books.');
+                    }
+                    break;
+                case 'newbooks':
+                    $nowymd = Carbon::tomorrow();
+                    $ago7days = Carbon::tomorrow()->subDays(7);
+                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+                    if (count($books) < 1) {
+                        return $this->sendMessage('Found 0 new books.');
+                    }
+                    break;
+                default:
+                    throw new Exception("Khong ton tai");
+                    break;
+            }
+            return response()->json($books);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return $this->sendData(['featuredbooks' => $featuredbooks]);
-    }
-
-    public function discountBooks()
-    {
-        $discountbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
-        if (count($discountbooks) < 1) {
-            return $this->sendMessage('Found 0 discount books.');
-        }
-        return $this->sendData($discountbooks);
-    }
-
-    public function newBooks()
-    {
-        $nowymd = Carbon::tomorrow();
-        $ago7days = Carbon::tomorrow()->subDays(7);
-        $newbooks = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
-        if (count($newbooks) < 1) {
-            return $this->sendMessage('Found 0 new books.');
-        }
-        return $this->sendData($newbooks);
     }
 
     public function getBookInfo($slug)
