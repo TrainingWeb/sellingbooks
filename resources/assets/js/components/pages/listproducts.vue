@@ -18,7 +18,7 @@
       </v-container>
       <template>
         <div class="text-xs-center mt-5">
-          <v-pagination :length="3" v-model="page"></v-pagination>
+          <v-pagination :length="panigation.length" v-model="panigation.page" @input="next" :total-visible="7"></v-pagination>
         </div>
       </template>
     </v-container>
@@ -48,8 +48,21 @@ export default {
     ],
     books: [],
     namepage: "Danh sách sản phẩm",
-    page: 1
+    // page: 1,
+    panigation: {
+      page: 1,
+      visible: 4,
+      length: 9
+    }
   }),
+  methods: {
+    next(page) {
+      let type = this.$route.query.type;
+      window.axios.get("/books/type/" + type + "?page=" + page).then(res => {
+        this.books = res.data.data;
+      });
+    }
+  },
   mounted() {
     let type = this.$route.query.type;
     window.axios

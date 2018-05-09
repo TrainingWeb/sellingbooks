@@ -189,7 +189,10 @@ export default {
           author: "Nguyễn Du"
         }
       ],
-
+      // commenttext = '',
+      // bookDetail = {},
+      // comments = [],
+      // book = [],
       breadcrumbs: [
         {
           name: "Trang Chủ",
@@ -206,6 +209,9 @@ export default {
       currentComment: null,
       page: 1
     };
+  },
+  mounted() {
+    window.axios.get("/book/{slug}");
   },
   methods: {
     addCartDetail() {

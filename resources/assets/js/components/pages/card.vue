@@ -34,7 +34,10 @@
               <img :src="'/storage/images/'+props.item.book.image" alt="" width="40px" height="60px">
             </td>
             <td>{{ props.item.book.name }}</td>
-            <td>{{ formatPrice(props.item.book.promotion_price) }} đ</td>
+            <td>
+              <div v-if="props.item.book.promotion_price">{{ formatPrice(props.item.book.promotion_price) }} đ</div>
+              <div v-else>{{ formatPrice(props.item.book.price) }} đ</div>
+            </td>
             <td>
               <v-layout row wrap>
                 <v-flex xs12 md3>
@@ -42,7 +45,10 @@
                 </v-flex>
               </v-layout>
             </td>
-            <td class="text-xs-right"> {{formatPrice(props.item.book.promotion_price *props.item.quantity)}} đ</td>
+            <td class="text-xs-right">
+              <div v-if="props.item.book.promotion_price"> {{formatPrice(props.item.book.promotion_price *props.item.quantity)}} đ</div>
+              <div v-else> {{formatPrice(props.item.book.price *props.item.quantity)}} đ</div>
+            </td>
           </tr>
         </template>
         <template slot="footer">
@@ -138,7 +144,11 @@ export default {
   computed: {
     total() {
       return this.$store.state.cart.reduce((total, p) => {
-        return total + p.book.promotion_price * p.quantity;
+        if (p.book.promotion_price) {
+          return total + p.book.promotion_price * p.quantity;
+        } else {
+          return total + p.book.price * p.quantity;
+        }
       }, 0);
     }
   }

@@ -12358,7 +12358,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(121);
+module.exports = __webpack_require__(120);
 
 
 /***/ }),
@@ -12377,9 +12377,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12411,7 +12411,7 @@ if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default *
 if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
-__webpack_require__(109);
+__webpack_require__(119);
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: "#app",
@@ -34472,7 +34472,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sale: "",
         author: "Nguyễn Du"
       }],
-
+      // commenttext = '',
+      // bookDetail = {},
+      // comments = [],
+      // book = [],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -34486,6 +34489,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       currentComment: null,
       page: 1
     };
+  },
+  mounted: function mounted() {
+    window.axios.get("/book/{slug}");
   },
 
   methods: {
@@ -36523,15 +36529,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
       books: [],
       namepage: "Danh sách sản phẩm",
-      page: 1
+      // page: 1,
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: 9
+      }
     };
   },
+  methods: {
+    next: function next(page) {
+      var _this = this;
+
+      var type = this.$route.query.type;
+      window.axios.get("/books/type/" + type + "?page=" + page).then(function (res) {
+        _this.books = res.data.data;
+      });
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     var type = this.$route.query.type;
     window.axios.get("/books/type/" + type + "?page=" + this.$route.query.page || 1).then(function (res) {
-      _this.books = res.data.data;
+      _this2.books = res.data.data;
     });
   }
 });
@@ -36621,13 +36642,14 @@ var render = function() {
               { staticClass: "text-xs-center mt-5" },
               [
                 _c("v-pagination", {
-                  attrs: { length: 3 },
+                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
+                  on: { input: _vm.next },
                   model: {
-                    value: _vm.page,
+                    value: _vm.panigation.page,
                     callback: function($$v) {
-                      _vm.page = $$v
+                      _vm.$set(_vm.panigation, "page", $$v)
                     },
-                    expression: "page"
+                    expression: "panigation.page"
                   }
                 })
               ],
@@ -36828,6 +36850,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36880,7 +36908,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     total: function total() {
       return this.$store.state.cart.reduce(function (total, p) {
-        return total + p.book.promotion_price * p.quantity;
+        if (p.book.promotion_price) {
+          return total + p.book.promotion_price * p.quantity;
+        } else {
+          return total + p.book.price * p.quantity;
+        }
       }, 0);
     }
   }
@@ -37058,11 +37090,23 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(props.item.book.name))]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm._v(
-                            _vm._s(
-                              _vm.formatPrice(props.item.book.promotion_price)
-                            ) + " đ"
-                          )
+                          props.item.book.promotion_price
+                            ? _c("div", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.formatPrice(
+                                      props.item.book.promotion_price
+                                    )
+                                  ) + " đ"
+                                )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.formatPrice(props.item.book.price)
+                                  ) + " đ"
+                                )
+                              ])
                         ]),
                         _vm._v(" "),
                         _c(
@@ -37104,16 +37148,31 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-xs-right" }, [
-                          _vm._v(
-                            " " +
-                              _vm._s(
-                                _vm.formatPrice(
-                                  props.item.book.promotion_price *
-                                    props.item.quantity
+                          props.item.book.promotion_price
+                            ? _c("div", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.formatPrice(
+                                        props.item.book.promotion_price *
+                                          props.item.quantity
+                                      )
+                                    ) +
+                                    " đ"
                                 )
-                              ) +
-                              " đ"
-                          )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.formatPrice(
+                                        props.item.book.price *
+                                          props.item.quantity
+                                      )
+                                    ) +
+                                    " đ"
+                                )
+                              ])
                         ])
                       ])
                     ]
@@ -37728,6 +37787,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37864,47 +37929,63 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "green--text text--accent-4 title "
-                              },
-                              [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm.formatPrice(
-                                        props.item.book.promotion_price
+                      _c("td", [
+                        props.item.book.promotion_price
+                          ? _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title "
+                                },
+                                [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          props.item.book.promotion_price
+                                        )
+                                      )
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "grey--text text--darken-1 title ml-3"
+                                },
+                                [
+                                  _c("del", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
                                       )
                                     )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "grey--text text--darken-1 title ml-3"
-                              },
-                              [
-                                _c("del", [
+                                  ])
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title ml-3"
+                                },
+                                [
                                   _vm._v(
-                                    _vm._s(
-                                      _vm.formatPrice(props.item.book.price)
-                                    )
+                                    "\n                " +
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
+                                      ) +
+                                      "\n              "
                                   )
-                                ])
-                              ]
-                            )
-                          ])
-                        ],
-                        1
-                      ),
+                                ]
+                              )
+                            ])
+                      ]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -42831,27 +42912,16 @@ var index_esm = {
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.axios = __webpack_require__(6);
-
-window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
-var api = "/api";
-window.axios.defaults.baseURL = "" + host + api;
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(111)
+  __webpack_require__(110)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(113)
+var __vue_script__ = __webpack_require__(112)
 /* template */
-var __vue_template__ = __webpack_require__(114)
+var __vue_template__ = __webpack_require__(113)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42890,13 +42960,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(112);
+var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -42916,7 +42986,7 @@ if(false) {
 }
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -42930,11 +43000,19 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43046,7 +43124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43114,58 +43192,94 @@ var render = function() {
                         [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "green--text text--accent-4 title" },
+                      _vm.book.promotion_price
+                        ? _c(
+                            "v-card-actions",
                             [
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    _vm.formatPrice(_vm.book.promotion_price)
-                                  ) +
-                                  "\n              "
-                              ),
                               _c(
-                                "span",
+                                "div",
                                 {
-                                  staticStyle: {
-                                    "text-decoration": "underline"
-                                  }
+                                  staticClass:
+                                    "green--text text--accent-4 title"
                                 },
-                                [_vm._v("đ")]
+                                [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          _vm.book.promotion_price
+                                        )
+                                      ) +
+                                      "\n              "
+                                  ),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticStyle: {
+                                        "text-decoration": "underline"
+                                      }
+                                    },
+                                    [_vm._v("đ")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "grey--text text--darken-1 " },
+                                [
+                                  _c("del", [
+                                    _vm._v(
+                                      _vm._s(_vm.formatPrice(_vm.book.price)) +
+                                        "\n                "
+                                    ),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticStyle: {
+                                          "text-decoration": "underline"
+                                        }
+                                      },
+                                      [_vm._v("đ")]
+                                    )
+                                  ])
+                                ]
                               )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "grey--text text--darken-1 " },
-                            [
-                              _c("del", [
-                                _vm._v(
-                                  _vm._s(_vm.formatPrice(_vm.book.price)) +
-                                    "\n                "
-                                ),
-                                _c(
-                                  "span",
-                                  {
-                                    staticStyle: {
-                                      "text-decoration": "underline"
-                                    }
-                                  },
-                                  [_vm._v("đ")]
-                                )
-                              ])
-                            ]
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      ),
+                        : _c("v-card-actions", [
+                            _c(
+                              "div",
+                              { staticClass: "grey--text text--darken-1 " },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "green--text text--accent-4 title"
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.formatPrice(_vm.book.price)) +
+                                        "\n                "
+                                    ),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticStyle: {
+                                          "text-decoration": "underline"
+                                        }
+                                      },
+                                      [_vm._v("đ")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]),
                       _vm._v(" "),
                       _c("v-divider", { staticClass: "mt-2" }),
                       _vm._v(" "),
@@ -43273,19 +43387,19 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(116)
+  __webpack_require__(115)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(118)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43324,13 +43438,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(116);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43350,7 +43464,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -43364,7 +43478,7 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43394,7 +43508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43479,8 +43593,18 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */,
-/* 121 */
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+window.axios = __webpack_require__(6);
+
+window.axios.defaults.headers.post["Content-Type"] = "application/json";
+var host = "http://sellingbookstore.test";
+var api = "/api";
+window.axios.defaults.baseURL = "" + host + api;
+
+/***/ }),
+/* 120 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
