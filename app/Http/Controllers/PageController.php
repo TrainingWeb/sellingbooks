@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 use Validator;
 use Exception; 
+use App\Group;
 
 class PageController extends APIBaseController
 {
@@ -38,17 +39,8 @@ class PageController extends APIBaseController
     public function index(Request $request)
     {
         // for menu
-        $categories = Category::take(15)->get();
-        $stcategories = $categories->slice(0, 5);
-        $ndcategories = $categories->slice(5, 5);
-        $thcategories = $categories->slice(10, 5);
-        return $menucategories = ["first" => $stcategories, "second" => $ndcategories, "third" => $thcategories];
-
-        $authors = Author::take(15)->get();
-        $stauthors = $authors->slice(0, 5);
-        $ndauthors = $authors->slice(5, 5);
-        $thauthors = $authors->slice(10, 5);
-        $menuauthors = array("first" => $stauthors, "second" => $ndauthors, "third" => $thauthors);
+        $menucategories = Group::with('categories')->get();
+        $menuauthors = Author::take(15)->get();
         // return $menuauthors;
         // for menu
         $tagtrendings = Tag::withCount('books')->orderBy('books_count', 'DECS')->take(20)->get();
@@ -105,7 +97,7 @@ class PageController extends APIBaseController
     {
         try {
             switch ($type) {
-                case 'discoutbooks':
+                case 'discountbooks':
                     $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->paginate(18);
                     if (count($books) < 1) {
                         return $this->sendMessage('Found 0 feature books.');
@@ -120,18 +112,18 @@ class PageController extends APIBaseController
                 case 'newbooks':
                     $nowymd = Carbon::tomorrow();
                     $ago7days = Carbon::tomorrow()->subDays(7);
-                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->take(6)->get();
+                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->paginate(18);
                     if (count($books) < 1) {
                         return $this->sendMessage('Found 0 new books.');
                     }
                     break;
                 default:
-                    throw new Exception("Khong ton tai");
+                    throw new Exception("Không tìm thấy kiểu sách");
                     break;
             }
             return response()->json($books);
         } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            return $thí->sendErrorNotFound($e);
         }
     }
 
