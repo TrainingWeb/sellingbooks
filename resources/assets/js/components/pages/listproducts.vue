@@ -55,12 +55,21 @@ export default {
       length: 9
     }
   }),
+  watch: {
+    "$route.query.page"(val) {
+      if (val) {
+        window.axios
+          .get("/books/type/" + this.$route.query.type + "?page=" + val)
+          .then(res => {
+            this.books = res.data.data;
+          });
+      }
+    }
+  },
   methods: {
     next(page) {
       let type = this.$route.query.type;
-      window.axios.get("/books/type/" + type + "?page=" + page).then(res => {
-        this.books = res.data.data;
-      });
+      this.$router.push("list-products?type=newbooks&&page=" + page);
     }
   },
   mounted() {

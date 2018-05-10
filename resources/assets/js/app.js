@@ -17,6 +17,8 @@ Vue.component("BookItem", BookItem);
 //
 import VBanner from "./components/extends/Banner";
 Vue.component("VBanner", VBanner);
+
+require("./axios");
 //
 
 // Save card
@@ -29,8 +31,14 @@ if (localStorage.favorite)
 if (localStorage.selected)
   store.commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
+if (localStorage.token && localStorage.token != 'undefined')
+  store.dispatch("setToken", localStorage.token);
+
+if (localStorage.user && localStorage.user != 'undefined')
+  store.dispatch("setUser", JSON.parse(localStorage.user));
+
 Vue.use(Vuetify);
-require("./axios");
+
 
 const app = new Vue({
   el: "#app",
