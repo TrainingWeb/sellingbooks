@@ -104,13 +104,16 @@
 
             <v-toolbar-items>
               <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
-              <!-- <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
+              <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
                 <v-btn slot="activator" flat class="white--text">Danh mục</v-btn>
                 <v-card>
-                  <v-layout row wrap v-if="dataApp.menuauthors">
+                  <v-layout row wrap v-if="dataApp.menucategories">
                     <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.first" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.name">
+                        <v-list-tile>
+                          <strong class="headline">{{dataApp.menucategories[0].name}}</strong>
+                        </v-list-tile>
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menucategories[0].categories" :key="`keyauthor1-$`+index" exact :to="`/list-category?type=`+subtiem.slug">
                           <v-list-tile-content>
                             <v-list-tile-title>
                               {{subtiem.name}}
@@ -121,25 +124,35 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.second" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.name">
+                        <v-list-tile>
+                          <strong class="headline"> {{dataApp.menucategories[1].name}}</strong>
+                        </v-list-tile>
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menucategories[1].categories" :key="`keyauthor1-$`+index" exact :to="`/list-category?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
+                            <v-list-tile-title>
+                              {{subtiem.name}}
+                            </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
                     <v-flex xs4>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in  dataApp.menuauthors.third" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.name">
+                        <v-list-tile>
+                          <strong class="headline">{{dataApp.menucategories[2].name}}</strong>
+                        </v-list-tile>
+                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menucategories[2].categories" :key="`keyauthor1-$`+index" exact :to="`/list-category?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
+                            <v-list-tile-title>
+                              {{subtiem.name}}
+                            </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
                   </v-layout>
                 </v-card>
-              </v-menu> -->
+              </v-menu>
               <!-- tác gia -->
               <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
                 <v-btn slot="activator" flat class="white--text">Tác giả</v-btn>
@@ -147,7 +160,7 @@
                   <v-layout row wrap v-if="dataApp.menuauthors">
                     <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.first" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
+                        <v-list-tile avatar v-if="index<5" v-for="(subtiem,index) in dataApp.menuauthors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
                             <v-list-tile-title>
                               {{subtiem.name}}
@@ -156,24 +169,29 @@
                         </v-list-tile>
                       </v-list>
                     </v-flex>
-                    <v-flex xs4>
+                    <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in dataApp.menuauthors.second" :key="`keyauthor2-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
+                        <v-list-tile avatar v-if="index>=5 && index<10" v-for="(subtiem,index) in dataApp.menuauthors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
+                            <v-list-tile-title>
+                              {{subtiem.name}}
+                            </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
-                    <v-flex xs4>
+                    <v-flex xs4 text-xs-center>
                       <v-list>
-                        <v-list-tile avatar v-for="(subtiem,index) in  dataApp.menuauthors.third" :key="`keyauthor3-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
+                        <v-list-tile avatar v-if="index>=10" v-for="(subtiem,index) in dataApp.menuauthors" :key="`keyauthor1-$`+index" exact :to="`/list-author?type=`+subtiem.slug">
                           <v-list-tile-content>
-                            <v-list-tile-title>{{subtiem.name}}</v-list-tile-title>
+                            <v-list-tile-title>
+                              {{subtiem.name}}
+                            </v-list-tile-title>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
                     </v-flex>
+
                   </v-layout>
                 </v-card>
               </v-menu>
@@ -342,6 +360,7 @@ export default {
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
+        console.log(response.data.data);
       })
       .catch(function(error) {
         console.log(error);

@@ -129,7 +129,7 @@ class PageController extends APIBaseController
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $samebooks = Book::where('id_category', $book->id_category)->orderBy('created_at', 'DESC')->take(4)->get();
+        $samebooks = Book::where('id_category', $book->id_category)->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return $this->sendData(['book' => $book, 'samebooks' => $samebooks]);
     }
 
