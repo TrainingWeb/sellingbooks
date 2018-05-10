@@ -33801,7 +33801,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       featuredbooks: {},
       discountbooks: {},
       newbooks: {},
-
       sliders: [{
         src: "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
       }, {
@@ -33810,78 +33809,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         src: "http://ptth-hstar.thuathienhue.edu.vn/imgs/Thu_muc_he_thong/_Nam_2014/_Thang_09/p1150951fileminimizer-.jpg"
       }, {
         src: "https://cafeandbooks.files.wordpress.com/2015/07/dscn4528.jpg"
-      }],
-      book: [{
-        id: 1,
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }, {
-        id: 2,
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }, {
-        id: 3,
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }, {
-        id: 4,
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }, {
-        id: 5,
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }, {
-        id: 6,
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: 12000,
-        sale: 15000,
-        author: "Nguyễn Du"
-      }],
-      bookSale: [{
-        id: 7,
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: 600,
-        sale: 900,
-        author: "Nguyễn Du"
-      }, {
-        id: 8,
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: 120000,
-        sale: 240000,
-        author: "Nguyễn Du"
-      }, {
-        id: 9,
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: 12000,
-        sale: 15005,
-        author: "Nguyễn Du"
-      }, {
-        id: 10,
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: 120000,
-        sale: 150000,
-        author: "Nguyễn Du"
       }]
     };
   },
@@ -34297,158 +34224,150 @@ exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       commenttext: "",
       bookDetail: {},
 
-      comments: [{
-        avatar: "./img/author.jpg",
-        name: "Võ Đăng Ánh",
-        subtitle: "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
-        time: "02:56 PM"
-      }, {
-        avatar: "./img/author.jpg",
-        name: "Tô Thị Tuyết Nga",
-        subtitle: "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
-        time: "03:15 PM"
-      }, {
-        avatar: "./img/user.jpg",
-        name: "Nguyễn Thị Thu Thủy",
-        subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
-        time: "08:32 PM"
-
-        // { divider: true, inset: true }
-      }],
-      book: {},
-
+      comments: {},
+      books: {},
+      snackbar: false,
+      timeout: 3000,
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -34463,25 +34382,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       page: 1
     };
   },
-  mounted: function mounted() {
-    window.axios.get("/book/{slug}");
-  },
 
   methods: {
     addCartDetail: function addCartDetail() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert("Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+      var cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === this.bookDetail.id) {
+          cart[index].quantity = cart[index].quantity + 1;
+          this.snackbar = true;
           return;
         }
       }
+      //
       var itemBook = {
         book: this.bookDetail,
         quantity: 1
       };
-      var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbar = true;
     },
     addFavoriteDetail: function addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
@@ -34507,18 +34426,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.commenttext = "";
     }
-  }
-}, "mounted", function mounted() {
-  var _this = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
-  window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.book;
-    _this.book = response.data.data.samebooks;
-    console.log("đây là tác phẩm", response.data.data.samebooks);
-  }).catch(function (error) {
-    console.log(error);
-  });
-}));
+    window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
+      _this.bookDetail = response.data.data.book;
+      _this.books = response.data.data.samebooks;
+      _this.comments = response.data.data.book.comments;
+      console.log("đây là tác phẩm cảu detail", response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+});
 
 /***/ }),
 /* 35 */
@@ -34590,338 +34511,391 @@ var render = function() {
                                           }
                                         },
                                         [
-                                          _c(
-                                            "v-layout",
-                                            { attrs: { row: "" } },
-                                            [
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { xs4: "" } },
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "/storage/images/" +
-                                                        _vm.bookDetail.image,
-                                                      height: "450px",
-                                                      contain: ""
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-flex",
-                                                { attrs: { xs8: "" } },
+                                          _vm.bookDetail.author
+                                            ? _c(
+                                                "v-layout",
+                                                { attrs: { row: "" } },
                                                 [
                                                   _c(
-                                                    "div",
+                                                    "v-flex",
+                                                    { attrs: { xs4: "" } },
+                                                    [
+                                                      _c("v-card-media", {
+                                                        attrs: {
+                                                          src:
+                                                            "/storage/images/" +
+                                                            _vm.bookDetail
+                                                              .image,
+                                                          height: "450px"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-flex",
+                                                    { attrs: { xs8: "" } },
                                                     [
                                                       _c(
                                                         "div",
-                                                        {
-                                                          staticClass:
-                                                            "headline grey--text text--darken-3"
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.bookDetail
-                                                                .name
-                                                            )
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          staticClass:
-                                                            "grey--text accent-4 body-2"
-                                                        },
-                                                        [
-                                                          _c("span", [
-                                                            _vm._v("Tác giả: ")
-                                                          ]),
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.bookDetail
-                                                                .author.name
-                                                            )
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-layout",
-                                                        {
-                                                          staticClass: "mx-0",
-                                                          attrs: {
-                                                            row: "",
-                                                            wrap: ""
-                                                          }
-                                                        },
                                                         [
                                                           _c(
                                                             "div",
                                                             {
                                                               staticClass:
-                                                                "green--text text--accent-4 title mt-3"
+                                                                "headline grey--text text--darken-3"
                                                             },
                                                             [
                                                               _vm._v(
-                                                                " " +
-                                                                  _vm._s(
-                                                                    _vm
-                                                                      .bookDetail
-                                                                      .price
-                                                                  )
+                                                                _vm._s(
+                                                                  _vm.bookDetail
+                                                                    .name
+                                                                )
                                                               )
                                                             ]
                                                           ),
                                                           _vm._v(" "),
                                                           _c(
-                                                            "span",
+                                                            "div",
                                                             {
                                                               staticClass:
-                                                                "grey--text text--darken-1 title mt-3 ml-3"
+                                                                "grey--text accent-4 body-2"
                                                             },
                                                             [
-                                                              _c("del", [
+                                                              _c("span", [
+                                                                _vm._v(
+                                                                  "Tác giả: " +
+                                                                    _vm._s(
+                                                                      _vm
+                                                                        .bookDetail
+                                                                        .author
+                                                                        .name
+                                                                    )
+                                                                )
+                                                              ])
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _vm.bookDetail
+                                                            .promotion_price
+                                                            ? _c("div", [
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticClass:
+                                                                      "green--text text--accent-4 title mt-3"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      " " +
+                                                                        _vm._s(
+                                                                          _vm
+                                                                            .bookDetail
+                                                                            .price
+                                                                        )
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticClass:
+                                                                      "grey--text text--darken-1 title mt-3 ml-3"
+                                                                  },
+                                                                  [
+                                                                    _c("del", [
+                                                                      _vm._v(
+                                                                        _vm._s(
+                                                                          _vm
+                                                                            .bookDetail
+                                                                            .promotion_price
+                                                                        )
+                                                                      )
+                                                                    ])
+                                                                  ]
+                                                                )
+                                                              ])
+                                                            : _c("div", [
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticClass:
+                                                                      "green--text text--accent-4 title mt-3"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                              " +
+                                                                        _vm._s(
+                                                                          _vm
+                                                                            .bookDetail
+                                                                            .price
+                                                                        ) +
+                                                                        "\n                            "
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]),
+                                                          _vm._v(" "),
+                                                          _c("v-divider", {
+                                                            staticClass: "my-3"
+                                                          }),
+                                                          _vm._v(" "),
+                                                          _c("div", [
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  " grey--text text--accent-4body-1"
+                                                              },
+                                                              [
                                                                 _vm._v(
                                                                   _vm._s(
                                                                     _vm
                                                                       .bookDetail
-                                                                      .sale
+                                                                      .description
                                                                   )
                                                                 )
-                                                              ])
-                                                            ]
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c("v-divider", {
-                                                        staticClass: "my-3"
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c("div", [
-                                                        _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              " grey--text text--accent-4body-1"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              _vm._s(
-                                                                _vm.bookDetail
-                                                                  .description
-                                                              )
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c("a", [
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              staticClass:
-                                                                "green--text text--accent-4"
-                                                            },
-                                                            [_vm._v("Xem thêm")]
-                                                          )
-                                                        ])
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("v-divider", {
-                                                        staticClass: "my-3"
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        [
-                                                          _c(
-                                                            "v-btn",
-                                                            {
-                                                              staticClass:
-                                                                "mx-0",
-                                                              attrs: {
-                                                                color:
-                                                                  "green accent-4 white--text"
-                                                              },
-                                                              on: {
-                                                                click:
-                                                                  _vm.addCartDetail
-                                                              }
-                                                            },
-                                                            [
-                                                              _c(
-                                                                "i",
-                                                                {
-                                                                  staticClass:
-                                                                    "material-icons add-shopping mr-2 white--text"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "add_shopping_cart"
-                                                                  )
-                                                                ]
-                                                              ),
-                                                              _vm._v(
-                                                                "Thêm\n                            "
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "v-btn",
-                                                            {
-                                                              attrs: {
-                                                                color:
-                                                                  "green accent-4"
-                                                              },
-                                                              on: {
-                                                                click:
-                                                                  _vm.addFavoriteDetail
-                                                              }
-                                                            },
-                                                            [
-                                                              _c(
-                                                                "i",
-                                                                {
-                                                                  staticClass:
-                                                                    "material-icons favorite white--text"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "favorite"
-                                                                  )
-                                                                ]
-                                                              )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-layout",
-                                                        {
-                                                          staticClass: "mt-3",
-                                                          attrs: {
-                                                            row: "",
-                                                            wrap: ""
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "div",
-                                                            {
-                                                              staticClass:
-                                                                "text-xs-center"
-                                                            },
-                                                            [
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c("a", [
                                                               _c(
                                                                 "span",
                                                                 {
                                                                   staticClass:
-                                                                    "green--text ml-2"
+                                                                    "green--text text--accent-4"
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "Tags:"
+                                                                    "Xem thêm"
                                                                   )
                                                                 ]
-                                                              ),
-                                                              _vm._v(" "),
+                                                              )
+                                                            ])
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("v-divider", {
+                                                            staticClass: "my-3"
+                                                          }),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            [
                                                               _c(
-                                                                "v-chip",
+                                                                "v-btn",
                                                                 {
                                                                   staticClass:
-                                                                    "px-0",
+                                                                    "mx-0",
                                                                   attrs: {
                                                                     color:
-                                                                      "grey--text text--darken-1",
-                                                                    "text-color":
-                                                                      "white"
+                                                                      "green accent-4",
+                                                                    dark: ""
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.addCartDetail
                                                                   }
                                                                 },
                                                                 [
                                                                   _c(
-                                                                    "router-link",
+                                                                    "v-icon",
                                                                     {
                                                                       staticClass:
-                                                                        "grey--text text--darken-2",
-                                                                      staticStyle: {
-                                                                        "text-decoration":
-                                                                          "none"
-                                                                      },
-                                                                      attrs: {
-                                                                        to:
-                                                                          "/tags"
-                                                                      }
+                                                                        "mr-2"
                                                                     },
                                                                     [
                                                                       _vm._v(
-                                                                        "Sách Giáo Khoa "
+                                                                        "add_shopping_cart"
                                                                       )
                                                                     ]
+                                                                  ),
+                                                                  _vm._v(
+                                                                    "\n                              Thêm\n                            "
                                                                   )
                                                                 ],
                                                                 1
                                                               ),
                                                               _vm._v(" "),
                                                               _c(
-                                                                "v-chip",
+                                                                "v-snackbar",
                                                                 {
-                                                                  staticClass:
-                                                                    "px-0",
+                                                                  attrs: {
+                                                                    timeout:
+                                                                      _vm.timeout,
+                                                                    top: "",
+                                                                    color:
+                                                                      "green accent-4"
+                                                                  },
+                                                                  model: {
+                                                                    value:
+                                                                      _vm.snackbar,
+                                                                    callback: function(
+                                                                      $$v
+                                                                    ) {
+                                                                      _vm.snackbar = $$v
+                                                                    },
+                                                                    expression:
+                                                                      "snackbar"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                              Thêm vào giỏ hàng thành công\n                              "
+                                                                  ),
+                                                                  _c(
+                                                                    "v-btn",
+                                                                    {
+                                                                      attrs: {
+                                                                        flat:
+                                                                          "",
+                                                                        icon:
+                                                                          "",
+                                                                        color:
+                                                                          "white"
+                                                                      },
+                                                                      nativeOn: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {
+                                                                          _vm.snackbar = false
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "v-icon",
+                                                                        [
+                                                                          _vm._v(
+                                                                            "clear"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                1
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-btn",
+                                                                {
                                                                   attrs: {
                                                                     color:
-                                                                      "grey--text text--darken-1",
-                                                                    "text-color":
-                                                                      "white"
+                                                                      "green accent-4",
+                                                                    dark: ""
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.addFavoriteDetail
                                                                   }
                                                                 },
                                                                 [
                                                                   _c(
-                                                                    "router-link",
+                                                                    "v-icon",
                                                                     {
                                                                       staticClass:
-                                                                        "grey--text text--darken-2",
-                                                                      staticStyle: {
-                                                                        "text-decoration":
-                                                                          "none"
-                                                                      },
-                                                                      attrs: {
-                                                                        to:
-                                                                          "/tags"
-                                                                      }
+                                                                        "mr-2"
                                                                     },
                                                                     [
                                                                       _vm._v(
-                                                                        "Sách Văn Học "
+                                                                        "favorite"
                                                                       )
                                                                     ]
+                                                                  ),
+                                                                  _vm._v(
+                                                                    "\n                              Yêu thích\n                            "
                                                                   )
                                                                 ],
                                                                 1
                                                               )
                                                             ],
                                                             1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-layout",
+                                                            {
+                                                              staticClass:
+                                                                "mt-3",
+                                                              attrs: {
+                                                                row: "",
+                                                                wrap: ""
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "div",
+                                                                {
+                                                                  staticClass:
+                                                                    "text-xs-center"
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "span",
+                                                                    {
+                                                                      staticClass:
+                                                                        "green--text ml-2"
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "Tags:"
+                                                                      )
+                                                                    ]
+                                                                  ),
+                                                                  _vm._v(" "),
+                                                                  _c(
+                                                                    "v-chip",
+                                                                    {
+                                                                      staticClass:
+                                                                        "px-0",
+                                                                      attrs: {
+                                                                        color:
+                                                                          "grey--text text--darken-1",
+                                                                        "text-color":
+                                                                          "white"
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "router-link",
+                                                                        {
+                                                                          staticClass:
+                                                                            "grey--text text--darken-2",
+                                                                          staticStyle: {
+                                                                            "text-decoration":
+                                                                              "none"
+                                                                          },
+                                                                          attrs: {
+                                                                            to:
+                                                                              "/tags"
+                                                                          }
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "Sách Giáo Khoa "
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            ]
                                                           )
-                                                        ]
+                                                        ],
+                                                        1
                                                       )
-                                                    ],
-                                                    1
+                                                    ]
                                                   )
-                                                ]
+                                                ],
+                                                1
                                               )
-                                            ],
-                                            1
-                                          )
+                                            : _vm._e()
                                         ],
                                         1
                                       )
@@ -35001,55 +34975,71 @@ var render = function() {
                                     "v-list",
                                     { attrs: { "three-line": "" } },
                                     [
-                                      _vm._l(_vm.comments, function(item) {
-                                        return _c(
-                                          "v-list-tile",
-                                          {
-                                            key: item.title,
-                                            attrs: { avatar: "" }
-                                          },
-                                          [
-                                            _c("v-list-tile-avatar", [
-                                              _c("img", {
-                                                attrs: { src: item.avatar }
-                                              })
-                                            ]),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-tile-content",
-                                              [
-                                                _c("v-list-tile-title", {
-                                                  domProps: {
-                                                    innerHTML: _vm._s(item.name)
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("v-list-tile-sub-title", {
-                                                  staticClass:
-                                                    "subtitleComment",
-                                                  domProps: {
-                                                    innerHTML: _vm._s(
-                                                      item.subtitle
-                                                    )
-                                                  }
+                                      [
+                                        _c("h3", [
+                                          _vm._v(
+                                            "NHẬN XÉT (" +
+                                              _vm._s(_vm.comments.length) +
+                                              ")"
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.comments, function(
+                                          item,
+                                          index
+                                        ) {
+                                          return _c(
+                                            "v-list-tile",
+                                            {
+                                              key: "keycm-$" + index,
+                                              attrs: { avatar: "" }
+                                            },
+                                            [
+                                              _c("v-list-tile-avatar", [
+                                                _c("img", {
+                                                  attrs: { src: item.avatar }
                                                 })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-tile-action",
-                                              [
-                                                _c("v-list-tile-action-text", [
-                                                  _vm._v(_vm._s(item.time))
-                                                ])
-                                              ],
-                                              1
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      }),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-content",
+                                                [
+                                                  _c("v-list-tile-title", {
+                                                    domProps: {
+                                                      innerHTML: _vm._s(
+                                                        item.name
+                                                      )
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("v-list-tile-sub-title", {
+                                                    staticClass:
+                                                      "subtitleComment",
+                                                    domProps: {
+                                                      innerHTML: _vm._s(
+                                                        item.subtitle
+                                                      )
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-action",
+                                                [
+                                                  _c(
+                                                    "v-list-tile-action-text",
+                                                    [_vm._v(_vm._s(item.time))]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        })
+                                      ],
                                       _vm._v(" "),
                                       _c(
                                         "v-layout",
@@ -35106,29 +35096,7 @@ var render = function() {
                                           )
                                         ],
                                         1
-                                      ),
-                                      _vm._v(" "),
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "text-xs-center mt-5"
-                                          },
-                                          [
-                                            _c("v-pagination", {
-                                              attrs: { length: 3 },
-                                              model: {
-                                                value: _vm.page,
-                                                callback: function($$v) {
-                                                  _vm.page = $$v
-                                                },
-                                                expression: "page"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ]
+                                      )
                                     ],
                                     2
                                   )
@@ -35158,11 +35126,11 @@ var render = function() {
                       _c(
                         "v-layout",
                         { attrs: { row: "", wrap: "" } },
-                        _vm._l(_vm.book, function(item, index) {
+                        _vm._l(_vm.books, function(item, index) {
                           return _c(
                             "v-flex",
                             {
-                              key: "Book-" + index,
+                              key: "khoa" + index,
                               attrs: { xs12: "", md6: "", lg4: "" }
                             },
                             [_c("book-item", { attrs: { book: item } })],
@@ -37388,123 +37356,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }],
+      search: {},
       namepage: "",
 
       page: 1
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
     this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
+
+    window.axios.post("/search/" + +this.$route.query.keyword + "?keyword=" + this.$route.query.keyword).then(function (response) {
+      _this.search = response.data.data.books.data;
+      console.log("Đây là search", response.data.data.books.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -37571,7 +37440,7 @@ var render = function() {
               _c(
                 "v-layout",
                 { attrs: { row: "", wrap: "" } },
-                _vm._l(_vm.books, function(item, index) {
+                _vm._l(_vm.search, function(item, index) {
                   return _c(
                     "v-flex",
                     {
@@ -38293,22 +38162,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       page: 1
     };
   },
+  methods: {
+    loadauthor: function loadauthor() {
+      var _this = this;
+
+      window.axios.get("/categories/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
+        _this.listCatagory = response.data.data.data;
+        console.log("đây là tác phẩm", _this.listauthor);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
+      this.loadauthor();
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
     this.breadcrumbs[1].name = "" + this.$route.query.type;
-
-    window.axios.get("/categories/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-      _this.listCatagory = response.data.data.data;
-      console.log("đây là tác phẩm", _this.listauthor);
-    }).catch(function (error) {
-      console.log(error);
-    });
+    this.loadauthor();
   }
 });
 
@@ -43266,6 +43140,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
@@ -43409,13 +43287,24 @@ var render = function() {
                         ],
                         1
                       ),
+                      _vm._v("\n<<<<<<< HEAD\n            "),
+                      _vm.book.author
+                        ? _c(
+                            "p",
+                            { staticClass: "grey--text text--darken-1 mt-1" },
+                            [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
+                          )
+                        : _vm._e(),
+                      _vm._v("\n=======\n            "),
                       _vm._v(" "),
                       _c(
                         "p",
                         { staticClass: "grey--text text--darken-1 mt-1" },
                         [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
                       ),
-                      _vm._v(" "),
+                      _vm._v(
+                        "\n>>>>>>> 19547e4b94d915f1ad1611071592f35b25b3b3e2\n            "
+                      ),
                       _vm.book.promotion_price
                         ? _c(
                             "v-card-actions",
@@ -43434,7 +43323,7 @@ var render = function() {
                                           _vm.book.promotion_price
                                         )
                                       ) +
-                                      "\n              "
+                                      "\n                "
                                   ),
                                   _c(
                                     "span",
@@ -43457,7 +43346,7 @@ var render = function() {
                                   _c("del", [
                                     _vm._v(
                                       _vm._s(_vm.formatPrice(_vm.book.price)) +
-                                        "\n                "
+                                        "\n                  "
                                     ),
                                     _c(
                                       "span",
@@ -43488,7 +43377,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       _vm._s(_vm.formatPrice(_vm.book.price)) +
-                                        "\n                "
+                                        "\n                  "
                                     ),
                                     _c(
                                       "span",
@@ -43538,7 +43427,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n              Thêm vào giỏ hàng thành công\n              "
+                                "\n                Thêm vào giỏ hàng thành công\n                "
                               ),
                               _c(
                                 "v-btn",
