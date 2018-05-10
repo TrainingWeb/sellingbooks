@@ -131,7 +131,7 @@ class PageController extends APIBaseController
 
     public function getBookInfo($slug)
     {
-        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('comments')->where('slug', $slug)->first();
+        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->with('comments')->where('slug', $slug)->first();
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found !');
         }
