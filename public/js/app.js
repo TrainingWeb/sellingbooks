@@ -43192,7 +43192,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: black;\n}\n.hover-card:hover {\r\n  border: solid 1px #00c853 !important;\r\n  -webkit-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  -webkit-transition-property: -webkit-box-shadow;\r\n  transition-property: -webkit-box-shadow;\r\n  transition-property: box-shadow;\r\n  transition-property: box-shadow, -webkit-box-shadow;\n}\n.hover-card {\r\n  border: solid 1px #f5f5f5 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: black;\n}\n.hover-card:hover {\r\n  /* border: solid 1px #00c853 !important; */\r\n  -webkit-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),\r\n    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\r\n  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\r\n  -webkit-transition-property: -webkit-box-shadow;\r\n  transition-property: -webkit-box-shadow;\r\n  transition-property: box-shadow;\r\n  transition-property: box-shadow, -webkit-box-shadow;\n}\n.hover-card {\r\n  border: solid 1px #f5f5f5 !important;\n}\n.block-with-text {\r\n  overflow: hidden;\r\n  white-space: nowrap;\r\n  text-overflow: ellipsis;\n}\r\n", ""]);
 
 // exports
 
@@ -43203,6 +43203,11 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43387,7 +43392,22 @@ var render = function() {
                           staticClass: "link-book",
                           attrs: { to: "/detail?type=" + _vm.book.slug }
                         },
-                        [_c("h3", [_vm._v(_vm._s(_vm.book.name))])]
+                        [
+                          _c("v-tooltip", { attrs: { bottom: "" } }, [
+                            _c(
+                              "h3",
+                              {
+                                staticClass: "block-with-text",
+                                attrs: { slot: "activator" },
+                                slot: "activator"
+                              },
+                              [_vm._v(_vm._s(_vm.book.name) + " ")]
+                            ),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(_vm._s(_vm.book.name) + " ")])
+                          ])
+                        ],
+                        1
                       ),
                       _vm._v(" "),
                       _c(
@@ -43803,7 +43823,7 @@ if (false) {
 window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
+var host = "http://sellingbookstore.test";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 
