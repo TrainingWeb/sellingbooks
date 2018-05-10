@@ -12,21 +12,28 @@
                 <v-flex xs12>
                   <v-card color="cyan darken-2" class="white--text">
                     <v-container fluid grid-list-lg>
-                      <v-layout row>
+                      <v-layout row v-if="bookDetail.author">
                         <v-flex xs4>
-                          <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px" contain></v-card-media>
+                          <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px"></v-card-media>
                         </v-flex>
                         <v-flex xs8>
                           <div>
                             <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
                             <div class="grey--text accent-4 body-2">
-                              <span>Tác giả: </span>{{bookDetail.author.name}}</div>
-                            <v-layout row wrap class="mx-0">
-                              <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
+                              <span>Tác giả: {{bookDetail.author.name}}</span>
+                            </div>
+                            <div v-if="bookDetail.promotion_price">
+                              <span class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</span>
                               <span class="grey--text text--darken-1 title mt-3 ml-3">
-                                <del>{{bookDetail.sale}}</del>
+                                <del>{{bookDetail.promotion_price}}</del>
                               </span>
-                            </v-layout>
+                            </div>
+                            <div v-else>
+                              <span class="green--text text--accent-4 title mt-3">
+                                {{bookDetail.price}}
+                              </span>
+                            </div>
+
                             <v-divider class="my-3"></v-divider>
                             <div>
                               <span class=" grey--text text--accent-4body-1">{{bookDetail.description}}</span>
@@ -36,11 +43,19 @@
                             </div>
                             <v-divider class="my-3"></v-divider>
                             <div>
-                              <v-btn class="mx-0" color="green accent-4 white--text" @click="addCartDetail">
-                                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
+                              <v-btn class="mx-0" color="green accent-4" dark @click="addCartDetail">
+                                <v-icon class="mr-2">add_shopping_cart</v-icon>
+                                Thêm
                               </v-btn>
-                              <v-btn color="green accent-4" @click="addFavoriteDetail">
-                                <i class="material-icons favorite white--text">favorite</i>
+                              <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
+                                Thêm vào giỏ hàng thành công
+                                <v-btn flat icon color="white" @click.native="snackbar = false">
+                                  <v-icon>clear</v-icon>
+                                </v-btn>
+                              </v-snackbar>
+                              <v-btn color="green accent-4" dark @click="addFavoriteDetail">
+                                <v-icon class="mr-2">favorite</v-icon>
+                                Yêu thích
                               </v-btn>
                             </div>
                             <v-layout row wrap class="mt-3">
@@ -49,9 +64,7 @@
                                 <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
                                   <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Giáo Khoa </router-link>
                                 </v-chip>
-                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
-                                  <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Văn Học </router-link>
-                                </v-chip>
+
                               </div>
                             </v-layout>
                           </div>
@@ -78,8 +91,10 @@
               <v-tab-item id="tab-2">
                 <v-card>
                   <v-list three-line>
+
                     <template>
-                      <v-list-tile v-for="item in comments" avatar :key="item.title">
+                      <h3>NHẬN XÉT ({{comments.length}})</h3>
+                      <v-list-tile v-for="(item, index) in comments" avatar :key="`keycm-$`+index">
                         <v-list-tile-avatar>
                           <img :src="item.avatar">
                         </v-list-tile-avatar>
@@ -98,11 +113,6 @@
                         <v-btn color="green accent-4 white--text" @click="saveComment">Gửi</v-btn>
                       </div>
                     </v-layout>
-                    <template>
-                      <div class="text-xs-center mt-5">
-                        <v-pagination :length="3" v-model="page"></v-pagination>
-                      </div>
-                    </template>
                   </v-list>
                 </v-card>
               </v-tab-item>
@@ -111,7 +121,7 @@
           <v-container grid-list-xs class="my-5">
             <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
             <v-layout row wrap>
-              <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+              <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
                 <book-item :book="item"></book-item>
               </v-flex>
             </v-layout>
@@ -128,32 +138,10 @@ export default {
       commenttext: "",
       bookDetail: {},
 
-      comments: [
-        {
-          avatar: "./img/author.jpg",
-          name: "Võ Đăng Ánh",
-          subtitle:
-            "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
-          time: "02:56 PM"
-        },
-        {
-          avatar: "./img/author.jpg",
-          name: "Tô Thị Tuyết Nga",
-          subtitle:
-            "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
-          time: "03:15 PM"
-        },
-        {
-          avatar: "./img/user.jpg",
-          name: "Nguyễn Thị Thu Thủy",
-          subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
-          time: "08:32 PM"
-        }
-
-        // { divider: true, inset: true }
-      ],
-      book: {},
-
+      comments: {},
+      books: {},
+      snackbar: false,
+      timeout: 3000,
       breadcrumbs: [
         {
           name: "Trang Chủ",
@@ -171,26 +159,24 @@ export default {
       page: 1
     };
   },
-  mounted() {
-    window.axios.get("/book/{slug}");
-  },
   methods: {
     addCartDetail() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert(
-            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
-          );
+      let cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === this.bookDetail.id) {
+          cart[index].quantity = cart[index].quantity + 1;
+          this.snackbar = true;
           return;
         }
       }
+      //
       let itemBook = {
         book: this.bookDetail,
         quantity: 1
       };
-      let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbar = true;
     },
     addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
@@ -224,8 +210,9 @@ export default {
       )
       .then(response => {
         this.bookDetail = response.data.data.book;
-        this.book = response.data.data.samebooks;
-        console.log("đây là tác phẩm", response.data.data.samebooks);
+        this.books = response.data.data.samebooks;
+        this.comments = response.data.data.book.comments;
+        console.log("đây là tác phẩm cảu detail", response.data);
       })
       .catch(function(error) {
         console.log(error);
