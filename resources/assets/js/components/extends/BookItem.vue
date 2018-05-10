@@ -4,7 +4,7 @@
       <v-layout row wrap offset-sm3 class="hover-card">
         <v-flex xs12 sm5 md5 class=" py-0 px-0">
           <router-link :to="`/detail?type=`+book.slug" class="link-book">
-            <v-card-media :src="'/storage/images/'+book.image" height="180px"></v-card-media>
+            <v-card-media :src="'/storage/images/'+book.image" height="205px"></v-card-media>
           </router-link>
         </v-flex>
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">

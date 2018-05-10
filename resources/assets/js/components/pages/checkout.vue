@@ -41,24 +41,21 @@
                       </td>
                     </template>
                   </v-data-table>
-                  <div class="mt-3 text-xs-right ">
-                    <v-btn dark color="green accent-4" @click.native.stop="dialogDel = true">
+                  <div class="my-3 text-xs-right ">
+                    <v-btn class="my-4" dark color="green accent-4" @click.native.stop="dialogDel = true">
                       Đặt hàng
                     </v-btn>
                     <v-layout row justify-center>
-
                       <v-dialog v-model="dialogDel" max-width="290">
                         <v-card>
                           <v-toolbar color="green accent-4" dark>
                             <v-toolbar-title>Thông báo</v-toolbar-title>
                           </v-toolbar>
                           <v-card-text>Bạn đã đặt hàng thành công<br>
-
                           </v-card-text>
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="green accent-4" flat="flat" @click.native="dialogDel = false" to="/">OK</v-btn>
-
                           </v-card-actions>
                         </v-card>
                       </v-dialog>

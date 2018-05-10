@@ -35862,9 +35862,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36172,11 +36169,12 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "mt-3 text-xs-right " },
+                                    { staticClass: "my-3 text-xs-right " },
                                     [
                                       _c(
                                         "v-btn",
                                         {
+                                          staticClass: "my-4",
                                           attrs: {
                                             dark: "",
                                             color: "green accent-4"
@@ -37631,15 +37629,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ sortable: false }, {
+      headers: [{ sortable: false }, { sortable: false }, {
         text: "Tên sách",
         align: "left",
         sortable: false
-      }, { text: "Giá tiền", sortable: false }, { text: "Chọn mua", sortable: false }, { sortable: false }],
+      }, { text: "Giá tiền", sortable: false }, { text: "Chọn mua", sortable: false }],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37739,122 +37738,6 @@ var render = function() {
                 fn: function(props) {
                   return [
                     _c("tr", { staticClass: "py-1" }, [
-                      _c("td", { staticClass: "py-2" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/images/" + props.item.book.image,
-                            alt: "",
-                            width: "80px",
-                            height: "120px"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass:
-                                "subheading text-xs-left red--text text--darken-4",
-                              staticStyle: { "text-decoration": "none" },
-                              attrs: { to: "/detail" }
-                            },
-                            [_vm._v(_vm._s(props.item.book.name))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        props.item.book.promotion_price
-                          ? _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title "
-                                },
-                                [
-                                  _vm._v(
-                                    " " +
-                                      _vm._s(
-                                        _vm.formatPrice(
-                                          props.item.book.promotion_price
-                                        )
-                                      )
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "grey--text text--darken-1 title ml-3"
-                                },
-                                [
-                                  _c("del", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      )
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title ml-3"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) +
-                                      "\n              "
-                                  )
-                                ]
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "mx-0 my-3",
-                              attrs: { color: "green accent-4 white--text" },
-                              on: {
-                                click: function($event) {
-                                  _vm.addCartPageFavorite(props.item)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "i",
-                                {
-                                  staticClass:
-                                    "material-icons add-shopping mr-2 white--text"
-                                },
-                                [_vm._v("add_shopping_cart")]
-                              ),
-                              _vm._v("Thêm\n            ")
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
                       _c(
                         "td",
                         { staticClass: "text-xs-center layout px-0 py-5" },
@@ -37974,6 +37857,123 @@ var render = function() {
                               )
                             ],
                             1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "py-2" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/images/" + props.item.book.image,
+                            alt: "",
+                            width: "80px",
+                            height: "120px"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass:
+                                "subheading text-xs-left red--text text--darken-4",
+                              staticStyle: { "text-decoration": "none" },
+                              attrs: { to: "/detail" }
+                            },
+                            [_vm._v(_vm._s(props.item.book.name))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", [
+                        props.item.book.promotion_price
+                          ? _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title "
+                                },
+                                [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          props.item.book.promotion_price
+                                        )
+                                      ) +
+                                      "đ"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "grey--text text--darken-1 title ml-3"
+                                },
+                                [
+                                  _c("del", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
+                                      ) + "đ"
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title ml-3"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
+                                      ) +
+                                      "đ\n              "
+                                  )
+                                ]
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-0 my-3",
+                              attrs: { color: "green accent-4 white--text" },
+                              on: {
+                                click: function($event) {
+                                  _vm.addCartPageFavorite(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "i",
+                                {
+                                  staticClass:
+                                    "material-icons add-shopping mr-2 white--text"
+                                },
+                                [_vm._v("add_shopping_cart")]
+                              ),
+                              _vm._v("Thêm\n            ")
+                            ]
                           )
                         ],
                         1
@@ -40553,6 +40553,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40756,334 +40759,342 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        {
-                          attrs: {
-                            bottom: "",
-                            "offset-y": "",
-                            "max-width": 350,
-                            "close-on-content-click": false
+                      [
+                        _c(
+                          "v-menu",
+                          {
+                            attrs: {
+                              bottom: "",
+                              "offset-y": "",
+                              "max-width": 350,
+                              "close-on-content-click": false
+                            },
+                            model: {
+                              value: _vm.login,
+                              callback: function($$v) {
+                                _vm.login = $$v
+                              },
+                              expression: "login"
+                            }
                           },
-                          model: {
-                            value: _vm.login,
-                            callback: function($$v) {
-                              _vm.login = $$v
-                            },
-                            expression: "login"
-                          }
-                        },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white",
-                              attrs: { slot: "activator", flat: "" },
-                              slot: "activator"
-                            },
-                            [_vm._v("Đăng nhập")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
-                            { attrs: { flat: "" } },
-                            [
-                              _c(
-                                "v-list",
-                                {
-                                  staticClass:
-                                    "green accent-4 white--text text-xs-center"
-                                },
-                                [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
-                              ),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v(" "),
-                              _c(
-                                "v-container",
-                                [
-                                  _c(
-                                    "v-form",
-                                    {
-                                      ref: "form",
-                                      attrs: { "lazy-validation": "" },
-                                      model: {
-                                        value: _vm.valid,
-                                        callback: function($$v) {
-                                          _vm.valid = $$v
-                                        },
-                                        expression: "valid"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.emailRules,
-                                              label: "E-mail",
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.emailLogin,
-                                              callback: function($$v) {
-                                                _vm.emailLogin = $$v
-                                              },
-                                              expression: "emailLogin"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              required: "",
-                                              name: "input-10-2",
-                                              label: "Mật khẩu",
-                                              "append-icon": _vm.e2
-                                                ? "visibility"
-                                                : "visibility_off",
-                                              "append-icon-cb": function() {
-                                                return (_vm.e2 = !_vm.e2)
-                                              },
-                                              type: _vm.e2 ? "password" : "text"
-                                            },
-                                            model: {
-                                              value: _vm.passLogin,
-                                              callback: function($$v) {
-                                                _vm.passLogin = $$v
-                                              },
-                                              expression: "passLogin"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        [
-                                          _c(
-                                            "v-btn",
-                                            {
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "white",
+                                attrs: { slot: "activator", flat: "" },
+                                slot: "activator"
+                              },
+                              [_vm._v("Đăng nhập")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-card",
+                              { attrs: { flat: "" } },
+                              [
+                                _c(
+                                  "v-list",
+                                  {
+                                    staticClass:
+                                      "green accent-4 white--text text-xs-center"
+                                  },
+                                  [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
+                                ),
+                                _vm._v(" "),
+                                _c("v-divider"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-container",
+                                  [
+                                    _c(
+                                      "v-form",
+                                      {
+                                        ref: "form",
+                                        attrs: { "lazy-validation": "" },
+                                        model: {
+                                          value: _vm.valid,
+                                          callback: function($$v) {
+                                            _vm.valid = $$v
+                                          },
+                                          expression: "valid"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { xs12: "" } },
+                                          [
+                                            _c("v-text-field", {
                                               attrs: {
-                                                flat: "",
-                                                to: "/forgotpassword"
+                                                rules: _vm.emailRules,
+                                                label: "E-mail",
+                                                required: ""
+                                              },
+                                              model: {
+                                                value: _vm.emailLogin,
+                                                callback: function($$v) {
+                                                  _vm.emailLogin = $$v
+                                                },
+                                                expression: "emailLogin"
                                               }
-                                            },
-                                            [_vm._v("Quên mật khẩu")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass: "text-xs-center",
-                                              attrs: { disabled: !_vm.valid },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.loginpage()
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { xs12: "" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: {
+                                                required: "",
+                                                name: "input-10-2",
+                                                label: "Mật khẩu",
+                                                "append-icon": _vm.e2
+                                                  ? "visibility"
+                                                  : "visibility_off",
+                                                "append-icon-cb": function() {
+                                                  return (_vm.e2 = !_vm.e2)
+                                                },
+                                                type: _vm.e2
+                                                  ? "password"
+                                                  : "text"
+                                              },
+                                              model: {
+                                                value: _vm.passLogin,
+                                                callback: function($$v) {
+                                                  _vm.passLogin = $$v
+                                                },
+                                                expression: "passLogin"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  flat: "",
+                                                  to: "/forgotpassword"
                                                 }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                      Đăng nhập\n                    "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        {
-                          attrs: {
-                            fluid: "",
-                            bottom: "",
-                            "offset-y": "",
-                            "max-width": 400,
-                            "close-on-content-click": false
+                                              },
+                                              [_vm._v("Quên mật khẩu")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                staticClass: "text-xs-center",
+                                                attrs: { disabled: !_vm.valid },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.loginpage()
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                        Đăng nhập\n                      "
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-menu",
+                          {
+                            attrs: {
+                              fluid: "",
+                              bottom: "",
+                              "offset-y": "",
+                              "max-width": 350,
+                              "close-on-content-click": false
+                            },
+                            model: {
+                              value: _vm.register,
+                              callback: function($$v) {
+                                _vm.register = $$v
+                              },
+                              expression: "register"
+                            }
                           },
-                          model: {
-                            value: _vm.register,
-                            callback: function($$v) {
-                              _vm.register = $$v
-                            },
-                            expression: "register"
-                          }
-                        },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white",
-                              attrs: { slot: "activator", flat: "" },
-                              slot: "activator"
-                            },
-                            [_vm._v("Đăng Ký")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
-                            { attrs: { flat: "" } },
-                            [
-                              _c(
-                                "v-list",
-                                {
-                                  staticClass:
-                                    "green accent-4 white--text text-xs-center"
-                                },
-                                [_c("span", [_vm._v("ĐĂNG KÝ")])]
-                              ),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v(" "),
-                              _c(
-                                "v-container",
-                                [
-                                  _c(
-                                    "v-form",
-                                    {
-                                      ref: "form",
-                                      attrs: { "lazy-validation": "" },
-                                      model: {
-                                        value: _vm.valid,
-                                        callback: function($$v) {
-                                          _vm.valid = $$v
-                                        },
-                                        expression: "valid"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.nameRules,
-                                              label: "Tên",
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.name,
-                                              callback: function($$v) {
-                                                _vm.name = $$v
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "white",
+                                attrs: { slot: "activator", flat: "" },
+                                slot: "activator"
+                              },
+                              [_vm._v("Đăng Ký")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-card",
+                              { attrs: { flat: "" } },
+                              [
+                                _c(
+                                  "v-list",
+                                  {
+                                    staticClass:
+                                      "green accent-4 white--text text-xs-center"
+                                  },
+                                  [_c("span", [_vm._v("ĐĂNG KÝ")])]
+                                ),
+                                _vm._v(" "),
+                                _c("v-divider"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-container",
+                                  [
+                                    _c(
+                                      "v-form",
+                                      {
+                                        ref: "form",
+                                        attrs: { "lazy-validation": "" },
+                                        model: {
+                                          value: _vm.valid,
+                                          callback: function($$v) {
+                                            _vm.valid = $$v
+                                          },
+                                          expression: "valid"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { xs12: "" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: {
+                                                rules: _vm.nameRules,
+                                                label: "Tên",
+                                                required: ""
                                               },
-                                              expression: "name"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.emailRules,
-                                              label: "E-mail",
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.emailRegister,
-                                              callback: function($$v) {
-                                                _vm.emailRegister = $$v
+                                              model: {
+                                                value: _vm.name,
+                                                callback: function($$v) {
+                                                  _vm.name = $$v
+                                                },
+                                                expression: "name"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { xs12: "" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: {
+                                                rules: _vm.emailRules,
+                                                label: "E-mail",
+                                                required: ""
                                               },
-                                              expression: "emailRegister"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              required: "",
-                                              label: "Mật khẩu",
-                                              rules: _vm.passRules,
-                                              "append-icon": _vm.e2
-                                                ? "visibility"
-                                                : "visibility_off",
-                                              "append-icon-cb": function() {
-                                                return (_vm.e2 = !_vm.e2)
+                                              model: {
+                                                value: _vm.emailRegister,
+                                                callback: function($$v) {
+                                                  _vm.emailRegister = $$v
+                                                },
+                                                expression: "emailRegister"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-flex",
+                                          { attrs: { xs12: "" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: {
+                                                required: "",
+                                                label: "Mật khẩu",
+                                                rules: _vm.passRules,
+                                                "append-icon": _vm.e2
+                                                  ? "visibility"
+                                                  : "visibility_off",
+                                                "append-icon-cb": function() {
+                                                  return (_vm.e2 = !_vm.e2)
+                                                },
+                                                type: _vm.e2
+                                                  ? "password"
+                                                  : "text"
                                               },
-                                              type: _vm.e2 ? "password" : "text"
-                                            },
-                                            model: {
-                                              value: _vm.passRegister,
-                                              callback: function($$v) {
-                                                _vm.passRegister = $$v
+                                              model: {
+                                                value: _vm.passRegister,
+                                                callback: function($$v) {
+                                                  _vm.passRegister = $$v
+                                                },
+                                                expression: "passRegister"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              { attrs: { flat: "" } },
+                                              [_vm._v("Đóng")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: { disabled: !_vm.valid },
+                                                on: { click: _vm.registerUser }
                                               },
-                                              expression: "passRegister"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        [
-                                          _c("v-btn", { attrs: { flat: "" } }, [
-                                            _vm._v("Đóng")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { disabled: !_vm.valid },
-                                              on: { click: _vm.registerUser }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                      Đăng ký\n                    "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                                              [
+                                                _vm._v(
+                                                  "\n                        Đăng ký\n                      "
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
                     ],
-                    1
+                    2
                   )
                 ],
                 1
@@ -42054,9 +42065,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
       commit("SET_TOKEN", val);
       localStorage.token = val;
-      window.axios.defaults.headers = {
-        "Authorization": 'Bearer ' + val
-      };
+      // window.axios.defaults.headers = {
+      //   "Authorization": 'Bearer ' + val
+      // }
+      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val;
     },
     setUser: function setUser(_ref5, val) {
       var commit = _ref5.commit;
@@ -43271,7 +43283,7 @@ var render = function() {
                       _c("v-card-media", {
                         attrs: {
                           src: "/storage/images/" + _vm.book.image,
-                          height: "180px"
+                          height: "205px"
                         }
                       })
                     ],
