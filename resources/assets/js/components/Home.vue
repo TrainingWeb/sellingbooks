@@ -103,7 +103,7 @@ export default {
     loadFeaturedBooks() {
       window.axios.get("/index").then(res => {
         this.featuredbooks = res.data.data.featuredbooks;
-        console.log(res.data);
+        // console.log(res.data);
         this.discountbooks = res.data.data.discountbooks;
         this.newbooks = res.data.data.newbooks;
       });

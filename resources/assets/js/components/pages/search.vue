@@ -52,19 +52,14 @@ export default {
     page: 1
   }),
   mounted() {
-    this.namepage = `Kết quả tìm kiếm: ${this.$route.query.keyword}`;
-    this.breadcrumbs[1].name = `Kết quả tìm kiếm: ${this.$route.query.keyword}`;
+    this.namepage = `Kết quả tìm kiếm: ${this.$route.query.name}`;
+    this.breadcrumbs[1].name = `Kết quả tìm kiếm: ${this.$route.query.name}`;
 
     window.axios
-      .post(
-        "/search/" +
-          +this.$route.query.keyword +
-          "?keyword=" +
-          this.$route.query.keyword
-      )
+      .post("/search/?name=" + this.$route.query.name)
       .then(response => {
-        this.search = response.data.data.books.data;
-        console.log("Đây là search", response.data.data.books.data);
+        this.search = response.data.data;
+        console.log("Đây là search", response.data.data);
       })
       .catch(function(error) {
         console.log(error);

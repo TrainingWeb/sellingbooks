@@ -29,11 +29,11 @@
                       <v-text-field v-model="emailLogin" :rules="emailRules" label="E-mail" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                      <v-text-field v-model="passLogin" required name="input-10-2" label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                      <v-text-field v-model="passLogin" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                     </v-flex>
                     <div>
                       <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
-                      <v-btn class="text-xs-center" :disabled="!valid" @click="login = false">
+                      <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage">
                         Đăng nhập
                       </v-btn>
                     </div>
@@ -327,15 +327,17 @@ export default {
     password: "Password",
     dataApp: {},
     listauthor: {},
-    search: null
+    search: null,
+    emailLogin: "",
+    passLogin: "",
+    token_login: {}
   }),
   props: {
     source: String
   },
   methods: {
     textSearch() {
-      console.log("Đã vào rồi ");
-      window.location = `#/search?keyword=${this.search}`;
+      window.location = `#/search?name=${this.search}`;
       this.search = "";
     },
     submit() {
@@ -345,6 +347,19 @@ export default {
           email: this.email
         });
       }
+    },
+    loginpage() {
+      window.axios
+        .post("/login", {
+          email: this.emailLogin,
+          pass: this.passLogin
+        })
+        .then(response => {
+          this.token_login = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   computed: {
@@ -359,12 +374,10 @@ export default {
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
-        console.log(response.data.data);
       })
       .catch(function(error) {
         console.log(error);
       });
-    window.axios.post("/login +");
   }
 };
 </script>

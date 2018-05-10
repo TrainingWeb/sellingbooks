@@ -100,7 +100,6 @@ export default {
           }
         }
       }
-      console.log("Đỏ");
 
       let itemBook = {
         book: this.book,

@@ -23,9 +23,9 @@
                               <span>Tác giả: {{bookDetail.author.name}}</span>
                             </div>
                             <div v-if="bookDetail.promotion_price">
-                              <span class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</span>
+                              <span class="green--text text--accent-4 title mt-3"> {{formatPrice(bookDetail.price)}} </span>
                               <span class="grey--text text--darken-1 title mt-3 ml-3">
-                                <del>{{bookDetail.promotion_price}}</del>
+                                <del>{{formatPrice(bookDetail.promotion_price)}}</del>
                               </span>
                             </div>
                             <div v-else>
@@ -61,10 +61,9 @@
                             <v-layout row wrap class="mt-3">
                               <div class="text-xs-center">
                                 <span class="green--text ml-2">Tags:</span>
-                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
-                                  <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Giáo Khoa </router-link>
+                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0" v-for="(tag,index) in tags" :key="`keytag-$`+index">
+                                  <router-link :to="`/tags?name=`+tag.slug" class="grey--text text--darken-2" style="text-decoration:none">{{tag.name}} </router-link>
                                 </v-chip>
-
                               </div>
                             </v-layout>
                           </div>
@@ -137,7 +136,7 @@ export default {
     return {
       commenttext: "",
       bookDetail: {},
-
+      tags: {},
       comments: {},
       books: {},
       snackbar: false,
@@ -193,14 +192,9 @@ export default {
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
     },
-    saveComment() {
-      this.comments.push({
-        avatar: "./img/author.jpg",
-        name: "Tô Thị Tuyết Nga",
-        subtitle: this.commenttext,
-        time: "03:15 PM"
-      });
-      this.commenttext = "";
+    formatPrice(price) {
+      let val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   mounted() {
@@ -211,6 +205,7 @@ export default {
       .then(response => {
         this.bookDetail = response.data.data.book;
         this.books = response.data.data.samebooks;
+        this.tags = response.data.data.book.tags;
         this.comments = response.data.data.book.comments;
         console.log("đây là tác phẩm cảu detail", response.data);
       })

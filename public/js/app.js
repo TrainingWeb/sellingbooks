@@ -33816,7 +33816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       window.axios.get("/index").then(function (res) {
         _this.featuredbooks = res.data.data.featuredbooks;
-        console.log(res.data);
+        // console.log(res.data);
         _this.discountbooks = res.data.data.discountbooks;
         _this.newbooks = res.data.data.newbooks;
       });
@@ -34353,14 +34353,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       commenttext: "",
       bookDetail: {},
-
+      tags: {},
       comments: {},
       books: {},
       snackbar: false,
@@ -34414,14 +34413,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
     },
-    saveComment: function saveComment() {
-      this.comments.push({
-        avatar: "./img/author.jpg",
-        name: "Tô Thị Tuyết Nga",
-        subtitle: this.commenttext,
-        time: "03:15 PM"
-      });
-      this.commenttext = "";
+    formatPrice: function formatPrice(price) {
+      var val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   mounted: function mounted() {
@@ -34430,6 +34424,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
       _this.bookDetail = response.data.data.book;
       _this.books = response.data.data.samebooks;
+      _this.tags = response.data.data.book.tags;
       _this.comments = response.data.data.book.comments;
       console.log("đây là tác phẩm cảu detail", response.data);
     }).catch(function (error) {
@@ -34587,10 +34582,13 @@ var render = function() {
                                                                     _vm._v(
                                                                       " " +
                                                                         _vm._s(
-                                                                          _vm
-                                                                            .bookDetail
-                                                                            .price
-                                                                        )
+                                                                          _vm.formatPrice(
+                                                                            _vm
+                                                                              .bookDetail
+                                                                              .price
+                                                                          )
+                                                                        ) +
+                                                                        " "
                                                                     )
                                                                   ]
                                                                 ),
@@ -34605,9 +34603,11 @@ var render = function() {
                                                                     _c("del", [
                                                                       _vm._v(
                                                                         _vm._s(
-                                                                          _vm
-                                                                            .bookDetail
-                                                                            .promotion_price
+                                                                          _vm.formatPrice(
+                                                                            _vm
+                                                                              .bookDetail
+                                                                              .promotion_price
+                                                                          )
                                                                         )
                                                                       )
                                                                     ])
@@ -34843,44 +34843,59 @@ var render = function() {
                                                                     ]
                                                                   ),
                                                                   _vm._v(" "),
-                                                                  _c(
-                                                                    "v-chip",
-                                                                    {
-                                                                      staticClass:
-                                                                        "px-0",
-                                                                      attrs: {
-                                                                        color:
-                                                                          "grey--text text--darken-1",
-                                                                        "text-color":
-                                                                          "white"
-                                                                      }
-                                                                    },
-                                                                    [
-                                                                      _c(
-                                                                        "router-link",
+                                                                  _vm._l(
+                                                                    _vm.tags,
+                                                                    function(
+                                                                      tag,
+                                                                      index
+                                                                    ) {
+                                                                      return _c(
+                                                                        "v-chip",
                                                                         {
+                                                                          key:
+                                                                            "keytag-$" +
+                                                                            index,
                                                                           staticClass:
-                                                                            "grey--text text--darken-2",
-                                                                          staticStyle: {
-                                                                            "text-decoration":
-                                                                              "none"
-                                                                          },
+                                                                            "px-0",
                                                                           attrs: {
-                                                                            to:
-                                                                              "/tags"
+                                                                            color:
+                                                                              "grey--text text--darken-1",
+                                                                            "text-color":
+                                                                              "white"
                                                                           }
                                                                         },
                                                                         [
-                                                                          _vm._v(
-                                                                            "Sách Giáo Khoa "
+                                                                          _c(
+                                                                            "router-link",
+                                                                            {
+                                                                              staticClass:
+                                                                                "grey--text text--darken-2",
+                                                                              staticStyle: {
+                                                                                "text-decoration":
+                                                                                  "none"
+                                                                              },
+                                                                              attrs: {
+                                                                                to:
+                                                                                  "/tags?name=" +
+                                                                                  tag.slug
+                                                                              }
+                                                                            },
+                                                                            [
+                                                                              _vm._v(
+                                                                                _vm._s(
+                                                                                  tag.name
+                                                                                ) +
+                                                                                  " "
+                                                                              )
+                                                                            ]
                                                                           )
-                                                                        ]
+                                                                        ],
+                                                                        1
                                                                       )
-                                                                    ],
-                                                                    1
+                                                                    }
                                                                   )
                                                                 ],
-                                                                1
+                                                                2
                                                               )
                                                             ]
                                                           )
@@ -37362,12 +37377,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     var _this = this;
 
-    this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
-    this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.keyword;
+    this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
+    this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
 
-    window.axios.post("/search/" + +this.$route.query.keyword + "?keyword=" + this.$route.query.keyword).then(function (response) {
-      _this.search = response.data.data.books.data;
-      console.log("Đây là search", response.data.data.books.data);
+    window.axios.post("/search/?name=" + this.$route.query.name).then(function (response) {
+      _this.search = response.data.data;
+      console.log("Đây là search", response.data.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -38825,23 +38840,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
 
-      books: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }],
+      tags: {},
       namepage: "Tags",
 
       page: 1
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.axios.get("/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name).then(function (response) {
+      _this.tags = response.data.books;
+      console.log("đây là tác phẩm của tags", response.data.books);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -38908,7 +38921,7 @@ var render = function() {
               _c(
                 "v-layout",
                 { attrs: { row: "", wrap: "" } },
-                _vm._l(_vm.books, function(item, index) {
+                _vm._l(_vm.tags, function(item, index) {
                   return _c(
                     "v-flex",
                     {
@@ -40617,15 +40630,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //    popover
       e2: false,
       e3: false
-    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _ref;
+    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "token_login", {}), _ref;
   },
   props: {
     source: String
   },
   methods: {
     textSearch: function textSearch() {
-      console.log("Đã vào rồi ");
-      window.location = "#/search?keyword=" + this.search;
+      window.location = "#/search?name=" + this.search;
       this.search = "";
     },
     submit: function submit() {
@@ -40635,6 +40647,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           email: this.email
         });
       }
+    },
+    loginpage: function loginpage() {
+      var _this = this;
+
+      window.axios.post("/login", {
+        email: this.emailLogin,
+        pass: this.passLogin
+      }).then(function (response) {
+        _this.token_login = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -40645,15 +40669,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     window.axios.get("/index").then(function (response) {
-      _this.dataApp = response.data.data;
-      console.log(response.data.data);
+      _this2.dataApp = response.data.data;
     }).catch(function (error) {
       console.log(error);
     });
-    window.axios.post("/login +");
   }
 });
 
@@ -40831,7 +40853,6 @@ var render = function() {
                                               required: "",
                                               name: "input-10-2",
                                               label: "Mật khẩu",
-                                              rules: _vm.passRules,
                                               "append-icon": _vm.e2
                                                 ? "visibility"
                                                 : "visibility_off",
@@ -40871,11 +40892,7 @@ var render = function() {
                                             {
                                               staticClass: "text-xs-center",
                                               attrs: { disabled: !_vm.valid },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.login = false
-                                                }
-                                              }
+                                              on: { click: _vm.loginpage }
                                             },
                                             [
                                               _vm._v(
@@ -43178,7 +43195,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         }
       }
-      console.log("Đỏ");
 
       var itemBook = {
         book: this.book,
@@ -43694,7 +43710,7 @@ if (false) {
 window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 
