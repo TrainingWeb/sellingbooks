@@ -46,7 +46,7 @@ export default {
       { text: "Lọc Theo Giá tiền" },
       { text: "Lọc theo giá tiền giảm giá" }
     ],
-    books: [],
+    books: {},
     namepage: "Danh sách sản phẩm",
     // page: 1,
     panigation: {
@@ -69,6 +69,7 @@ export default {
       .get("/books/type/" + type + "?page=" + this.$route.query.page || 1)
       .then(res => {
         this.books = res.data.data;
+        console.log("mang chị thuy", res.data.data);
       });
   }
 };
