@@ -15,9 +15,6 @@
                 <span>{{book.name}} </span>
               </v-tooltip>
             </router-link>
-            <!-- <router-link :to="`/detail?type=`+book.slug" class="link-book">
-              <h3>{{book.name}}</h3>
-            </router-link> -->
             <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>
             <v-card-actions v-if="book.promotion_price">
               <div class="green--text text--accent-4 title"> {{formatPrice(book.promotion_price)}}

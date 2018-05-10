@@ -64,7 +64,6 @@
         <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in newbooks" :key="`Book-${index}`">
           <book-item :book=item></book-item>
         </v-flex>
-
         <v-flex xs12 class="pt-2 mr-1">
           <router-link to="/list-products?type=newbooks">
             <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
@@ -73,9 +72,7 @@
       </v-layout>
     </v-container>
   </div>
-
 </template>
-
 <script>
 export default {
   data() {
@@ -83,7 +80,6 @@ export default {
       featuredbooks: {},
       discountbooks: {},
       newbooks: {},
-
       sliders: [
         {
           src:

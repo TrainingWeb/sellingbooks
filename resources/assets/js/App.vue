@@ -338,7 +338,6 @@ export default {
       window.location = `#/search?keyword=${this.search}`;
       this.search = "";
     },
-
     submit() {
       if (this.$refs.form.validate()) {
         axios.post("/api/submit", {
@@ -365,6 +364,7 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+    window.axios.post("/login +");
   }
 };
 </script>
