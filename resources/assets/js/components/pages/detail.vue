@@ -12,50 +12,35 @@
                 <v-flex xs12>
                   <v-card color="cyan darken-2" class="white--text">
                     <v-container fluid grid-list-lg>
-                      <v-layout row v-if="bookDetail.author">
+                      <v-layout row>
                         <v-flex xs4>
-                          <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px"></v-card-media>
+                          <v-card-media :src="bookDetail.img" height="450px" contain></v-card-media>
                         </v-flex>
                         <v-flex xs8>
                           <div>
                             <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
                             <div class="grey--text accent-4 body-2">
-                              <span>Tác giả: {{bookDetail.author.name}}</span>
-                            </div>
-                            <div v-if="bookDetail.promotion_price">
-                              <span class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</span>
+                              <span>Tác giả: </span>{{bookDetail.author}}</div>
+                            <v-layout row wrap class="mx-0">
+                              <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
                               <span class="grey--text text--darken-1 title mt-3 ml-3">
-                                <del>{{bookDetail.promotion_price}}</del>
+                                <del>{{bookDetail.sale}}</del>
                               </span>
-                            </div>
-                            <div v-else>
-                              <span class="green--text text--accent-4 title mt-3">
-                                {{bookDetail.price}}
-                              </span>
-                            </div>
-
+                            </v-layout>
                             <v-divider class="my-3"></v-divider>
                             <div>
-                              <span class=" grey--text text--accent-4body-1">{{bookDetail.description}}</span>
+                              <span class=" grey--text text--accent-4body-1">{{bookDetail.detail}}</span>
                               <a>
                                 <span class="green--text text--accent-4">Xem thêm</span>
                               </a>
                             </div>
                             <v-divider class="my-3"></v-divider>
                             <div>
-                              <v-btn class="mx-0" color="green accent-4" dark @click="addCartDetail">
-                                <v-icon class="mr-2">add_shopping_cart</v-icon>
-                                Thêm
+                              <v-btn class="mx-0" color="green accent-4 white--text" @click="addCartDetail">
+                                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
                               </v-btn>
-                              <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
-                                Thêm vào giỏ hàng thành công
-                                <v-btn flat icon color="white" @click.native="snackbar = false">
-                                  <v-icon>clear</v-icon>
-                                </v-btn>
-                              </v-snackbar>
-                              <v-btn color="green accent-4" dark @click="addFavoriteDetail">
-                                <v-icon class="mr-2">favorite</v-icon>
-                                Yêu thích
+                              <v-btn color="green accent-4" @click="addFavoriteDetail">
+                                <i class="material-icons favorite white--text">favorite</i>
                               </v-btn>
                             </div>
                             <v-layout row wrap class="mt-3">
@@ -64,7 +49,9 @@
                                 <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
                                   <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Giáo Khoa </router-link>
                                 </v-chip>
-
+                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
+                                  <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Văn Học </router-link>
+                                </v-chip>
                               </div>
                             </v-layout>
                           </div>
@@ -86,15 +73,13 @@
             </v-tab>
             <v-tabs-items>
               <v-tab-item id="tab-1">
-                <v-card-text class="roboto">{{ bookDetail.description }}</v-card-text>
+                <v-card-text class="roboto">{{ bookDetail.textDetail }}</v-card-text>
               </v-tab-item>
               <v-tab-item id="tab-2">
                 <v-card>
                   <v-list three-line>
-
                     <template>
-                      <h3>NHẬN XÉT ({{comments.length}})</h3>
-                      <v-list-tile v-for="(item, index) in comments" avatar :key="`keycm-$`+index">
+                      <v-list-tile v-for="item in comments" avatar :key="item.title">
                         <v-list-tile-avatar>
                           <img :src="item.avatar">
                         </v-list-tile-avatar>
@@ -113,6 +98,11 @@
                         <v-btn color="green accent-4 white--text" @click="saveComment">Gửi</v-btn>
                       </div>
                     </v-layout>
+                    <template>
+                      <div class="text-xs-center mt-5">
+                        <v-pagination :length="3" v-model="page"></v-pagination>
+                      </div>
+                    </template>
                   </v-list>
                 </v-card>
               </v-tab-item>
@@ -121,8 +111,8 @@
           <v-container grid-list-xs class="my-5">
             <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
             <v-layout row wrap>
-              <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
-                <book-item :book="item"></book-item>
+              <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+                <book-item :book=item></book-item>
               </v-flex>
             </v-layout>
           </v-container>
@@ -136,12 +126,73 @@ export default {
   data() {
     return {
       commenttext: "",
-      bookDetail: {},
+      bookDetail: {
+        img:
+          "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+        name: "Cô gái mở đường",
+        price: 12000,
+        detail:
+          "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
+        sale: 1500,
+        author: "Nguyễn Du",
+        textDetail:
+          "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ."
+      },
 
-      comments: {},
-      books: {},
-      snackbar: false,
-      timeout: 3000,
+      comments: [
+        {
+          avatar: "./img/author.jpg",
+          name: "Võ Đăng Ánh",
+          subtitle:
+            "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
+          time: "02:56 PM"
+        },
+        {
+          avatar: "./img/author.jpg",
+          name: "Tô Thị Tuyết Nga",
+          subtitle:
+            "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
+          time: "03:15 PM"
+        },
+        {
+          avatar: "./img/user.jpg",
+          name: "Nguyễn Thị Thu Thủy",
+          subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
+          time: "08:32 PM"
+        }
+
+        // { divider: true, inset: true }
+      ],
+      book: [
+        {
+          img:
+            "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
+          name: "Cô gái mở đường",
+          price: "120.000",
+          sale: "",
+          author: "Nguyễn Du"
+        },
+        {
+          img:
+            "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
+          name: "Dế mèn phiêu lưu kí",
+          price: "120.000",
+          sale: "",
+          author: "Nguyễn Du"
+        },
+        {
+          img:
+            "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
+          name: "Truyện kiều",
+          price: "120.000",
+          sale: "",
+          author: "Nguyễn Du"
+        }
+      ],
+      // commenttext = '',
+      // bookDetail = {},
+      // comments = [],
+      // book = [],
       breadcrumbs: [
         {
           name: "Trang Chủ",
@@ -159,24 +210,26 @@ export default {
       page: 1
     };
   },
+  mounted() {
+    window.axios.get("/book/{slug}");
+  },
   methods: {
     addCartDetail() {
-      let cart = this.$store.state.cart;
-      for (var index in cart) {
-        if (cart[index].book.id === this.bookDetail.id) {
-          cart[index].quantity = cart[index].quantity + 1;
-          this.snackbar = true;
+      for (var index in this.$store.state.cart) {
+        if (this.$store.state.cart[index].book.id === this.book.id) {
+          alert(
+            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+          );
           return;
         }
       }
-      //
       let itemBook = {
         book: this.bookDetail,
         quantity: 1
       };
+      let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
-      this.snackbar = true;
     },
     addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
@@ -202,21 +255,6 @@ export default {
       });
       this.commenttext = "";
     }
-  },
-  mounted() {
-    window.axios
-      .get(
-        "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
-      )
-      .then(response => {
-        this.bookDetail = response.data.data.book;
-        this.books = response.data.data.samebooks;
-        this.comments = response.data.data.book.comments;
-        console.log("đây là tác phẩm cảu detail", response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 };
 </script>
