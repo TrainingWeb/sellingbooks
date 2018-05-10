@@ -162,8 +162,9 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
+        $comments = Comment::where('id_book', $book->id)->with('user')->get();
         $samebooks = Book::where('id_category', $book->id_category)->whereNotIn('id', [$book->id])->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
-        return $this->sendData(['book' => $book, 'samebooks' => $samebooks]);
+        return $this->sendData(['book' => $book,'comments'=>$comments, 'samebooks' => $samebooks]);
     }
 
     public function getAuthors()

@@ -56,8 +56,8 @@ return [
      */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'anhvdpd01720@fpt.edu.vn'),
-        'name' => env('MAIL_FROM_NAME', 'Vo Dang Anh'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@noreply.com'),
+        'name' => env('MAIL_FROM_NAME', 'Noreply'),
     ],
 
     /*
@@ -84,7 +84,7 @@ return [
     |
      */
 
-    'username' => env('MAIL_USERNAME', 'ma.hideonbush@gmail.com'),
+    'username' => env('MAIL_USERNAME', 'noreply@noreply.com'),
 
     'password' => env('MAIL_PASSWORD', 'iamdeveloper1@'),
 
