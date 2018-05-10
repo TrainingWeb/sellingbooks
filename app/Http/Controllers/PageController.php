@@ -6,6 +6,7 @@ use App\Author;
 use App\Book;
 use App\Category;
 use App\Comment;
+use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\Mail\ResetPassword;
 use App\Order;
@@ -14,26 +15,51 @@ use App\Storage;
 use App\Tag;
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use Validator;
-use Exception; 
-use App\Group;
 
 class PageController extends APIBaseController
 {
 
     public function login(Request $request)
     {
-        $email = $request->email;
-        $password = $request->password;
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $api_token = Auth::user()->createToken('test')->accessToken;
-            return response()->json(['api_token' => $api_token]);
+            $user = Auth::user();
+            return response()->json(['api_token' => $api_token, 'user' => $user]);
         } else {
             return $this->sendMessage('Email or password is not correct !');
         }
+    }
+
+    public function createUser(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Please enter name',
+            'email.required' => 'Please enter email.',
+            'email.unique' => 'Email alreay exits, please enter another email !',
+            'password.required' => 'Password can not null.',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
+        }
+        $user = new User;
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->role = 0;
+        $user->password = bcrypt($input['password']);
+        $user->save();
+        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $api_token = Auth::user()->createToken('test')->accessToken;
+        return response()->json(['api_token' => $api_token, 'user' => $user, 'role' => $user->role, 'message' => 'User created successfully !']);
     }
 
     public function index(Request $request)
@@ -61,10 +87,11 @@ class PageController extends APIBaseController
     public function tagInfo($slug)
     {
         $tag = Tag::with('books')->where('slug', $slug)->first();
-        if (is_null($tag)) {
+        if (!$tag) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        return response()->json($tag);
+        $books = $tag->books()->with('author')->with('tags')->get();
+        return response()->json($books);
     }
 
     public function search()
@@ -92,7 +119,7 @@ class PageController extends APIBaseController
         }
         $done = $items01 + $items02 + $items03;
         $books = Book::whereIn('id', $done)->with('author')->paginate(18);
-        if(count($books)< 1){
+        if (count($books) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
         return response()->json($books);
@@ -132,10 +159,10 @@ class PageController extends APIBaseController
     public function getBookInfo($slug)
     {
         $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->with('comments')->where('slug', $slug)->first();
-        if (is_null($book)) {
+        if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $samebooks = Book::where('id_category', $book->id_category)->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
+        $samebooks = Book::where('id_category', $book->id_category)->whereNotIn('id', [$book->id])->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return $this->sendData(['book' => $book, 'samebooks' => $samebooks]);
     }
 
@@ -170,7 +197,7 @@ class PageController extends APIBaseController
     public function getInfoCategory($slug)
     {
         $category = Category::where('slug', $slug)->first();
-        if (is_null($category)) {
+        if (!$category) {
             return $this->sendErrorNotFound('Category not found !');
         }
         $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('author')->with('tags')->paginate(9);
@@ -205,6 +232,21 @@ class PageController extends APIBaseController
         }
     }
 
+    public function editComment(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+        if (!$comment) {
+            return $this->sendErrorNotFound('Comment not found !');
+        }
+        if ($request->user()->id == $comment->id_user) {
+            $comment->content = $request->content;
+            $comment->save();
+            return $this->sendMessage('Edited successfully !');
+        } else {
+            return $this->sendErrorPermission('You have no permission to do this !');
+        }
+    }
+
     public function showOrderUser(Request $request)
     {
         $user = User::with('orders')->find($request->user()->id);
@@ -232,21 +274,6 @@ class PageController extends APIBaseController
             return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
         } elseif ($order->status == 'sold') {
             return $this->sendMessage('Your order has been done ! Let us keep that.');
-        }
-    }
-
-    public function editComment(Request $request, $id)
-    {
-        $comment = Comment::find($id);
-        if (!$comment) {
-            return $this->sendErrorNotFound('Comment not found !');
-        }
-        if ($request->user()->id == $comment->id_user) {
-            $comment->content = $request->content;
-            $comment->save();
-            return $this->sendMessage('Edited successfully !');
-        } else {
-            return $this->sendErrorPermission('You have no permission to do this !');
         }
     }
 
@@ -284,11 +311,11 @@ class PageController extends APIBaseController
     public function getFavoriteBook(Request $request)
     {
         $user = User::find($request->user()->id);
-        $books = $user->books()->with('tags')->paginate(18);
+        $books = $user->books()->with('tags')->with('author')->paginate(18);
         if (count($books) < 1) {
             return $this->sendResponse($user, 'Found 0 book');
         }
-        return $this->sendData(['user' => $user, 'books' => $books]);
+        return $this->sendData($books);
     }
 
     public function checkInfo(Request $request)
@@ -359,34 +386,7 @@ class PageController extends APIBaseController
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->save();
-        return $this->sendMessage('Updated ' . $user->name . ' successfully !');
-    }
-
-    public function createUser(Request $request)
-    {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-        ], [
-            'name.required' => 'Please enter name',
-            'email.required' => 'Please enter email.',
-            'email.unique' => 'Email alreay exits, please enter another email !',
-            'password.required' => 'Password can not null.',
-        ]);
-        if ($validator->fails()) {
-            return $this->sendErrorValidation('Validation Error.', $validator->errors());
-        }
-        $user = new User;
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->role = 0;
-        $user->password = bcrypt($input['password']);
-        $user->save();
-        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        $api_token = Auth::user()->createToken('test1')->accessToken;
-        return response()->json(['api_token' => $api_token, 'role' => 0, 'message' => 'User created successfully !']);
+        return $this->sendMessage('Successfully !');
     }
 
     public function checkout(Request $request)
@@ -443,11 +443,14 @@ class PageController extends APIBaseController
     // public function resetPassword(Request $request)
     // {
     //     $passwordreset = PasswordReset::where('token', $request->token);
-    //     if($passwordreset->email !== $request->email){
+    //     if ($passwordreset->email !== $request->email) {
     //         return $this->sendMessage('This token is not correct !');
+    //     } else {
+    //         $passwordreset->token = bcrypt(str_radom(60));
+    //         $passwordreset->save();
     //     }
     //     $user = User::where('email', $request->email)->first();
-    //     if($request->password !== $request->confirm_password){
+    //     if ($request->password !== $request->confirm_password) {
     //         return $this->sendMessage('Password confirm must in the same !');
     //     }
     //     $user->password = $request->password;

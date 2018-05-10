@@ -33,7 +33,7 @@
                     </v-flex>
                     <div>
                       <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
-                      <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage">
+                      <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage()">
                         Đăng nhập
                       </v-btn>
                     </div>
@@ -63,7 +63,7 @@
                     </v-flex>
                     <div>
                       <v-btn flat>Đóng</v-btn>
-                      <v-btn :disabled="!valid" @click="register = false">
+                      <v-btn :disabled="!valid" @click="registerUser">
                         Đăng ký
                       </v-btn>
                     </div>
@@ -349,17 +349,39 @@ export default {
       }
     },
     loginpage() {
+      console.log("vao day roi");
       window.axios
         .post("/login", {
           email: this.emailLogin,
-          pass: this.passLogin
+          password: this.passLogin
         })
         .then(response => {
-          this.token_login = response.data;
+          let data = response.data;
+          console.log(data);
+          this.$store.dispatch("setToken", data.api_token),
+            this.$store.dispatch("setUser", data.user);
         })
         .catch(function(error) {
           console.log(error);
         });
+      this.login = false;
+    },
+    registerUser() {
+      window.axios
+        .post("/register", {
+          name: this.name,
+          email: this.emailRegister,
+          password: this.passRegister
+        })
+        .then(response => {
+          let data = response.data;
+          this.$store.dispatch("setToken", data.api_token),
+            this.$store.dispatch("setUser", data.user);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.register = false;
     }
   },
   computed: {

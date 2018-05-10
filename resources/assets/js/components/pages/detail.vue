@@ -12,9 +12,9 @@
                 <v-flex xs12>
                   <v-card color="cyan darken-2" class="white--text">
                     <v-container fluid grid-list-lg>
-                      <v-layout row v-if="bookDetail.author">
+                      <v-layout row>
                         <v-flex xs4>
-                          <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px"></v-card-media>
+                          <v-card-media :src="bookDetail.img" height="450px" contain></v-card-media>
                         </v-flex>
                         <v-flex xs8>
                           <div>
@@ -31,31 +31,21 @@
                             <div v-else>
                               <span class="green--text text--accent-4 title mt-3">
                                 {{bookDetail.price}}
-                              </span>
-                            </div>
-
+                                <span>Tác giả: </span>{{bookDetail.author}}</div>
                             <v-divider class="my-3"></v-divider>
                             <div>
-                              <span class=" grey--text text--accent-4body-1">{{bookDetail.description}}</span>
+                              <span class=" grey--text text--accent-4body-1">{{bookDetail.detail}}</span>
                               <a>
                                 <span class="green--text text--accent-4">Xem thêm</span>
                               </a>
                             </div>
                             <v-divider class="my-3"></v-divider>
                             <div>
-                              <v-btn class="mx-0" color="green accent-4" dark @click="addCartDetail">
-                                <v-icon class="mr-2">add_shopping_cart</v-icon>
-                                Thêm
+                              <v-btn class="mx-0" color="green accent-4 white--text" @click="addCartDetail">
+                                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
                               </v-btn>
-                              <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
-                                Thêm vào giỏ hàng thành công
-                                <v-btn flat icon color="white" @click.native="snackbar = false">
-                                  <v-icon>clear</v-icon>
-                                </v-btn>
-                              </v-snackbar>
-                              <v-btn color="green accent-4" dark @click="addFavoriteDetail">
-                                <v-icon class="mr-2">favorite</v-icon>
-                                Yêu thích
+                              <v-btn color="green accent-4" @click="addFavoriteDetail">
+                                <i class="material-icons favorite white--text">favorite</i>
                               </v-btn>
                             </div>
                             <v-layout row wrap class="mt-3">
@@ -63,6 +53,9 @@
                                 <span class="green--text ml-2">Tags:</span>
                                 <v-chip color="grey--text text--darken-1" text-color="white" class="px-0" v-for="(tag,index) in tags" :key="`keytag-$`+index">
                                   <router-link :to="`/tags?name=`+tag.slug" class="grey--text text--darken-2" style="text-decoration:none">{{tag.name}} </router-link>
+                                </v-chip>
+                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
+                                  <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Văn Học </router-link>
                                 </v-chip>
                               </div>
                             </v-layout>
@@ -85,15 +78,13 @@
             </v-tab>
             <v-tabs-items>
               <v-tab-item id="tab-1">
-                <v-card-text class="roboto">{{ bookDetail.description }}</v-card-text>
+                <v-card-text class="roboto">{{ bookDetail.textDetail }}</v-card-text>
               </v-tab-item>
               <v-tab-item id="tab-2">
                 <v-card>
                   <v-list three-line>
-
                     <template>
-                      <h3>NHẬN XÉT ({{comments.length}})</h3>
-                      <v-list-tile v-for="(item, index) in comments" avatar :key="`keycm-$`+index">
+                      <v-list-tile v-for="item in comments" avatar :key="item.title">
                         <v-list-tile-avatar>
                           <img :src="item.avatar">
                         </v-list-tile-avatar>
@@ -112,6 +103,11 @@
                         <v-btn color="green accent-4 white--text" @click="saveComment">Gửi</v-btn>
                       </div>
                     </v-layout>
+                    <template>
+                      <div class="text-xs-center mt-5">
+                        <v-pagination :length="3" v-model="page"></v-pagination>
+                      </div>
+                    </template>
                   </v-list>
                 </v-card>
               </v-tab-item>
@@ -120,8 +116,8 @@
           <v-container grid-list-xs class="my-5">
             <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
             <v-layout row wrap>
-              <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
-                <book-item :book="item"></book-item>
+              <v-flex xs12 md6 lg4 v-for="(item,index) in book" :key="`Book-${index}`">
+                <book-item :book=item></book-item>
               </v-flex>
             </v-layout>
           </v-container>
@@ -158,24 +154,26 @@ export default {
       page: 1
     };
   },
+  mounted() {
+    window.axios.get("/book/{slug}");
+  },
   methods: {
     addCartDetail() {
-      let cart = this.$store.state.cart;
-      for (var index in cart) {
-        if (cart[index].book.id === this.bookDetail.id) {
-          cart[index].quantity = cart[index].quantity + 1;
-          this.snackbar = true;
+      for (var index in this.$store.state.cart) {
+        if (this.$store.state.cart[index].book.id === this.book.id) {
+          alert(
+            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
+          );
           return;
         }
       }
-      //
       let itemBook = {
         book: this.bookDetail,
         quantity: 1
       };
+      let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
-      this.snackbar = true;
     },
     addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
