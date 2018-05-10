@@ -326,6 +326,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+
         $tags = \App\Tag::all();
         foreach ($tags as $key => $item) {
             $books = [];
@@ -377,6 +378,13 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
             $item->books()->saveMany($books);
+        }
+        foreach (range(1, 150) as $index)
+        {
+            App\Storage::create([
+                'quantity'      => 100,
+                'id_book'       => $index,
+            ]);
         }
     }
 }
