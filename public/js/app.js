@@ -43140,10 +43140,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
@@ -43287,24 +43283,13 @@ var render = function() {
                         ],
                         1
                       ),
-                      _vm._v("\n<<<<<<< HEAD\n            "),
-                      _vm.book.author
-                        ? _c(
-                            "p",
-                            { staticClass: "grey--text text--darken-1 mt-1" },
-                            [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
-                          )
-                        : _vm._e(),
-                      _vm._v("\n=======\n            "),
                       _vm._v(" "),
                       _c(
                         "p",
                         { staticClass: "grey--text text--darken-1 mt-1" },
                         [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
                       ),
-                      _vm._v(
-                        "\n>>>>>>> 19547e4b94d915f1ad1611071592f35b25b3b3e2\n            "
-                      ),
+                      _vm._v(" "),
                       _vm.book.promotion_price
                         ? _c(
                             "v-card-actions",
@@ -43323,7 +43308,7 @@ var render = function() {
                                           _vm.book.promotion_price
                                         )
                                       ) +
-                                      "\n                "
+                                      "\n              "
                                   ),
                                   _c(
                                     "span",
@@ -43346,7 +43331,7 @@ var render = function() {
                                   _c("del", [
                                     _vm._v(
                                       _vm._s(_vm.formatPrice(_vm.book.price)) +
-                                        "\n                  "
+                                        "\n                "
                                     ),
                                     _c(
                                       "span",
@@ -43377,7 +43362,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       _vm._s(_vm.formatPrice(_vm.book.price)) +
-                                        "\n                  "
+                                        "\n                "
                                     ),
                                     _c(
                                       "span",
@@ -43427,7 +43412,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                Thêm vào giỏ hàng thành công\n                "
+                                "\n              Thêm vào giỏ hàng thành công\n              "
                               ),
                               _c(
                                 "v-btn",
