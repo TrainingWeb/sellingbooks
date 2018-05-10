@@ -33791,9 +33791,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -40656,6 +40653,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }).catch(function (error) {
       console.log(error);
     });
+    window.axios.post("/login +");
   }
 });
 
@@ -43137,9 +43135,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
@@ -43284,11 +43279,13 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c(
-                        "p",
-                        { staticClass: "grey--text text--darken-1 mt-1" },
-                        [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
-                      ),
+                      _vm.book.author
+                        ? _c(
+                            "p",
+                            { staticClass: "grey--text text--darken-1 mt-1" },
+                            [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _vm.book.promotion_price
                         ? _c(
