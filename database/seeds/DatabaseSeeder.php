@@ -13,183 +13,30 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
         // $this->call(UsersTableSeeder::class);
-        DB::table('authors')->insert([
-            [
+        foreach (range(1, 30) as $index) {
+            App\Author::create([
                 'name' => $faker->name,
                 'avatar' => 'author.jpg',
                 'slug' => str_slug($faker->name),
                 'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
                 'phone' => '0123456789',
                 'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'author.jpg',
-                'slug' => str_slug($faker->name),
-                'description' => 'Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng trong các ứng dụng dàn trang, như Aldus PageMaker.',
-                'phone' => '0123456789',
-                'address' => 'Thanh Khe, Da Nang',
-                'email' => str_random(15) . '@gmail.com',
-            ],
-        ]);
+                'email' => $faker->email,
+            ]);
+        }
 
-        DB::table('users')->insert([
-            [
-                'name' => 'My name Admin',
+        foreach (range(1, 30) as $index) {
+            App\User::create([
+                'name' => $faker->name,
                 'avatar' => 'user.jpg',
-                'phone' => '0123456789',
-                'email' => 'admin@gmail.com',
+                'phone' => $faker->phoneNumber,
+                'email' => $faker->unique()->email,
                 'password' => bcrypt(123123),
-                'birthday' => '1997-06-30',
-                'address' => 'Thanh Khe, Da Nang',
-                'phone' => '0123456789',
+                'birthday' => $faker->dateTimeBetween('1980-01-01', '2005-12-31')->format('Y-m-d'),
+                'address' => $faker->address,
                 'role' => '1',
-
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'user.jpg',
-                'phone' => '0123456789',
-                'email' => 'customer@gmail.com',
-                'password' => bcrypt(123123),
-                'birthday' => '1997-06-30',
-                'address' => 'Thanh Khe, Da Nang',
-                'phone' => '0123456789',
-                'role' => '0',
-
-            ],
-            [
-                'name' => $faker->name,
-                'avatar' => 'user.jpg',
-                'phone' => '0123456789',
-                'email' => 'banneder@gmail.com',
-                'password' => bcrypt(123123),
-                'birthday' => '1997-06-30',
-                'address' => 'Thanh Khe, Da Nang',
-                'phone' => '0123456789',
-                'role' => '2',
-
-            ],
-        ]);
-
+            ]);
+        }
         DB::table('groups')->insert([
             [
                 'name' => 'Tieu thuyet',
@@ -326,7 +173,6 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-
         $tags = \App\Tag::all();
         foreach ($tags as $key => $item) {
             $books = [];
@@ -379,12 +225,69 @@ class DatabaseSeeder extends Seeder
             }
             $item->books()->saveMany($books);
         }
-        foreach (range(1, 150) as $index)
-        {
+        foreach (range(1, 150) as $index) {
             App\Storage::create([
-                'quantity'      => 100,
-                'id_book'       => $index,
+                'quantity' => 100,
+                'id_book' => $index,
             ]);
         }
+        foreach (range(1, 150) as $index) {
+            App\Comment::create([
+                'content' => 'Once we have made these changes, the average time to run the seeder drops from 15 seconds to 6 seconds! Whilst this is much better, its still far too long.',
+                'id_book' => $index,
+                'id_user' => 1,
+            ]);
+        }
+        foreach (range(1, 150) as $index) {
+            App\Comment::create([
+                'content' => 'Once we have made these changes, the average time to run the seeder drops from 15 seconds to 6 seconds! Whilst this is much better, its still far too long.',
+                'id_book' => $index,
+                'id_user' => 2,
+            ]);
+        }
+        foreach (range(1, 150) as $index) {
+            App\Comment::create([
+                'content' => 'Once we have made these changes, the average time to run the seeder drops from 15 seconds to 6 seconds! Whilst this is much better, its still far too long.',
+                'id_book' => $index,
+                'id_user' => 3,
+            ]);
+        }
+        DB::table('orders')->insert([
+            [
+                'total' => 100000,
+                'status' => 'waiting',
+                'id_user' => 1,
+            ],
+            [
+                'total' => 100000,
+                'status' => 'waiting',
+                'id_user' => 2,
+            ],
+            [
+                'total' => 100000,
+                'status' => 'waiting',
+                'id_user' => 3,
+            ],
+        ]);
+        DB::table('order_details')->insert([
+            [
+                'price' => 100000,
+                'quantity' => 1,
+                'id_order' => 1,
+                'id_book' => 1,
+            ],
+            [
+                'price' => 100000,
+                'quantity' => 1,
+                'id_order' => 2,
+                'id_book' => 2,
+            ],
+            [
+                'price' => 100000,
+                'quantity' => 1,
+                'id_order' => 3,
+                'id_book' => 3,
+            ],
+        ]);
     }
 }
