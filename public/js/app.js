@@ -33791,9 +33791,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -33801,7 +33798,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       featuredbooks: {},
       discountbooks: {},
       newbooks: {},
-
       sliders: [{
         src: "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
       }, {
@@ -40782,6 +40778,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }).catch(function (error) {
       console.log(error);
     });
+    window.axios.post("/login +");
   }
 });
 
@@ -43203,9 +43200,6 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
 //
 //
 //
