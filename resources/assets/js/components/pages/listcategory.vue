@@ -50,28 +50,33 @@ export default {
     namepage: "Danh sách sản phẩm",
     page: 1
   }),
+  methods: {
+    loadauthor() {
+      window.axios
+        .get(
+          "/categories/" +
+            this.$route.query.type +
+            "?slug=" +
+            this.$route.query.type
+        )
+        .then(response => {
+          this.listCatagory = response.data.data.data;
+          console.log("đây là tác phẩm", this.listauthor);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  },
   watch: {
     "$route.query.type"(val) {
       this.breadcrumbs[1].name = `${this.$route.query.type}`;
+      this.loadauthor();
     }
   },
   mounted() {
     this.breadcrumbs[1].name = `${this.$route.query.type}`;
-
-    window.axios
-      .get(
-        "/categories/" +
-          this.$route.query.type +
-          "?slug=" +
-          this.$route.query.type
-      )
-      .then(response => {
-        this.listCatagory = response.data.data.data;
-        console.log("đây là tác phẩm", this.listauthor);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    this.loadauthor();
   }
 };
 </script>
