@@ -28,7 +28,8 @@ class PageController extends APIBaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $api_token = Auth::user()->createToken('test')->accessToken;
-            return response()->json(['api_token' => $api_token]);
+            $user = Auth::user();
+            return response()->json(['api_token' => $api_token, 'user'=>$user]);
         } else {
             return $this->sendMessage('Email or password is not correct !');
         }
@@ -58,7 +59,7 @@ class PageController extends APIBaseController
         $user->save();
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         $api_token = Auth::user()->createToken('test')->accessToken;
-        return response()->json(['api_token' => $api_token, 'user'=>$user, 'role' => 0, 'message' => 'User created successfully !']);
+        return response()->json(['api_token' => $api_token, 'user'=>$user, 'role' => $user->role, 'message' => 'User created successfully !']);
     }
 
     public function index(Request $request)
