@@ -10,9 +10,19 @@
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">
           <div>
             <router-link :to="`/detail?type=`+book.slug" class="link-book">
-              <h3>{{book.name}}</h3>
+              <v-tooltip bottom>
+                <h3 class="block-with-text" slot="activator">{{book.name}} </h3>
+                <span>{{book.name}} </span>
+              </v-tooltip>
             </router-link>
+<<<<<<< HEAD
             <p class="grey--text text--darken-1 mt-1" v-if="book.author">Tác giả: {{book.author.name}}</p>
+=======
+            <!-- <router-link :to="`/detail?type=`+book.slug" class="link-book">
+              <h3>{{book.name}}</h3>
+            </router-link> -->
+            <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>
+>>>>>>> 19547e4b94d915f1ad1611071592f35b25b3b3e2
             <v-card-actions v-if="book.promotion_price">
               <div class="green--text text--accent-4 title"> {{formatPrice(book.promotion_price)}}
                 <span style="text-decoration: underline">đ</span>
@@ -121,7 +131,7 @@ export default {
   color: black;
 }
 .hover-card:hover {
-  border: solid 1px #00c853 !important;
+  /* border: solid 1px #00c853 !important; */
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -129,5 +139,10 @@ export default {
 }
 .hover-card {
   border: solid 1px #f5f5f5 !important;
+}
+.block-with-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

@@ -64,11 +64,14 @@ class PageController extends APIBaseController
         if (is_null($tag)) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        return $this->sendData(['tag' => $tag]);
+        return response()->json($tag);
     }
 
     public function search()
     {
+        $items01 = array();
+        $items02 = array();
+        $items03 = array();
         $authorbooks = Book::whereIn('highlights', [0, 1])->whereHas('author', function ($query) {
             $query->where('name', 'LIKE', '%' . request()->name . '%');
         })->get();
@@ -88,8 +91,11 @@ class PageController extends APIBaseController
             $items03[] = $items3->id;
         }
         $done = $items01 + $items02 + $items03;
-        $books = Book::whereIn('id', $done)->paginate(18);
-        return $this->sendData(['books' => $books]);
+        $books = Book::whereIn('id', $done)->with('author')->paginate(18);
+        if(count($books)< 1){
+            return $this->sendMessage('Found 0 books for this keywork !');
+        }
+        return response()->json($books);
     }
 
     public function typeBooks($type)
@@ -125,11 +131,11 @@ class PageController extends APIBaseController
 
     public function getBookInfo($slug)
     {
-        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('comments')->where('slug', $slug)->first();
+        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->with('comments')->where('slug', $slug)->first();
         if (is_null($book)) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $samebooks = Book::where('id_category', $book->id_category)->orderBy('created_at', 'DESC')->take(3)->get();
+        $samebooks = Book::where('id_category', $book->id_category)->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return $this->sendData(['book' => $book, 'samebooks' => $samebooks]);
     }
 
