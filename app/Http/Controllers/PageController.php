@@ -6,6 +6,7 @@ use App\Author;
 use App\Book;
 use App\Category;
 use App\Comment;
+use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\Mail\ResetPassword;
 use App\Order;
@@ -14,12 +15,11 @@ use App\Storage;
 use App\Tag;
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use Validator;
-use Exception; 
-use App\Group;
 
 class PageController extends APIBaseController
 {
@@ -29,7 +29,7 @@ class PageController extends APIBaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $api_token = Auth::user()->createToken('test')->accessToken;
             $user = Auth::user();
-            return response()->json(['api_token' => $api_token, 'user'=>$user]);
+            return response()->json(['api_token' => $api_token, 'user' => $user]);
         } else {
             return $this->sendMessage('Email or password is not correct !');
         }
@@ -59,7 +59,7 @@ class PageController extends APIBaseController
         $user->save();
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         $api_token = Auth::user()->createToken('test')->accessToken;
-        return response()->json(['api_token' => $api_token, 'user'=>$user, 'role' => $user->role, 'message' => 'User created successfully !']);
+        return response()->json(['api_token' => $api_token, 'user' => $user, 'role' => $user->role, 'message' => 'User created successfully !']);
     }
 
     public function index(Request $request)
@@ -90,7 +90,8 @@ class PageController extends APIBaseController
         if (!$tag) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        return response()->json($tag);
+        $books = $tag->books()->with('author')->with('tags')->get();
+        return response()->json($books);
     }
 
     public function search()
@@ -118,7 +119,7 @@ class PageController extends APIBaseController
         }
         $done = $items01 + $items02 + $items03;
         $books = Book::whereIn('id', $done)->with('author')->paginate(18);
-        if(count($books)< 1){
+        if (count($books) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
         return response()->json($books);
@@ -161,8 +162,9 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
+        $comments = Comment::where('id_book', $book->id)->with('user')->get();
         $samebooks = Book::where('id_category', $book->id_category)->whereNotIn('id', [$book->id])->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
-        return $this->sendData(['book' => $book, 'samebooks' => $samebooks]);
+        return $this->sendData(['book' => $book,'comments'=>$comments, 'samebooks' => $samebooks]);
     }
 
     public function getAuthors()
@@ -442,11 +444,14 @@ class PageController extends APIBaseController
     // public function resetPassword(Request $request)
     // {
     //     $passwordreset = PasswordReset::where('token', $request->token);
-    //     if($passwordreset->email !== $request->email){
+    //     if ($passwordreset->email !== $request->email) {
     //         return $this->sendMessage('This token is not correct !');
+    //     } else {
+    //         $passwordreset->token = bcrypt(str_radom(60));
+    //         $passwordreset->save();
     //     }
     //     $user = User::where('email', $request->email)->first();
-    //     if($request->password !== $request->confirm_password){
+    //     if ($request->password !== $request->confirm_password) {
     //         return $this->sendMessage('Password confirm must in the same !');
     //     }
     //     $user->password = $request->password;

@@ -330,15 +330,17 @@ export default {
     password: "Password",
     dataApp: {},
     listauthor: {},
-    search: null
+    search: null,
+    emailLogin: "",
+    passLogin: "",
+    token_login: {}
   }),
   props: {
     source: String
   },
   methods: {
     textSearch() {
-      console.log("Đã vào rồi ");
-      window.location = `#/search?keyword=${this.search}`;
+      window.location = `#/search?name=${this.search}`;
       this.search = "";
     },
     submit() {
@@ -397,7 +399,6 @@ export default {
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
-        console.log(response.data.data);
       })
       .catch(function(error) {
         console.log(error);

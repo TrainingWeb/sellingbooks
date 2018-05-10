@@ -20,13 +20,18 @@
                           <div>
                             <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
                             <div class="grey--text accent-4 body-2">
-                              <span>Tác giả: </span>{{bookDetail.author}}</div>
-                            <v-layout row wrap class="mx-0">
-                              <div class="green--text text--accent-4 title mt-3"> {{bookDetail.price}}</div>
+                              <span>Tác giả: {{bookDetail.author.name}}</span>
+                            </div>
+                            <div v-if="bookDetail.promotion_price">
+                              <span class="green--text text--accent-4 title mt-3"> {{formatPrice(bookDetail.price)}} </span>
                               <span class="grey--text text--darken-1 title mt-3 ml-3">
-                                <del>{{bookDetail.sale}}</del>
+                                <del>{{formatPrice(bookDetail.promotion_price)}}</del>
                               </span>
-                            </v-layout>
+                            </div>
+                            <div v-else>
+                              <span class="green--text text--accent-4 title mt-3">
+                                {{bookDetail.price}}
+                                <span>Tác giả: </span>{{bookDetail.author}}</div>
                             <v-divider class="my-3"></v-divider>
                             <div>
                               <span class=" grey--text text--accent-4body-1">{{bookDetail.detail}}</span>
@@ -46,8 +51,8 @@
                             <v-layout row wrap class="mt-3">
                               <div class="text-xs-center">
                                 <span class="green--text ml-2">Tags:</span>
-                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
-                                  <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Giáo Khoa </router-link>
+                                <v-chip color="grey--text text--darken-1" text-color="white" class="px-0" v-for="(tag,index) in tags" :key="`keytag-$`+index">
+                                  <router-link :to="`/tags?name=`+tag.slug" class="grey--text text--darken-2" style="text-decoration:none">{{tag.name}} </router-link>
                                 </v-chip>
                                 <v-chip color="grey--text text--darken-1" text-color="white" class="px-0">
                                   <router-link to="/tags" class="grey--text text--darken-2" style="text-decoration:none">Sách Văn Học </router-link>
@@ -126,73 +131,12 @@ export default {
   data() {
     return {
       commenttext: "",
-      bookDetail: {
-        img:
-          "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: 12000,
-        detail:
-          "Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao,mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu”[...]",
-        sale: 1500,
-        author: "Nguyễn Du",
-        textDetail:
-          "Một cô gái thôn quê tỉnh dậy trong cơ thể một cậu trai thành phố và ngược lại, cậu trai ấy cũng tỉnh dậy trong cuộc sống đời thường của cô gái. Hai con người khác nhau, sống ở hai địa điểm khác nhau ở nước Nhật – một cổ xưa, một hiện đại. Vậy bí mật nào đã đưa họ tới với nhau?Your Name là một cuốn sách chứa đựng nhiều cung bậc cảm xúc. Đoạn mở đầu với sự hài hước, đoạn giữa tiếp nối bằng hồi hộp – bí ẩn và đoạn cuối thì giống như một cú bùng nổ cực đại, hệt như ngôi sao chổi đâm sầm vào Trái đất và làm nổ tung mọi giác quan của người xem. Mọi diễn biến truyện diễn ra dồn dập, với tiết tấu nhanh chậm đan xen nhịp nhàng. Khiến cho người đọc không thể rời mắt, từ háo hức ở giây đầu tiên cho tới sự nuối tiếc ở những giây cuối cùng.Ngày cùng sư phụ thành thân, ta hạnh phúc biết bao, mong chờ nhường nào, rằng hai chúng ta sẽ sống những ngày vô lo vô nghĩ, mãi mãi bên nhau đến khi bạc đầu” chúng ta  Thế nhưng, sư phụ chàng cái gì cũng tốt, điều không tốt duy nhất chính là không yêu ta. Cho đến tận ngày ta vì khó sinh mà bước chân vào cửa tử, chàng vẫn lãnh đạm tựa băng tuyết nghìn năm, thậm chí còn chẳng ghé mắt mà nhìn ta lần cuối. Ta chẳng thể bấu víu vào đâu, đành ôm nỗi vấn vương trần thế cùng mối hận thác xuống cửu tuyền.Duy trì đáng kể các giải pháp nhấp chuột và vữa mà không có giải pháp chức năng.Hoàn toàn hợp tác hóa các mối quan hệ thuế tài nguyên thông qua các thị trường thích hợp hàng đầu. Chuyên nghiệp trau dồi dịch vụ khách hàng một đối một với những ý tưởng mạnh mẽ."
-      },
-
-      comments: [
-        {
-          avatar: "./img/author.jpg",
-          name: "Võ Đăng Ánh",
-          subtitle:
-            "<span class='text--primary'>Tôi rất hài lòng về cách phục vụ khách hàng của nhân viên ở đây</span>",
-          time: "02:56 PM"
-        },
-        {
-          avatar: "./img/author.jpg",
-          name: "Tô Thị Tuyết Nga",
-          subtitle:
-            "<span class='text--primary'>Sẽ ghé shop nhiều lần sau nữa</span>",
-          time: "03:15 PM"
-        },
-        {
-          avatar: "./img/user.jpg",
-          name: "Nguyễn Thị Thu Thủy",
-          subtitle: "<span class='text--primary'>View của shop rất đẹp</span>",
-          time: "08:32 PM"
-        }
-
-        // { divider: true, inset: true }
-      ],
-      book: [
-        {
-          img:
-            "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-          name: "Cô gái mở đường",
-          price: "120.000",
-          sale: "",
-          author: "Nguyễn Du"
-        },
-        {
-          img:
-            "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-          name: "Dế mèn phiêu lưu kí",
-          price: "120.000",
-          sale: "",
-          author: "Nguyễn Du"
-        },
-        {
-          img:
-            "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-          name: "Truyện kiều",
-          price: "120.000",
-          sale: "",
-          author: "Nguyễn Du"
-        }
-      ],
-      // commenttext = '',
-      // bookDetail = {},
-      // comments = [],
-      // book = [],
+      bookDetail: {},
+      tags: {},
+      comments: {},
+      books: {},
+      snackbar: false,
+      timeout: 3000,
       breadcrumbs: [
         {
           name: "Trang Chủ",
@@ -246,15 +190,26 @@ export default {
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
     },
-    saveComment() {
-      this.comments.push({
-        avatar: "./img/author.jpg",
-        name: "Tô Thị Tuyết Nga",
-        subtitle: this.commenttext,
-        time: "03:15 PM"
-      });
-      this.commenttext = "";
+    formatPrice(price) {
+      let val = (price / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+  },
+  mounted() {
+    window.axios
+      .get(
+        "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
+      )
+      .then(response => {
+        this.bookDetail = response.data.data.book;
+        this.books = response.data.data.samebooks;
+        this.tags = response.data.data.book.tags;
+        this.comments = response.data.data.book.comments;
+        console.log("đây là tác phẩm cảu detail", response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>
