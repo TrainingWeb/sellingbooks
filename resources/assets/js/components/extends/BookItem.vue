@@ -4,7 +4,7 @@
       <v-layout row wrap offset-sm3 class="hover-card">
         <v-flex xs12 sm5 md5 class=" py-0 px-0">
           <router-link :to="`/detail?type=`+book.slug" class="link-book">
-            <v-card-media :src="'/storage/images/'+book.image" height="180px"></v-card-media>
+            <v-card-media :src="'/storage/images/'+book.image" height="205px"></v-card-media>
           </router-link>
         </v-flex>
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">
@@ -15,8 +15,7 @@
                 <span>{{book.name}} </span>
               </v-tooltip>
             </router-link>
-
-            <p class="grey--text text--darken-1 mt-1">Tác giả: {{book.author.name}}</p>
+            <p class="grey--text text--darken-1 mt-1" v-if="book.author">Tác giả: {{book.author.name}}</p>
             <v-card-actions v-if="book.promotion_price">
               <div class="green--text text--accent-4 title"> {{formatPrice(book.promotion_price)}}
                 <span style="text-decoration: underline">đ</span>
@@ -101,7 +100,6 @@ export default {
           }
         }
       }
-      console.log("Đỏ");
 
       let itemBook = {
         book: this.book,

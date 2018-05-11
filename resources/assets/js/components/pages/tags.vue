@@ -11,7 +11,7 @@
       </v-layout>
       <v-container grid-list-xs>
         <v-layout row wrap>
-          <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`khoa${index}`">
+          <v-flex xs12 md6 lg4 v-for="(item,index) in tags" :key="`khoa${index}`">
             <book-item :book="item"></book-item>
           </v-flex>
         </v-layout>
@@ -47,28 +47,24 @@ export default {
       { text: "Lọc theo giá tiền giảm giá" }
     ],
 
-    books: [
-      {
-        img:
-          "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      },
-      {
-        img:
-          "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }
-    ],
+    tags: {},
     namepage: "Tags",
 
     page: 1
-  })
+  }),
+  mounted() {
+    window.axios
+      .get(
+        "/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name
+      )
+      .then(response => {
+        this.tags = response.data.books;
+        console.log("đây là tác phẩm của tags", response.data.books);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 };
 </script>
 
