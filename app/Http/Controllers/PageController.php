@@ -23,7 +23,6 @@ use Validator;
 
 class PageController extends APIBaseController
 {
-
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -153,7 +152,7 @@ class PageController extends APIBaseController
         }
         $comments = Comment::with('user')->where('id_book', $book->id)->simplePaginate(5);
         $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
-        return $this->sendData(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks]);
+        return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
     }
 
     public function seeMoreSameBooks($slug)
@@ -201,7 +200,7 @@ class PageController extends APIBaseController
     public function postComment(Request $request, $slug)
     {
         $book = Book::where('slug', $slug)->first();
-        if(!$book){
+        if (!$book) {
             return $this->sendErrorNotFound('Book not found 1');
         }
         $comment = new Comment;
