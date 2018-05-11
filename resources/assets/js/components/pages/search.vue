@@ -3,7 +3,7 @@
     <v-layout xs12>
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
-    <v-container>
+    <v-container v-if="search">
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
           <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
@@ -21,6 +21,9 @@
           <v-pagination :length="3" v-model="page"></v-pagination>
         </div>
       </template>
+    </v-container>
+    <v-container v-else>
+      <h1 class="py-5">Không có kết quả tìm kiếm phù hợp</h1>
     </v-container>
   </div>
 </template>

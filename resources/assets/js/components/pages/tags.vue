@@ -49,7 +49,6 @@ export default {
 
     tags: {},
     namepage: "Tags",
-
     page: 1
   }),
   mounted() {

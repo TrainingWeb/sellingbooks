@@ -36391,8 +36391,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36424,41 +36422,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       panigation: {
         page: 1,
         visible: 4,
-        length: 9
+        length: 7
       }
     };
   },
   watch: {
-    "$route.query.page": function $routeQueryPage(val) {
+    // "$route.query.page"(val) {
+    //   if (val) {
+    //     window.axios
+    //       .get("/books/type/" + this.$route.query.type + "?page=" + val)
+    //       .then(res => {
+    //         this.books = res.data.data;
+    //       });
+    //   }
+    //   console.log("chuyển axios thành công");
+    // },
+    filter_value: function filter_value(val) {
       var _this = this;
 
-      if (val) {
-        window.axios.get("/books/type/" + this.$route.query.type + "?page=" + val).then(function (res) {
-          _this.books = res.data.data;
-        });
-      }
-    },
-    filter_value: function filter_value(val) {
-      var _this2 = this;
-
-      window.axios.get("/books/type/" + this.$route.query.type + "?page=" + val).then(function (res) {
-        _this2.books = res.data.data;
+      console.log(val.linkto);
+      window.axios.get("/books/type/" + this.$route.query.type + "?sort=" + val.linkto).then(function (res) {
+        _this.books = res.data.data;
       });
+      console.log("chuyển axios lọc");
     }
   },
   methods: {
     next: function next(page) {
       var type = this.$route.query.type;
-      this.$router.push("list-products?type=newbooks&&page=" + page);
+      this.$router.push("list-products?type=" + this.$route.query.type + "&&page=" + page);
+      console.log("đưa lên url thành công");
+    },
+    fil: function fil(filter_value) {
+      console.log("đã vào đây");
+      this.$router.push("list-products?type=" + this.$route.query.type + "?&&sort=" + filter_value);
+      console.log("đưa lên url của lọc thành công");
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this2 = this;
 
     var type = this.$route.query.type;
-    window.axios.get("/books/type/" + type + "?page=" + this.$route.query.page || 1).then(function (res) {
-      _this3.books = res.data.data;
-      // console.log("mang chị thuy", res.data.data);
+    window.axios.get("/books/type/" + type).then(function (res) {
+      _this2.books = res.data.data;
+      console.log("mang chị thuy", res.data.data);
     });
   }
 });
@@ -37295,6 +37302,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37355,83 +37365,89 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.filter,
-                      label: "--Chọn--",
-                      "single-line": ""
-                    },
-                    model: {
-                      value: _vm.e1,
-                      callback: function($$v) {
-                        _vm.e1 = $$v
-                      },
-                      expression: "e1"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
+      _vm.search
+        ? _c(
             "v-container",
-            { attrs: { "grid-list-xs": "" } },
             [
               _c(
                 "v-layout",
                 { attrs: { row: "", wrap: "" } },
-                _vm._l(_vm.search, function(item, index) {
-                  return _c(
+                [
+                  _c(
                     "v-flex",
-                    {
-                      key: "khoa" + index,
-                      attrs: { xs12: "", md6: "", lg4: "" }
-                    },
-                    [_c("book-item", { attrs: { book: item } })],
+                    { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter,
+                          label: "--Chọn--",
+                          "single-line": ""
+                        },
+                        model: {
+                          value: _vm.e1,
+                          callback: function($$v) {
+                            _vm.e1 = $$v
+                          },
+                          expression: "e1"
+                        }
+                      })
+                    ],
                     1
                   )
-                })
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          [
-            _c(
-              "div",
-              { staticClass: "text-xs-center mt-5" },
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-container",
+                { attrs: { "grid-list-xs": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    _vm._l(_vm.search, function(item, index) {
+                      return _c(
+                        "v-flex",
+                        {
+                          key: "khoa" + index,
+                          attrs: { xs12: "", md6: "", lg4: "" }
+                        },
+                        [_c("book-item", { attrs: { book: item } })],
+                        1
+                      )
+                    })
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               [
-                _c("v-pagination", {
-                  attrs: { length: 3 },
-                  model: {
-                    value: _vm.page,
-                    callback: function($$v) {
-                      _vm.page = $$v
-                    },
-                    expression: "page"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        ],
-        2
-      )
+                _c(
+                  "div",
+                  { staticClass: "text-xs-center mt-5" },
+                  [
+                    _c("v-pagination", {
+                      attrs: { length: 3 },
+                      model: {
+                        value: _vm.page,
+                        callback: function($$v) {
+                          _vm.page = $$v
+                        },
+                        expression: "page"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            ],
+            2
+          )
+        : _c("v-container", [
+            _c("h1", { staticClass: "py-5" }, [
+              _vm._v("Không có kết quả tìm kiếm phù hợp")
+            ])
+          ])
     ],
     1
   )
@@ -38786,7 +38802,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       tags: {},
       namepage: "Tags",
-
       page: 1
     };
   },
