@@ -34208,239 +34208,27 @@ if(false) {
 
 /***/ }),
 /* 33 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.cyan.darken-2,\n.cyan.darken-2--after:after {\n      background - color: #fff !important;\n}\n.cyan {\n      background - color: #fff !important;\n    border-color: #fff !important;\n}\n.card {\n      box - shadow: none;\n}\n.application.theme--light {\n      background: #fff;\n}\n.application.theme--light .text--primary {\n      color: #757575 !important;\n}\n.primary {\n      background - color: #00c853 !important;\n    border-color: #00c853 !important;\n}\n", ""]);
-
-// exports
-
+throw new Error("Module build failed: CssSyntaxError: D:\\laragon\\www\\sellingBookStore\\resources\\assets\\js\\components\\pages\\detail.vue:380:3: Unexpected }\n    at Input.error (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\input.js:119:22)\n    at Parser.unexpectedClose (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\parser.js:510:26)\n    at Parser.end (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\parser.js:353:18)\n    at Parser.parse (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\parser.js:68:26)\n    at parse (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\parse.js:24:16)\n    at new LazyResult (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\lazy-result.js:70:24)\n    at Processor.process (D:\\laragon\\www\\sellingBookStore\\node_modules\\postcss\\lib\\processor.js:117:12)\n    at loadPostcssConfig.then.config (D:\\laragon\\www\\sellingBookStore\\node_modules\\vue-loader\\lib\\style-compiler\\index.js:61:10)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)");
 
 /***/ }),
 /* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
-  data: function data() {
-    return {
-      commenttext: "",
-      bookDetail: {},
-      tags: {},
-      comments: {},
-      books: {},
-      snackbar: false,
-      timeout: 3000,
-      breadcrumbs: [{
-        name: "Trang Chủ",
-        url: "/",
-        disabled: false
-      }, {
-        name: "Chi tiết sản phẩm",
-        url: "/list-products",
-        disabled: true
-      }],
-      namepage: "Chi tiết sản phẩm",
-      currentComment: null,
-      page: 1
-    };
-  },
-  mounted: function mounted() {
-    window.axios.get("/book/{slug}");
-  },
-
-  methods: {
-    addCartDetail: function addCartDetail() {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert("Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
-          return;
-        }
-      }
-      var itemBook = {
-        book: this.bookDetail,
-        quantity: 1
-      };
-      var cart = this.$store.state.cart;
-      cart.push(itemBook);
-      this.$store.dispatch("setCart", cart);
-    },
-    addFavoriteDetail: function addFavoriteDetail() {
-      for (var index in this.$store.state.favorite) {
-        if (this.$store.state.favorite[index].id == this.book.id) {
-          alert("Sản phẩm này đã được bạn yêu thích");
-          return;
-        }
-      }
-      var itemBook = {
-        book: this.bookDetail,
-        quantity: 1
-      };
-      var favorite = this.$store.state.favorite;
-      favorite.push(itemBook);
-      this.$store.dispatch("setFavorite", favorite);
-    },
-    formatPrice: function formatPrice(price) {
-      var val = (price / 1).toFixed(0).replace(".", ",");
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-  }
-}, "mounted", function mounted() {
-  var _this = this;
-
-  window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.book;
-    _this.books = response.data.data.samebooks;
-    _this.tags = response.data.data.book.tags;
-    _this.comments = response.data.data.book.comments;
-    console.log("đây là tác phẩm cảu detail", response.data);
-  }).catch(function (error) {
-    console.log(error);
-  });
-}));
+throw new Error("Module build failed: SyntaxError: D:/laragon/www/sellingBookStore/resources/assets/js/components/pages/detail.vue: Unexpected token (308:0)\n\n\u001b[0m \u001b[90m 306 | \u001b[39m      let val \u001b[33m=\u001b[39m (price \u001b[33m/\u001b[39m \u001b[35m1\u001b[39m)\u001b[33m.\u001b[39mtoFixed(\u001b[35m0\u001b[39m)\u001b[33m.\u001b[39mreplace(\u001b[32m\".\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\",\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 307 | \u001b[39m      \u001b[36mreturn\u001b[39m val\u001b[33m.\u001b[39mtoString()\u001b[33m.\u001b[39mreplace(\u001b[35m/\\B(?=(\\d{3})+(?!\\d))/g\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\".\"\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 308 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 309 | \u001b[39m    }\n \u001b[90m 310 | \u001b[39m  }\u001b[33m,\u001b[39m\n \u001b[90m 311 | \u001b[39m  mounted() {\u001b[0m\n");
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token (1:114)\n    at Parser.pp$4.raise (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2610:13)\n    at Parser.pp.unexpected (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:637:8)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2094:10)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parsePropertyValue (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2310:87)\n    at Parser.parseObj (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4472:14)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2077:17)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parsePropertyValue (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2310:87)\n    at Parser.parseObj (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4472:14)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2077:17)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parseExprList (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2528:20)\n    at Parser.pp$3.parseSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1983:29)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1958:21)");
+module.exports={render:function(){},staticRenderFns:[]}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1b582480", module.exports)
+  }
+}
 
 /***/ }),
 /* 36 */
@@ -36872,8 +36660,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -42523,6 +42309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         }
       }
+      console.log("Đỏ");
 
       var itemBook = {
         book: this.book,
@@ -42617,19 +42404,17 @@ var render = function() {
                               [_vm._v(_vm._s(_vm.book.name) + " ")]
                             ),
                             _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(_vm.book.name) + " ")])
+                            _c("span", [_vm._v(_vm._s(_vm.book.name))])
                           ])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _vm.book.author
-                        ? _c(
-                            "p",
-                            { staticClass: "grey--text text--darken-1 mt-1" },
-                            [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
-                          )
-                        : _vm._e(),
+                      _c(
+                        "p",
+                        { staticClass: "grey--text text--darken-1 mt-1" },
+                        [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
+                      ),
                       _vm._v(" "),
                       _vm.book.promotion_price
                         ? _c(
@@ -43033,14 +42818,9 @@ if (false) {
 
 /***/ }),
 /* 119 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-window.axios = __webpack_require__(6);
-
-window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://selling-books.local";
-var api = "/api";
-window.axios.defaults.baseURL = "" + host + api;
+throw new Error("Module build failed: SyntaxError: D:/laragon/www/sellingBookStore/resources/assets/js/axios/index.js: Unexpected token (4:0)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mwindow\u001b[33m.\u001b[39maxios\u001b[33m.\u001b[39mdefaults\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39mpost[\u001b[32m\"Content-Type\"\u001b[39m] \u001b[33m=\u001b[39m \u001b[32m\"application/json\"\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbookstore.test\"\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 7 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://selling-books.local\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 120 */
