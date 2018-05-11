@@ -34215,7 +34215,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.cyan.darken-2,\n.cyan.darken-2--after:after {\n      background - color: #fff !important;\n}\n.cyan {\n      background - color: #fff !important;\n    border-color: #fff !important;\n}\n.card {\n      box - shadow: none;\n}\n.application.theme--light {\n      background: #fff;\n}\n.application.theme--light .text--primary {\n      color: #757575 !important;\n}\n.primary {\n      background - color: #00c853 !important;\n    border-color: #00c853 !important;\n}\n", ""]);
 
 // exports
 
@@ -34228,6 +34228,7 @@ exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -34437,15 +34438,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports={render:function(){},staticRenderFns:[]}
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1b582480", module.exports)
-  }
-}
+throw new Error("Module build failed: SyntaxError: Unexpected token (1:114)\n    at Parser.pp$4.raise (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2610:13)\n    at Parser.pp.unexpected (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:637:8)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2094:10)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parsePropertyValue (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2310:87)\n    at Parser.parseObj (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4472:14)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2077:17)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parsePropertyValue (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2310:87)\n    at Parser.parseObj (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4472:14)\n    at Parser.pp$3.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2077:17)\n    at Parser.parseExprAtom (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:4372:24)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1955:19)\n    at Parser.pp$3.parseMaybeUnary (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1932:17)\n    at Parser.pp$3.parseExprOps (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1874:19)\n    at Parser.pp$3.parseMaybeConditional (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1857:19)\n    at Parser.pp$3.parseMaybeAssign (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1832:19)\n    at Parser.pp$3.parseExprList (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:2528:20)\n    at Parser.pp$3.parseSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1983:29)\n    at Parser.pp$3.parseExprSubscripts (G:\\Program\\laragon\\www\\selling-books\\node_modules\\vue-template-es2015-compiler\\buble.js:1958:21)");
 
 /***/ }),
 /* 36 */
@@ -43043,7 +43038,7 @@ if (false) {
 window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
+var host = "http://selling-books.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

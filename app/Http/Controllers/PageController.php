@@ -90,23 +90,7 @@ class PageController extends APIBaseController
         if (!$tag) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        switch (request()->sort) {
-            case 'atoz':
-                $books = $tag->books()->with('author')->with('tags')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name')->paginate(18);
-                break;
-            case 'atozdesc':
-                $books = $tag->books()->with('author')->with('tags')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name', 'DESC')->paginate(18);
-                break;
-            case 'price';
-                $books = $tag->books()->with('author')->with('tags')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price')->paginate(18);
-                break;
-            case 'pricedesc';
-                $books = $tag->books()->with('author')->with('tags')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price', 'DESC')->paginate(18);
-                break;
-            default:
-                $books = $tag->books()->with('author')->with('tags')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
-        }
-        return response()->json($books);
+        return $this->sort($tag->books());
     }
 
     public function search()
@@ -136,23 +120,7 @@ class PageController extends APIBaseController
         if (count($books) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
-        switch (request()->sort) {
-            case 'atoz':
-                $books = Book::whereIn('id', $done)->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name')->paginate(18);
-                break;
-            case 'atozdesc':
-                $books = Book::whereIn('id', $done)->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name', 'DESC')->paginate(18);
-                break;
-            case 'price';
-                $books = Book::whereIn('id', $done)->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price')->paginate(18);
-                break;
-            case 'pricedesc';
-                $books = Book::whereIn('id', $done)->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price', 'DESC')->paginate(18);
-                break;
-            default:
-                $books = Book::whereIn('id', $done)->with('author')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
-        }
-        return response()->json($books);
+        return $this->sort(Book::whereIn('id', $done));
     }
 
     public function typeBooks($type)
@@ -160,70 +128,15 @@ class PageController extends APIBaseController
         try {
             switch ($type) {
                 case 'discountbooks':
-                    switch (request()->sort) {
-                        case 'atoz':
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->orderBy('name')->paginate(18);
-                            break;
-                        case 'atozdesc':
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->orderBy('name', 'DESC')->paginate(18);
-                            break;
-                        case 'price';
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->orderBy('price')->paginate(18);
-                            break;
-                        case 'pricedesc';
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->orderBy('price', 'DESC')->paginate(18);
-                            break;
-                        default:
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
-                    }
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 feature books.');
-                    }
+                    return $this->sort(Book::where('promotion_price', '>', '0'));
                     break;
                 case 'featuredbooks':
-                    switch (request()->sort) {
-                        case 'atoz':
-                            $books = Book::where('highlights', 1)->with('storage')->with('author')->with('tags')->orderBy('name')->paginate(18);
-                            break;
-                        case 'atozdesc':
-                            $books = Book::where('highlights', 1)->with('storage')->with('author')->with('tags')->orderBy('name', 'DESC')->paginate(18);
-                            break;
-                        case 'price';
-                            $books = Book::where('highlights', 1)->with('storage')->with('author')->with('tags')->orderBy('price')->paginate(18);
-                            break;
-                        case 'pricedesc';
-                            $books = Book::where('highlights', 1)->with('storage')->with('author')->with('tags')->orderBy('price', 'DESC')->paginate(18);
-                            break;
-                        default:
-                            $books = Book::where('highlights', 1)->with('storage')->with('author')->with('tags')->paginate(18);
-                    }
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 discount books.');
-                    }
+                    return $this->sort(Book::where('highlights', 1));
                     break;
                 case 'newbooks':
                     $nowymd = Carbon::tomorrow();
                     $ago7days = Carbon::tomorrow()->subDays(7);
-
-                    switch (request()->sort) {
-                        case 'atoz':
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->orderBy('name')->paginate(18);
-                            break;
-                        case 'atozdesc':
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->orderBy('name', 'DESC')->paginate(18);
-                            break;
-                        case 'price';
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->orderBy('price')->paginate(18);
-                            break;
-                        case 'pricedesc';
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->orderBy('price', 'DESC')->paginate(18);
-                            break;
-                        default:
-                            $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->paginate(18);
-                    }
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 new books.');
-                    }
+                    return $this->sort(Book::whereBetween('created_at', [$ago7days, $nowymd]));
                     break;
             }
             return response()->json($books);
@@ -238,9 +151,15 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $comments = Comment::with('user')->with('book')->where('id_book', $book->id)->simplePaginate(5);
-        $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
+        $comments = Comment::with('user')->where('id_book', $book->id)->simplePaginate(5);
+        $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return $this->sendData(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks]);
+    }
+
+    public function seeMoreSameBooks($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        return $this->sort(Book::where('id_category', $book->id_category));
     }
 
     public function getAuthors()
@@ -258,23 +177,7 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        switch (request()->sort) {
-            case 'atoz':
-                $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->with('storage')->orderBy('name')->paginate(9);
-                break;
-            case 'atozdesc':
-                $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->with('storage')->orderBy('name', 'DESC')->paginate(9);
-                break;
-            case 'price';
-                $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->with('storage')->orderBy('price')->paginate(9);
-                break;
-            case 'pricedesc';
-                $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->with('storage')->orderBy('price', 'DESC')->paginate(9);
-                break;
-            default:
-                $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->with('storage')->paginate(9);
-        }
-        return $this->sendData($books);
+        return $this->sort(Book::where('id_author', $author->id));
     }
 
     public function getCategoies()
@@ -292,15 +195,18 @@ class PageController extends APIBaseController
         if (!$category) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('author')->with('tags')->paginate(9);
-        return $this->sendData($books);
+        return $this->sort(Book::where('id_category', $category->id));
     }
 
-    public function postComment(Request $request, $id)
+    public function postComment(Request $request, $slug)
     {
+        $book = Book::where('slug', $slug)->first();
+        if(!$book){
+            return $this->sendErrorNotFound('Book not found 1');
+        }
         $comment = new Comment;
         $comment->id_user = $request->user()->id;
-        $comment->id_book = $id;
+        $comment->id_book = $book->id;
         $comment->content = $request->content;
         $comment->save();
         return $this->sendMessage('Add comment successfully !');
@@ -412,25 +318,7 @@ class PageController extends APIBaseController
     {
         $user = User::find($request->user()->id);
         $books = $user->books()->with('tags')->with('author')->paginate(18);
-        switch (request()->sort) {
-            case 'atoz':
-                $books = $user->books()->with('tags')->with('author')->with('storage')->whereIn('highlights', [0, 1])->sortBy('name')->paginate(18);
-                break;
-            case 'atozdesc':
-                $books = $user->books()->with('tags')->with('author')->with('storage')->whereIn('highlights', [0, 1])->sortBy('name', 'DESC')->paginate(18);
-                break;
-            case 'price';
-                $books = $user->books()->with('tags')->with('author')->with('storage')->whereIn('highlights', [0, 1])->sortBy('price')->paginate(18);
-                break;
-            case 'pricedesc';
-                $books = $user->books()->with('tags')->with('author')->with('storage')->whereIn('highlights', [0, 1])->sortBy('price', 'DESC')->paginate(18);
-                break;
-            default:
-                $books = $user->books()->with('tags')->with('author')->whereIn('highlights', [0, 1])->paginate(18);}
-        if (count($books) < 1) {
-            return $this->sendResponse($user, 'Found 0 book');
-        }
-        return $this->sendData($books);
+        return $this->sort($user->books());
     }
 
     public function checkInfo(Request $request)
@@ -569,10 +457,10 @@ class PageController extends APIBaseController
     //         $passwordreset->token = bcrypt(str_radom(60));
     //         $passwordreset->save();
     //     }
-    //     $user = User::where('email', $request->email)->first();
     //     if ($request->password !== $request->confirm_password) {
     //         return $this->sendMessage('Password confirm must in the same !');
     //     }
+    //     $user = User::where('email', $request->email)->first();
     //     $user->password = $request->password;
     //     $user->save();
     //     return $this->sendMessage('Your account has been reset password !');
