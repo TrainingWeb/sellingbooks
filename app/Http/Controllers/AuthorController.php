@@ -59,14 +59,10 @@ class AuthorController extends APIBaseController
         $author->address = $input['address'];
         $author->email = $input['email'];
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $author->avatar = $name;
+            $author->avatar = $request->file('avatar')->store('/public/images');
         }
         $author->save();
         return $this->sendMessage('Author ' . $author->name . ' created successfully.');
-
     }
 
     /**
@@ -132,10 +128,7 @@ class AuthorController extends APIBaseController
         $author->address = $input['address'];
         $author->email = $input['email'];
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $author->avatar = $name;
+            $author->avatar = $request->file('avatar')->store('/public/images');
         }
         $author->save();
         return $this->sendMessage('Author ' . $author->name . ' updated successfully.');

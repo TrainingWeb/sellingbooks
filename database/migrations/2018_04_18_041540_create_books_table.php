@@ -18,8 +18,8 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('image');
-            $table->string('price');
-            $table->string('promotion_price')->nullable();
+            $table->integer('price');
+            $table->integer('promotion_price')->nullable();
             $table->string('highlights')->nullable();
             $table->longtext('description')->nullable();
             $table->integer('id_category')->unsigned();

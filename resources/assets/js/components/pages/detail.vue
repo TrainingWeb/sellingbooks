@@ -6,26 +6,30 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12>
+
           <v-card flat>
             <v-container fluid style="min-height: 0;" grid-list-lg>
               <v-layout row wrap>
-
                 <v-card color="cyan darken-2" class="white--text">
                   <v-container fluid grid-list-lg>
                     <v-layout row wrap v-if="bookDetail.author">
-                      <v-flex xs12 sm6 md4>
+                      <v-flex xs12 sm6 md4 class="px-5">
                         <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px"></v-card-media>
                       </v-flex>
                       <v-flex xs12 sm6 md8>
                         <div>
                           <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
-                          <div class="grey--text accent-4 body-2">
+                          <div class="grey--text accent-4 body-2 py-2">
                             <span>Tác giả: {{bookDetail.author.name}}</span>
                           </div>
                           <div v-if="bookDetail.promotion_price">
-                            <span class="green--text text--accent-4 title mt-3"> {{formatPrice(bookDetail.price)}} </span>
+                            <span class="green--text text--accent-4 title py-3"> {{formatPrice(bookDetail.price)}}
+                              <span style="text-decoration: underline">đ</span>
+                            </span>
                             <span class="grey--text text--darken-1 title mt-3 ml-3">
-                              <del>{{formatPrice(bookDetail.promotion_price)}}</del>
+                              <del>{{formatPrice(bookDetail.promotion_price)}}
+                                <span style="text-decoration: underline">đ</span>
+                              </del>
                             </span>
                           </div>
                           <div v-else>
@@ -35,7 +39,7 @@
                           </div>
                           <v-divider class="my-3"></v-divider>
                           <div>
-                            <span class=" grey--text text--accent-4body-1">{{bookDetail.description}}</span>
+                            <div class="seemore-description grey--text text--accent-4body-1">{{bookDetail.description}}</div>
                             <a>
                               <span class="green--text text--accent-4">Xem thêm</span>
                             </a>
@@ -66,58 +70,54 @@
             </v-container>
           </v-card>
           <v-tabs icons-and-text dark color="white" height="40px">
-            <v-tabs-slider color="yellow"></v-tabs-slider>
+            <v-tabs-slider color="green accent-4"></v-tabs-slider>
             <v-tab class="green accent-4" href="#tab-1">
               Chi tiết sản phẩm
             </v-tab>
             <v-tab class="green accent-4" href="#tab-2">
               Nhận xét khách hàng
             </v-tab>
-            <v-tabs-items>
+            <v-tabs-items class="ml-2">
               <v-tab-item id="tab-1">
                 <v-card-text class="roboto">{{ bookDetail.description }}</v-card-text>
               </v-tab-item>
               <v-tab-item id="tab-2">
                 <v-card>
                   <v-list three-line>
-                    <template>
-                      <v-list-tile v-for="item in comments" avatar :key="item.title">
-                        <v-list-tile-avatar>
-                          <img :src="item.avatar">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                          <v-list-tile-title v-html="item.content"></v-list-tile-title>
-                          <v-list-tile-sub-title class="subtitleComment" v-html="item.comments"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                          <v-list-tile-action-text>{{ item.comments }}</v-list-tile-action-text>
-                        </v-list-tile-action>
-                      </v-list-tile>
-                    </template>
+                    <v-list-tile v-for="item in comments" avatar :key="item.title">
+                      <v-list-tile-avatar>
+                        <img src="#">
+                      </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title v-html="item.user.name"></v-list-tile-title>
+                        <v-list-tile-sub-title class="subtitleComment" v-html="item.content"></v-list-tile-sub-title>
+                      </v-list-tile-content>
+                      <v-list-tile-action class="pl-5">
+                        <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
+                      </v-list-tile-action>
+                    </v-list-tile>
                     <v-layout row wrap>
                       <v-text-field v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
-                      <div>
+                      <div class="ml-0">
                         <v-btn color="green accent-4 white--text">Gửi</v-btn>
                       </div>
                     </v-layout>
-                    <template>
-                      <div class="text-xs-center mt-5">
-                        <v-pagination :length="3" v-model="page"></v-pagination>
-                      </div>
-                    </template>
+                    <div class="text-xs-center mt-5">
+                      <v-pagination :length="3" v-model="page"></v-pagination>
+                    </div>
                   </v-list>
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
           </v-tabs>
-          <v-container grid-list-xs class="my-5">
-            <div class="headline grey--text text--darken-3">Những sản phẩm liên quan</div>
-            <v-layout row wrap>
+          <div grid-list-xs class="my-5">
+            <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
+            <v-layout row wrap class="my-4 ml-3">
               <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`Book-${index}`">
                 <book-item :book="item"></book-item>
               </v-flex>
             </v-layout>
-          </v-container>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -130,7 +130,7 @@ export default {
       commenttext: "",
       bookDetail: {},
       tags: {},
-      comments: {},
+      comments: [],
       books: {},
       snackbar: false,
       timeout: 3000,
@@ -198,11 +198,12 @@ export default {
         "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
       )
       .then(response => {
-        this.bookDetail = response.data.data.book;
+        this.bookDetail = response.data.data.data;
         this.books = response.data.data.samebooks;
         this.tags = response.data.data.book.tags;
-        this.comments = response.data.data.book.comments;
-        console.log("đây là tác phẩm cảu detail", response.data);
+        this.comments = response.data.data.comments;
+        console.log(this.bookDetail);
+        console.log("đây là tác phẩm của detail", response.data);
       })
       .catch(function(error) {
         console.log(error);
@@ -231,5 +232,10 @@ export default {
 .primary {
   background-color: #00c853 !important;
   border-color: #00c853 !important;
+}
+.seemore-description {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

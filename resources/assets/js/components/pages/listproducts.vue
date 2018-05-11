@@ -67,51 +67,77 @@ export default {
     }
   }),
   watch: {
-    // "$route.query.page"(val) {
-    //   if (val) {
-    //     window.axios
-    //       .get("/books/type/" + this.$route.query.type + "?page=" + val)
-    //       .then(res => {
-    //         this.books = res.data.data;
-    //       });
-    //   }
-    //   console.log("chuyển axios thành công");
-    // },
+    "$route.query.page"(val) {
+      if (val) {
+        window.axios
+          .get(
+            "/books/type/" +
+              this.$route.query.type +
+              "?page=" +
+              val +
+              (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+          )
+          .then(res => {
+            this.books = res.data.data;
+            this.panigation.page = res.data.current_page;
+            this.panigation.length = res.data.last_page;
+          });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort"(val) {
+      if (val) {
+        window.axios
+          .get(
+            "/books/type/" +
+              this.$route.query.type +
+              "?sort=" +
+              val +
+              (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
+          )
+          .then(res => {
+            this.books = res.data.data;
+            this.panigation.page = res.data.current_page;
+            this.panigation.length = res.data.last_page;
+          });
+      }
+      console.log("chuyển axios thành công");
+    },
     filter_value(val) {
-      console.log(val.linkto);
-      window.axios
-        .get("/books/type/" + this.$route.query.type + "?sort=" + val.linkto)
-        .then(res => {
-          this.books = res.data.data;
-        });
-      console.log("chuyển axios lọc");
+      this.$router.push(
+        "list-products?type=" + this.$route.query.type + "&&sort=" + val.linkto
+      );
     }
   },
   methods: {
     next(page) {
       let type = this.$route.query.type;
       this.$router.push(
-        "list-products?type=" + this.$route.query.type + "&&page=" + page
-      );
-      console.log("đưa lên url thành công");
-    },
-    fil(filter_value) {
-      console.log("đã vào đây");
-      this.$router.push(
         "list-products?type=" +
           this.$route.query.type +
-          "?&&sort=" +
-          filter_value
+          "&&page=" +
+          page +
+          (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
       );
-      console.log("đưa lên url của lọc thành công");
+      console.log("đưa lên url thành công");
     }
   },
   mounted() {
     let type = this.$route.query.type;
-    window.axios.get("/books/type/" + type).then(res => {
-      this.books = res.data.data;
-      console.log("mang chị thuy", res.data.data);
-    });
+    window.axios
+      .get(
+        "/books/type/" +
+          type +
+          "?" +
+          (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") +
+          (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
+      )
+      .then(res => {
+        this.books = res.data.data;
+        this.panigation.page = res.data.current_page;
+        this.panigation.length = res.data.last_page;
+        console.log("mang chị thuy", res.data.data);
+      });
   }
 };
 </script>

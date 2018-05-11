@@ -70,10 +70,7 @@ class BookController extends APIBaseController
         $book->description = $input['description'];
         $book->id_author = $input['id_author'];
         $book->id_category = $input['id_category'];
-        $file = $request->file('image');
-        $file->store('/public/images');
-        $name = $file->getClientOriginalName('image');
-        $book->image = $name;
+        $book->image = $request->file('image')->store('/public/images');
         $book->save();
         if ($request->id_tag) {
             $book->tags()->attach($request->id_tag);
@@ -164,10 +161,7 @@ class BookController extends APIBaseController
         }
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('image');
-            $book->image = $name;
+            $book->image = $request->file('image')->store('/public/images');
         }
         $book->name = $input['name'];
         $book->slug = str_slug($input['name']);

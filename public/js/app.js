@@ -34215,7 +34215,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n  background-color: #fff !important;\n}\n.cyan {\r\n  background-color: #fff !important;\r\n  border-color: #fff !important;\n}\n.card {\r\n  -webkit-box-shadow: none;\r\n          box-shadow: none;\n}\n.application.theme--light {\r\n  background: #fff;\n}\n.application.theme--light .text--primary {\r\n  color: #757575 !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\n.seemore-description {\r\n  overflow: hidden;\r\n  white-space: nowrap;\r\n  text-overflow: ellipsis;\n}\r\n", ""]);
 
 // exports
 
@@ -34360,7 +34360,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       commenttext: "",
       bookDetail: {},
       tags: {},
-      comments: {},
+      comments: [],
       books: {},
       snackbar: false,
       timeout: 3000,
@@ -34422,11 +34422,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var _this = this;
 
   window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.book;
+    _this.bookDetail = response.data.data.data;
     _this.books = response.data.data.samebooks;
     _this.tags = response.data.data.book.tags;
-    _this.comments = response.data.data.book.comments;
-    console.log("đây là tác phẩm cảu detail", response.data);
+    _this.comments = response.data.data.comments;
+    console.log(_this.bookDetail);
+    console.log("đây là tác phẩm của detail", response.data);
   }).catch(function (error) {
     console.log(error);
   });
@@ -34503,6 +34504,7 @@ var render = function() {
                                               _c(
                                                 "v-flex",
                                                 {
+                                                  staticClass: "px-5",
                                                   attrs: {
                                                     xs12: "",
                                                     sm6: "",
@@ -34555,7 +34557,7 @@ var render = function() {
                                                         "div",
                                                         {
                                                           staticClass:
-                                                            "grey--text accent-4 body-2"
+                                                            "grey--text accent-4 body-2 py-2"
                                                         },
                                                         [
                                                           _c("span", [
@@ -34577,7 +34579,7 @@ var render = function() {
                                                               "span",
                                                               {
                                                                 staticClass:
-                                                                  "green--text text--accent-4 title mt-3"
+                                                                  "green--text text--accent-4 title py-3"
                                                               },
                                                               [
                                                                 _vm._v(
@@ -34589,7 +34591,17 @@ var render = function() {
                                                                           .price
                                                                       )
                                                                     ) +
-                                                                    " "
+                                                                    "\n                            "
+                                                                ),
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticStyle: {
+                                                                      "text-decoration":
+                                                                        "underline"
+                                                                    }
+                                                                  },
+                                                                  [_vm._v("đ")]
                                                                 )
                                                               ]
                                                             ),
@@ -34609,7 +34621,22 @@ var render = function() {
                                                                           .bookDetail
                                                                           .promotion_price
                                                                       )
-                                                                    )
+                                                                    ) +
+                                                                      "\n                              "
+                                                                  ),
+                                                                  _c(
+                                                                    "span",
+                                                                    {
+                                                                      staticStyle: {
+                                                                        "text-decoration":
+                                                                          "underline"
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "đ"
+                                                                      )
+                                                                    ]
                                                                   )
                                                                 ])
                                                               ]
@@ -34644,10 +34671,10 @@ var render = function() {
                                                       _vm._v(" "),
                                                       _c("div", [
                                                         _c(
-                                                          "span",
+                                                          "div",
                                                           {
                                                             staticClass:
-                                                              " grey--text text--accent-4body-1"
+                                                              "seemore-description grey--text text--accent-4body-1"
                                                           },
                                                           [
                                                             _vm._v(
@@ -34864,7 +34891,9 @@ var render = function() {
                       }
                     },
                     [
-                      _c("v-tabs-slider", { attrs: { color: "yellow" } }),
+                      _c("v-tabs-slider", {
+                        attrs: { color: "green accent-4" }
+                      }),
                       _vm._v(" "),
                       _c(
                         "v-tab",
@@ -34890,6 +34919,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-tabs-items",
+                        { staticClass: "ml-2" },
                         [
                           _c(
                             "v-tab-item",
@@ -34922,9 +34952,7 @@ var render = function() {
                                           },
                                           [
                                             _c("v-list-tile-avatar", [
-                                              _c("img", {
-                                                attrs: { src: item.avatar }
-                                              })
+                                              _c("img", { attrs: { src: "#" } })
                                             ]),
                                             _vm._v(" "),
                                             _c(
@@ -34933,7 +34961,7 @@ var render = function() {
                                                 _c("v-list-tile-title", {
                                                   domProps: {
                                                     innerHTML: _vm._s(
-                                                      item.content
+                                                      item.user.name
                                                     )
                                                   }
                                                 }),
@@ -34943,7 +34971,7 @@ var render = function() {
                                                     "subtitleComment",
                                                   domProps: {
                                                     innerHTML: _vm._s(
-                                                      item.comments
+                                                      item.content
                                                     )
                                                   }
                                                 })
@@ -34953,9 +34981,12 @@ var render = function() {
                                             _vm._v(" "),
                                             _c(
                                               "v-list-tile-action",
+                                              { staticClass: "pl-5" },
                                               [
                                                 _c("v-list-tile-action-text", [
-                                                  _vm._v(_vm._s(item.comments))
+                                                  _vm._v(
+                                                    _vm._s(item.created_at)
+                                                  )
                                                 ])
                                               ],
                                               1
@@ -34986,6 +35017,7 @@ var render = function() {
                                           _vm._v(" "),
                                           _c(
                                             "div",
+                                            { staticClass: "ml-0" },
                                             [
                                               _c(
                                                 "v-btn",
@@ -35004,27 +35036,23 @@ var render = function() {
                                         1
                                       ),
                                       _vm._v(" "),
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "text-xs-center mt-5"
-                                          },
-                                          [
-                                            _c("v-pagination", {
-                                              attrs: { length: 3 },
-                                              model: {
-                                                value: _vm.page,
-                                                callback: function($$v) {
-                                                  _vm.page = $$v
-                                                },
-                                                expression: "page"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ]
+                                      _c(
+                                        "div",
+                                        { staticClass: "text-xs-center mt-5" },
+                                        [
+                                          _c("v-pagination", {
+                                            attrs: { length: 3 },
+                                            model: {
+                                              value: _vm.page,
+                                              callback: function($$v) {
+                                                _vm.page = $$v
+                                              },
+                                              expression: "page"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
                                     ],
                                     2
                                   )
@@ -35042,18 +35070,21 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-container",
+                    "div",
                     { staticClass: "my-5", attrs: { "grid-list-xs": "" } },
                     [
                       _c(
                         "div",
-                        { staticClass: "headline grey--text text--darken-3" },
+                        { staticClass: "headline grey--text text--darken-3 " },
                         [_vm._v("Những sản phẩm liên quan")]
                       ),
                       _vm._v(" "),
                       _c(
                         "v-layout",
-                        { attrs: { row: "", wrap: "" } },
+                        {
+                          staticClass: "my-4 ml-3",
+                          attrs: { row: "", wrap: "" }
+                        },
                         _vm._l(_vm.books, function(item, index) {
                           return _c(
                             "v-flex",
@@ -36427,44 +36458,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   watch: {
-    // "$route.query.page"(val) {
-    //   if (val) {
-    //     window.axios
-    //       .get("/books/type/" + this.$route.query.type + "?page=" + val)
-    //       .then(res => {
-    //         this.books = res.data.data;
-    //       });
-    //   }
-    //   console.log("chuyển axios thành công");
-    // },
-    filter_value: function filter_value(val) {
+    "$route.query.page": function $routeQueryPage(val) {
       var _this = this;
 
-      console.log(val.linkto);
-      window.axios.get("/books/type/" + this.$route.query.type + "?sort=" + val.linkto).then(function (res) {
-        _this.books = res.data.data;
-      });
-      console.log("chuyển axios lọc");
+      if (val) {
+        window.axios.get("/books/type/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.books = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/books/type/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this2.books = res.data.data;
+          _this2.panigation.page = res.data.current_page;
+          _this2.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    filter_value: function filter_value(val) {
+      this.$router.push("list-products?type=" + this.$route.query.type + "&&sort=" + val.linkto);
     }
   },
   methods: {
     next: function next(page) {
       var type = this.$route.query.type;
-      this.$router.push("list-products?type=" + this.$route.query.type + "&&page=" + page);
+      this.$router.push("list-products?type=" + this.$route.query.type + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
       console.log("đưa lên url thành công");
-    },
-    fil: function fil(filter_value) {
-      console.log("đã vào đây");
-      this.$router.push("list-products?type=" + this.$route.query.type + "?&&sort=" + filter_value);
-      console.log("đưa lên url của lọc thành công");
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     var type = this.$route.query.type;
-    window.axios.get("/books/type/" + type).then(function (res) {
-      _this2.books = res.data.data;
+    window.axios.get("/books/type/" + type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+      _this3.books = res.data.data;
+      _this3.panigation.page = res.data.current_page;
+      _this3.panigation.length = res.data.last_page;
       console.log("mang chị thuy", res.data.data);
     });
   }
@@ -37559,8 +37595,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -43309,6 +43343,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         }
       }
+      console.log("Đỏ");
 
       var itemBook = {
         book: this.book,
@@ -43403,19 +43438,17 @@ var render = function() {
                               [_vm._v(_vm._s(_vm.book.name) + " ")]
                             ),
                             _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(_vm.book.name) + " ")])
+                            _c("span", [_vm._v(_vm._s(_vm.book.name))])
                           ])
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _vm.book.author
-                        ? _c(
-                            "p",
-                            { staticClass: "grey--text text--darken-1 mt-1" },
-                            [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
-                          )
-                        : _vm._e(),
+                      _c(
+                        "p",
+                        { staticClass: "grey--text text--darken-1 mt-1" },
+                        [_vm._v("Tác giả: " + _vm._s(_vm.book.author.name))]
+                      ),
                       _vm._v(" "),
                       _vm.book.promotion_price
                         ? _c(

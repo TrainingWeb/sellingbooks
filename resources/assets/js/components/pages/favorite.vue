@@ -43,14 +43,12 @@
                   {{formatPrice(props.item.book.price)}}đ
                 </span>
               </div>
-
             </td>
             <td>
               <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
               </v-btn>
             </td>
-
           </tr>
         </template>
       </v-data-table>
