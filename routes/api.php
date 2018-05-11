@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
     Route::get('/removefavorite/{id}', 'PageController@removeFavorite');
 });
 
-Route::post('/search', 'PageController@search');
+Route::get('/search', 'PageController@search');
 Route::get('/index', 'PageController@index');
 Route::get('/books/type/{type}', 'PageController@typeBooks');
 Route::get('/books/{slug}', 'PageController@getBookInfo');
@@ -63,5 +63,5 @@ Route::get('/categories', 'PageController@getCategoies');
 Route::get('/categories/{slug}', 'PageController@getInfoCategory');
 Route::get('/tags/{slug}', 'PageController@tagInfo');
 
-Route::post('/sendmail', 'PageController@sendMail');
+Route::post('/sendmail', 'PageController@sendMailResetPassword');
 Route::post('/password/reset', 'PageController@resetPassword');
