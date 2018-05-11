@@ -58,8 +58,8 @@ export default {
         "/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name
       )
       .then(response => {
-        this.tags = response.data;
-        console.log("đây là tác phẩm của tags", response.data);
+        this.tags = response.data.data;
+        console.log("đây là tác phẩm của tags", response.data.data);
       })
       .catch(function(error) {
         console.log(error);

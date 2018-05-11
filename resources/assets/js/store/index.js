@@ -52,9 +52,10 @@ const store = new Vuex.Store({
     }, val) {
       commit("SET_TOKEN", val);
       localStorage.token = val;
-      window.axios.defaults.headers = {
-        "Authorization": 'Bearer ' + val
-      }
+      // window.axios.defaults.headers = {
+      //   "Authorization": 'Bearer ' + val
+      // }
+      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val
     },
     setUser({
       commit

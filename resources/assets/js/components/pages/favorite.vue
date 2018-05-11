@@ -7,31 +7,6 @@
       <v-data-table :headers="headers" :items="$store.state.favorite" hide-actions flat>
         <template slot="items" slot-scope="props">
           <tr class="py-1">
-            <td class="py-2">
-              <img :src="'/storage/images/'+props.item.book.image" alt="" width="80px" height="120px">
-            </td>
-            <td>
-              <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
-            </td>
-            <td>
-              <div v-if="props.item.book.promotion_price">
-                <span class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}</span>
-                <span class="grey--text text--darken-1 title ml-3">
-                  <del>{{formatPrice(props.item.book.price)}}</del>
-                </span>
-              </div>
-              <div v-else>
-                <span class="green--text text--accent-4 title ml-3">
-                  {{formatPrice(props.item.book.price)}}
-                </span>
-              </div>
-
-            </td>
-            <td>
-              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
-                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
-              </v-btn>
-            </td>
             <td class="text-xs-center layout px-0 py-5">
               <v-layout row justify-center>
                 <v-dialog flat v-model="dialogDelete" persistent max-width="290">
@@ -50,6 +25,32 @@
                 </v-dialog>
               </v-layout>
             </td>
+            <td class="py-2">
+              <img :src="'/storage/images/'+props.item.book.image" alt="" width="80px" height="120px">
+            </td>
+            <td>
+              <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
+            </td>
+            <td>
+              <div v-if="props.item.book.promotion_price">
+                <span class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}đ</span>
+                <span class="grey--text text--darken-1 title ml-3">
+                  <del>{{formatPrice(props.item.book.price)}}đ</del>
+                </span>
+              </div>
+              <div v-else>
+                <span class="green--text text--accent-4 title ml-3">
+                  {{formatPrice(props.item.book.price)}}đ
+                </span>
+              </div>
+
+            </td>
+            <td>
+              <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
+                <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
+              </v-btn>
+            </td>
+
           </tr>
         </template>
       </v-data-table>
@@ -62,14 +63,14 @@ export default {
   data: () => ({
     headers: [
       { sortable: false },
+      { sortable: false },
       {
         text: "Tên sách",
         align: "left",
         sortable: false
       },
       { text: "Giá tiền", sortable: false },
-      { text: "Chọn mua", sortable: false },
-      { sortable: false }
+      { text: "Chọn mua", sortable: false }
     ],
     breadcrumbs: [
       {

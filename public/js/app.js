@@ -35814,9 +35814,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36124,11 +36121,12 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "mt-3 text-xs-right " },
+                                    { staticClass: "my-3 text-xs-right " },
                                     [
                                       _c(
                                         "v-btn",
                                         {
+                                          staticClass: "my-4",
                                           attrs: {
                                             dark: "",
                                             color: "green accent-4"
@@ -36393,10 +36391,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      filter_value: "",
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -36407,7 +36408,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disabled: true
       }],
       e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
       books: {},
       namepage: "Danh sách sản phẩm",
       // page: 1,
@@ -36427,6 +36437,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this.books = res.data.data;
         });
       }
+    },
+    filter_value: function filter_value(val) {
+      var _this2 = this;
+
+      window.axios.get("/books/type/" + this.$route.query.type + "?page=" + val).then(function (res) {
+        _this2.books = res.data.data;
+      });
     }
   },
   methods: {
@@ -36436,12 +36453,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     var type = this.$route.query.type;
     window.axios.get("/books/type/" + type + "?page=" + this.$route.query.page || 1).then(function (res) {
-      _this2.books = res.data.data;
-      console.log("mang chị thuy", res.data.data);
+      _this3.books = res.data.data;
+      // console.log("mang chị thuy", res.data.data);
     });
   }
 });
@@ -36484,15 +36501,17 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       items: _vm.filter,
+                      "item-text": "text",
+                      "return-object": "",
                       label: "--Chọn--",
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.e1,
+                      value: _vm.filter_value,
                       callback: function($$v) {
-                        _vm.e1 = $$v
+                        _vm.filter_value = $$v
                       },
-                      expression: "e1"
+                      expression: "filter_value"
                     }
                   })
                 ],
@@ -37303,7 +37322,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
     this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
 
-    window.axios.post("/search/?name=" + this.$route.query.name).then(function (response) {
+    window.axios.get("/search/?name=" + this.$route.query.name).then(function (response) {
       _this.search = response.data.data;
       console.log("Đây là search", response.data.data);
     }).catch(function (error) {
@@ -37583,15 +37602,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ sortable: false }, {
+      headers: [{ sortable: false }, { sortable: false }, {
         text: "Tên sách",
         align: "left",
         sortable: false
-      }, { text: "Giá tiền", sortable: false }, { text: "Chọn mua", sortable: false }, { sortable: false }],
+      }, { text: "Giá tiền", sortable: false }, { text: "Chọn mua", sortable: false }],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37691,122 +37711,6 @@ var render = function() {
                 fn: function(props) {
                   return [
                     _c("tr", { staticClass: "py-1" }, [
-                      _c("td", { staticClass: "py-2" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/images/" + props.item.book.image,
-                            alt: "",
-                            width: "80px",
-                            height: "120px"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass:
-                                "subheading text-xs-left red--text text--darken-4",
-                              staticStyle: { "text-decoration": "none" },
-                              attrs: { to: "/detail" }
-                            },
-                            [_vm._v(_vm._s(props.item.book.name))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", [
-                        props.item.book.promotion_price
-                          ? _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title "
-                                },
-                                [
-                                  _vm._v(
-                                    " " +
-                                      _vm._s(
-                                        _vm.formatPrice(
-                                          props.item.book.promotion_price
-                                        )
-                                      )
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "grey--text text--darken-1 title ml-3"
-                                },
-                                [
-                                  _c("del", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      )
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title ml-3"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) +
-                                      "\n              "
-                                  )
-                                ]
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "mx-0 my-3",
-                              attrs: { color: "green accent-4 white--text" },
-                              on: {
-                                click: function($event) {
-                                  _vm.addCartPageFavorite(props.item)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "i",
-                                {
-                                  staticClass:
-                                    "material-icons add-shopping mr-2 white--text"
-                                },
-                                [_vm._v("add_shopping_cart")]
-                              ),
-                              _vm._v("Thêm\n            ")
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
                       _c(
                         "td",
                         { staticClass: "text-xs-center layout px-0 py-5" },
@@ -37926,6 +37830,123 @@ var render = function() {
                               )
                             ],
                             1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "py-2" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/images/" + props.item.book.image,
+                            alt: "",
+                            width: "80px",
+                            height: "120px"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass:
+                                "subheading text-xs-left red--text text--darken-4",
+                              staticStyle: { "text-decoration": "none" },
+                              attrs: { to: "/detail" }
+                            },
+                            [_vm._v(_vm._s(props.item.book.name))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", [
+                        props.item.book.promotion_price
+                          ? _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title "
+                                },
+                                [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          props.item.book.promotion_price
+                                        )
+                                      ) +
+                                      "đ"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "grey--text text--darken-1 title ml-3"
+                                },
+                                [
+                                  _c("del", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
+                                      ) + "đ"
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title ml-3"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.book.price)
+                                      ) +
+                                      "đ\n              "
+                                  )
+                                ]
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-0 my-3",
+                              attrs: { color: "green accent-4 white--text" },
+                              on: {
+                                click: function($event) {
+                                  _vm.addCartPageFavorite(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "i",
+                                {
+                                  staticClass:
+                                    "material-icons add-shopping mr-2 white--text"
+                                },
+                                [_vm._v("add_shopping_cart")]
+                              ),
+                              _vm._v("Thêm\n            ")
+                            ]
                           )
                         ],
                         1
@@ -38773,8 +38794,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this = this;
 
     window.axios.get("/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name).then(function (response) {
-      _this.tags = response.data;
-      console.log("đây là tác phẩm của tags", response.data);
+      _this.tags = response.data.data;
+      console.log("đây là tác phẩm của tags", response.data.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -42113,9 +42134,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
       commit("SET_TOKEN", val);
       localStorage.token = val;
-      window.axios.defaults.headers = {
-        "Authorization": 'Bearer ' + val
-      };
+      // window.axios.defaults.headers = {
+      //   "Authorization": 'Bearer ' + val
+      // }
+      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val;
     },
     setUser: function setUser(_ref5, val) {
       var commit = _ref5.commit;
@@ -43328,7 +43350,7 @@ var render = function() {
                       _c("v-card-media", {
                         attrs: {
                           src: "/storage/images/" + _vm.book.image,
-                          height: "180px"
+                          height: "205px"
                         }
                       })
                     ],

@@ -56,7 +56,7 @@ export default {
     this.breadcrumbs[1].name = `Kết quả tìm kiếm: ${this.$route.query.name}`;
 
     window.axios
-      .post("/search/?name=" + this.$route.query.name)
+      .get("/search/?name=" + this.$route.query.name)
       .then(response => {
         this.search = response.data.data;
         console.log("Đây là search", response.data.data);

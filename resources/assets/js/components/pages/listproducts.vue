@@ -6,7 +6,9 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
-          <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
+
+          <v-select :items="filter" item-text="text" return-object v-model="filter_value" label="--Chọn--" single-line></v-select>
+
         </v-flex>
       </v-layout>
       <v-container grid-list-xs>
@@ -28,6 +30,7 @@
 <script>
 export default {
   data: () => ({
+    filter_value: "",
     breadcrumbs: [
       {
         name: "Trang Chủ",
@@ -42,8 +45,18 @@ export default {
     ],
     e1: null,
     filter: [
-      { text: "Lọc theo tên A-Z" },
-      { text: "Lọc Theo Giá tiền" },
+      {
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      },
+      {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      },
+      {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      },
       { text: "Lọc theo giá tiền giảm giá" }
     ],
     books: {},
@@ -64,6 +77,13 @@ export default {
             this.books = res.data.data;
           });
       }
+    },
+    filter_value(val) {
+      window.axios
+        .get("/books/type/" + this.$route.query.type + "?page=" + val)
+        .then(res => {
+          this.books = res.data.data;
+        });
     }
   },
   methods: {
@@ -78,7 +98,7 @@ export default {
       .get("/books/type/" + type + "?page=" + this.$route.query.page || 1)
       .then(res => {
         this.books = res.data.data;
-        console.log("mang chị thuy", res.data.data);
+        // console.log("mang chị thuy", res.data.data);
       });
   }
 };
