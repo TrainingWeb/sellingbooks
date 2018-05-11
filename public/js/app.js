@@ -34353,9 +34353,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   data: function data() {
@@ -34439,7 +34436,655 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-layout",
+        { attrs: { xs12: "" } },
+        [
+          _c("v-banner", {
+            attrs: {
+              value: { title: _vm.namepage, breadcrumbs: _vm.breadcrumbs }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "v-container",
+                        {
+                          staticStyle: { "min-height": "0" },
+                          attrs: { fluid: "", "grid-list-lg": "" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                {
+                                  staticClass: "white--text",
+                                  attrs: { color: "cyan darken-2" }
+                                },
+                                [
+                                  _c(
+                                    "v-container",
+                                    {
+                                      attrs: { fluid: "", "grid-list-lg": "" }
+                                    },
+                                    [
+                                      _vm.bookDetail.author
+                                        ? _c(
+                                            "v-layout",
+                                            { attrs: { row: "", wrap: "" } },
+                                            [
+                                              _c(
+                                                "v-flex",
+                                                {
+                                                  attrs: {
+                                                    xs12: "",
+                                                    sm6: "",
+                                                    md4: ""
+                                                  }
+                                                },
+                                                [
+                                                  _c("v-card-media", {
+                                                    attrs: {
+                                                      src:
+                                                        "/storage/images/" +
+                                                        _vm.bookDetail.image,
+                                                      height: "450px"
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-flex",
+                                                {
+                                                  attrs: {
+                                                    xs12: "",
+                                                    sm6: "",
+                                                    md8: ""
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "headline grey--text text--darken-3"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.bookDetail
+                                                                .name
+                                                            )
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "grey--text accent-4 body-2"
+                                                        },
+                                                        [
+                                                          _c("span", [
+                                                            _vm._v(
+                                                              "Tác giả: " +
+                                                                _vm._s(
+                                                                  _vm.bookDetail
+                                                                    .author.name
+                                                                )
+                                                            )
+                                                          ])
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _vm.bookDetail
+                                                        .promotion_price
+                                                        ? _c("div", [
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "green--text text--accent-4 title mt-3"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  " " +
+                                                                    _vm._s(
+                                                                      _vm.formatPrice(
+                                                                        _vm
+                                                                          .bookDetail
+                                                                          .price
+                                                                      )
+                                                                    ) +
+                                                                    " "
+                                                                )
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "grey--text text--darken-1 title mt-3 ml-3"
+                                                              },
+                                                              [
+                                                                _c("del", [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      _vm.formatPrice(
+                                                                        _vm
+                                                                          .bookDetail
+                                                                          .promotion_price
+                                                                      )
+                                                                    )
+                                                                  )
+                                                                ])
+                                                              ]
+                                                            )
+                                                          ])
+                                                        : _c("div", [
+                                                            _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "green--text text--accent-4 title mt-3"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n                            " +
+                                                                    _vm._s(
+                                                                      _vm.formatPrice(
+                                                                        _vm
+                                                                          .bookDetail
+                                                                          .price
+                                                                      )
+                                                                    ) +
+                                                                    "\n                          "
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]),
+                                                      _vm._v(" "),
+                                                      _c("v-divider", {
+                                                        staticClass: "my-3"
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "span",
+                                                          {
+                                                            staticClass:
+                                                              " grey--text text--accent-4body-1"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.bookDetail
+                                                                  .description
+                                                              )
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("a", [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "green--text text--accent-4"
+                                                            },
+                                                            [_vm._v("Xem thêm")]
+                                                          )
+                                                        ])
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("v-divider", {
+                                                        staticClass: "my-3"
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        [
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              staticClass:
+                                                                "mx-0",
+                                                              attrs: {
+                                                                color:
+                                                                  "green accent-4 white--text"
+                                                              },
+                                                              on: {
+                                                                click:
+                                                                  _vm.addCartDetail
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "i",
+                                                                {
+                                                                  staticClass:
+                                                                    "material-icons add-shopping mr-2 white--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "add_shopping_cart"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(
+                                                                "Thêm\n                          "
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                color:
+                                                                  "green accent-4"
+                                                              },
+                                                              on: {
+                                                                click:
+                                                                  _vm.addFavoriteDetail
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "i",
+                                                                {
+                                                                  staticClass:
+                                                                    "material-icons favorite white--text"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "favorite"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-layout",
+                                                        {
+                                                          staticClass: "mt-3",
+                                                          attrs: {
+                                                            row: "",
+                                                            wrap: ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "text-xs-center"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "green--text ml-2"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Tags:"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _vm._l(
+                                                                _vm.tags,
+                                                                function(
+                                                                  tag,
+                                                                  index
+                                                                ) {
+                                                                  return _c(
+                                                                    "v-chip",
+                                                                    {
+                                                                      key:
+                                                                        "keytag-$" +
+                                                                        index,
+                                                                      staticClass:
+                                                                        "px-0",
+                                                                      attrs: {
+                                                                        color:
+                                                                          "grey--text text--darken-1",
+                                                                        "text-color":
+                                                                          "white"
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "router-link",
+                                                                        {
+                                                                          staticClass:
+                                                                            "grey--text text--darken-2",
+                                                                          staticStyle: {
+                                                                            "text-decoration":
+                                                                              "none"
+                                                                          },
+                                                                          attrs: {
+                                                                            to:
+                                                                              "/tags?name=" +
+                                                                              tag.slug
+                                                                          }
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            _vm._s(
+                                                                              tag.name
+                                                                            ) +
+                                                                              " "
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                }
+                                                              )
+                                                            ],
+                                                            2
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-tabs",
+                    {
+                      attrs: {
+                        "icons-and-text": "",
+                        dark: "",
+                        color: "white",
+                        height: "40px"
+                      }
+                    },
+                    [
+                      _c("v-tabs-slider", { attrs: { color: "yellow" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-tab",
+                        {
+                          staticClass: "green accent-4",
+                          attrs: { href: "#tab-1" }
+                        },
+                        [_vm._v("\n            Chi tiết sản phẩm\n          ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-tab",
+                        {
+                          staticClass: "green accent-4",
+                          attrs: { href: "#tab-2" }
+                        },
+                        [
+                          _vm._v(
+                            "\n            Nhận xét khách hàng\n          "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-tabs-items",
+                        [
+                          _c(
+                            "v-tab-item",
+                            { attrs: { id: "tab-1" } },
+                            [
+                              _c("v-card-text", { staticClass: "roboto" }, [
+                                _vm._v(_vm._s(_vm.bookDetail.description))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-tab-item",
+                            { attrs: { id: "tab-2" } },
+                            [
+                              _c(
+                                "v-card",
+                                [
+                                  _c(
+                                    "v-list",
+                                    { attrs: { "three-line": "" } },
+                                    [
+                                      _vm._l(_vm.comments, function(item) {
+                                        return _c(
+                                          "v-list-tile",
+                                          {
+                                            key: item.title,
+                                            attrs: { avatar: "" }
+                                          },
+                                          [
+                                            _c("v-list-tile-avatar", [
+                                              _c("img", {
+                                                attrs: { src: item.avatar }
+                                              })
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              [
+                                                _c("v-list-tile-title", {
+                                                  domProps: {
+                                                    innerHTML: _vm._s(
+                                                      item.content
+                                                    )
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-list-tile-sub-title", {
+                                                  staticClass:
+                                                    "subtitleComment",
+                                                  domProps: {
+                                                    innerHTML: _vm._s(
+                                                      item.comments
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-action",
+                                              [
+                                                _c("v-list-tile-action-text", [
+                                                  _vm._v(_vm._s(item.comments))
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-layout",
+                                        { attrs: { row: "", wrap: "" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              name: "input-1-3",
+                                              label: "Lời nhận xét của bạn",
+                                              "single-line": ""
+                                            },
+                                            model: {
+                                              value: _vm.commenttext,
+                                              callback: function($$v) {
+                                                _vm.commenttext = $$v
+                                              },
+                                              expression: "commenttext"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color:
+                                                      "green accent-4 white--text"
+                                                  }
+                                                },
+                                                [_vm._v("Gửi")]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "text-xs-center mt-5"
+                                          },
+                                          [
+                                            _c("v-pagination", {
+                                              attrs: { length: 3 },
+                                              model: {
+                                                value: _vm.page,
+                                                callback: function($$v) {
+                                                  _vm.page = $$v
+                                                },
+                                                expression: "page"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    ],
+                                    2
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-container",
+                    { staticClass: "my-5", attrs: { "grid-list-xs": "" } },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "headline grey--text text--darken-3" },
+                        [_vm._v("Những sản phẩm liên quan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { row: "", wrap: "" } },
+                        _vm._l(_vm.books, function(item, index) {
+                          return _c(
+                            "v-flex",
+                            {
+                              key: "Book-" + index,
+                              attrs: { xs12: "", md6: "", lg4: "" }
+                            },
+                            [_c("book-item", { attrs: { book: item } })],
+                            1
+                          )
+                        })
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -38128,8 +38773,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this = this;
 
     window.axios.get("/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name).then(function (response) {
-      _this.tags = response.data.books;
-      console.log("đây là tác phẩm của tags", response.data.books);
+      _this.tags = response.data;
+      console.log("đây là tác phẩm của tags", response.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -39858,6 +40503,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -39908,7 +40577,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //    popover
       e2: false,
       e3: false
-    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "token_login", {}), _ref;
+    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _ref;
   },
   props: {
     source: String
@@ -39935,12 +40604,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: this.passLogin
       }).then(function (response) {
         var data = response.data;
-        console.log(data);
+        console.log(data.api_token);
         _this.$store.dispatch("setToken", data.api_token), _this.$store.dispatch("setUser", data.user);
+        _this.snackbarlogin = true;
       }).catch(function (error) {
         console.log(error);
       });
       this.login = false;
+    },
+    logout: function logout() {
+      var user = this.$store.state.user;
+      var token = this.$store.state.token;
+      token = "";
+      user = {};
+      this.$store.dispatch("setUser", user);
+      this.$store.dispatch("setToken", token);
     },
     registerUser: function registerUser() {
       var _this2 = this;
@@ -39950,8 +40628,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         email: this.emailRegister,
         password: this.passRegister
       }).then(function (response) {
-        var data = response.data;
-        _this2.$store.dispatch("setToken", data.api_token), _this2.$store.dispatch("setUser", data.user);
+        _this2.data = response.data;
+        _this2.$store.dispatch("setToken", _this2.data.api_token), _this2.$store.dispatch("setUser", _this2.data.user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -40059,334 +40737,389 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        {
-                          attrs: {
-                            bottom: "",
-                            "offset-y": "",
-                            "max-width": 350,
-                            "close-on-content-click": false
-                          },
-                          model: {
-                            value: _vm.login,
-                            callback: function($$v) {
-                              _vm.login = $$v
-                            },
-                            expression: "login"
-                          }
-                        },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white",
-                              attrs: { slot: "activator", flat: "" },
-                              slot: "activator"
-                            },
-                            [_vm._v("Đăng nhập")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
-                            { attrs: { flat: "" } },
-                            [
-                              _c(
-                                "v-list",
-                                {
-                                  staticClass:
-                                    "green accent-4 white--text text-xs-center"
+                      !_vm.$store.state.token
+                        ? [
+                            _c(
+                              "v-menu",
+                              {
+                                attrs: {
+                                  bottom: "",
+                                  "offset-y": "",
+                                  "max-width": 350,
+                                  "close-on-content-click": false
                                 },
-                                [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
-                              ),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v(" "),
-                              _c(
-                                "v-container",
-                                [
-                                  _c(
-                                    "v-form",
-                                    {
-                                      ref: "form",
-                                      attrs: { "lazy-validation": "" },
-                                      model: {
-                                        value: _vm.valid,
-                                        callback: function($$v) {
-                                          _vm.valid = $$v
-                                        },
-                                        expression: "valid"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.emailRules,
-                                              label: "E-mail",
-                                              required: ""
-                                            },
+                                model: {
+                                  value: _vm.login,
+                                  callback: function($$v) {
+                                    _vm.login = $$v
+                                  },
+                                  expression: "login"
+                                }
+                              },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "white",
+                                    attrs: { slot: "activator", flat: "" },
+                                    slot: "activator"
+                                  },
+                                  [_vm._v("Đăng nhập")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-card",
+                                  { attrs: { flat: "" } },
+                                  [
+                                    _c(
+                                      "v-list",
+                                      {
+                                        staticClass:
+                                          "green accent-4 white--text text-xs-center"
+                                      },
+                                      [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("v-divider"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-container",
+                                      [
+                                        _c(
+                                          "v-form",
+                                          {
+                                            ref: "form",
+                                            attrs: { "lazy-validation": "" },
                                             model: {
-                                              value: _vm.emailLogin,
+                                              value: _vm.valid,
                                               callback: function($$v) {
-                                                _vm.emailLogin = $$v
+                                                _vm.valid = $$v
                                               },
-                                              expression: "emailLogin"
+                                              expression: "valid"
                                             }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              required: "",
-                                              name: "input-10-2",
-                                              label: "Mật khẩu",
-                                              "append-icon": _vm.e2
-                                                ? "visibility"
-                                                : "visibility_off",
-                                              "append-icon-cb": function() {
-                                                return (_vm.e2 = !_vm.e2)
-                                              },
-                                              type: _vm.e2 ? "password" : "text"
-                                            },
-                                            model: {
-                                              value: _vm.passLogin,
-                                              callback: function($$v) {
-                                                _vm.passLogin = $$v
-                                              },
-                                              expression: "passLogin"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        [
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                flat: "",
-                                                to: "/forgotpassword"
-                                              }
-                                            },
-                                            [_vm._v("Quên mật khẩu")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass: "text-xs-center",
-                                              attrs: { disabled: !_vm.valid },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.loginpage()
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                      Đăng nhập\n                    "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-menu",
-                        {
-                          attrs: {
-                            fluid: "",
-                            bottom: "",
-                            "offset-y": "",
-                            "max-width": 400,
-                            "close-on-content-click": false
-                          },
-                          model: {
-                            value: _vm.register,
-                            callback: function($$v) {
-                              _vm.register = $$v
-                            },
-                            expression: "register"
-                          }
-                        },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white",
-                              attrs: { slot: "activator", flat: "" },
-                              slot: "activator"
-                            },
-                            [_vm._v("Đăng Ký")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card",
-                            { attrs: { flat: "" } },
-                            [
-                              _c(
-                                "v-list",
-                                {
-                                  staticClass:
-                                    "green accent-4 white--text text-xs-center"
+                                          },
+                                          [
+                                            _c(
+                                              "v-flex",
+                                              { attrs: { xs12: "" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    rules: _vm.emailRules,
+                                                    label: "E-mail",
+                                                    required: ""
+                                                  },
+                                                  model: {
+                                                    value: _vm.emailLogin,
+                                                    callback: function($$v) {
+                                                      _vm.emailLogin = $$v
+                                                    },
+                                                    expression: "emailLogin"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-flex",
+                                              { attrs: { xs12: "" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    required: "",
+                                                    name: "input-10-2",
+                                                    label: "Mật khẩu",
+                                                    "append-icon": _vm.e2
+                                                      ? "visibility"
+                                                      : "visibility_off",
+                                                    "append-icon-cb": function() {
+                                                      return (_vm.e2 = !_vm.e2)
+                                                    },
+                                                    type: _vm.e2
+                                                      ? "password"
+                                                      : "text"
+                                                  },
+                                                  model: {
+                                                    value: _vm.passLogin,
+                                                    callback: function($$v) {
+                                                      _vm.passLogin = $$v
+                                                    },
+                                                    expression: "passLogin"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              [
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      flat: "",
+                                                      to: "/forgotpassword"
+                                                    }
+                                                  },
+                                                  [_vm._v("Quên mật khẩu")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    staticClass:
+                                                      "text-xs-center",
+                                                    attrs: {
+                                                      disabled: !_vm.valid
+                                                    },
+                                                    on: { click: _vm.loginpage }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                        Đăng nhập\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-menu",
+                              {
+                                attrs: {
+                                  fluid: "",
+                                  bottom: "",
+                                  "offset-y": "",
+                                  "max-width": 400,
+                                  "close-on-content-click": false
                                 },
-                                [_c("span", [_vm._v("ĐĂNG KÝ")])]
-                              ),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v(" "),
-                              _c(
-                                "v-container",
-                                [
-                                  _c(
-                                    "v-form",
-                                    {
-                                      ref: "form",
-                                      attrs: { "lazy-validation": "" },
-                                      model: {
-                                        value: _vm.valid,
-                                        callback: function($$v) {
-                                          _vm.valid = $$v
-                                        },
-                                        expression: "valid"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.nameRules,
-                                              label: "Tên",
-                                              required: ""
-                                            },
+                                model: {
+                                  value: _vm.register,
+                                  callback: function($$v) {
+                                    _vm.register = $$v
+                                  },
+                                  expression: "register"
+                                }
+                              },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "white",
+                                    attrs: { slot: "activator", flat: "" },
+                                    slot: "activator"
+                                  },
+                                  [_vm._v("Đăng Ký")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-card",
+                                  { attrs: { flat: "" } },
+                                  [
+                                    _c(
+                                      "v-list",
+                                      {
+                                        staticClass:
+                                          "green accent-4 white--text text-xs-center"
+                                      },
+                                      [_c("span", [_vm._v("ĐĂNG KÝ")])]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("v-divider"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-container",
+                                      [
+                                        _c(
+                                          "v-form",
+                                          {
+                                            ref: "form",
+                                            attrs: { "lazy-validation": "" },
                                             model: {
-                                              value: _vm.name,
+                                              value: _vm.valid,
                                               callback: function($$v) {
-                                                _vm.name = $$v
+                                                _vm.valid = $$v
                                               },
-                                              expression: "name"
+                                              expression: "valid"
                                             }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.emailRules,
-                                              label: "E-mail",
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.emailRegister,
-                                              callback: function($$v) {
-                                                _vm.emailRegister = $$v
-                                              },
-                                              expression: "emailRegister"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              required: "",
-                                              label: "Mật khẩu",
-                                              rules: _vm.passRules,
-                                              "append-icon": _vm.e2
-                                                ? "visibility"
-                                                : "visibility_off",
-                                              "append-icon-cb": function() {
-                                                return (_vm.e2 = !_vm.e2)
-                                              },
-                                              type: _vm.e2 ? "password" : "text"
-                                            },
-                                            model: {
-                                              value: _vm.passRegister,
-                                              callback: function($$v) {
-                                                _vm.passRegister = $$v
-                                              },
-                                              expression: "passRegister"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        [
-                                          _c("v-btn", { attrs: { flat: "" } }, [
-                                            _vm._v("Đóng")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { disabled: !_vm.valid },
-                                              on: { click: _vm.registerUser }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                      Đăng ký\n                    "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
+                                          },
+                                          [
+                                            _c(
+                                              "v-flex",
+                                              { attrs: { xs12: "" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    rules: _vm.nameRules,
+                                                    label: "Tên",
+                                                    required: ""
+                                                  },
+                                                  model: {
+                                                    value: _vm.name,
+                                                    callback: function($$v) {
+                                                      _vm.name = $$v
+                                                    },
+                                                    expression: "name"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-flex",
+                                              { attrs: { xs12: "" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    rules: _vm.emailRules,
+                                                    label: "E-mail",
+                                                    required: ""
+                                                  },
+                                                  model: {
+                                                    value: _vm.emailRegister,
+                                                    callback: function($$v) {
+                                                      _vm.emailRegister = $$v
+                                                    },
+                                                    expression: "emailRegister"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-flex",
+                                              { attrs: { xs12: "" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    required: "",
+                                                    label: "Mật khẩu",
+                                                    rules: _vm.passRules,
+                                                    "append-icon": _vm.e2
+                                                      ? "visibility"
+                                                      : "visibility_off",
+                                                    "append-icon-cb": function() {
+                                                      return (_vm.e2 = !_vm.e2)
+                                                    },
+                                                    type: _vm.e2
+                                                      ? "password"
+                                                      : "text"
+                                                  },
+                                                  model: {
+                                                    value: _vm.passRegister,
+                                                    callback: function($$v) {
+                                                      _vm.passRegister = $$v
+                                                    },
+                                                    expression: "passRegister"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              [
+                                                _c(
+                                                  "v-btn",
+                                                  { attrs: { flat: "" } },
+                                                  [_vm._v("Đóng")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      disabled: !_vm.valid
+                                                    },
+                                                    on: {
+                                                      click: _vm.registerUser
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                        Đăng ký\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        : [
+                            _c(
+                              "v-toolbar-title",
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "mr-0",
+                                    attrs: { flat: "", icon: "" }
+                                  },
+                                  [_c("v-icon", [_vm._v("account_circle")])],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "caption" }, [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(_vm.$store.state.user.name) +
+                                      "\n              "
                                   )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      flat: "",
+                                      icon: "",
+                                      color: "grey darken-1"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.logout()
+                                      }
+                                    }
+                                  },
+                                  [_c("v-icon", [_vm._v("exit_to_app")])],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ]
                     ],
-                    1
+                    2
                   )
                 ],
                 1
@@ -40425,11 +41158,7 @@ var render = function() {
                         [
                           _c(
                             "v-btn",
-                            {
-                              staticClass:
-                                "caption grey--text  text--darken-1 p-0",
-                              attrs: { flat: "", to: "/card" }
-                            },
+                            { attrs: { flat: "", to: "/card" } },
                             [
                               _c(
                                 "v-badge",
@@ -40460,11 +41189,7 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-btn",
-                            {
-                              staticClass:
-                                "caption grey--text  text--darken-1 p-0",
-                              attrs: { flat: "", to: "/favorite" }
-                            },
+                            { attrs: { flat: "", to: "/favorite" } },
                             [
                               _c(
                                 "v-badge",
@@ -41276,6 +42001,37 @@ var render = function() {
                 [_vm._v("\n        ©2018 — Demo Vue Js\n      ")]
               )
             ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: 4000, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbarlogin,
+            callback: function($$v) {
+              _vm.snackbarlogin = $$v
+            },
+            expression: "snackbarlogin"
+          }
+        },
+        [
+          _vm._v("\n\n    đắng nhập thành công\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbarlogin = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
             1
           )
         ],
