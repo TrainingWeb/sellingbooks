@@ -90,8 +90,7 @@ class PageController extends APIBaseController
         if (!$tag) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        $books = $tag->books()->with('author')->with('tags')->get();
-        return response()->json($books);
+        return $this->sort($tag->books());
     }
 
     public function search()
@@ -118,11 +117,10 @@ class PageController extends APIBaseController
             $items03[] = $items3->id;
         }
         $done = $items01 + $items02 + $items03;
-        $books = Book::whereIn('id', $done)->with('author')->paginate(18);
         if (count($books) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
-        return response()->json($books);
+        return $this->sort(Book::whereIn('id', $done));
     }
 
     public function typeBooks($type)
@@ -130,24 +128,15 @@ class PageController extends APIBaseController
         try {
             switch ($type) {
                 case 'discountbooks':
-                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->paginate(18);
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 feature books.');
-                    }
+                    return $this->sort(Book::where('promotion_price', '>', '0'));
                     break;
                 case 'featuredbooks':
-                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->orderBy('promotion_price', 'DESC')->paginate(18);
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 discount books.');
-                    }
+                    return $this->sort(Book::where('highlights', 1));
                     break;
                 case 'newbooks':
                     $nowymd = Carbon::tomorrow();
                     $ago7days = Carbon::tomorrow()->subDays(7);
-                    $books = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->whereBetween('created_at', [$ago7days, $nowymd])->paginate(18);
-                    if (count($books) < 1) {
-                        return $this->sendMessage('Found 0 new books.');
-                    }
+                    return $this->sort(Book::whereBetween('created_at', [$ago7days, $nowymd]));
                     break;
             }
             return response()->json($books);
@@ -162,14 +151,20 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $comments = Comment::where('id_book', $book->id)->with('user')->get();
-        $samebooks = Book::where('id_category', $book->id_category)->whereNotIn('id', [$book->id])->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
-        return $this->sendData(['book' => $book,'comments'=>$comments, 'samebooks' => $samebooks]);
+        $comments = Comment::with('user')->where('id_book', $book->id)->simplePaginate(5);
+        $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
+        return $this->sendData(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks]);
+    }
+
+    public function seeMoreSameBooks($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        return $this->sort(Book::where('id_category', $book->id_category));
     }
 
     public function getAuthors()
     {
-        $authors = Author::withCount('books')->paginate(15);
+        $authors = Author::withCount('books')->paginate(18);
         if (is_null($authors)) {
             return $this->sendMessage('Found 0 authors !');
         }
@@ -182,13 +177,12 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        $books = Book::whereIn('highlights', [0, 1])->where('id_author', $author->id)->with('author')->with('tags')->paginate(9);
-        return $this->sendData($books);
+        return $this->sort(Book::where('id_author', $author->id));
     }
 
     public function getCategoies()
     {
-        $categories = Category::withCount('books')->paginate(20);
+        $categories = Category::withCount('books')->paginate(18);
         if (is_null($categories)) {
             return $this->sendMessage('Found 0 categories');
         }
@@ -201,15 +195,18 @@ class PageController extends APIBaseController
         if (!$category) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        $books = Book::whereIn('highlights', [0, 1])->where('id_category', $category->id)->with('author')->with('tags')->paginate(9);
-        return $this->sendData($books);
+        return $this->sort(Book::where('id_category', $category->id));
     }
 
-    public function postComment(Request $request, $id)
+    public function postComment(Request $request, $slug)
     {
+        $book = Book::where('slug', $slug)->first();
+        if(!$book){
+            return $this->sendErrorNotFound('Book not found 1');
+        }
         $comment = new Comment;
         $comment->id_user = $request->user()->id;
-        $comment->id_book = $id;
+        $comment->id_book = $book->id;
         $comment->content = $request->content;
         $comment->save();
         return $this->sendMessage('Add comment successfully !');
@@ -254,7 +251,15 @@ class PageController extends APIBaseController
         if (is_null($user->orders)) {
             return $this->sendMessage('You are have 0 order !');
         }
-        return $this->sendData($user);
+        if (count($user->orders) < 1) {
+            return $this->sendMessage('Have no orders !');
+        } else {
+            foreach ($user->orders as $items) {
+                $item[] = $items->id;
+            }
+            $orders = Order::whereIn('id', $item)->paginate(10);
+            return response()->json($orders);
+        }
     }
 
     public function deleteOrderUser(Request $request, $id)
@@ -313,19 +318,20 @@ class PageController extends APIBaseController
     {
         $user = User::find($request->user()->id);
         $books = $user->books()->with('tags')->with('author')->paginate(18);
-        if (count($books) < 1) {
-            return $this->sendResponse($user, 'Found 0 book');
-        }
-        return $this->sendData($books);
+        return $this->sort($user->books());
     }
 
     public function checkInfo(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
         ], [
+            'name.required' => 'Name can not be null',
+            'email.required' => 'Email can not be null',
             'phone.required' => 'Phone can not blank !',
             'address.required' => 'Address can not blank !',
         ]);
@@ -333,6 +339,8 @@ class PageController extends APIBaseController
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $user = User::find($request->user()->id);
+        $user->name = $input['name'];
+        $user->email = $input['email'];
         $user->phone = $input['phone'];
         $user->address = $input['address'];
         $user->save();
@@ -404,7 +412,6 @@ class PageController extends APIBaseController
         if ($idbook) {
             return $this->sendResponse($idbook, 'Have a book not enought to sells, please check quantity before sells !');
         }
-
         foreach ($books as $key => $book) {
             if ($book->promotion_price) {
                 $price = $book->promotion_price;
@@ -436,7 +443,7 @@ class PageController extends APIBaseController
         return $this->sendMessage('Order successfully !');
     }
 
-    public function sendMail(Request $request)
+    public function sendMailResetPassword(Request $request)
     {
         Mail::to($request->email)->send(new ResetPassword());
     }
@@ -450,10 +457,10 @@ class PageController extends APIBaseController
     //         $passwordreset->token = bcrypt(str_radom(60));
     //         $passwordreset->save();
     //     }
-    //     $user = User::where('email', $request->email)->first();
     //     if ($request->password !== $request->confirm_password) {
     //         return $this->sendMessage('Password confirm must in the same !');
     //     }
+    //     $user = User::where('email', $request->email)->first();
     //     $user->password = $request->password;
     //     $user->save();
     //     return $this->sendMessage('Your account has been reset password !');

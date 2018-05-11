@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class UserController extends APIBaseController
@@ -16,8 +15,6 @@ class UserController extends APIBaseController
     {
         $this->user = $user;
     }
-
-    
 
     public function index()
     {
@@ -43,10 +40,10 @@ class UserController extends APIBaseController
         if (!$user) {
             return $this->sendErrorNotFound('User not found !');
         }
-        if($user->id == $request->user()->id){
+        if ($user->id == $request->user()->id) {
             return $this->sendMessage('You cannot delete your account');
         }
-        if($user->role == 1){
+        if ($user->role == 1) {
             return $this->sendMessage('Cannot delete another administrator !');
         }
         $user->delete();
@@ -72,10 +69,7 @@ class UserController extends APIBaseController
         $user = new User;
         $user->name = $input['name'];
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $user->avatar = $name;
+            $user->avatar = $request->file('avatar')->store('/public/images');
         }
         $user->birthday = $input['birthday'];
         $user->address = $input['address'];
@@ -110,10 +104,7 @@ class UserController extends APIBaseController
         }
         $user->name = $input['name'];
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $user->avatar = $name;
+            $user->avatar = $request->file('avatar')->store('/public/images');
         }
         $user->birthday = $input['birthday'];
         $user->address = $input['address'];
@@ -123,7 +114,5 @@ class UserController extends APIBaseController
         $user->save();
         return $this->sendMessage('Updated successfully !');
     }
-
-    
 
 }
