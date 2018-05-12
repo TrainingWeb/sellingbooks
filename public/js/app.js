@@ -11789,12 +11789,6 @@ module.exports = g;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(83);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -11893,10 +11887,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12084,6 +12078,12 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(83);
 
 /***/ }),
 /* 9 */
@@ -12688,7 +12688,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(7)))
 
 /***/ }),
 /* 18 */
@@ -34422,11 +34422,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var _this = this;
 
   window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.data;
+    _this.bookDetail = response.data.data.book;
     _this.books = response.data.data.samebooks;
     _this.tags = response.data.data.book.tags;
     _this.comments = response.data.data.comments;
-    console.log(_this.bookDetail);
+    console.log(_this.comments);
     console.log("đây là tác phẩm của detail", response.data);
   }).catch(function (error) {
     console.log(error);
@@ -39063,7 +39063,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
@@ -39148,7 +39148,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(85);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(6);
 
 /**
  * Create an instance of Axios
@@ -39231,7 +39231,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(6);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(94);
 var dispatchRequest = __webpack_require__(95);
@@ -39770,7 +39770,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(96);
 var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(6);
 var isAbsoluteURL = __webpack_require__(97);
 var combineURLs = __webpack_require__(98);
 
@@ -40307,7 +40307,7 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -43852,9 +43852,14 @@ if (false) {
 
 /***/ }),
 /* 119 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: D:/laragon/www/sellingBookStore/resources/assets/js/axios/index.js: Unexpected token (4:0)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mwindow\u001b[33m.\u001b[39maxios\u001b[33m.\u001b[39mdefaults\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39mpost[\u001b[32m\"Content-Type\"\u001b[39m] \u001b[33m=\u001b[39m \u001b[32m\"application/json\"\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbookstore.test\"\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 7 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbooks.local\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n");
+window.axios = __webpack_require__(8);
+
+window.axios.defaults.headers.post["Content-Type"] = "application/json";
+var host = "http://sellingbookstore.test";
+var api = "/api";
+window.axios.defaults.baseURL = "" + host + api;
 
 /***/ }),
 /* 120 */
