@@ -198,11 +198,11 @@ export default {
         "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
       )
       .then(response => {
-        this.bookDetail = response.data.data.book;
+        this.bookDetail = response.data.data.data;
         this.books = response.data.data.samebooks;
         this.tags = response.data.data.book.tags;
         this.comments = response.data.data.comments;
-        console.log(this.comments);
+        console.log(this.bookDetail);
         console.log("đây là tác phẩm của detail", response.data);
       })
       .catch(function(error) {

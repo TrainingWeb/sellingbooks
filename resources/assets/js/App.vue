@@ -15,8 +15,8 @@
               </span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <template>
-              <!-- Đăng nhập -->
+            <!-- Đăng nhập -->
+            <template v-if="!$store.state.token">
               <v-menu v-model="login" bottom offset-y :max-width="350" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
                 <v-card flat>
@@ -34,7 +34,7 @@
                       </v-flex>
                       <div>
                         <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
-                        <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage()">
+                        <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage">
                           Đăng nhập
                         </v-btn>
                       </div>
@@ -44,7 +44,7 @@
               </v-menu>
               <!-- Hết Đăng nhập -->
               <!-- Đăng Ký -->
-              <v-menu fluid v-model="register" bottom offset-y :max-width="350" :close-on-content-click="false">
+              <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
                 <v-card flat>
                   <v-list class="green accent-4 white--text text-xs-center">
@@ -72,7 +72,22 @@
                   </v-container>
                 </v-card>
               </v-menu>
-              <!-- Hết đăng ký -->
+            </template>
+            <template v-else>
+              <v-toolbar-title>
+                <!-- <v-avatar :tile="tile" :size="avatarSize" color="grey lighten-4">
+                  <img :src="'/storage/images/'+$store.state.user.avatar">
+                </v-avatar> -->
+                <v-btn flat icon class="mr-0">
+                  <v-icon>account_circle</v-icon>
+                </v-btn>
+                <span class="caption">
+                  {{$store.state.user.name}}
+                </span>
+                <v-btn flat icon color="grey darken-1" @click="logout()">
+                  <v-icon>exit_to_app</v-icon>
+                </v-btn>
+              </v-toolbar-title>
             </template>
           </v-toolbar>
         </v-container>
@@ -85,13 +100,13 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/card">
+              <v-btn flat to="/card">
                 <v-badge color="red lighten-1" class="p-0">
                   <span slot="badge" class="caption">{{totalCard}}</span>
                   <v-icon color="grey">add_shopping_cart</v-icon>
                 </v-badge>
               </v-btn>
-              <v-btn flat class="caption grey--text  text--darken-1 p-0" to="/favorite">
+              <v-btn flat to="/favorite">
                 <v-badge color="indigo" class="p-0">
                   <span slot="badge" class="caption">{{$store.state.favorite.length}}</span>
                   <v-icon color="grey">favorite</v-icon>
@@ -259,7 +274,13 @@
         </v-card-actions>
       </v-card>
     </v-footer>
+    <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
 
+      đắng nhập thành công
+      <v-btn flat icon color="white" @click.native="snackbarlogin = false">
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -333,7 +354,8 @@ export default {
     search: null,
     emailLogin: "",
     passLogin: "",
-    token_login: {}
+    data: {},
+    snackbarlogin: false
   }),
   props: {
     source: String
@@ -360,14 +382,23 @@ export default {
         })
         .then(response => {
           let data = response.data;
-          console.log(data);
+          console.log(data.api_token);
           this.$store.dispatch("setToken", data.api_token),
             this.$store.dispatch("setUser", data.user);
+          this.snackbarlogin = true;
         })
         .catch(function(error) {
           console.log(error);
         });
       this.login = false;
+    },
+    logout() {
+      let user = this.$store.state.user;
+      let token = this.$store.state.token;
+      token = "";
+      user = {};
+      this.$store.dispatch("setUser", user);
+      this.$store.dispatch("setToken", token);
     },
     registerUser() {
       window.axios
@@ -377,9 +408,9 @@ export default {
           password: this.passRegister
         })
         .then(response => {
-          let data = response.data;
-          this.$store.dispatch("setToken", data.api_token),
-            this.$store.dispatch("setUser", data.user);
+          this.data = response.data;
+          this.$store.dispatch("setToken", this.data.api_token),
+            this.$store.dispatch("setUser", this.data.user);
         })
         .catch(function(error) {
           console.log(error);
