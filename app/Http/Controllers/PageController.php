@@ -116,7 +116,7 @@ class PageController extends APIBaseController
             $items03[] = $items3->id;
         }
         $done = $items01 + $items02 + $items03;
-        if (count($books) < 1) {
+        if (count($done) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
         return $this->sort(Book::whereIn('id', $done));
@@ -150,9 +150,26 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $comments = Comment::with('user')->where('id_book', $book->id)->simplePaginate(5);
+        $comments = Comment::with('user')->where('id_book', $book->id)->orderBy('created_at', 'DESC')->paginate(5);
         $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
+    }
+
+    public function getMoreComments($slug)
+    {
+        $book = Book::whereIn('highlights', [0, 1])->where('slug', $slug)->first();
+        if(!$book){
+            return $this->sendErrorNotFound('book not found !');
+        }
+        foreach($book->comments as $items){
+            $id[] = $items->id;
+        }
+        $comments = Comment::whereIn('id', $id)->with('user')->orderBy('created_at', 'DESC')->paginate(5);
+        if(count($comments)< 1){
+            return $this->sendMessage('Found 0 comments !');
+        }
+        return response()->json($comments, 200);
+
     }
 
     public function seeMoreSameBooks($slug)
@@ -199,16 +216,19 @@ class PageController extends APIBaseController
 
     public function postComment(Request $request, $slug)
     {
+        if (!$request->user()) {
+            return $this->sendErrorAuth('You are must login before to do this !');
+        }
         $book = Book::where('slug', $slug)->first();
         if (!$book) {
-            return $this->sendErrorNotFound('Book not found 1');
+            return $this->sendErrorNotFound('Book not found !');
         }
         $comment = new Comment;
         $comment->id_user = $request->user()->id;
         $comment->id_book = $book->id;
         $comment->content = $request->content;
         $comment->save();
-        return $this->sendMessage('Add comment successfully !');
+        return $this->sendResponse($comment, 'Add comment successfully !');
     }
 
     public function deleteComment(Request $request, $id)
@@ -247,9 +267,6 @@ class PageController extends APIBaseController
     public function showOrderUser(Request $request)
     {
         $user = User::with('orders')->find($request->user()->id);
-        if (is_null($user->orders)) {
-            return $this->sendMessage('You are have 0 order !');
-        }
         if (count($user->orders) < 1) {
             return $this->sendMessage('Have no orders !');
         } else {
@@ -267,18 +284,24 @@ class PageController extends APIBaseController
         if (is_null($order)) {
             return $this->sendErrorNotFound('Order not found !');
         }
-        if ($order->status == 'waiting' || $order->status == 'cancel') {
-            if ($request->user()->id == $order->id_user) {
-                $order->status = 'cancel';
-                $order->save();
-                return $this->sendMessage('Just deleted order ' . $id . ' !');
-            } else {
-                return $this->sendErrorPermisstion('Cannot delete order of another user !');
-            }
-        } elseif ($order->status == 'accept') {
-            return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
-        } elseif ($order->status == 'sold') {
-            return $this->sendMessage('Your order has been done ! Let us keep that.');
+        switch ($order->status) {
+            case 'waiting':
+                if ($request->user()->id == $order->id_user) {
+                    $order->status = 'cancel';
+                    $order->save();
+                    return $this->sendMessage('Just cancel your order !');
+                } else {
+                    return $this->sendErrorPermisstion('Cannot delete order of another user !');
+                }
+            case 'cancel':
+                return $this->sendMessage('This order has been cancel before !');
+                break;
+            case 'accept':
+                return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
+                break;
+            case 'sold':
+                return $this->sendMessage('Your order has been done ! Let us keep that.');
+                break;
         }
     }
 
@@ -293,7 +316,7 @@ class PageController extends APIBaseController
             $items[] = $result->id;
             foreach ($items as $item) {
                 if ($item == $id) {
-                    return $this->sendMessage('This book has been favorite, can not add this book one more time !');
+                    return $this->sendMessage('This book has been your favorite, can not add this book one more time !');
                 }
             }
         }
@@ -325,21 +348,18 @@ class PageController extends APIBaseController
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
         ], [
-            'name.required' => 'Name can not be null',
-            'email.required' => 'Email can not be null',
-            'phone.required' => 'Phone can not blank !',
-            'address.required' => 'Address can not blank !',
+            'name.required' => 'Name cannot be null',
+            'phone.required' => 'Phone cannot blank !',
+            'address.required' => 'Address cannot blank !',
         ]);
         if ($validator->fails()) {
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $user = User::find($request->user()->id);
         $user->name = $input['name'];
-        $user->email = $input['email'];
         $user->phone = $input['phone'];
         $user->address = $input['address'];
         $user->save();
@@ -382,10 +402,7 @@ class PageController extends APIBaseController
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $user->avatar = $name;
+            $user->avatar = $request->file('avatar')->store('/public/images');
         }
         $user->name = $request->name;
         $user->email = $request->email;

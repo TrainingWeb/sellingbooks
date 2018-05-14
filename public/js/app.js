@@ -43850,14 +43850,9 @@ if (false) {
 
 /***/ }),
 /* 119 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-window.axios = __webpack_require__(6);
-
-window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
-var api = "/api";
-window.axios.defaults.baseURL = "" + host + api;
+throw new Error("Module build failed: SyntaxError: D:/laragon/www/sellingBookStore/resources/assets/js/axios/index.js: Unexpected token (4:0)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mwindow\u001b[33m.\u001b[39maxios\u001b[33m.\u001b[39mdefaults\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39mpost[\u001b[32m\"Content-Type\"\u001b[39m] \u001b[33m=\u001b[39m \u001b[32m\"application/json\"\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbookstore.test\"\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 7 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbooks.local\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 120 */
