@@ -49,6 +49,12 @@
               <v-btn flat icon color="grey" @click="addItemfavorite()">
                 <v-icon v-if="!love" color="grey lighten-1">favorite</v-icon>
                 <v-icon v-else color="red">favorite</v-icon>
+                <v-snackbar :timeout="timeout" top v-model="snackbarFavorite" color="green accent-4">
+                  Thêm vào yêu thích thành công
+                  <v-btn flat icon color="white" @click.native="snackbarFavorite = false">
+                    <v-icon>clear</v-icon>
+                  </v-btn>
+                </v-snackbar>
               </v-btn>
             </v-card-actions>
           </div>
@@ -57,13 +63,13 @@
     </v-container>
   </v-card>
 </template>
-
 <script>
 export default {
   props: ["book"],
   data() {
     return {
       snackbar: false,
+      snackbarFavorite: false,
       timeout: 3000,
       love: false
     };
@@ -96,6 +102,7 @@ export default {
             console.log("không đỏ");
             favorite.splice(favorite[index], 1);
             love: false, this.$store.dispatch("setFavorite", favorite);
+            this.snackbarFav = true;
             return;
           }
         }
@@ -109,6 +116,7 @@ export default {
       };
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+      this.snackbarFavorite = true;
     },
     formatPrice(price) {
       let val = (price / 1).toFixed(0).replace(".", ",");
