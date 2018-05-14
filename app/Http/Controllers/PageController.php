@@ -116,7 +116,7 @@ class PageController extends APIBaseController
             $items03[] = $items3->id;
         }
         $done = $items01 + $items02 + $items03;
-        if (count($books) < 1) {
+        if (count($done) < 1) {
             return $this->sendMessage('Found 0 books for this keywork !');
         }
         return $this->sort(Book::whereIn('id', $done));
@@ -150,7 +150,7 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $comments = Comment::with('user')->where('id_book', $book->id)->simplePaginate(5);
+        $comments = Comment::with('user')->where('id_book', $book->id)->paginate(5);
         $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
     }
@@ -250,9 +250,6 @@ class PageController extends APIBaseController
     public function showOrderUser(Request $request)
     {
         $user = User::with('orders')->find($request->user()->id);
-        if (is_null($user->orders)) {
-            return $this->sendMessage('You are have 0 order !');
-        }
         if (count($user->orders) < 1) {
             return $this->sendMessage('Have no orders !');
         } else {
@@ -270,19 +267,38 @@ class PageController extends APIBaseController
         if (is_null($order)) {
             return $this->sendErrorNotFound('Order not found !');
         }
-        if ($order->status == 'waiting' || $order->status == 'cancel') {
-            if ($request->user()->id == $order->id_user) {
-                $order->status = 'cancel';
-                $order->save();
-                return $this->sendMessage('Just deleted order ' . $id . ' !');
-            } else {
-                return $this->sendErrorPermisstion('Cannot delete order of another user !');
-            }
-        } elseif ($order->status == 'accept') {
-            return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
-        } elseif ($order->status == 'sold') {
-            return $this->sendMessage('Your order has been done ! Let us keep that.');
+        switch ($order->status) {
+            case 'waiting':
+                if ($request->user()->id == $order->id_user) {
+                    $order->status = 'cancel';
+                    $order->save();
+                    return $this->sendMessage('Just deleted order ' . $id . ' !');
+                } else {
+                    return $this->sendErrorPermisstion('Cannot delete order of another user !');
+                }
+            case 'cancel':
+                return $this->sendMessage('This order has been cancel before !');
+                break;
+            case 'accept':
+                return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
+                break;
+            case 'sold':
+                return $this->sendMessage('Your order has been done ! Let us keep that.');
+                break;
         }
+        // if ($order->status == 'waiting' || $order->status == 'cancel') {
+        //     if ($request->user()->id == $order->id_user) {
+        //         $order->status = 'cancel';
+        //         $order->save();
+        //         return $this->sendMessage('Just deleted order ' . $id . ' !');
+        //     } else {
+        //         return $this->sendErrorPermisstion('Cannot delete order of another user !');
+        //     }
+        // } elseif ($order->status == 'accept') {
+        //     return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
+        // } elseif ($order->status == 'sold') {
+        //     return $this->sendMessage('Your order has been done ! Let us keep that.');
+        // }
     }
 
     public function postFavorite(Request $request, $id)
@@ -385,10 +401,7 @@ class PageController extends APIBaseController
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $file->store('/public/images');
-            $name = $file->getClientOriginalName('avatar');
-            $user->avatar = $name;
+            $user->avatar = $request->file('avatar')->store('/public/images');
         }
         $user->name = $request->name;
         $user->email = $request->email;
