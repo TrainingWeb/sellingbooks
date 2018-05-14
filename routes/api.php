@@ -57,6 +57,7 @@ Route::get('/search', 'PageController@search');
 Route::get('/index', 'PageController@index');
 Route::get('/books/type/{type}', 'PageController@typeBooks');
 Route::get('/books/{slug}', 'PageController@getBookInfo');
+Route::get('/getmorecomments/{slug}', 'PageController@getMoreComments');
 Route::get('/books/seemore/{slug}', 'PageController@seeMoreSameBooks');
 Route::get('/authors', 'PageController@getAuthors');
 Route::get('/authors/{slug}', 'PageController@getInfoAuthor');

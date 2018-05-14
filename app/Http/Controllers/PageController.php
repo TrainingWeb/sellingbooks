@@ -155,6 +155,20 @@ class PageController extends APIBaseController
         return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
     }
 
+    public function getMoreComments($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        if(!$book){
+            return $this->sendErrorNotFound('book not found !');
+        }
+        foreach($book->comments as $items){
+            $id[] = $items->id;
+        }
+        $comments = Comment::whereIn('id', $id)->paginate(5);
+        return $comments;
+
+    }
+
     public function seeMoreSameBooks($slug)
     {
         $book = Book::where('slug', $slug)->first();
