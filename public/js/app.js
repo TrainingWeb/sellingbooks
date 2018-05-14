@@ -12412,9 +12412,11 @@ if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default *
 //
 if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
-if (localStorage.token && localStorage.token != 'undefined') __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
+if (localStorage.token && localStorage.token != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
 
-if (localStorage.user && localStorage.user != 'undefined') __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
+if (localStorage.user && localStorage.user != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
+
+if (localStorage.message && localStorage.message != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setMessage", localStorage.message);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
@@ -34351,8 +34353,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   data: function data() {
@@ -34422,11 +34422,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var _this = this;
 
   window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.data;
-    _this.books = response.data.data.samebooks;
-    _this.tags = response.data.data.book.tags;
-    _this.comments = response.data.data.comments;
-    console.log(_this.bookDetail);
+    _this.bookDetail = response.data.book;
+    _this.books = response.data.samebooks;
+    _this.tags = response.data.book.tags;
+    _this.comments = response.data.comments.data;
     console.log("đây là tác phẩm của detail", response.data);
   }).catch(function (error) {
     console.log(error);
@@ -34943,11 +34942,14 @@ var render = function() {
                                     "v-list",
                                     { attrs: { "three-line": "" } },
                                     [
-                                      _vm._l(_vm.comments, function(item) {
+                                      _vm._l(_vm.comments, function(
+                                        item,
+                                        index
+                                      ) {
                                         return _c(
                                           "v-list-tile",
                                           {
-                                            key: item.title,
+                                            key: "indexcm-$" + index,
                                             attrs: { avatar: "" }
                                           },
                                           [
@@ -35032,24 +35034,6 @@ var render = function() {
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "text-xs-center mt-5" },
-                                        [
-                                          _c("v-pagination", {
-                                            attrs: { length: 3 },
-                                            model: {
-                                              value: _vm.page,
-                                              callback: function($$v) {
-                                                _vm.page = $$v
-                                              },
-                                              expression: "page"
-                                            }
-                                          })
                                         ],
                                         1
                                       )
@@ -35845,6 +35829,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35861,27 +35847,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         value: "total",
         sortable: false
       }],
-
-      valid: false,
-      name: "",
-      nameRules: [function (v) {
-        return !!v || "Tên là bắt buộc";
-      }],
-      email: "",
-      emailRules: [function (v) {
-        return !!v || "E-mail là bắt buộc";
-      }, function (v) {
-        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail không hợp lệ"
-        );
-      }],
+      valid: true,
       phone: "",
-      phoneRules: [function (v) {
-        return !!v || "Số điện thoại là bắt buộc";
-      }],
-      address: "",
       addressRules: [function (v) {
         return !!v || "Địa chỉ là bắt buộc";
       }],
+      address: "",
+      emailRules: [function (v) {
+        return !!v || " Số điện thoại là bắt buộc";
+      }, function (v) {
+        return v && v.length >= 10 || "Số điện thoại không đúng";
+      }],
+
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -35893,6 +35870,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       namepage: "Kiểm tra đơn hàng"
     };
+  },
+  methods: {
+    submit: function submit() {
+      window.axios.post("/check-info", {
+        phone: this.phone,
+        address: this.address
+      }).then(function (response) {
+        console.log("đã thành công");
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    clear: function clear() {
+      this.$refs.form.reset();
+    }
   },
   computed: {
     total: function total() {
@@ -35975,7 +35967,8 @@ var render = function() {
                                       _c(
                                         "v-form",
                                         {
-                                          staticClass: "mt-5",
+                                          ref: "form",
+                                          attrs: { "lazy-validation": "" },
                                           model: {
                                             value: _vm.valid,
                                             callback: function($$v) {
@@ -35987,41 +35980,26 @@ var render = function() {
                                         [
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Họ và tên",
-                                              rules: _vm.nameRules,
-                                              counter: 10,
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.name,
-                                              callback: function($$v) {
-                                                _vm.name = $$v
-                                              },
-                                              expression: "name"
+                                              label: "Name",
+                                              value: _vm.$store.state.user.name,
+                                              disabled: ""
                                             }
                                           }),
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: " Địa chỉ E-mail",
-                                              rules: _vm.emailRules,
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.email,
-                                              callback: function($$v) {
-                                                _vm.email = $$v
-                                              },
-                                              expression: "email"
+                                              label: "E-mail",
+                                              value:
+                                                _vm.$store.state.user.email,
+                                              disabled: ""
                                             }
                                           }),
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Số Điện Thoại",
                                               mask: "phone",
-                                              rules: _vm.phoneRules,
-                                              required: ""
+                                              rules: _vm.emailRules,
+                                              label: "Số điện thoại"
                                             },
                                             model: {
                                               value: _vm.phone,
@@ -36034,9 +36012,8 @@ var render = function() {
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Địa Chỉ",
                                               rules: _vm.addressRules,
-                                              required: ""
+                                              label: "Địa chỉ"
                                             },
                                             model: {
                                               value: _vm.address,
@@ -36157,21 +36134,15 @@ var render = function() {
                                       _c(
                                         "v-btn",
                                         {
-                                          staticClass: "my-4",
                                           attrs: {
                                             dark: "",
                                             color: "green accent-4"
                                           },
-                                          nativeOn: {
-                                            click: function($event) {
-                                              $event.stopPropagation()
-                                              _vm.dialogDel = true
-                                            }
-                                          }
+                                          on: { click: _vm.submit }
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    Đặt hàng\n                  "
+                                            "\n                    thanh toán\n                  "
                                           )
                                         ]
                                       ),
@@ -36384,7 +36355,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -36501,7 +36472,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       _this3.books = res.data.data;
       _this3.panigation.page = res.data.current_page;
       _this3.panigation.length = res.data.last_page;
-      console.log("mang chị thuy", res.data.data);
     });
   }
 });
@@ -40597,6 +40567,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40668,19 +40639,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     loginpage: function loginpage() {
       var _this = this;
 
-      console.log("vao day roi");
       window.axios.post("/login", {
         email: this.emailLogin,
         password: this.passLogin
       }).then(function (response) {
         var data = response.data;
-        console.log(data.api_token);
-        _this.$store.dispatch("setToken", data.api_token), _this.$store.dispatch("setUser", data.user);
-        _this.snackbarlogin = true;
+        _this.$store.dispatch("setToken", data.api_token);
+        _this.$store.dispatch("setUser", data.user);
+        if (data.message) {
+          _this.snackbarlogin = true;
+          _this.login = false;
+        }
       }).catch(function (error) {
         console.log(error);
       });
-      this.login = false;
     },
     logout: function logout() {
       var user = this.$store.state.user;
@@ -40699,7 +40671,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: this.passRegister
       }).then(function (response) {
         _this2.data = response.data;
-        _this2.$store.dispatch("setToken", _this2.data.api_token), _this2.$store.dispatch("setUser", _this2.data.user);
+        _this2.$store.dispatch("setToken", _this2.data.api_token);
+        _this2.$store.dispatch("setUser", _this2.data.user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -40921,6 +40894,22 @@ var render = function() {
                                               ],
                                               1
                                             ),
+                                            _vm._v(" "),
+                                            _c("div", [
+                                              _vm.data.message
+                                                ? _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "red--text"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Email hoặc mật khẩu không đúng"
+                                                      )
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -42090,7 +42079,7 @@ var render = function() {
           }
         },
         [
-          _vm._v("\n\n    đắng nhập thành công\n    "),
+          _vm._v("\n    Đăng nhập thành công\n    "),
           _c(
             "v-btn",
             {
@@ -42139,7 +42128,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     favorite: [],
     selected: [],
     token: null,
-    user: {}
+    user: {},
+    message: null
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -42156,8 +42146,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_USER: function SET_USER(state, user) {
       state.user = user;
+    },
+    SET_MESSAGE: function SET_MESSAGE(state, message) {
+      state.message = message;
     }
-
   },
   actions: {
     setCart: function setCart(_ref, val) {
@@ -42186,13 +42178,19 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       // window.axios.defaults.headers = {
       //   "Authorization": 'Bearer ' + val
       // }
-      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val;
+      window.axios.defaults.headers.common["Authorization"] = "Bearer " + val;
     },
     setUser: function setUser(_ref5, val) {
       var commit = _ref5.commit;
 
       commit("SET_USER", val);
       localStorage.user = JSON.stringify(val);
+    },
+    setMessage: function setMessage(_ref6, val) {
+      var commit = _ref6.commit;
+
+      commit("SET_MESSAGE", val);
+      localStorage.message = val;
     }
   }
 });

@@ -84,7 +84,7 @@
               <v-tab-item id="tab-2">
                 <v-card>
                   <v-list three-line>
-                    <v-list-tile v-for="item in comments" avatar :key="item.title">
+                    <v-list-tile v-for="(item,index) in comments" avatar :key="`indexcm-$`+index">
                       <v-list-tile-avatar>
                         <img src="#">
                       </v-list-tile-avatar>
@@ -102,9 +102,7 @@
                         <v-btn color="green accent-4 white--text">Gửi</v-btn>
                       </div>
                     </v-layout>
-                    <div class="text-xs-center mt-5">
-                      <v-pagination :length="3" v-model="page"></v-pagination>
-                    </div>
+
                   </v-list>
                 </v-card>
               </v-tab-item>
@@ -198,11 +196,10 @@ export default {
         "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
       )
       .then(response => {
-        this.bookDetail = response.data.data.data;
-        this.books = response.data.data.samebooks;
-        this.tags = response.data.data.book.tags;
-        this.comments = response.data.data.comments;
-        console.log(this.bookDetail);
+        this.bookDetail = response.data.book;
+        this.books = response.data.samebooks;
+        this.tags = response.data.book.tags;
+        this.comments = response.data.comments.data;
         console.log("đây là tác phẩm của detail", response.data);
       })
       .catch(function(error) {

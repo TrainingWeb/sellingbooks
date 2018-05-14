@@ -136,21 +136,12 @@ export default {
         this.books = res.data.data;
         this.panigation.page = res.data.current_page;
         this.panigation.length = res.data.last_page;
-        console.log("mang chị thuy", res.data.data);
       });
   }
 };
 </script>
 
 <style>
-.banner {
-  min-height: 350px;
-  width: 100%;
-}
-.color-text a {
-  color: white !important;
-}
-
 .primary {
   background-color: #00c853 !important;
   border-color: #00c853 !important;

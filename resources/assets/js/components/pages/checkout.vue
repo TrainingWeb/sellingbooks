@@ -12,12 +12,14 @@
                 <v-card>
                   <h1 class=" headline grey--text text--darken-3 text-xs-center pt-3">Vui lòng xác nhận lại thông tin của bạn</h1>
                   <v-container>
-                    <v-form v-model="valid" class="mt-5">
-                      <v-text-field label="Họ và tên" v-model="name" :rules="nameRules" :counter="10" required></v-text-field>
-                      <v-text-field label=" Địa chỉ E-mail" v-model="email" :rules="emailRules" required></v-text-field>
-                      <v-text-field label="Số Điện Thoại" mask="phone" v-model="phone" :rules="phoneRules" required></v-text-field>
-                      <v-text-field label="Địa Chỉ" v-model="address" :rules="addressRules" required></v-text-field>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                      <v-text-field label="Name" :value="$store.state.user.name" disabled></v-text-field>
+                      <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
+                      <v-text-field v-model="phone" mask="phone" :rules="emailRules" label="Số điện thoại"></v-text-field>
+                      <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
+
                     </v-form>
+
                   </v-container>
                 </v-card>
               </v-flex>
@@ -42,8 +44,8 @@
                     </template>
                   </v-data-table>
                   <div class="my-3 text-xs-right ">
-                    <v-btn class="my-4" dark color="green accent-4" @click.native.stop="dialogDel = true">
-                      Đặt hàng
+                    <v-btn @click="submit" dark color="green accent-4">
+                      thanh toán
                     </v-btn>
                     <v-layout row justify-center>
                       <v-dialog v-model="dialogDel" max-width="290">
@@ -88,21 +90,15 @@ export default {
         sortable: false
       }
     ],
-
-    valid: false,
-    name: "",
-    nameRules: [v => !!v || "Tên là bắt buộc"],
-    email: "",
-    emailRules: [
-      v => !!v || "E-mail là bắt buộc",
-      v =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-        "E-mail không hợp lệ"
-    ],
+    valid: true,
     phone: "",
-    phoneRules: [v => !!v || "Số điện thoại là bắt buộc"],
-    address: "",
     addressRules: [v => !!v || "Địa chỉ là bắt buộc"],
+    address: "",
+    emailRules: [
+      v => !!v || " Số điện thoại là bắt buộc",
+      v => (v && v.length >= 10) || "Số điện thoại không đúng"
+    ],
+
     breadcrumbs: [
       {
         name: "Trang Chủ",
@@ -117,6 +113,24 @@ export default {
     ],
     namepage: "Kiểm tra đơn hàng"
   }),
+  methods: {
+    submit() {
+      window.axios
+        .post("/check-info", {
+          phone: this.phone,
+          address: this.address
+        })
+        .then(response => {
+          console.log("đã thành công");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    clear() {
+      this.$refs.form.reset();
+    }
+  },
   computed: {
     total() {
       return this.$store.state.cart.reduce((total, p) => {
