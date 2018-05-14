@@ -150,21 +150,21 @@ class PageController extends APIBaseController
         if (!$book) {
             return $this->sendErrorNotFound('Book not found !');
         }
-        $comments = Comment::with('user')->where('id_book', $book->id)->paginate(5);
+        $comments = Comment::with('user')->where('id_book', $book->id)->orderBy('created_at', 'DESC')->paginate(5);
         $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
         return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
     }
 
     public function getMoreComments($slug)
     {
-        $book = Book::where('slug', $slug)->first();
+        $book = Book::whereIn('highlights', [0, 1])->where('slug', $slug)->first();
         if(!$book){
             return $this->sendErrorNotFound('book not found !');
         }
         foreach($book->comments as $items){
             $id[] = $items->id;
         }
-        $comments = Comment::whereIn('id', $id)->with('user')->paginate(5);
+        $comments = Comment::whereIn('id', $id)->with('user')->orderBy('created_at', 'DESC')->paginate(5);
         if(count($comments)< 1){
             return $this->sendMessage('Found 0 comments !');
         }
