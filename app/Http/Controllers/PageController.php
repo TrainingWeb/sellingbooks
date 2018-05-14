@@ -155,6 +155,20 @@ class PageController extends APIBaseController
         return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
     }
 
+    public function getMoreComments($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        if(!$book){
+            return $this->sendErrorNotFound('book not found !');
+        }
+        foreach($book->comments as $items){
+            $id[] = $items->id;
+        }
+        $comments = Comment::whereIn('id', $id)->paginate(5);
+        return $comments;
+
+    }
+
     public function seeMoreSameBooks($slug)
     {
         $book = Book::where('slug', $slug)->first();
@@ -272,7 +286,7 @@ class PageController extends APIBaseController
                 if ($request->user()->id == $order->id_user) {
                     $order->status = 'cancel';
                     $order->save();
-                    return $this->sendMessage('Just deleted order ' . $id . ' !');
+                    return $this->sendMessage('Just cancel your order !');
                 } else {
                     return $this->sendErrorPermisstion('Cannot delete order of another user !');
                 }
@@ -286,19 +300,6 @@ class PageController extends APIBaseController
                 return $this->sendMessage('Your order has been done ! Let us keep that.');
                 break;
         }
-        // if ($order->status == 'waiting' || $order->status == 'cancel') {
-        //     if ($request->user()->id == $order->id_user) {
-        //         $order->status = 'cancel';
-        //         $order->save();
-        //         return $this->sendMessage('Just deleted order ' . $id . ' !');
-        //     } else {
-        //         return $this->sendErrorPermisstion('Cannot delete order of another user !');
-        //     }
-        // } elseif ($order->status == 'accept') {
-        //     return $this->sendMessage('Your order has been approved, you cannot cancel this order ! Give us a call if you really want to cancel this order.');
-        // } elseif ($order->status == 'sold') {
-        //     return $this->sendMessage('Your order has been done ! Let us keep that.');
-        // }
     }
 
     public function postFavorite(Request $request, $id)
@@ -312,7 +313,7 @@ class PageController extends APIBaseController
             $items[] = $result->id;
             foreach ($items as $item) {
                 if ($item == $id) {
-                    return $this->sendMessage('This book has been favorite, can not add this book one more time !');
+                    return $this->sendMessage('This book has been your favorite, can not add this book one more time !');
                 }
             }
         }
@@ -344,21 +345,18 @@ class PageController extends APIBaseController
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
         ], [
-            'name.required' => 'Name can not be null',
-            'email.required' => 'Email can not be null',
-            'phone.required' => 'Phone can not blank !',
-            'address.required' => 'Address can not blank !',
+            'name.required' => 'Name cannot be null',
+            'phone.required' => 'Phone cannot blank !',
+            'address.required' => 'Address cannot blank !',
         ]);
         if ($validator->fails()) {
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         $user = User::find($request->user()->id);
         $user->name = $input['name'];
-        $user->email = $input['email'];
         $user->phone = $input['phone'];
         $user->address = $input['address'];
         $user->save();
