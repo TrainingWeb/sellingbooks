@@ -199,16 +199,19 @@ class PageController extends APIBaseController
 
     public function postComment(Request $request, $slug)
     {
+        if (!$request->user()) {
+            return $this->sendErrorAuth('You are must login before to do this !');
+        }
         $book = Book::where('slug', $slug)->first();
         if (!$book) {
-            return $this->sendErrorNotFound('Book not found 1');
+            return $this->sendErrorNotFound('Book not found !');
         }
         $comment = new Comment;
         $comment->id_user = $request->user()->id;
         $comment->id_book = $book->id;
         $comment->content = $request->content;
         $comment->save();
-        return $this->sendMessage('Add comment successfully !');
+        return $this->sendResponse($comment, 'Add comment successfully !');
     }
 
     public function deleteComment(Request $request, $id)
