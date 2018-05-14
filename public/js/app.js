@@ -11789,6 +11789,12 @@ module.exports = g;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(83);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -11887,10 +11893,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12078,12 +12084,6 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(83);
 
 /***/ }),
 /* 9 */
@@ -12688,7 +12688,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(8)))
 
 /***/ }),
 /* 18 */
@@ -34226,7 +34226,7 @@ exports.push([module.i, "\n.cyan.darken-2,\r\n.cyan.darken-2--after:after {\r\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //
 //
@@ -34353,16 +34353,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      snackbarCommet: false,
       commenttext: "",
       bookDetail: {},
       tags: {},
       comments: [],
       books: {},
       snackbar: false,
+      snackbarCartDetail: false,
+      snackbarFavDetail: false,
       timeout: 3000,
       breadcrumbs: [{
         name: "Trang Chủ",
@@ -34378,15 +34402,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       page: 1
     };
   },
-  mounted: function mounted() {
-    window.axios.get("/book/{slug}");
-  },
 
   methods: {
     addCartDetail: function addCartDetail() {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert("Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+          this.snackbarCartDetail = true;
           return;
         }
       }
@@ -34397,11 +34418,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbarCartDetail = true;
     },
     addFavoriteDetail: function addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].id == this.book.id) {
-          alert("Sản phẩm này đã được bạn yêu thích");
+          this.snackbarFavDetail = true;
           return;
         }
       }
@@ -34412,26 +34434,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var favorite = this.$store.state.favorite;
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+      this.snackbarFavDetail = true;
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-  }
-}, "mounted", function mounted() {
-  var _this = this;
+    },
+    postComment: function postComment() {
+      var _this = this;
 
-  window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-    _this.bookDetail = response.data.data.book;
-    _this.books = response.data.data.samebooks;
-    _this.tags = response.data.data.book.tags;
-    _this.comments = response.data.data.comments;
-    console.log(_this.comments);
-    console.log("đây là tác phẩm của detail", response.data);
-  }).catch(function (error) {
-    console.log(error);
-  });
-}));
+      window.axios.post("/add-comment/" + this.$route.query.type, {
+        content: this.commenttext
+      }).then(function (response) {
+        console.log("add comment", response.data);
+        var data = response.data.data;
+        // if (this.$store.state.api_token) {
+        data.user = _this.$store.state.user;
+        _this.comments.data.push(data);
+        _this.commenttext = "";
+        // } else {
+        //   alert("ddawng nhap");
+        // }
+      });
+    },
+    loadComment: function loadComment() {
+      var _this2 = this;
+
+      var type = this.$route.query.type;
+      if (this.comments.current_page <= this.comments.last_page) {
+        var page = this.comments.current_page + 1;
+        console.log(this.comments);
+        var url = "/getmorecomments/" + type + "?page=" + page;
+        window.axios.get(url).then(function (response) {
+          var data = response.data;
+          var dataold = _this2.comments.data;
+          _this2.comments = response.data;
+          _this2.comments.data.reverse();
+          for (var i = 0; i < _this2.comments.data.length; i++) {
+            for (var j = 0; j < dataold.length; j++) {
+              if (_this2.comments.data[i].id === dataold[j].id) {
+                _this2.comments.data.splice(i, 1);
+                i--;
+              }
+            }
+          }
+          _this2.comments.data = [].concat(_toConsumableArray(_this2.comments.data), _toConsumableArray(dataold));
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    window.axios.get("/books/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
+      // console.log("DDaay laf detail", response.data);
+      _this3.bookDetail = response.data.book;
+      _this3.books = response.data.samebooks;
+      _this3.tags = response.data.book.tags;
+      _this3.comments = response.data.comments;
+      _this3.comments.data.reverse();
+      _this3.currentComment = response.data.comments.current_page;
+      console.log(_this3.currentComment);
+      // console.log(this.comments);
+      // console.log("đây là tác phẩm của detail", response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+});
 
 /***/ }),
 /* 35 */
@@ -34504,7 +34574,7 @@ var render = function() {
                                               _c(
                                                 "v-flex",
                                                 {
-                                                  staticClass: "px-5",
+                                                  staticClass: "pr-5",
                                                   attrs: {
                                                     xs12: "",
                                                     sm6: "",
@@ -34659,7 +34729,17 @@ var render = function() {
                                                                           .price
                                                                       )
                                                                     ) +
-                                                                    "\n                          "
+                                                                    "\n                            "
+                                                                ),
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticStyle: {
+                                                                      "text-decoration":
+                                                                        "underline"
+                                                                    }
+                                                                  },
+                                                                  [_vm._v("đ")]
                                                                 )
                                                               ]
                                                             )
@@ -34724,7 +34804,7 @@ var render = function() {
                                                                 "i",
                                                                 {
                                                                   staticClass:
-                                                                    "material-icons add-shopping mr-2 white--text"
+                                                                    "material-icons add-shopping  white--text"
                                                                 },
                                                                 [
                                                                   _vm._v(
@@ -34732,10 +34812,69 @@ var render = function() {
                                                                   )
                                                                 ]
                                                               ),
-                                                              _vm._v(
-                                                                "Thêm\n                          "
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-snackbar",
+                                                                {
+                                                                  attrs: {
+                                                                    timeout:
+                                                                      _vm.timeout,
+                                                                    top: "",
+                                                                    color:
+                                                                      "green accent-4"
+                                                                  },
+                                                                  model: {
+                                                                    value:
+                                                                      _vm.snackbarCartDetail,
+                                                                    callback: function(
+                                                                      $$v
+                                                                    ) {
+                                                                      _vm.snackbarCartDetail = $$v
+                                                                    },
+                                                                    expression:
+                                                                      "snackbarCartDetail"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                              Thêm vào giỏ hàng thành công\n                              "
+                                                                  ),
+                                                                  _c(
+                                                                    "v-btn",
+                                                                    {
+                                                                      attrs: {
+                                                                        flat:
+                                                                          "",
+                                                                        icon:
+                                                                          "",
+                                                                        color:
+                                                                          "white"
+                                                                      },
+                                                                      nativeOn: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {
+                                                                          _vm.snackbarCartDetail = false
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "v-icon",
+                                                                        [
+                                                                          _vm._v(
+                                                                            "clear"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                1
                                                               )
-                                                            ]
+                                                            ],
+                                                            1
                                                           ),
                                                           _vm._v(" "),
                                                           _c(
@@ -34762,8 +34901,70 @@ var render = function() {
                                                                     "favorite"
                                                                   )
                                                                 ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-snackbar",
+                                                                {
+                                                                  attrs: {
+                                                                    timeout:
+                                                                      _vm.timeout,
+                                                                    top: "",
+                                                                    color:
+                                                                      "green accent-4"
+                                                                  },
+                                                                  model: {
+                                                                    value:
+                                                                      _vm.snackbarFavDetail,
+                                                                    callback: function(
+                                                                      $$v
+                                                                    ) {
+                                                                      _vm.snackbarFavDetail = $$v
+                                                                    },
+                                                                    expression:
+                                                                      "snackbarFavDetail"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                              Thêm vào giỏ hàng thành công\n                              "
+                                                                  ),
+                                                                  _c(
+                                                                    "v-btn",
+                                                                    {
+                                                                      attrs: {
+                                                                        flat:
+                                                                          "",
+                                                                        icon:
+                                                                          "",
+                                                                        color:
+                                                                          "white"
+                                                                      },
+                                                                      nativeOn: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {
+                                                                          _vm.snackbarFavDetail = false
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "v-icon",
+                                                                        [
+                                                                          _vm._v(
+                                                                            "clear"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ],
+                                                                    1
+                                                                  )
+                                                                ],
+                                                                1
                                                               )
-                                                            ]
+                                                            ],
+                                                            1
                                                           )
                                                         ],
                                                         1
@@ -34939,11 +35140,39 @@ var render = function() {
                               _c(
                                 "v-card",
                                 [
+                                  _c("div", { staticClass: "mt-3 ml-3" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "grey--text text--darken-3 body-2"
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            attrs: { label: "" },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.loadComment(_vm.page)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Xem những nhận xét cũ hơn >"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
                                   _c(
                                     "v-list",
                                     { attrs: { "three-line": "" } },
                                     [
-                                      _vm._l(_vm.comments, function(item) {
+                                      _vm._l(_vm.comments.data, function(item) {
                                         return _c(
                                           "v-list-tile",
                                           {
@@ -35006,6 +35235,23 @@ var render = function() {
                                               label: "Lời nhận xét của bạn",
                                               "single-line": ""
                                             },
+                                            on: {
+                                              keyup: function($event) {
+                                                if (
+                                                  !("button" in $event) &&
+                                                  _vm._k(
+                                                    $event.keyCode,
+                                                    "enter",
+                                                    13,
+                                                    $event.key,
+                                                    "Enter"
+                                                  )
+                                                ) {
+                                                  return null
+                                                }
+                                                return _vm.postComment($event)
+                                              }
+                                            },
                                             model: {
                                               value: _vm.commenttext,
                                               callback: function($$v) {
@@ -35017,7 +35263,7 @@ var render = function() {
                                           _vm._v(" "),
                                           _c(
                                             "div",
-                                            { staticClass: "ml-0" },
+                                            { staticClass: "ml-0 mr-2" },
                                             [
                                               _c(
                                                 "v-btn",
@@ -35025,31 +35271,61 @@ var render = function() {
                                                   attrs: {
                                                     color:
                                                       "green accent-4 white--text"
-                                                  }
+                                                  },
+                                                  on: { click: _vm.postComment }
                                                 },
                                                 [_vm._v("Gửi")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-snackbar",
+                                                {
+                                                  attrs: {
+                                                    timeout: _vm.timeout,
+                                                    top: "",
+                                                    color: "green accent-4"
+                                                  },
+                                                  model: {
+                                                    value: _vm.snackbarCommet,
+                                                    callback: function($$v) {
+                                                      _vm.snackbarCommet = $$v
+                                                    },
+                                                    expression: "snackbarCommet"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                        Vui lòng đăng nhập trước khi nhận xét\n                        "
+                                                  ),
+                                                  _c(
+                                                    "v-btn",
+                                                    {
+                                                      attrs: {
+                                                        flat: "",
+                                                        icon: "",
+                                                        color: "white"
+                                                      },
+                                                      nativeOn: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.snackbarCommet = false
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-icon", [
+                                                        _vm._v("clear")
+                                                      ])
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "text-xs-center mt-5" },
-                                        [
-                                          _c("v-pagination", {
-                                            attrs: { length: 3 },
-                                            model: {
-                                              value: _vm.page,
-                                              callback: function($$v) {
-                                                _vm.page = $$v
-                                              },
-                                              expression: "page"
-                                            }
-                                          })
                                         ],
                                         1
                                       )
@@ -37653,6 +37929,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37661,7 +37943,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         text: "Tên sách",
         align: "left",
         sortable: false
-      }, { text: "Giá tiền", sortable: false }, { text: "Chọn mua", sortable: false }],
+      }, { text: "Giá tiền", align: "left", sortable: false }, { text: "Chọn mua", sortable: false }],
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37674,7 +37956,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       e1: null,
       namepage: "Sản phẩm yêu thích",
       page: 1,
-      dialogDelete: false
+      dialogDelete: false,
+      snackbarCart: false,
+      timeout: 3000
     };
   },
   methods: {
@@ -37696,7 +37980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addCartPageFavorite: function addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === val.id) {
-          alert("Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm");
+          this.snackbarCart = true;
           return;
         }
       }
@@ -37707,6 +37991,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbarCart = true;
     },
     upadateQantity: function upadateQantity(id, e) {
       var favorite = this.$store.state.favorite;
@@ -37913,7 +38198,7 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticClass: "text-xs-left" }, [
                         props.item.book.promotion_price
                           ? _c("div", [
                               _c(
@@ -37995,8 +38280,49 @@ var render = function() {
                                 },
                                 [_vm._v("add_shopping_cart")]
                               ),
-                              _vm._v("Thêm\n            ")
-                            ]
+                              _vm._v("Thêm\n              "),
+                              _c(
+                                "v-snackbar",
+                                {
+                                  attrs: {
+                                    timeout: _vm.timeout,
+                                    top: "",
+                                    color: "green accent-4"
+                                  },
+                                  model: {
+                                    value: _vm.snackbarCart,
+                                    callback: function($$v) {
+                                      _vm.snackbarCart = $$v
+                                    },
+                                    expression: "snackbarCart"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Thêm vào giỏ hàng thành công\n                "
+                                  ),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        flat: "",
+                                        icon: "",
+                                        color: "white"
+                                      },
+                                      nativeOn: {
+                                        click: function($event) {
+                                          _vm.snackbarCart = false
+                                        }
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("clear")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
@@ -39063,7 +39389,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
@@ -39148,7 +39474,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(85);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -39231,7 +39557,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(94);
 var dispatchRequest = __webpack_require__(95);
@@ -39770,7 +40096,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(96);
 var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var isAbsoluteURL = __webpack_require__(97);
 var combineURLs = __webpack_require__(98);
 
@@ -40307,7 +40633,7 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -43300,12 +43626,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
   data: function data() {
     return {
       snackbar: false,
+      snackbarFavorite: false,
       timeout: 3000,
       love: false
     };
@@ -43339,6 +43671,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log("không đỏ");
             favorite.splice(favorite[index], 1);
             love: false, this.$store.dispatch("setFavorite", favorite);
+            this.snackbarFav = true;
             return;
           }
         }
@@ -43352,6 +43685,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+      this.snackbarFavorite = true;
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
@@ -43612,7 +43946,48 @@ var render = function() {
                                   )
                                 : _c("v-icon", { attrs: { color: "red" } }, [
                                     _vm._v("favorite")
-                                  ])
+                                  ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-snackbar",
+                                {
+                                  attrs: {
+                                    timeout: _vm.timeout,
+                                    top: "",
+                                    color: "green accent-4"
+                                  },
+                                  model: {
+                                    value: _vm.snackbarFavorite,
+                                    callback: function($$v) {
+                                      _vm.snackbarFavorite = $$v
+                                    },
+                                    expression: "snackbarFavorite"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Thêm vào yêu thích thành công\n                "
+                                  ),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        flat: "",
+                                        icon: "",
+                                        color: "white"
+                                      },
+                                      nativeOn: {
+                                        click: function($event) {
+                                          _vm.snackbarFavorite = false
+                                        }
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("clear")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
@@ -43854,7 +44229,7 @@ if (false) {
 /* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.axios = __webpack_require__(8);
+window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
 var host = "http://sellingbookstore.test";
