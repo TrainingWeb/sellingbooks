@@ -164,8 +164,11 @@ class PageController extends APIBaseController
         foreach($book->comments as $items){
             $id[] = $items->id;
         }
-        $comments = Comment::whereIn('id', $id)->paginate(5);
-        return $comments;
+        $comments = Comment::whereIn('id', $id)->with('user')->paginate(5);
+        if(count($comments)< 1){
+            return $this->sendMessage('Found 0 comments !');
+        }
+        return response()->json($comments, 200);
 
     }
 
