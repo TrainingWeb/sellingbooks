@@ -34381,7 +34381,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      snackbarCommet: false,
+      snackbarComment: false,
       commenttext: "",
       bookDetail: {},
       tags: {},
@@ -34446,19 +34446,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     postComment: function postComment() {
       var _this = this;
 
-      window.axios.post("/add-comment/" + this.$route.query.type, {
-        content: this.commenttext
-      }).then(function (response) {
-        console.log("add comment", response.data);
-        var data = response.data.data;
-        // if (this.$store.state.api_token) {
-        data.user = _this.$store.state.user;
-        _this.comments.data.push(data);
-        _this.commenttext = "";
-        // } else {
-        //   alert("ddawng nhap");
-        // }
-      });
+      if (this.$store.state.token) {
+        window.axios.post("/add-comment/" + this.$route.query.type, {
+          content: this.commenttext
+        }).then(function (response) {
+          console.log("add comment", response.data);
+          var data = response.data.data;
+          data.user = _this.$store.state.user;
+          _this.comments.data.push(data);
+          _this.commenttext = "";
+        });
+      } else {
+        this.snackbarComment = true;
+        this.commenttext = "";
+      }
     },
     loadComment: function loadComment() {
       var _this2 = this;
@@ -35289,16 +35290,17 @@ var render = function() {
                                                     color: "green accent-4"
                                                   },
                                                   model: {
-                                                    value: _vm.snackbarCommet,
+                                                    value: _vm.snackbarComment,
                                                     callback: function($$v) {
-                                                      _vm.snackbarCommet = $$v
+                                                      _vm.snackbarComment = $$v
                                                     },
-                                                    expression: "snackbarCommet"
+                                                    expression:
+                                                      "snackbarComment"
                                                   }
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                        Vui lòng đăng nhập trước khi nhận xét\n                        "
+                                                    "\n                        Vui lòng đăng nhập hoặc đăng ký trước khi nhận xét\n                        "
                                                   ),
                                                   _c(
                                                     "v-btn",
@@ -35312,7 +35314,7 @@ var render = function() {
                                                         click: function(
                                                           $event
                                                         ) {
-                                                          _vm.snackbarCommet = false
+                                                          _vm.snackbarComment = false
                                                         }
                                                       }
                                                     },
@@ -37759,22 +37761,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disabled: true
       }],
       e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
+      books: {},
       search: {},
+      filter_search: "",
       namepage: "",
-
-      page: 1
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: 5
+      }
     };
   },
+  watch: {
+    "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
+
+      if (val) {
+        window.axios.get("/search?name=" + this.$route.query.name + "&page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.search = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/search?name=" + this.$route.query.name + "&sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this2.search = res.data.data;
+          _this2.panigation.page = res.data.current_page;
+          _this2.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    filter_search: function filter_search(val) {
+      this.$router.push("/search?name=" + this.$route.query.name + "&&sort=" + val.linkto);
+    }
+  },
+  methods: {
+    next: function next(page) {
+      // let type = this.$route.query.name;
+      this.$router.push("/search?name=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+      console.log("đưa lên url thành công");
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
 
     this.namepage = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
     this.breadcrumbs[1].name = "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm: " + this.$route.query.name;
 
-    window.axios.get("/search/?name=" + this.$route.query.name).then(function (response) {
-      _this.search = response.data.data;
-      console.log("Đây là search", response.data.data);
+    window.axios.get("/search?name=" + this.$route.query.name).then(function (response) {
+      _this3.search = response.data.data;
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
     }).catch(function (error) {
       console.log(error);
     });
@@ -37820,15 +37873,17 @@ var render = function() {
                       _c("v-select", {
                         attrs: {
                           items: _vm.filter,
+                          "item-text": "text",
+                          "return-object": "",
                           label: "--Chọn--",
                           "single-line": ""
                         },
                         model: {
-                          value: _vm.e1,
+                          value: _vm.filter_search,
                           callback: function($$v) {
-                            _vm.e1 = $$v
+                            _vm.filter_search = $$v
                           },
-                          expression: "e1"
+                          expression: "filter_search"
                         }
                       })
                     ],
@@ -37867,13 +37922,17 @@ var render = function() {
                   { staticClass: "text-xs-center mt-5" },
                   [
                     _c("v-pagination", {
-                      attrs: { length: 3 },
+                      attrs: {
+                        length: _vm.panigation.length,
+                        "total-visible": 7
+                      },
+                      on: { input: _vm.next },
                       model: {
-                        value: _vm.page,
+                        value: _vm.panigation.page,
                         callback: function($$v) {
-                          _vm.page = $$v
+                          _vm.$set(_vm.panigation, "page", $$v)
                         },
-                        expression: "page"
+                        expression: "panigation.page"
                       }
                     })
                   ],
@@ -38575,6 +38634,10 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _data$methods$watch$m;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -38603,7 +38666,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __webpack_exports__["default"] = (_data$methods$watch$m = {
   data: function data() {
     return {
       breadcrumbs: [{
@@ -38616,10 +38679,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disabled: true
       }],
       e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      listCatagory: {},
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
       namepage: "Danh sách sản phẩm",
-      page: 1
+      listCatagory: {},
+      filter_listcategory: "",
+      book: {},
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: 5
+      }
     };
   },
   methods: {
@@ -38638,13 +38716,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
       this.loadauthor();
+    },
+    "$route.query.page": function $routeQueryPage(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/categories?type=" + this.$route.query.type + "&page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this2.search = res.data.data;
+          _this2.panigation.page = res.data.current_page;
+          _this2.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this3 = this;
+
+      if (val) {
+        window.axios.get("/categories?type=" + this.$route.query.type + "&sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this3.search = res.data.data;
+          _this3.panigation.page = res.data.current_page;
+          _this3.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    filter_author: function filter_author(val) {
+      this.$router.push("/categories?type=" + this.$route.query.type + "&&sort=" + val.linkto);
     }
-  },
-  mounted: function mounted() {
-    this.breadcrumbs[1].name = "" + this.$route.query.type;
-    this.loadauthor();
   }
-});
+}, _defineProperty(_data$methods$watch$m, "methods", {
+  next: function next(page) {
+    // let type = this.$route.query.name;
+    this.$router.push("/categories?type=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+    console.log("đưa lên url thành công");
+  }
+}), _defineProperty(_data$methods$watch$m, "mounted", function mounted() {
+  this.breadcrumbs[1].name = "" + this.$route.query.type;
+  this.loadauthor();
+}), _data$methods$watch$m);
 
 /***/ }),
 /* 68 */
@@ -38684,15 +38794,17 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       items: _vm.filter,
+                      "item-text": "text",
+                      "return-object": "",
                       label: "--Chọn--",
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.e1,
+                      value: _vm.filter_listcategory,
                       callback: function($$v) {
-                        _vm.e1 = $$v
+                        _vm.filter_listcategory = $$v
                       },
-                      expression: "e1"
+                      expression: "filter_listcategory"
                     }
                   })
                 ],
@@ -38731,13 +38843,14 @@ var render = function() {
               { staticClass: "text-xs-center mt-5" },
               [
                 _c("v-pagination", {
-                  attrs: { length: 3 },
+                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
+                  on: { input: _vm.next },
                   model: {
-                    value: _vm.page,
+                    value: _vm.panigation.page,
                     callback: function($$v) {
-                      _vm.page = $$v
+                      _vm.$set(_vm.panigation, "page", $$v)
                     },
-                    expression: "page"
+                    expression: "panigation.page"
                   }
                 })
               ],

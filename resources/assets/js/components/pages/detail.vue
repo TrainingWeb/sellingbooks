@@ -118,9 +118,9 @@
                       <v-text-field @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
                       <div class="ml-0 mr-2">
                         <v-btn @click="postComment" color="green accent-4 white--text">Gửi</v-btn>
-                        <v-snackbar :timeout="timeout" top v-model="snackbarCommet" color="green accent-4">
-                          Vui lòng đăng nhập trước khi nhận xét
-                          <v-btn flat icon color="white" @click.native="snackbarCommet = false">
+                        <v-snackbar :timeout="timeout" top v-model="snackbarComment" color="green accent-4">
+                          Vui lòng đăng nhập hoặc đăng ký trước khi nhận xét
+                          <v-btn flat icon color="white" @click.native="snackbarComment = false">
                             <v-icon>clear</v-icon>
                           </v-btn>
                         </v-snackbar>
@@ -149,7 +149,7 @@
 export default {
   data() {
     return {
-      snackbarCommet: false,
+      snackbarComment: false,
       commenttext: "",
       bookDetail: {},
       tags: {},
@@ -214,21 +214,22 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     postComment() {
-      window.axios
-        .post("/add-comment/" + this.$route.query.type, {
-          content: this.commenttext
-        })
-        .then(response => {
-          console.log("add comment", response.data);
-          let data = response.data.data;
-          // if (this.$store.state.api_token) {
-          data.user = this.$store.state.user;
-          this.comments.data.push(data);
-          this.commenttext = "";
-          // } else {
-          //   alert("ddawng nhap");
-          // }
-        });
+      if (this.$store.state.token) {
+        window.axios
+          .post("/add-comment/" + this.$route.query.type, {
+            content: this.commenttext
+          })
+          .then(response => {
+            console.log("add comment", response.data);
+            let data = response.data.data;
+            data.user = this.$store.state.user;
+            this.comments.data.push(data);
+            this.commenttext = "";
+          });
+      } else {
+        this.snackbarComment = true;
+        this.commenttext = "";
+      }
     },
     loadComment() {
       let type = this.$route.query.type;

@@ -6,7 +6,7 @@
     <v-container v-if="search">
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
-          <v-select :items="filter" v-model="e1" label="--Chọn--" single-line></v-select>
+          <v-select :items="filter" item-text="text" return-object v-model="filter_search" label="--Chọn--" single-line></v-select>
         </v-flex>
       </v-layout>
       <v-container grid-list-xs>
@@ -18,7 +18,7 @@
       </v-container>
       <template>
         <div class="text-xs-center mt-5">
-          <v-pagination :length="3" v-model="page"></v-pagination>
+          <v-pagination :length="panigation.length" v-model="panigation.page" @input="next" :total-visible="7"></v-pagination>
         </div>
       </template>
     </v-container>
@@ -45,24 +45,96 @@ export default {
     ],
     e1: null,
     filter: [
-      { text: "Lọc theo tên A-Z" },
-      { text: "Lọc Theo Giá tiền" },
+      {
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      },
+      {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      },
+      {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      },
       { text: "Lọc theo giá tiền giảm giá" }
     ],
+    books: {},
     search: {},
+    filter_search: "",
     namepage: "",
-
-    page: 1
+    panigation: {
+      page: 1,
+      visible: 4,
+      length: 5
+    }
   }),
+  watch: {
+    "$route.query.page"(val) {
+      if (val) {
+        window.axios
+          .get(
+            "/search?name=" +
+              this.$route.query.name +
+              "&page=" +
+              val +
+              (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+          )
+          .then(res => {
+            this.search = res.data.data;
+            this.panigation.page = res.data.current_page;
+            this.panigation.length = res.data.last_page;
+          });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort"(val) {
+      if (val) {
+        window.axios
+          .get(
+            "/search?name=" +
+              this.$route.query.name +
+              "&sort=" +
+              val +
+              (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
+          )
+          .then(res => {
+            this.search = res.data.data;
+            this.panigation.page = res.data.current_page;
+            this.panigation.length = res.data.last_page;
+          });
+      }
+      console.log("chuyển axios thành công");
+    },
+    filter_search(val) {
+      this.$router.push(
+        "/search?name=" + this.$route.query.name + "&&sort=" + val.linkto
+      );
+    }
+  },
+  methods: {
+    next(page) {
+      // let type = this.$route.query.name;
+      this.$router.push(
+        "/search?name=" +
+          this.$route.query.name +
+          "&&page=" +
+          page +
+          (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+      );
+      console.log("đưa lên url thành công");
+    }
+  },
   mounted() {
     this.namepage = `Kết quả tìm kiếm: ${this.$route.query.name}`;
     this.breadcrumbs[1].name = `Kết quả tìm kiếm: ${this.$route.query.name}`;
 
     window.axios
-      .get("/search/?name=" + this.$route.query.name)
+      .get("/search?name=" + this.$route.query.name)
       .then(response => {
         this.search = response.data.data;
-        console.log("Đây là search", response.data.data);
+        this.panigation.page = response.data.current_page;
+        this.panigation.length = response.data.last_page;
       })
       .catch(function(error) {
         console.log(error);
