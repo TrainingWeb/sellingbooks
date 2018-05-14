@@ -8,7 +8,8 @@ const store = new Vuex.Store({
     favorite: [],
     selected: [],
     token: null,
-    user: {}
+    user: {},
+    message: null
   },
   mutations: {
     SET_CART: (state, cart) => {
@@ -26,42 +27,38 @@ const store = new Vuex.Store({
     SET_USER: (state, user) => {
       state.user = user;
     },
-
+    SET_MESSAGE: (state, message) => {
+      state.message = message;
+    }
   },
   actions: {
-    setCart({
-      commit
-    }, val) {
+    setCart({ commit }, val) {
       commit("SET_CART", val);
       localStorage.cart = JSON.stringify(val);
     },
-    setFavorite({
-      commit
-    }, val) {
+    setFavorite({ commit }, val) {
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
     },
-    setSelected({
-      commit
-    }, val) {
+    setSelected({ commit }, val) {
       commit("SET_SELECTED", val);
       localStorage.selected = JSON.stringify(val);
     },
-    setToken({
-      commit
-    }, val) {
+    setToken({ commit }, val) {
       commit("SET_TOKEN", val);
       localStorage.token = val;
       // window.axios.defaults.headers = {
       //   "Authorization": 'Bearer ' + val
       // }
-      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val
+      window.axios.defaults.headers.common["Authorization"] = "Bearer " + val;
     },
-    setUser({
-      commit
-    }, val) {
+    setUser({ commit }, val) {
       commit("SET_USER", val);
       localStorage.user = JSON.stringify(val);
+    },
+    setMessage({ commit }, val) {
+      commit("SET_MESSAGE", val);
+      localStorage.message = val;
     }
   }
 });

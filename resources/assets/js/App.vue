@@ -33,6 +33,9 @@
                         <v-text-field v-model="passLogin" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                       </v-flex>
                       <div>
+                        <span v-if="data.message" class="red--text">Email hoặc mật khẩu không đúng</span>
+                      </div>
+                      <div>
                         <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
                         <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage">
                           Đăng nhập
@@ -119,7 +122,6 @@
       <v-flex xs12 green accent-4>
         <v-container class="pa-0">
           <v-toolbar flat class="green accent-4">
-
             <v-toolbar-items>
               <v-btn flat class="white--text ma-0" to="/">Trang chủ</v-btn>
               <v-menu open-on-hover offset-y full-width bottom :close-on-content-click="false" content-class="mega-menu">
@@ -275,8 +277,7 @@
       </v-card>
     </v-footer>
     <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
-
-      đắng nhập thành công
+      Đăng nhập thành công
       <v-btn flat icon color="white" @click.native="snackbarlogin = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -374,7 +375,6 @@ export default {
       }
     },
     loginpage() {
-      console.log("vao day roi");
       window.axios
         .post("/login", {
           email: this.emailLogin,
@@ -382,15 +382,16 @@ export default {
         })
         .then(response => {
           let data = response.data;
-          console.log(data.api_token);
-          this.$store.dispatch("setToken", data.api_token),
-            this.$store.dispatch("setUser", data.user);
-          this.snackbarlogin = true;
+          this.$store.dispatch("setToken", data.api_token);
+          this.$store.dispatch("setUser", data.user);
+          if (data.message) {
+            this.snackbarlogin = true;
+            this.login = false;
+          }
         })
         .catch(function(error) {
           console.log(error);
         });
-      this.login = false;
     },
     logout() {
       let user = this.$store.state.user;
@@ -409,8 +410,8 @@ export default {
         })
         .then(response => {
           this.data = response.data;
-          this.$store.dispatch("setToken", this.data.api_token),
-            this.$store.dispatch("setUser", this.data.user);
+          this.$store.dispatch("setToken", this.data.api_token);
+          this.$store.dispatch("setUser", this.data.user);
         })
         .catch(function(error) {
           console.log(error);

@@ -12412,9 +12412,11 @@ if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default *
 //
 if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
 //
-if (localStorage.token && localStorage.token != 'undefined') __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
+if (localStorage.token && localStorage.token != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
 
-if (localStorage.user && localStorage.user != 'undefined') __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
+if (localStorage.user && localStorage.user != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
+
+if (localStorage.message && localStorage.message != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setMessage", localStorage.message);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
@@ -34374,6 +34376,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36121,11 +36124,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialogDel: false,
+      snackbar: false,
+      snackbarcheck: false,
+      timeout: 3000,
       headers: [{
         text: "Sản phẩm",
         align: "left",
@@ -36137,27 +36159,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         value: "total",
         sortable: false
       }],
-
-      valid: false,
-      name: "",
-      nameRules: [function (v) {
-        return !!v || "Tên là bắt buộc";
-      }],
-      email: "",
-      emailRules: [function (v) {
-        return !!v || "E-mail là bắt buộc";
-      }, function (v) {
-        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail không hợp lệ"
-        );
-      }],
+      valid: true,
       phone: "",
-      phoneRules: [function (v) {
-        return !!v || "Số điện thoại là bắt buộc";
-      }],
+      name: "",
       address: "",
       addressRules: [function (v) {
         return !!v || "Địa chỉ là bắt buộc";
       }],
+      emailRules: [function (v) {
+        return !!v || " Số điện thoại là bắt buộc";
+      }, function (v) {
+        return v && v.length >= 10 || "Số điện thoại không đúng";
+      }],
+      nameRules: [function (v) {
+        return !!v || " Tên là bắt buộc";
+      }],
+
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -36169,6 +36186,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       namepage: "Kiểm tra đơn hàng"
     };
+  },
+  methods: {
+    userOrder: function userOrder() {
+      var _this = this;
+
+      if (this.$store.state.token) {
+        if (this.$refs.form.validate()) {
+          window.axios.post("/check-info", {
+            name: this.name,
+            phone: this.phone,
+            address: this.address
+          }).then(function (response) {
+            _this.snackbar = true;
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
+      } else {
+        this.snackbarcheck = true;
+      }
+    },
+    oder: function oder() {
+      var _this2 = this;
+
+      if (this.$store.state.token) {
+        if (this.$refs.form.validate()) {
+          var book = this.$store.state.cart;
+          var book_id = [];
+          var qty = [];
+          for (var index in book) {
+            book_id.push(book[index].book.id);
+            qty.push(book[index].quantity);
+          }
+          window.axios.post("/finish-checkout", {
+            id: book_id,
+            quantity: qty
+          }).then(function (response) {
+            _this2.$store.state.cart = [];
+            _this2.$store.dispatch("setCart", cart);
+            _this2.dialogDel = true;
+            window.location = "#/";
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
+      } else {
+        this.snackbarcheck = true;
+      }
+    }
   },
   computed: {
     total: function total() {
@@ -36251,7 +36317,8 @@ var render = function() {
                                       _c(
                                         "v-form",
                                         {
-                                          staticClass: "mt-5",
+                                          ref: "form",
+                                          attrs: { "lazy-validation": "" },
                                           model: {
                                             value: _vm.valid,
                                             callback: function($$v) {
@@ -36264,9 +36331,8 @@ var render = function() {
                                           _c("v-text-field", {
                                             attrs: {
                                               label: "Họ và tên",
-                                              rules: _vm.nameRules,
-                                              counter: 10,
-                                              required: ""
+                                              value: _vm.$store.state.user.name,
+                                              rules: _vm.nameRules
                                             },
                                             model: {
                                               value: _vm.name,
@@ -36279,25 +36345,18 @@ var render = function() {
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: " Địa chỉ E-mail",
-                                              rules: _vm.emailRules,
-                                              required: ""
-                                            },
-                                            model: {
-                                              value: _vm.email,
-                                              callback: function($$v) {
-                                                _vm.email = $$v
-                                              },
-                                              expression: "email"
+                                              label: "E-mail",
+                                              value:
+                                                _vm.$store.state.user.email,
+                                              disabled: ""
                                             }
                                           }),
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Số Điện Thoại",
                                               mask: "phone",
-                                              rules: _vm.phoneRules,
-                                              required: ""
+                                              rules: _vm.emailRules,
+                                              label: "Số điện thoại"
                                             },
                                             model: {
                                               value: _vm.phone,
@@ -36310,9 +36369,8 @@ var render = function() {
                                           _vm._v(" "),
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Địa Chỉ",
                                               rules: _vm.addressRules,
-                                              required: ""
+                                              label: "Địa chỉ"
                                             },
                                             model: {
                                               value: _vm.address,
@@ -36321,7 +36379,23 @@ var render = function() {
                                               },
                                               expression: "address"
                                             }
-                                          })
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                dark: "",
+                                                color: "green accent-4"
+                                              },
+                                              on: { click: _vm.userOrder }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                      Lưu\n                    "
+                                              )
+                                            ]
+                                          )
                                         ],
                                         1
                                       )
@@ -36433,21 +36507,15 @@ var render = function() {
                                       _c(
                                         "v-btn",
                                         {
-                                          staticClass: "my-4",
                                           attrs: {
                                             dark: "",
                                             color: "green accent-4"
                                           },
-                                          nativeOn: {
-                                            click: function($event) {
-                                              $event.stopPropagation()
-                                              _vm.dialogDel = true
-                                            }
-                                          }
+                                          on: { click: _vm.oder }
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    Đặt hàng\n                  "
+                                            "\n                    thanh toán\n                  "
                                           )
                                         ]
                                       ),
@@ -36511,10 +36579,9 @@ var render = function() {
                                                           attrs: {
                                                             color:
                                                               "green accent-4",
-                                                            flat: "flat",
-                                                            to: "/"
+                                                            flat: "flat"
                                                           },
-                                                          nativeOn: {
+                                                          on: {
                                                             click: function(
                                                               $event
                                                             ) {
@@ -36555,6 +36622,68 @@ var render = function() {
                 1
               )
             ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: _vm.timeout, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n    Lưu thông tin thành công\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: _vm.timeout, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbarcheck,
+            callback: function($$v) {
+              _vm.snackbarcheck = $$v
+            },
+            expression: "snackbarcheck"
+          }
+        },
+        [
+          _vm._v("\n    Vui lòng đăng nhập hoặc đăng kí để nhập hàng\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
             1
           )
         ],
@@ -36660,7 +36789,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.color-text a {\r\n  color: white !important;\n}\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.primary {\r\n  background-color: #00c853 !important;\r\n  border-color: #00c853 !important;\n}\r\n", ""]);
 
 // exports
 
@@ -36777,7 +36906,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       _this3.books = res.data.data;
       _this3.panigation.page = res.data.current_page;
       _this3.panigation.length = res.data.last_page;
-      console.log("mang chị thuy", res.data.data);
     });
   }
 });
@@ -38772,115 +38900,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }],
+
       namepage: "Tác giả",
       page: 1,
       listauthor: []
@@ -40923,6 +40943,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40994,19 +41015,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     loginpage: function loginpage() {
       var _this = this;
 
-      console.log("vao day roi");
       window.axios.post("/login", {
         email: this.emailLogin,
         password: this.passLogin
       }).then(function (response) {
         var data = response.data;
-        console.log(data.api_token);
-        _this.$store.dispatch("setToken", data.api_token), _this.$store.dispatch("setUser", data.user);
-        _this.snackbarlogin = true;
+        _this.$store.dispatch("setToken", data.api_token);
+        _this.$store.dispatch("setUser", data.user);
+        if (data.message) {
+          _this.snackbarlogin = true;
+          _this.login = false;
+        }
       }).catch(function (error) {
         console.log(error);
       });
-      this.login = false;
     },
     logout: function logout() {
       var user = this.$store.state.user;
@@ -41025,7 +41047,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: this.passRegister
       }).then(function (response) {
         _this2.data = response.data;
-        _this2.$store.dispatch("setToken", _this2.data.api_token), _this2.$store.dispatch("setUser", _this2.data.user);
+        _this2.$store.dispatch("setToken", _this2.data.api_token);
+        _this2.$store.dispatch("setUser", _this2.data.user);
       }).catch(function (error) {
         console.log(error);
       });
@@ -41247,6 +41270,22 @@ var render = function() {
                                               ],
                                               1
                                             ),
+                                            _vm._v(" "),
+                                            _c("div", [
+                                              _vm.data.message
+                                                ? _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "red--text"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Email hoặc mật khẩu không đúng"
+                                                      )
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]),
                                             _vm._v(" "),
                                             _c(
                                               "div",
@@ -42416,7 +42455,7 @@ var render = function() {
           }
         },
         [
-          _vm._v("\n\n    đắng nhập thành công\n    "),
+          _vm._v("\n    Đăng nhập thành công\n    "),
           _c(
             "v-btn",
             {
@@ -42465,7 +42504,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     favorite: [],
     selected: [],
     token: null,
-    user: {}
+    user: {},
+    message: null
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -42482,8 +42522,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_USER: function SET_USER(state, user) {
       state.user = user;
+    },
+    SET_MESSAGE: function SET_MESSAGE(state, message) {
+      state.message = message;
     }
-
   },
   actions: {
     setCart: function setCart(_ref, val) {
@@ -42512,13 +42554,19 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       // window.axios.defaults.headers = {
       //   "Authorization": 'Bearer ' + val
       // }
-      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + val;
+      window.axios.defaults.headers.common["Authorization"] = "Bearer " + val;
     },
     setUser: function setUser(_ref5, val) {
       var commit = _ref5.commit;
 
       commit("SET_USER", val);
       localStorage.user = JSON.stringify(val);
+    },
+    setMessage: function setMessage(_ref6, val) {
+      var commit = _ref6.commit;
+
+      commit("SET_MESSAGE", val);
+      localStorage.message = val;
     }
   }
 });
@@ -43668,7 +43716,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       for (var index in favorite) {
         if (favorite[index].book.id === this.book.id) {
           if (i > -1) {
-            console.log("không đỏ");
             favorite.splice(favorite[index], 1);
             love: false, this.$store.dispatch("setFavorite", favorite);
             this.snackbarFav = true;
@@ -43676,7 +43723,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         }
       }
-      console.log("Đỏ");
 
       var itemBook = {
         book: this.book,

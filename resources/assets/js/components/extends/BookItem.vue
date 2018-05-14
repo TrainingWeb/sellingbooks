@@ -99,7 +99,6 @@ export default {
       for (var index in favorite) {
         if (favorite[index].book.id === this.book.id) {
           if (i > -1) {
-            console.log("không đỏ");
             favorite.splice(favorite[index], 1);
             love: false, this.$store.dispatch("setFavorite", favorite);
             this.snackbarFav = true;
@@ -107,7 +106,6 @@ export default {
           }
         }
       }
-      console.log("Đỏ");
 
       let itemBook = {
         book: this.book,
