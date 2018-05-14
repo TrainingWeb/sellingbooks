@@ -35831,11 +35831,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialogDel: false,
+      snackbar: false,
+      snackbarcheck: false,
+      timeout: 3000,
       headers: [{
         text: "Sản phẩm",
         align: "left",
@@ -35849,14 +35866,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       valid: true,
       phone: "",
+      name: "",
+      address: "",
       addressRules: [function (v) {
         return !!v || "Địa chỉ là bắt buộc";
       }],
-      address: "",
       emailRules: [function (v) {
         return !!v || " Số điện thoại là bắt buộc";
       }, function (v) {
         return v && v.length >= 10 || "Số điện thoại không đúng";
+      }],
+      nameRules: [function (v) {
+        return !!v || " Tên là bắt buộc";
       }],
 
       breadcrumbs: [{
@@ -35872,18 +35893,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   methods: {
-    submit: function submit() {
-      window.axios.post("/check-info", {
-        phone: this.phone,
-        address: this.address
-      }).then(function (response) {
-        console.log("đã thành công");
-      }).catch(function (error) {
-        console.log(error);
-      });
+    userOrder: function userOrder() {
+      var _this = this;
+
+      if (this.$store.state.token) {
+        if (this.$refs.form.validate()) {
+          window.axios.post("/check-info", {
+            name: this.name,
+            phone: this.phone,
+            address: this.address
+          }).then(function (response) {
+            _this.snackbar = true;
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
+      } else {
+        this.snackbarcheck = true;
+      }
     },
-    clear: function clear() {
-      this.$refs.form.reset();
+    oder: function oder() {
+      var _this2 = this;
+
+      if (this.$store.state.token) {
+        if (this.$refs.form.validate()) {
+          var book = this.$store.state.cart;
+          var book_id = [];
+          var qty = [];
+          for (var index in book) {
+            book_id.push(book[index].book.id);
+            qty.push(book[index].quantity);
+          }
+          window.axios.post("/finish-checkout", {
+            id: book_id,
+            quantity: qty
+          }).then(function (response) {
+            _this2.$store.state.cart = [];
+            _this2.$store.dispatch("setCart", cart);
+            _this2.dialogDel = true;
+            window.location = "#/";
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
+      } else {
+        this.snackbarcheck = true;
+      }
     }
   },
   computed: {
@@ -35980,9 +36035,16 @@ var render = function() {
                                         [
                                           _c("v-text-field", {
                                             attrs: {
-                                              label: "Name",
+                                              label: "Họ và tên",
                                               value: _vm.$store.state.user.name,
-                                              disabled: ""
+                                              rules: _vm.nameRules
+                                            },
+                                            model: {
+                                              value: _vm.name,
+                                              callback: function($$v) {
+                                                _vm.name = $$v
+                                              },
+                                              expression: "name"
                                             }
                                           }),
                                           _vm._v(" "),
@@ -36022,7 +36084,23 @@ var render = function() {
                                               },
                                               expression: "address"
                                             }
-                                          })
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                dark: "",
+                                                color: "green accent-4"
+                                              },
+                                              on: { click: _vm.userOrder }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                      Lưu\n                    "
+                                              )
+                                            ]
+                                          )
                                         ],
                                         1
                                       )
@@ -36138,7 +36216,7 @@ var render = function() {
                                             dark: "",
                                             color: "green accent-4"
                                           },
-                                          on: { click: _vm.submit }
+                                          on: { click: _vm.oder }
                                         },
                                         [
                                           _vm._v(
@@ -36206,10 +36284,9 @@ var render = function() {
                                                           attrs: {
                                                             color:
                                                               "green accent-4",
-                                                            flat: "flat",
-                                                            to: "/"
+                                                            flat: "flat"
                                                           },
-                                                          nativeOn: {
+                                                          on: {
                                                             click: function(
                                                               $event
                                                             ) {
@@ -36250,6 +36327,68 @@ var render = function() {
                 1
               )
             ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: _vm.timeout, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n    Lưu thông tin thành công\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: _vm.timeout, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbarcheck,
+            callback: function($$v) {
+              _vm.snackbarcheck = $$v
+            },
+            expression: "snackbarcheck"
+          }
+        },
+        [
+          _vm._v("\n    Vui lòng đăng nhập hoặc đăng kí để nhập hàng\n    "),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
             1
           )
         ],
@@ -38416,115 +38555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       e1: null,
       filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-      books: [{
-        img: "http://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg",
-        name: "Cô gái mở đường",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg",
-        name: "Dế mèn phiêu lưu kí",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "http://lehai.com.vn/uploads/news/Thi%E1%BA%BFt%20k%E1%BA%BF%20b%C3%ACa%20s%C3%A1ch/bia-sach-1.jpg",
-        name: "Truyện kiều",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.quantrimang.com/photos/image/2016/05/29/sach-hay-2.jpg",
-        name: "Chuyện chưa kể",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://i.pinimg.com/originals/e9/40/fd/e940fd856817c1737338ab47a938f430.jpg",
-        name: "Cô bé bán diêm",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://tintaynguyen.com/wp-content/uploads/2015/11/bia-truyen-thuy-kieu-moi-anh-nha-nam-2-1447230913.jpg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://hajimarinokaze.files.wordpress.com/2015/11/screenshot_7.png",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvdXrTopkVcFYQwFxmDQTMfYHnFWdL0coXXHGKsteMR0eXvgG2tw",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAI3ZXxnDDlYjAMJXZlvWPVEaDsLHnGmd06ZFPbR83ug0uUSa",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzILC2b-rkURE-BPHmVqnFBPeNDcktpkd71kD0afJGWYKLkI0tg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdHmGWsMv-u81C7ZjZsBiWKQAfRmBycRjXSLSMdZpiTNLvAxpHIA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLZXijYcdnacO0DTpH_IzMMNmzmJwgcb8DIFzCeStHgQ7dUm8sAA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgAqkP87llex4oOEWrTzvV7bUupOVWNb7JwBphiuoeB761UzT",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Xepf1UGSlrefSwiK8jbx8iIPHa_CU13csTFWSAunCIvGoekg",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtyIf_Ro-a4IRIIl4rO0NG-4AxpuMz-UIIHMg-iMOZByiDH71qQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR51dQmpOYMx-GCBow5lIFF2dzaQknAaZTB1gW7KtYR4By5Y5ElnA",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-5e3PeiSCg7t7NLQkHNikmL7zIuS04xe8tK7Fo3bjsZj7w_e",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }, {
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGqfU4M_EyfKALNeUq_67SdVisuPg_C5vC0CCsXoueug-IoaptQ",
-        name: "Mèo con đi học",
-        price: "120.000",
-        sale: "150.000",
-        author: "Nguyễn Du"
-      }],
+
       namepage: "Tác giả",
       page: 1,
       listauthor: []
@@ -43334,14 +43365,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       for (var index in favorite) {
         if (favorite[index].book.id === this.book.id) {
           if (i > -1) {
-            console.log("không đỏ");
             favorite.splice(favorite[index], 1);
             love: false, this.$store.dispatch("setFavorite", favorite);
             return;
           }
         }
       }
-      console.log("Đỏ");
 
       var itemBook = {
         book: this.book,
@@ -43850,9 +43879,14 @@ if (false) {
 
 /***/ }),
 /* 119 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: D:/laragon/www/sellingBookStore/resources/assets/js/axios/index.js: Unexpected token (4:0)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39mwindow\u001b[33m.\u001b[39maxios\u001b[33m.\u001b[39mdefaults\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39mpost[\u001b[32m\"Content-Type\"\u001b[39m] \u001b[33m=\u001b[39m \u001b[32m\"application/json\"\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbookstore.test\"\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 7 | \u001b[39mlet host \u001b[33m=\u001b[39m \u001b[32m\"http://sellingbooks.local\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n");
+window.axios = __webpack_require__(6);
+
+window.axios.defaults.headers.post["Content-Type"] = "application/json";
+var host = "http://sellingbooks.local";
+var api = "/api";
+window.axios.defaults.baseURL = "" + host + api;
 
 /***/ }),
 /* 120 */
