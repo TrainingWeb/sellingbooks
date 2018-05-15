@@ -64,7 +64,7 @@ export default {
         "/authors/" + this.$route.query.type + "?slug=" + this.$route.query.type
       )
       .then(response => {
-        this.listauthor = response.data.data.data;
+        this.listauthor = response.data.data;
         console.log("đây là tác phẩm", this.listauthor);
       })
       .catch(function(error) {

@@ -60,8 +60,8 @@ export default {
             this.$route.query.type
         )
         .then(response => {
-          this.listCatagory = response.data.data.data;
-          console.log("đây là tác phẩm", this.listauthor);
+          this.listCatagory = response.data.data;
+          console.log("đây là tác phẩm tác giả", response.data.data);
         })
         .catch(function(error) {
           console.log(error);
