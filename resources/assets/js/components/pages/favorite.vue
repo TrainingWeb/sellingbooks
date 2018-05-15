@@ -31,7 +31,7 @@
             <td>
               <router-link class="subheading text-xs-left red--text text--darken-4" style="text-decoration:none" to="/detail">{{ props.item.book.name }}</router-link>
             </td>
-            <td>
+            <td class="text-xs-left">
               <div v-if="props.item.book.promotion_price">
                 <span class="green--text text--accent-4 title "> {{formatPrice(props.item.book.promotion_price)}}đ</span>
                 <span class="grey--text text--darken-1 title ml-3">
@@ -47,6 +47,12 @@
             <td>
               <v-btn class="mx-0 my-3" color="green accent-4 white--text" @click="addCartPageFavorite(props.item)">
                 <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
+                <v-snackbar :timeout="timeout" top v-model="snackbarCart" color="green accent-4">
+                  Thêm vào giỏ hàng thành công
+                  <v-btn flat icon color="white" @click.native="snackbarCart = false">
+                    <v-icon>clear</v-icon>
+                  </v-btn>
+                </v-snackbar>
               </v-btn>
             </td>
           </tr>
@@ -67,7 +73,7 @@ export default {
         align: "left",
         sortable: false
       },
-      { text: "Giá tiền", sortable: false },
+      { text: "Giá tiền", align: "left", sortable: false },
       { text: "Chọn mua", sortable: false }
     ],
     breadcrumbs: [
@@ -85,7 +91,9 @@ export default {
     e1: null,
     namepage: "Sản phẩm yêu thích",
     page: 1,
-    dialogDelete: false
+    dialogDelete: false,
+    snackbarCart: false,
+    timeout: 3000
   }),
   methods: {
     favoriteBooks() {
@@ -106,9 +114,7 @@ export default {
     addCartPageFavorite(val) {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === val.id) {
-          alert(
-            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
-          );
+          this.snackbarCart = true;
           return;
         }
       }
@@ -119,6 +125,7 @@ export default {
       let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbarCart = true;
     },
     upadateQantity(id, e) {
       let favorite = this.$store.state.favorite;
