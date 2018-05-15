@@ -21,6 +21,7 @@ use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
+use Validator;
 
 class PageController extends APIBaseController
 {
@@ -351,7 +352,7 @@ class PageController extends APIBaseController
         if (count($books) < 1) {
             return response()->json('Found 0 books.', 200);
         }
-        return response()->json(['countbooks'=>$countbooks, 'books'=>$books]);
+        return response()->json(['countbooks' => $countbooks, 'books' => $books]);
     }
 
     public function checkInfo(Request $request)
@@ -455,6 +456,18 @@ class PageController extends APIBaseController
 
     public function resetPassword(Request $request, $token)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+            'confirm_password' => 'required',
+        ], [
+            'email.required' => 'Email can not be null',
+            'password.required' => 'Password can not be null',
+            'confirm_password.required' => 'Please confirm password !',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendErrorValidation('Validation Error.', $validator->errors());
+        }
         if ($request->password !== $request->confirm_password) {
             return $this->sendMessage('Password confirm must in the same !');
         }
@@ -479,8 +492,10 @@ class PageController extends APIBaseController
         return $this->sendMessage('Your account has been reset password !');
     }
 
-    public function testmail($token, $email)
+    public function testmail()
     {
+        $token = request()->token;
+        $email = request()->email;
         return view('testmail', compact('token', 'email'));
     }
 }

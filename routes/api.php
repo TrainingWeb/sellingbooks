@@ -66,5 +66,5 @@ Route::get('/categories/{slug}', 'PageController@getInfoCategory');
 Route::get('/tags/{slug}', 'PageController@tagInfo');
 
 Route::post('/sendmail', 'PageController@sendMailResetPassword');
-Route::get('reset/password/{token}/{email}', 'PageController@testmail');
+Route::get('reset/password', 'PageController@testmail');
 Route::post('/reset/password/{token}', 'PageController@resetPassword')->name('resetpassword');
