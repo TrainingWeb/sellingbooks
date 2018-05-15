@@ -331,7 +331,27 @@ class PageController extends APIBaseController
     {
         $user = User::find($request->user()->id);
         $books = $user->books()->with('tags')->with('author')->paginate(18);
-        return $this->sort($user->books());
+        $countbooks = count($books);
+        switch ($request->sort) {
+            case 'atoz':
+                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name')->paginate(18);
+                break;
+            case 'atozdesc':
+                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name', 'DESC')->paginate(18);
+                break;
+            case 'price';
+                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price')->paginate(18);
+                break;
+            case 'pricedesc';
+                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price', 'DESC')->paginate(18);
+                break;
+            default:
+                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
+        }
+        if (count($books) < 1) {
+            return response()->json('Found 0 books.', 200);
+        }
+        return response()->json(['countbooks'=>$countbooks, 'books'=>$books]);
     }
 
     public function checkInfo(Request $request)
