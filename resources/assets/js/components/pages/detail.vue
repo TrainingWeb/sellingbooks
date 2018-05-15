@@ -6,14 +6,13 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12>
-
           <v-card flat>
             <v-container fluid style="min-height: 0;" grid-list-lg>
               <v-layout row wrap>
                 <v-card color="cyan darken-2" class="white--text">
                   <v-container fluid grid-list-lg>
                     <v-layout row wrap v-if="bookDetail.author">
-                      <v-flex xs12 sm6 md4 class="px-5">
+                      <v-flex xs12 sm6 md4 class="pr-5">
                         <v-card-media :src="'/storage/images/'+bookDetail.image" height="450px"></v-card-media>
                       </v-flex>
                       <v-flex xs12 sm6 md8>
@@ -35,6 +34,7 @@
                           <div v-else>
                             <span class="green--text text--accent-4 title mt-3">
                               {{formatPrice(bookDetail.price)}}
+                              <span style="text-decoration: underline">đ</span>
                             </span>
                           </div>
                           <v-divider class="my-3"></v-divider>
@@ -47,10 +47,22 @@
                           <v-divider class="my-3"></v-divider>
                           <div>
                             <v-btn class="mx-0" color="green accent-4 white--text" @click="addCartDetail">
-                              <i class="material-icons add-shopping mr-2 white--text">add_shopping_cart</i>Thêm
+                              <i class="material-icons add-shopping  white--text">add_shopping_cart</i>
+                              <v-snackbar :timeout="timeout" top v-model="snackbarCartDetail" color="green accent-4">
+                                Thêm vào giỏ hàng thành công
+                                <v-btn flat icon color="white" @click.native="snackbarCartDetail = false">
+                                  <v-icon>clear</v-icon>
+                                </v-btn>
+                              </v-snackbar>
                             </v-btn>
                             <v-btn color="green accent-4" @click="addFavoriteDetail">
                               <i class="material-icons favorite white--text">favorite</i>
+                              <v-snackbar :timeout="timeout" top v-model="snackbarFavDetail" color="green accent-4">
+                                Thêm vào giỏ hàng thành công
+                                <v-btn flat icon color="white" @click.native="snackbarFavDetail = false">
+                                  <v-icon>clear</v-icon>
+                                </v-btn>
+                              </v-snackbar>
                             </v-btn>
                           </div>
                           <v-layout row wrap class="mt-3">
@@ -83,8 +95,13 @@
               </v-tab-item>
               <v-tab-item id="tab-2">
                 <v-card>
+                  <div class="mt-3 ml-3">
+                    <a class="grey--text text--darken-3 body-2">
+                      <span @click="loadComment(page)" label>Xem những nhận xét cũ hơn ></span>
+                    </a>
+                  </div>
                   <v-list three-line>
-                    <v-list-tile v-for="item in comments" avatar :key="item.title">
+                    <v-list-tile v-for="item in comments.data" avatar :key="item.title">
                       <v-list-tile-avatar>
                         <img src="#">
                       </v-list-tile-avatar>
@@ -96,15 +113,20 @@
                         <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
                       </v-list-tile-action>
                     </v-list-tile>
+
                     <v-layout row wrap>
-                      <v-text-field v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
-                      <div class="ml-0">
-                        <v-btn color="green accent-4 white--text">Gửi</v-btn>
+                      <v-text-field @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
+                      <div class="ml-0 mr-2">
+                        <v-btn @click="postComment" color="green accent-4 white--text">Gửi</v-btn>
+                        <v-snackbar :timeout="timeout" top v-model="snackbarComment" color="green accent-4">
+                          Vui lòng đăng nhập hoặc đăng ký trước khi nhận xét
+                          <v-btn flat icon color="white" @click.native="snackbarComment = false">
+                            <v-icon>clear</v-icon>
+                          </v-btn>
+                        </v-snackbar>
                       </div>
                     </v-layout>
-                    <div class="text-xs-center mt-5">
-                      <v-pagination :length="3" v-model="page"></v-pagination>
-                    </div>
+
                   </v-list>
                 </v-card>
               </v-tab-item>
@@ -127,12 +149,15 @@
 export default {
   data() {
     return {
+      snackbarComment: false,
       commenttext: "",
       bookDetail: {},
       tags: {},
       comments: [],
       books: {},
       snackbar: false,
+      snackbarCartDetail: false,
+      snackbarFavDetail: false,
       timeout: 3000,
       breadcrumbs: [
         {
@@ -151,16 +176,11 @@ export default {
       page: 1
     };
   },
-  mounted() {
-    window.axios.get("/book/{slug}");
-  },
   methods: {
     addCartDetail() {
       for (var index in this.$store.state.cart) {
         if (this.$store.state.cart[index].book.id === this.book.id) {
-          alert(
-            "Sản phẩm này đã có trong giỏ hàng của bạn vui lòng không chọn thêm"
-          );
+          this.snackbarCartDetail = true;
           return;
         }
       }
@@ -171,11 +191,12 @@ export default {
       let cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
+      this.snackbarCartDetail = true;
     },
     addFavoriteDetail() {
       for (var index in this.$store.state.favorite) {
         if (this.$store.state.favorite[index].id == this.book.id) {
-          alert("Sản phẩm này đã được bạn yêu thích");
+          this.snackbarFavDetail = true;
           return;
         }
       }
@@ -186,10 +207,52 @@ export default {
       let favorite = this.$store.state.favorite;
       favorite.push(itemBook);
       this.$store.dispatch("setFavorite", favorite);
+      this.snackbarFavDetail = true;
     },
     formatPrice(price) {
       let val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    postComment() {
+      if (this.$store.state.token) {
+        window.axios
+          .post("/add-comment/" + this.$route.query.type, {
+            content: this.commenttext
+          })
+          .then(response => {
+            console.log("add comment", response.data);
+            let data = response.data.data;
+            data.user = this.$store.state.user;
+            this.comments.data.push(data);
+            this.commenttext = "";
+          });
+      } else {
+        this.snackbarComment = true;
+        this.commenttext = "";
+      }
+    },
+    loadComment() {
+      let type = this.$route.query.type;
+      if (this.comments.current_page <= this.comments.last_page) {
+        let page = this.comments.current_page + 1;
+        console.log(this.comments);
+        let url = `/getmorecomments/${type}?page=${page}`;
+        window.axios.get(url).then(response => {
+          let data = response.data;
+          let dataold = this.comments.data;
+          this.comments = response.data;
+          this.comments.data.reverse();
+          for (let i = 0; i < this.comments.data.length; i++) {
+            for (let j = 0; j < dataold.length; j++) {
+              if (this.comments.data[i].id === dataold[j].id) {
+                this.comments.data.splice(i, 1);
+                i--;
+              }
+            }
+          }
+          this.comments.data = [...this.comments.data, ...dataold];
+        });
+      }
     }
   },
   mounted() {
@@ -198,12 +261,16 @@ export default {
         "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
       )
       .then(response => {
-        this.bookDetail = response.data.data.data;
-        this.books = response.data.data.samebooks;
-        this.tags = response.data.data.book.tags;
-        this.comments = response.data.data.comments;
-        console.log(this.bookDetail);
-        console.log("đây là tác phẩm của detail", response.data);
+        // console.log("DDaay laf detail", response.data);
+        this.bookDetail = response.data.book;
+        this.books = response.data.samebooks;
+        this.tags = response.data.book.tags;
+        this.comments = response.data.comments;
+        this.comments.data.reverse();
+        this.currentComment = response.data.comments.current_page;
+        console.log(this.currentComment);
+        // console.log(this.comments);
+        // console.log("đây là tác phẩm của detail", response.data);
       })
       .catch(function(error) {
         console.log(error);
