@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     next(page) {
-      // let type = this.$route.query.name;
       this.$router.push(
         "/search?name=" +
           this.$route.query.name +
