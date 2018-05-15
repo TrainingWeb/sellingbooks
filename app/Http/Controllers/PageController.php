@@ -8,18 +8,19 @@ use App\Category;
 use App\Comment;
 use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
-use App\Mail\ResetPassword;
+use App\Mail\SendMailResetPassword;
 use App\Order;
 use App\OrderDetail;
+use App\ResetPassword;
 use App\Storage;
 use App\Tag;
 use App\User;
 use Carbon\Carbon;
 use Exception;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
-use Validator;
 
 class PageController extends APIBaseController
 {
@@ -36,29 +37,19 @@ class PageController extends APIBaseController
 
     public function createUser(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-        ], [
-            'name.required' => 'Please enter name',
-            'email.required' => 'Please enter email.',
-            'email.unique' => 'Email alreay exits, please enter another email !',
-            'password.required' => 'Password can not null.',
-        ]);
+        $validator = $this->ValidationCreateUserFromIndex($request->all());
         if ($validator->fails()) {
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
-        $user = new User;
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->role = 0;
-        $user->password = bcrypt($input['password']);
-        $user->save();
+        $user = $this->CreateUserFromIndex($request->all());
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         $api_token = Auth::user()->createToken('test')->accessToken;
-        return response()->json(['api_token' => $api_token, 'user' => $user, 'role' => $user->role, 'message' => 'User created successfully !']);
+        return response()->json([
+            'api_token' => $api_token,
+            'user' => $user,
+            'role' => $user->role,
+            'message' => 'User created successfully !',
+        ]);
     }
 
     public function index(Request $request)
@@ -158,14 +149,14 @@ class PageController extends APIBaseController
     public function getMoreComments($slug)
     {
         $book = Book::whereIn('highlights', [0, 1])->where('slug', $slug)->first();
-        if(!$book){
+        if (!$book) {
             return $this->sendErrorNotFound('book not found !');
         }
-        foreach($book->comments as $items){
+        foreach ($book->comments as $items) {
             $id[] = $items->id;
         }
         $comments = Comment::whereIn('id', $id)->with('user')->orderBy('created_at', 'DESC')->paginate(5);
-        if(count($comments)< 1){
+        if (count($comments) < 1) {
             return $this->sendMessage('Found 0 comments !');
         }
         return response()->json($comments, 200);
@@ -330,7 +321,7 @@ class PageController extends APIBaseController
         foreach ($user->books as $results) {
             if ($id == $results->id) {
                 $user->books()->detach($id);
-                return $this->sendMessage('Unlike successfully this book !');
+                return $this->sendMessage('Unlike this book successfully!');
             }
         }
         return $this->sendErrorNotFound('Cannot found this book in your favorite list !');
@@ -345,24 +336,11 @@ class PageController extends APIBaseController
 
     public function checkInfo(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-        ], [
-            'name.required' => 'Name cannot be null',
-            'phone.required' => 'Phone cannot blank !',
-            'address.required' => 'Address cannot blank !',
-        ]);
+        $validator = $this->ValidationCheckInfo($request->all());
         if ($validator->fails()) {
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
-        $user = User::find($request->user()->id);
-        $user->name = $input['name'];
-        $user->phone = $input['phone'];
-        $user->address = $input['address'];
-        $user->save();
+        $user = $this->UpdateDataUserCheckInfo($request->all(), $request->user()->id);
         return $this->sendMessage('Update user successfully !');
     }
 
@@ -372,45 +350,33 @@ class PageController extends APIBaseController
         if (is_null($user)) {
             return $this->sendErrorNotFound('User not found !');
         }
-        if ($user->role == 1) {
-            $role = 1;
-        } elseif ($user->role == 0) {
-            $role = 0;
-        } else {
-            $role = null;
+        switch ($user->role) {
+            case 1:
+                $role = 1;
+                break;
+            case 0:
+                $role = 0;
+                break;
+            default:
+                $role = null;
+                break;
         }
-        return $this->sendData(['user' => $user, 'role' => $role]);
+        return response()->json(['user' => $user, 'role' => $role]);
 
     }
 
     public function updateUser(Request $request)
     {
-        $user = User::find($request->user()->id);
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'unique:users,email,' . $user->id,
-            'password' => 'required',
-            'phone' => 'unique:users,phone,' . $user->id,
-        ], [
-            'name.required' => 'Please enter name',
-            'email.required' => 'Please enter email',
-            'password.required' => 'Please enter password',
-            'phone.unique' => 'This phone number already exits ! Please enter another phone number,' . $user->id,
-        ]);
+        $validator = $this->ValidationUpdateDataInfoUser($request->all(), $request->user()->id);
         if ($validator->fails()) {
             return $this->sendErrorValidation('Validation Error.', $validator->errors());
         }
         if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->store('/public/images');
+            $avatar = $request->file('avatar')->store('/public/images');
+        } else {
+            $avatar = User::find($request->user()->id)->avatar;
         }
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->birthday = $request->birthday;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->save();
+        $user = $this->UpdateDataInfoUser($request->all(), $request->user()->id, $avatar);
         return $this->sendMessage('Successfully !');
     }
 
@@ -461,24 +427,40 @@ class PageController extends APIBaseController
 
     public function sendMailResetPassword(Request $request)
     {
-        Mail::to($request->email)->send(new ResetPassword());
+        if (!User::where('email', $request->email)->first()) {
+            return $this->sendMessage('Have no account have this email, please check it again !');
+        }
+        Mail::to($request->email)->send(new SendMailResetPassword());
     }
 
-    // public function resetPassword(Request $request)
-    // {
-    //     $passwordreset = PasswordReset::where('token', $request->token);
-    //     if ($passwordreset->email !== $request->email) {
-    //         return $this->sendMessage('This token is not correct !');
-    //     } else {
-    //         $passwordreset->token = bcrypt(str_radom(60));
-    //         $passwordreset->save();
-    //     }
-    //     if ($request->password !== $request->confirm_password) {
-    //         return $this->sendMessage('Password confirm must in the same !');
-    //     }
-    //     $user = User::where('email', $request->email)->first();
-    //     $user->password = $request->password;
-    //     $user->save();
-    //     return $this->sendMessage('Your account has been reset password !');
-    // }
+    public function resetPassword(Request $request, $token)
+    {
+        if ($request->password !== $request->confirm_password) {
+            return $this->sendMessage('Password confirm must in the same !');
+        }
+        if (!User::where('email', $request->email)->first()) {
+            return $this->sendMessage('Have no account have this email, please check it again !');
+        }
+        $nowtime = Carbon::now();
+        $sub5m = Carbon::now()->subMinutes(5);
+        $resetpassword = ResetPassword::where('token', $token)->whereBetween('created_at', [$sub5m, $nowtime])->first();
+        if (!$resetpassword) {
+            return $this->sendMessage('Your token has expired, please send another request reset mail !');
+        }
+        if ($request->email !== $resetpassword->email) {
+            return $this->sendMessage('This email have no request reset password !');
+        } else {
+            $resetpassword->delete();
+        }
+        $user = User::where('email', $request->email)->first();
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return $this->sendMessage('Your account has been reset password !');
+    }
+
+    public function testmail($token, $email)
+    {
+        return view('testmail', compact('token', 'email'));
+    }
 }

@@ -2,9 +2,89 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller as Controller;
+use App\User;
+use Hash;
+use Validator;
 
 class APIBaseController extends Controller
 {
+    public function ValidationCreateUserFromIndex($input)
+    {
+        return $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Please enter name',
+            'email.required' => 'Please enter email.',
+            'email.unique' => 'Email alreay exits, please enter another email !',
+            'password.required' => 'Password can not null.',
+        ]);
+    }
+
+    public function CreateUserFromIndex($input)
+    {
+        return User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'role' => 0,
+            'password' => Hash::make($input['password']),
+        ]);
+    }
+
+    public function ValidationCheckInfo($input)
+    {
+        return $validator = Validator::make($input, [
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ], [
+            'name.required' => 'Name cannot be null',
+            'phone.required' => 'Phone cannot blank !',
+            'address.required' => 'Address cannot blank !',
+        ]);
+    }
+
+    public function UpdateDataUserCheckInfo($input, $id)
+    {
+        $user = User::find($id);
+        return $user->update([
+            'name' => $input['name'],
+            'phone' => $input['phone'],
+            'address' => $input['address'],
+        ]);
+    }
+
+    public function ValidationUpdateDataInfoUser($input, $id)
+    {
+        $user = User::find($id);
+        return $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $user->id,
+            'password' => 'required',
+            'phone' => 'unique:users,phone,' . $user->id,
+        ], [
+            'name.required' => 'Please enter name',
+            'email.required' => 'Please enter email',
+            'password.required' => 'Please enter password',
+            'phone.unique' => 'This phone number already exits ! Please enter another phone number,' . $user->id,
+        ]);
+    }
+
+    public function UpdateDataInfoUser($input, $id, $avatar)
+    {
+        $user = User::find($id);
+        return $user->update([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => $input['password'],
+            'birthday' => $input['birthday'],
+            'address' => $input['address'],
+            'phone' => $input['phone'],
+            'avatar' => $avatar,
+        ]);
+    }
+
     public function sort($result)
     {
         switch (request()->sort) {
@@ -24,7 +104,7 @@ class APIBaseController extends Controller
                 $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
         }
         if (count($books) < 1) {
-            return $this->sendMessage('Found 0 books.');
+            return response()->json('Found 0 books.', 200);
         }
         return response()->json($books);
     }
@@ -32,6 +112,7 @@ class APIBaseController extends Controller
     public function sendData($result)
     {
         $response = [
+            'status' => true,
             'data' => $result,
         ];
         return response()->json($response, 200);
@@ -40,6 +121,7 @@ class APIBaseController extends Controller
     public function sendMessage($message)
     {
         $response = [
+            'status' => true,
             'message' => $message,
         ];
 
