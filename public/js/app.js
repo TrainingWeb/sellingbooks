@@ -12410,13 +12410,10 @@ if (localStorage.cart) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].c
 //
 if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 //
-if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
-//
+
 if (localStorage.token && localStorage.token != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
 
 if (localStorage.user && localStorage.user != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
-
-if (localStorage.message && localStorage.message != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setMessage", localStorage.message);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
@@ -37248,8 +37245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cart = this.$store.state.cart;
       for (var index in cart) {
         if (cart[index].book.id == id) {
-          console.log("vẫn giảm đc");
-          cart[index].quantity = e;
+          cart[index].quantity = parseInt(e);
           this.$store.dispatch("setCart", cart);
           return;
         }
@@ -38128,6 +38124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -38151,51 +38148,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       page: 1,
       dialogDelete: false,
       snackbarCart: false,
-      timeout: 3000
+      timeout: 3000,
+      favoriteBook: []
     };
   },
   methods: {
-    favoriteBooks: function favoriteBooks() {
-      window.axios.get("/index").then(function (res) {});
-    },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    deleteItem: function deleteItem(item) {
-      var favorite = this.$store.state.favorite;
-      var index = favorite.indexOf(item);
-      if (index >= 0) {
-        favorite.splice(index, 1);
-        this.$store.dispatch("setFavorite", favorite);
-      }
+    delFavorite: function delFavorite(index) {
+      var _this = this;
+
+      window.axios.get("/removefavorite/" + this.favoriteBook[index].id).then(function (response) {
+        _this.favoriteBook.splice(index, 1);
+        _this.dialogDelete = false;
+      }).catch(function (error) {
+        console.log(error);
+      });
+      //
     },
-    addCartPageFavorite: function addCartPageFavorite(val) {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === val.id) {
+    addCartPageFavorite: function addCartPageFavorite(item) {
+      var cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === item.id) {
+          cart[index].quantity = cart[index].quantity + 1;
           this.snackbarCart = true;
           return;
         }
       }
       var itemBook = {
-        book: val.book,
-        quantity: val.quantity
+        book: item,
+        quantity: 1
       };
-      var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
       this.snackbarCart = true;
-    },
-    upadateQantity: function upadateQantity(id, e) {
-      var favorite = this.$store.state.favorite;
-      for (var index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].book.id == id) {
-          this.$store.state.favorite[index].quantity = e;
-          this.$store.dispatch("setFavorite", favorite);
-          break;
-        }
-      }
     }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    window.axios.get("/get-favorite-books").then(function (response) {
+      _this2.favoriteBook = response.data.data;
+      console.log(response.data, "danh sách");
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -38226,126 +38225,130 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c("v-data-table", {
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.$store.state.favorite,
-              "hide-actions": "",
-              flat: ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c("tr", { staticClass: "py-1" }, [
-                      _c(
-                        "td",
-                        { staticClass: "text-xs-center layout px-0 py-5" },
-                        [
+          _vm.favoriteBook
+            ? _c("v-data-table", {
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.favoriteBook,
+                  "hide-actions": "",
+                  flat: ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("tr", { staticClass: "py-1" }, [
                           _c(
-                            "v-layout",
-                            { attrs: { row: "", "justify-center": "" } },
+                            "td",
+                            { staticClass: "text-xs-center layout px-0 py-5" },
                             [
                               _c(
-                                "v-dialog",
-                                {
-                                  attrs: {
-                                    flat: "",
-                                    persistent: "",
-                                    "max-width": "290"
-                                  },
-                                  model: {
-                                    value: _vm.dialogDelete,
-                                    callback: function($$v) {
-                                      _vm.dialogDelete = $$v
-                                    },
-                                    expression: "dialogDelete"
-                                  }
-                                },
+                                "v-layout",
+                                { attrs: { row: "", "justify-center": "" } },
                                 [
                                   _c(
-                                    "v-btn",
+                                    "v-dialog",
                                     {
-                                      attrs: { slot: "activator", icon: "" },
-                                      slot: "activator"
+                                      attrs: {
+                                        flat: "",
+                                        persistent: "",
+                                        "max-width": "290"
+                                      },
+                                      model: {
+                                        value: _vm.dialogDelete,
+                                        callback: function($$v) {
+                                          _vm.dialogDelete = $$v
+                                        },
+                                        expression: "dialogDelete"
+                                      }
                                     },
                                     [
                                       _c(
-                                        "v-icon",
+                                        "v-btn",
                                         {
-                                          staticClass:
-                                            "red--text text--darken-4"
+                                          attrs: {
+                                            slot: "activator",
+                                            icon: ""
+                                          },
+                                          slot: "activator"
                                         },
-                                        [_vm._v("clear")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-card",
-                                    { attrs: { flat: "" } },
-                                    [
-                                      _c(
-                                        "v-card-title",
-                                        {
-                                          staticClass:
-                                            "subheading ml-0 green accent-4 white--text"
-                                        },
-                                        [_vm._v("Thông báo !")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-card-text",
-                                        { staticClass: "body-1" },
                                         [
-                                          _vm._v(
-                                            "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-card-actions",
-                                        [
-                                          _c("v-spacer"),
-                                          _vm._v(" "),
                                           _c(
-                                            "v-btn",
+                                            "v-icon",
                                             {
-                                              attrs: {
-                                                color: "green darken-1",
-                                                flat: ""
-                                              },
-                                              nativeOn: {
-                                                click: function($event) {
-                                                  _vm.dialogDelete = false
-                                                }
-                                              }
+                                              staticClass:
+                                                "red--text text--darken-4"
                                             },
-                                            [_vm._v("Hủy")]
+                                            [_vm._v("clear")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card",
+                                        { attrs: { flat: "" } },
+                                        [
+                                          _c(
+                                            "v-card-title",
+                                            {
+                                              staticClass:
+                                                "subheading ml-0 green accent-4 white--text"
+                                            },
+                                            [_vm._v("Thông báo !")]
                                           ),
                                           _vm._v(" "),
                                           _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                color: "green darken-1",
-                                                flat: ""
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.deleteItem(props.item)
-                                                }
-                                              },
-                                              nativeOn: {
-                                                click: function($event) {
-                                                  _vm.dialogDelete = false
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Xóa")]
+                                            "v-card-text",
+                                            { staticClass: "body-1" },
+                                            [
+                                              _vm._v(
+                                                "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-actions",
+                                            [
+                                              _c("v-spacer"),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "green darken-1",
+                                                    flat: ""
+                                                  },
+                                                  nativeOn: {
+                                                    click: function($event) {
+                                                      _vm.dialogDelete = false
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Hủy")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "green darken-1",
+                                                    flat: ""
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.delFavorite(
+                                                        props.index
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Xóa")]
+                                              )
+                                            ],
+                                            1
                                           )
                                         ],
                                         1
@@ -38358,122 +38361,131 @@ var render = function() {
                               )
                             ],
                             1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "py-2" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/images/" + props.item.book.image,
-                            alt: "",
-                            width: "80px",
-                            height: "120px"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "py-2" }, [
+                            _c("img", {
+                              attrs: {
+                                src: "/storage/images/" + props.item.image,
+                                alt: "",
+                                width: "80px",
+                                height: "120px"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
                           _c(
-                            "router-link",
-                            {
-                              staticClass:
-                                "subheading text-xs-left red--text text--darken-4",
-                              staticStyle: { "text-decoration": "none" },
-                              attrs: { to: "/detail" }
-                            },
-                            [_vm._v(_vm._s(props.item.book.name))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-xs-left" }, [
-                        props.item.book.promotion_price
-                          ? _c("div", [
+                            "td",
+                            [
                               _c(
-                                "span",
+                                "router-link",
                                 {
                                   staticClass:
-                                    "green--text text--accent-4 title "
+                                    "subheading text-xs-left red--text text--darken-4",
+                                  staticStyle: { "text-decoration": "none" },
+                                  attrs: { to: "/detail" }
                                 },
                                 [
                                   _vm._v(
-                                    " " +
-                                      _vm._s(
-                                        _vm.formatPrice(
-                                          props.item.book.promotion_price
-                                        )
-                                      ) +
-                                      "đ"
+                                    _vm._s(props.item.name) +
+                                      " " +
+                                      _vm._s(props.item.id) +
+                                      "\n            "
                                   )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-left" }, [
+                            props.item.promotion_price
+                              ? _c("div", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "green--text text--accent-4 title "
+                                    },
+                                    [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              props.item.promotion_price
+                                            )
+                                          ) +
+                                          "đ"
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "grey--text text--darken-1 title ml-3"
+                                    },
+                                    [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.formatPrice(props.item.price)
+                                          ) + "đ"
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ])
+                              : _c("div", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "green--text text--accent-4 title ml-3"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(
+                                            _vm.formatPrice(props.item.price)
+                                          ) +
+                                          "đ\n              "
+                                      )
+                                    ]
+                                  )
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mx-0 my-3",
+                                  attrs: {
+                                    color: "green accent-4 white--text"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.addCartPageFavorite(props.item)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass:
+                                        "material-icons add-shopping mr-2 white--text"
+                                    },
+                                    [_vm._v("add_shopping_cart")]
+                                  ),
+                                  _vm._v("Thêm\n            ")
                                 ]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "grey--text text--darken-1 title ml-3"
-                                },
-                                [
-                                  _c("del", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) + "đ"
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title ml-3"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) +
-                                      "đ\n              "
-                                  )
-                                ]
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "mx-0 my-3",
-                              attrs: { color: "green accent-4 white--text" },
-                              on: {
-                                click: function($event) {
-                                  _vm.addCartPageFavorite(props.item)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "i",
-                                {
-                                  staticClass:
-                                    "material-icons add-shopping mr-2 white--text"
-                                },
-                                [_vm._v("add_shopping_cart")]
-                              ),
-                              _vm._v("Thêm\n              "),
                               _c(
                                 "v-snackbar",
                                 {
@@ -38492,7 +38504,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                Thêm vào giỏ hàng thành công\n                "
+                                    "\n              Thêm vào giỏ hàng thành công\n              "
                                   ),
                                   _c(
                                     "v-btn",
@@ -38517,15 +38529,13 @@ var render = function() {
                             ],
                             1
                           )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                }
-              }
-            ])
-          })
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            : _vm._e()
         ],
         1
       )
@@ -39001,6 +39011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      filter_value: "",
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -39011,26 +39022,80 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disabled: true
       }],
       e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: null
+      },
 
       namepage: "Tác giả",
-      page: 1,
-      listauthor: []
+      listauthor: {}
     };
   },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
+    },
+
+    //
+    "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
+
+      if (val) {
+        window.axios.get("/authors/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.listauthor = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+
+    //
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/authors/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+          _this2.listauthor = response.data.data;
+          _this2.panigation.page = response.data.current_page;
+          _this2.panigation.length = response.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+
+    //
+    filter_value: function filter_value(val) {
+      this.$router.push("/list-author/?type=" + this.$route.query.type + "&&sort=" + val.linkto);
+      console.log("lên url");
+    }
+  },
+  methods: {
+    next: function next(page) {
+      this.$router.push("/list-author/?type=" + this.$route.query.type + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+      console.log("thành công");
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
 
     this.breadcrumbs[1].name = "" + this.$route.query.type;
-
-    window.axios.get("/authors/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-      _this.listauthor = response.data.data.data;
-      console.log("đây là tác phẩm", _this.listauthor);
+    window.axios.get("/authors/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+      _this3.listauthor = response.data.data;
+      console.log(_this3.listauthor);
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
     }).catch(function (error) {
       console.log(error);
     });
@@ -39075,15 +39140,17 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       items: _vm.filter,
+                      "item-text": "text",
+                      "return-object": "",
                       label: "--Chọn--",
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.e1,
+                      value: _vm.filter_value,
                       callback: function($$v) {
-                        _vm.e1 = $$v
+                        _vm.filter_value = $$v
                       },
-                      expression: "e1"
+                      expression: "filter_value"
                     }
                   })
                 ],
@@ -39122,13 +39189,14 @@ var render = function() {
               { staticClass: "text-xs-center mt-5" },
               [
                 _c("v-pagination", {
-                  attrs: { length: 3 },
+                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
+                  on: { input: _vm.next },
                   model: {
-                    value: _vm.page,
+                    value: _vm.panigation.page,
                     callback: function($$v) {
-                      _vm.page = $$v
+                      _vm.$set(_vm.panigation, "page", $$v)
                     },
-                    expression: "page"
+                    expression: "panigation.page"
                   }
                 })
               ],
@@ -41510,6 +41578,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -41521,13 +41592,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       name: "",
       nameRules: [function (v) {
         return !!v || "Tên là bắt buộc";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+        );
       }],
       passLogin: "",
       passRegister: "",
       passRules: [function (v) {
         return !!v || "Mật khẩu là bắt buộc";
-      }, function (v) {
-        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
       }],
       emailRegister: "",
       emailLogin: "",
@@ -41538,7 +41610,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         );
       }],
       password: "",
-
       drawer: null,
       icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
       rows: [{
@@ -41570,39 +41641,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.location = "#/search?name=" + this.search;
       this.search = "";
     },
-    submit: function submit() {
-      if (this.$refs.form.validate()) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          name: this.name,
-          email: this.email
-        });
-      }
-    },
     loginpage: function loginpage() {
       var _this = this;
 
-      window.axios.post("/login", {
-        email: this.emailLogin,
-        password: this.passLogin
-      }).then(function (response) {
-        var data = response.data;
-        _this.$store.dispatch("setToken", data.api_token);
-        _this.$store.dispatch("setUser", data.user);
-        if (data.message) {
-          _this.snackbarlogin = true;
-          _this.login = false;
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
+      if (this.$refs.form.validate()) {
+        window.axios.post("/login", {
+          email: this.emailLogin,
+          password: this.passLogin
+        }).then(function (response) {
+          var data = response.data;
+          if (data.user) {
+            _this.$store.dispatch("setToken", data.api_token);
+            _this.$store.dispatch("setUser", data.user);
+            _this.snackbarlogin = true;
+            _this.emailLogin = "";
+            _this.passLogin = "";
+            _this.login = false;
+          } else {
+            var message = "sai";
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     },
     logout: function logout() {
       var user = this.$store.state.user;
       var token = this.$store.state.token;
+      var cart = this.$store.state.cart;
       token = "";
       user = {};
+      cart = [];
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
+      this.$store.dispatch("setCart", cart);
     },
     registerUser: function registerUser() {
       var _this2 = this;
@@ -41625,6 +41697,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     totalCard: function totalCard() {
       return this.$store.state.cart.reduce(function (total, p) {
         return total + p.quantity;
+        console.log("Tổng tiền 2" + (total + p.quantity));
       }, 0);
     }
   },
@@ -41633,6 +41706,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     window.axios.get("/index").then(function (response) {
       _this3.dataApp = response.data.data;
+      console.log(_this3.dataApp);
     }).catch(function (error) {
       console.log(error);
     });
@@ -41712,7 +41786,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n              0123 456 789\n            "
+                                "\n              0123 456 789 " +
+                                  _vm._s(_vm.data.message) +
+                                  "\n            "
                               )
                             ]
                           )
@@ -41757,12 +41833,19 @@ var render = function() {
                                   { attrs: { flat: "" } },
                                   [
                                     _c(
-                                      "v-list",
+                                      "v-toolbar",
                                       {
-                                        staticClass:
-                                          "green accent-4 white--text text-xs-center"
+                                        attrs: {
+                                          color: "green accent-4",
+                                          dark: ""
+                                        }
                                       },
-                                      [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
+                                      [
+                                        _c("v-toolbar-title", [
+                                          _vm._v("Đăng nhập")
+                                        ])
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
                                     _c("v-divider"),
@@ -41790,9 +41873,8 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
-                                                    rules: _vm.emailRules,
-                                                    label: "E-mail",
-                                                    required: ""
+                                                    label: "Họ và tên",
+                                                    rules: _vm.nameRules
                                                   },
                                                   model: {
                                                     value: _vm.emailLogin,
@@ -41812,6 +41894,7 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
+                                                    rules: _vm.passRules,
                                                     required: "",
                                                     name: "input-10-2",
                                                     label: "Mật khẩu",
@@ -41837,200 +41920,21 @@ var render = function() {
                                               1
                                             ),
                                             _vm._v(" "),
-                                            _c("div", [
-                                              _vm.data.message
-                                                ? _c(
-                                                    "span",
-                                                    {
-                                                      staticClass: "red--text"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Email hoặc mật khẩu không đúng"
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e()
-                                            ]),
-                                            _vm._v(" "),
                                             _c(
-                                              "div",
+                                              "v-card-actions",
                                               [
+                                                _c("v-spacer"),
+                                                _vm._v(" "),
                                                 _c(
-                                                  "v-btn",
+                                                  "router-link",
                                                   {
                                                     attrs: {
                                                       flat: "",
                                                       to: "/forgotpassword"
                                                     }
                                                   },
-                                                  [_vm._v("Quên mật khẩu")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    staticClass:
-                                                      "text-xs-center",
-                                                    attrs: {
-                                                      disabled: !_vm.valid
-                                                    },
-                                                    on: { click: _vm.loginpage }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                        Đăng nhập\n                      "
-                                                    )
-                                                  ]
+                                                  [_vm._v(" Quên mật khẩu?")]
                                                 )
-                                              ],
-                                              1
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-menu",
-                              {
-                                attrs: {
-                                  fluid: "",
-                                  bottom: "",
-                                  "offset-y": "",
-                                  "max-width": 400,
-                                  "close-on-content-click": false
-                                },
-                                model: {
-                                  value: _vm.register,
-                                  callback: function($$v) {
-                                    _vm.register = $$v
-                                  },
-                                  expression: "register"
-                                }
-                              },
-                              [
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "white",
-                                    attrs: { slot: "activator", flat: "" },
-                                    slot: "activator"
-                                  },
-                                  [_vm._v("Đăng Ký")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card",
-                                  { attrs: { flat: "" } },
-                                  [
-                                    _c(
-                                      "v-list",
-                                      {
-                                        staticClass:
-                                          "green accent-4 white--text text-xs-center"
-                                      },
-                                      [_c("span", [_vm._v("ĐĂNG KÝ")])]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("v-divider"),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-container",
-                                      [
-                                        _c(
-                                          "v-form",
-                                          {
-                                            ref: "form",
-                                            attrs: { "lazy-validation": "" },
-                                            model: {
-                                              value: _vm.valid,
-                                              callback: function($$v) {
-                                                _vm.valid = $$v
-                                              },
-                                              expression: "valid"
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    rules: _vm.nameRules,
-                                                    label: "Tên",
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value: _vm.name,
-                                                    callback: function($$v) {
-                                                      _vm.name = $$v
-                                                    },
-                                                    expression: "name"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    rules: _vm.emailRules,
-                                                    label: "E-mail",
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value: _vm.emailRegister,
-                                                    callback: function($$v) {
-                                                      _vm.emailRegister = $$v
-                                                    },
-                                                    expression: "emailRegister"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    required: "",
-                                                    label: "Mật khẩu",
-                                                    rules: _vm.passRules,
-                                                    "append-icon": _vm.e2
-                                                      ? "visibility"
-                                                      : "visibility_off",
-                                                    "append-icon-cb": function() {
-                                                      return (_vm.e2 = !_vm.e2)
-                                                    },
-                                                    type: _vm.e2
-                                                      ? "password"
-                                                      : "text"
-                                                  },
-                                                  model: {
-                                                    value: _vm.passRegister,
-                                                    callback: function($$v) {
-                                                      _vm.passRegister = $$v
-                                                    },
-                                                    expression: "passRegister"
-                                                  }
-                                                })
                                               ],
                                               1
                                             ),
@@ -42039,26 +41943,31 @@ var render = function() {
                                               "div",
                                               [
                                                 _c(
-                                                  "v-btn",
-                                                  { attrs: { flat: "" } },
-                                                  [_vm._v("Đóng")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    attrs: {
-                                                      disabled: !_vm.valid
-                                                    },
-                                                    on: {
-                                                      click: _vm.registerUser
-                                                    }
-                                                  },
+                                                  "v-card-actions",
+                                                  { staticClass: "mt-5" },
                                                   [
-                                                    _vm._v(
-                                                      "\n                        Đăng ký\n                      "
+                                                    _c("v-spacer"),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-btn",
+                                                      {
+                                                        attrs: {
+                                                          color:
+                                                            "green accent-4",
+                                                          dark: ""
+                                                        },
+                                                        on: {
+                                                          click: _vm.loginpage
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          Đăng nhập\n                        "
+                                                        )
+                                                      ]
                                                     )
-                                                  ]
+                                                  ],
+                                                  1
                                                 )
                                               ],
                                               1
@@ -43190,10 +43099,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
     cart: [],
     favorite: [],
-    selected: [],
     token: null,
-    user: {},
-    message: null
+    user: {}
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -43202,17 +43109,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     SET_FAVORITE: function SET_FAVORITE(state, favorite) {
       state.favorite = favorite;
     },
-    SET_SELECTED: function SET_SELECTED(state, selected) {
-      state.selected = selected;
-    },
+
     SET_TOKEN: function SET_TOKEN(state, token) {
       state.token = token;
     },
     SET_USER: function SET_USER(state, user) {
       state.user = user;
-    },
-    SET_MESSAGE: function SET_MESSAGE(state, message) {
-      state.message = message;
     }
   },
   actions: {
@@ -43228,33 +43130,18 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
     },
-    setSelected: function setSelected(_ref3, val) {
+    setToken: function setToken(_ref3, val) {
       var commit = _ref3.commit;
-
-      commit("SET_SELECTED", val);
-      localStorage.selected = JSON.stringify(val);
-    },
-    setToken: function setToken(_ref4, val) {
-      var commit = _ref4.commit;
 
       commit("SET_TOKEN", val);
       localStorage.token = val;
-      // window.axios.defaults.headers = {
-      //   "Authorization": 'Bearer ' + val
-      // }
       window.axios.defaults.headers.common["Authorization"] = "Bearer " + val;
     },
-    setUser: function setUser(_ref5, val) {
-      var commit = _ref5.commit;
+    setUser: function setUser(_ref4, val) {
+      var commit = _ref4.commit;
 
       commit("SET_USER", val);
       localStorage.user = JSON.stringify(val);
-    },
-    setMessage: function setMessage(_ref6, val) {
-      var commit = _ref6.commit;
-
-      commit("SET_MESSAGE", val);
-      localStorage.message = val;
     }
   }
 });
@@ -44367,6 +44254,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["book"],
@@ -44400,26 +44288,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.snackbar = true;
     },
     addItemfavorite: function addItemfavorite() {
-      var favorite = this.$store.state.favorite;
-      for (var index in favorite) {
-        if (favorite[index].book.id === this.book.id) {
-          if (i > -1) {
-            favorite.splice(favorite[index], 1);
-            love: false, this.$store.dispatch("setFavorite", favorite);
-            this.snackbarFav = true;
-            return;
-          }
-        }
-      }
+      var _this = this;
 
-      var itemBook = {
-        book: this.book,
-        quantity: 1,
-        love: true
-      };
-      favorite.push(itemBook);
-      this.$store.dispatch("setFavorite", favorite);
-      this.snackbarFavorite = true;
+      if (this.$store.state.token) {
+        window.axios.post("/add-favorite/" + this.book.id, {
+          id_book: this.book.id
+        }).then(function (response) {
+          _this.snackbarFavorite = true;
+        }).catch(function (error) {
+          console.log(error);
+        });
+      } else {
+        this.snackbarFavorite = true;
+      }
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
@@ -44680,46 +44561,49 @@ var render = function() {
                                   )
                                 : _c("v-icon", { attrs: { color: "red" } }, [
                                     _vm._v("favorite")
+                                  ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-snackbar",
+                            {
+                              attrs: {
+                                timeout: _vm.timeout,
+                                top: "",
+                                color: "green accent-4"
+                              },
+                              model: {
+                                value: _vm.snackbarFavorite,
+                                callback: function($$v) {
+                                  _vm.snackbarFavorite = $$v
+                                },
+                                expression: "snackbarFavorite"
+                              }
+                            },
+                            [
+                              _vm.$store.state.token
+                                ? _c("span", [
+                                    _vm._v("Thêm vào yêu thích thành công")
+                                  ])
+                                : _c("span", [
+                                    _vm._v(
+                                      "Vui lòng đăng nhập hoặc đăng ký tài khoản"
+                                    )
                                   ]),
                               _vm._v(" "),
                               _c(
-                                "v-snackbar",
+                                "v-btn",
                                 {
-                                  attrs: {
-                                    timeout: _vm.timeout,
-                                    top: "",
-                                    color: "green accent-4"
-                                  },
-                                  model: {
-                                    value: _vm.snackbarFavorite,
-                                    callback: function($$v) {
-                                      _vm.snackbarFavorite = $$v
-                                    },
-                                    expression: "snackbarFavorite"
+                                  attrs: { flat: "", icon: "", color: "white" },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.snackbarFavorite = false
+                                    }
                                   }
                                 },
-                                [
-                                  _vm._v(
-                                    "\n                Thêm vào yêu thích thành công\n                "
-                                  ),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        flat: "",
-                                        icon: "",
-                                        color: "white"
-                                      },
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.snackbarFavorite = false
-                                        }
-                                      }
-                                    },
-                                    [_c("v-icon", [_vm._v("clear")])],
-                                    1
-                                  )
-                                ],
+                                [_c("v-icon", [_vm._v("clear")])],
                                 1
                               )
                             ],
@@ -44966,7 +44850,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

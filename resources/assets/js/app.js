@@ -28,17 +28,12 @@ if (localStorage.cart) store.commit("SET_CART", JSON.parse(localStorage.cart));
 if (localStorage.favorite)
   store.commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 //
-if (localStorage.selected)
-  store.commit("SET_SELECTED", JSON.parse(localStorage.selected));
-//
+
 if (localStorage.token && localStorage.token != "undefined")
   store.dispatch("setToken", localStorage.token);
 
 if (localStorage.user && localStorage.user != "undefined")
   store.dispatch("setUser", JSON.parse(localStorage.user));
-
-if (localStorage.message && localStorage.message != "undefined")
-  store.dispatch("setMessage", localStorage.message);
 
 Vue.use(Vuetify);
 
