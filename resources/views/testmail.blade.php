@@ -11,7 +11,8 @@
 <body>
 
   <script>
-    window.location="sellingbookstore.test:8080/#/resetpassword?token=".{{$token}}."&&email=".{{$email}}""
+    window.location.href="sellingbookstore.test/#/resetpassword?token={{$token}}&&email={{$email}}"
+    console.log("thanhcong")
   </script>
 </body>
 
