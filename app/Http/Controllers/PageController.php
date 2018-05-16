@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Author;
+use App\Book;
+use App\Category;
+use App\Comment;
+use App\Group;
 use App\Http\Controllers\API\APIBaseController as APIBaseController;
 use App\Mail\SendMailResetPassword;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\ResetPassword;
-use App\OrderDetail;
-use Carbon\Carbon;
-use App\Category;
-use App\Storage;
-use App\Comment;
-use App\Author;
-use App\Group;
 use App\Order;
-use Validator;
-use Exception;
-use App\Book;
-use App\User;
+use App\OrderDetail;
+use App\ResetPassword;
+use App\Storage;
 use App\Tag;
+use App\User;
+use Carbon\Carbon;
+use Exception;
 use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mail;
+use Validator;
 
 class PageController extends APIBaseController
 {
@@ -76,7 +76,6 @@ class PageController extends APIBaseController
         ]);
     }
 
-    
     public function search()
     {
         $items01 = array();
@@ -96,112 +95,112 @@ class PageController extends APIBaseController
         }
         $books = Book::whereIn('highlights', [0, 1])->where([
             ['name', 'LIKE', '%' . request()->name . '%'],
-            ])->get();
-            foreach ($books as $items3) {
-                $items03[] = $items3->id;
-            }
-            $done = $items01 + $items02 + $items03;
-            if (count($done) < 1) {
-                return $this->sendMessage('Found 0 books for this keywork !');
-            }
-            return $this->sort(Book::whereIn('id', $done));
+        ])->get();
+        foreach ($books as $items3) {
+            $items03[] = $items3->id;
         }
-        
-        public function typeBooks($type)
-        {
-            try {
-                switch ($type) {
-                    case 'discountbooks':
+        $done = $items01 + $items02 + $items03;
+        if (count($done) < 1) {
+            return $this->sendMessage('Found 0 books for this keywork !');
+        }
+        return $this->sort(Book::whereIn('id', $done));
+    }
+
+    public function typeBooks($type)
+    {
+        try {
+            switch ($type) {
+                case 'discountbooks':
                     return $this->sort(Book::where('promotion_price', '>', '0'));
                     break;
-                    case 'featuredbooks':
+                case 'featuredbooks':
                     return $this->sort(Book::where('highlights', 1));
                     break;
-                    case 'newbooks':
+                case 'newbooks':
                     $nowymd = Carbon::tomorrow();
                     $ago7days = Carbon::tomorrow()->subDays(7);
                     return $this->sort(Book::whereBetween('created_at', [$ago7days, $nowymd]));
                     break;
-                }
-                return response()->json($books);
-            } catch (Exception $e) {
-                return $this->sendErrorNotFound('Không tìm thấy kiểu sách');
             }
+            return response()->json($books);
+        } catch (Exception $e) {
+            return $this->sendErrorNotFound('Không tìm thấy kiểu sách');
         }
-        
-        public function getBookInfo($slug)
-        {
-            $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->with('comments')->where('slug', $slug)->first();
-            if (!$book) {
-                return $this->sendErrorNotFound('Book not found !');
-            }
-            $comments = Comment::with('user')->where('id_book', $book->id)->orderBy('created_at', 'DESC')->paginate(5);
-            $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
-            return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
-        }
-        
-        public function getMoreComments($slug)
-        {
-            $book = Book::whereIn('highlights', [0, 1])->where('slug', $slug)->first();
-            if (!$book) {
-                return $this->sendErrorNotFound('book not found !');
-            }
-            foreach ($book->comments as $items) {
-                $id[] = $items->id;
-            }
-            $comments = Comment::whereIn('id', $id)->with('user')->orderBy('created_at', 'DESC')->paginate(5);
-            if (count($comments) < 1) {
-                return $this->sendMessage('Found 0 comments !');
-            }
-            return response()->json($comments, 200);
-            
-        }
-        
-        public function seeMoreSameBooks($slug)
-        {
-            $book = Book::where('slug', $slug)->first();
-            return $this->sort(Book::where('id_category', $book->id_category));
-        }
+    }
 
-        public function getTags()
-        {
-            $tags = Tag::withCount('books')->paginate(20);
-            if(count($tags)< 1){
-                return $this->sendMessage('Found 0 books !');
-            }
-            return $this->sendData($tags);
+    public function getBookInfo($slug)
+    {
+        $book = Book::whereIn('highlights', [0, 1])->with('storage')->with('author')->with('tags')->with('comments')->where('slug', $slug)->first();
+        if (!$book) {
+            return $this->sendErrorNotFound('Book not found !');
         }
-        
-        public function tagInfo($slug)
-        {
-            $tag = Tag::where('slug', $slug)->first();
-            if (!$tag) {
-                return $this->sendErrorNotFound('Tag not found !');
-            }
-            return $this->sortt($tag->books(), $tag);
+        $comments = Comment::with('user')->where('id_book', $book->id)->orderBy('created_at', 'DESC')->paginate(5);
+        $samebooks = Book::where('id_category', $book->id_category)->whereIn('highlights', [0, 1])->whereNotIn('id', [$book->id])->with('storage')->with('author')->orderBy('created_at', 'DESC')->take(3)->get();
+        return response()->json(['book' => $book, 'comments' => $comments, 'samebooks' => $samebooks], 200);
+    }
+
+    public function getMoreComments($slug)
+    {
+        $book = Book::whereIn('highlights', [0, 1])->where('slug', $slug)->first();
+        if (!$book) {
+            return $this->sendErrorNotFound('book not found !');
         }
-        
-        public function getAuthors()
-        {
-            $authors = Author::withCount('books')->paginate(18);
-            if (is_null($authors)) {
-                return $this->sendMessage('Found 0 authors !');
-            }
-            return $this->sendData($authors);
+        foreach ($book->comments as $items) {
+            $id[] = $items->id;
         }
-        
-        public function getInfoAuthor($slug)
-        {
-            $author = Author::where('slug', $slug)->first();
-            if (is_null($author)) {
-                return $this->sendErrorNotFound('Author not found !');
-            }
-            return $this->sortt(Book::where('id_author', $author->id), $author);
+        $comments = Comment::whereIn('id', $id)->with('user')->orderBy('created_at', 'DESC')->paginate(5);
+        if (count($comments) < 1) {
+            return $this->sendMessage('Found 0 comments !');
         }
-        
-        public function getCategoies()
-        {
-            $categories = Category::withCount('books')->paginate(18);
+        return response()->json($comments, 200);
+
+    }
+
+    public function seeMoreSameBooks($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        return $this->sort(Book::where('id_category', $book->id_category));
+    }
+
+    public function getTags()
+    {
+        $tags = Tag::withCount('books')->paginate(20);
+        if (count($tags) < 1) {
+            return $this->sendMessage('Found 0 books !');
+        }
+        return $this->sendData($tags);
+    }
+
+    public function tagInfo($slug)
+    {
+        $tag = Tag::where('slug', $slug)->first();
+        if (!$tag) {
+            return $this->sendErrorNotFound('Tag not found !');
+        }
+        return $this->sortt($tag->books(), $tag);
+    }
+
+    public function getAuthors()
+    {
+        $authors = Author::withCount('books')->paginate(18);
+        if (is_null($authors)) {
+            return $this->sendMessage('Found 0 authors !');
+        }
+        return $this->sendData($authors);
+    }
+
+    public function getInfoAuthor($slug)
+    {
+        $author = Author::where('slug', $slug)->first();
+        if (is_null($author)) {
+            return $this->sendErrorNotFound('Author not found !');
+        }
+        return $this->sortt(Book::where('id_author', $author->id), $author);
+    }
+
+    public function getCategoies()
+    {
+        $categories = Category::withCount('books')->paginate(18);
         if (is_null($categories)) {
             return $this->sendMessage('Found 0 categories');
         }
@@ -480,7 +479,10 @@ class PageController extends APIBaseController
         $user->update([
             'password' => Hash::make($request->password),
         ]);
-        return $this->sendMessage('Your account has been reset password !');
+        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $api_token = Auth::user()->createToken('test')->accessToken;
+        $user = Auth::user();
+        return response()->json(['api_token' => $api_token, 'user' => $user], 200);
     }
 
     public function testmail()

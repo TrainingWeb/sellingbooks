@@ -21,7 +21,7 @@
         <input type="submit" name="Reset" value="Reset">
     </form> --}}
     <script>
-        window.location="sellingbookstore.test:8080/#/resetpassword?token=".{{$token}}."&&email=".{{$email}}""
+        window.location="http://selling-books.local/#/resetpassword?token={{$token}}&&email={{$email}}"
     </script>
 </body>
 

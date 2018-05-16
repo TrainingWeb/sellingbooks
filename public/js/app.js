@@ -40832,7 +40832,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40893,7 +40893,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       dialogResetPassword: false,
       valid: true,
       email: "",
@@ -40907,39 +40909,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return !!v || "Mật khẩu là bắt buộc";
       }, function (v) {
         return v.length >= 8 || "Nhập ít nhất 8 ký tự";
-      }],
-      emailReset: "",
-      passReset: "",
-      passResetReset: "",
-      e2: false
-    };
+      }]
+    }, _defineProperty(_ref, "email", ""), _defineProperty(_ref, "password", ""), _defineProperty(_ref, "confirm_password", ""), _defineProperty(_ref, "e2", false), _ref;
   },
-  methods: _defineProperty({
+  methods: {
     // forgotPassword() {
     //   this.dialogForgotPassword = true;
     // },
     submit: function submit() {
+      var _this = this;
+
       if (this.$refs.form.validate()) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          emailReset: this.emailReset,
-          passReset: this.passReset,
-          passResetReset: this.passResetReset
+        window.axios.post("/reset/password/" + this.$route.query.token, {
+          email: this.$route.query.email,
+          password: this.password,
+          confirm_password: this.confirm_password
+        }).then(function (response) {
+          console.log(_this.$route.query.token);
+          _this.dialogResetPassword = true;
+          console.log("Reset_Password");
+          _this.data = response.data;
+          // console.log(response.data);
+          _this.$store.dispatch("setToken", _this.data.api_token);
+          _this.$store.dispatch("setUser", _this.data.user);
+        }).catch(function (error) {
+          console.log(error);
         });
       }
     },
     clear: function clear() {
       this.$refs.form.reset();
     }
-  }, "submit", function submit() {
-    var _this = this;
-
-    window.axios.get("reset/password").then(function (response) {
-      _this.dialogResetPassword = true;
-      console.log("Reset_Password");
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }),
+  },
   mounted: function mounted() {}
 });
 
@@ -40996,15 +40997,10 @@ var render = function() {
                             _c("v-text-field", {
                               attrs: {
                                 rules: _vm.emailRules,
+                                value: _vm.$route.query.email,
+                                disabled: "",
                                 label: "E-mail",
                                 required: ""
-                              },
-                              model: {
-                                value: _vm.emailReset,
-                                callback: function($$v) {
-                                  _vm.emailReset = $$v
-                                },
-                                expression: "emailReset"
                               }
                             })
                           ],
@@ -41029,11 +41025,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-                                value: _vm.passReset,
+                                value: _vm.password,
                                 callback: function($$v) {
-                                  _vm.passReset = $$v
+                                  _vm.password = $$v
                                 },
-                                expression: "passReset"
+                                expression: "password"
                               }
                             })
                           ],
@@ -41058,11 +41054,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-                                value: _vm.passResetReset,
+                                value: _vm.confirm_password,
                                 callback: function($$v) {
-                                  _vm.passResetReset = $$v
+                                  _vm.confirm_password = $$v
                                 },
-                                expression: "passResetReset"
+                                expression: "confirm_password"
                               }
                             })
                           ],
