@@ -255,11 +255,29 @@ export default {
       }
     }
   },
+  watch: {
+    "$route.query.type"(val) {
+      console.log("load thành công");
+      window.axios
+        .get("/books/" + this.$route.query.type)
+        .then(response => {
+          window.scrollTo(0, 0);
+          this.bookDetail = response.data.book;
+          this.books = response.data.samebooks;
+          this.tags = response.data.book.tags;
+          this.comments = response.data.comments;
+          this.comments.data.reverse();
+          this.currentComment = response.data.comments.current_page;
+          console.log(this.currentComment);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  },
   mounted() {
     window.axios
-      .get(
-        "/books/" + this.$route.query.type + "?slug=" + this.$route.query.type
-      )
+      .get("/books/" + this.$route.query.type)
       .then(response => {
         // console.log("DDaay laf detail", response.data);
         this.bookDetail = response.data.book;

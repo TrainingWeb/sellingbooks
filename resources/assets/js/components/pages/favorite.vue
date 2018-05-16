@@ -136,8 +136,7 @@ export default {
     window.axios
       .get("/get-favorite-books")
       .then(response => {
-        this.favoriteBook = response.data.data;
-        console.log(response.data, "danh sách");
+        this.favoriteBook = response.data.books.data;
       })
       .catch(function(error) {
         console.log(error);

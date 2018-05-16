@@ -3,7 +3,7 @@
     <v-layout xs12>
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
-    <v-container>
+    <v-container v-if="listauthor">
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
           <v-select :items="filter" item-text="text" return-object v-model="filter_value" label="--Chọn--" single-line></v-select>
@@ -22,7 +22,11 @@
         </div>
       </template>
     </v-container>
+    <v-container v-else class="py-5">
+      <h1>Không có tác phẩm thuộc tác giả này</h1>
+    </v-container>
   </div>
+
 </template>
 
 <script>
@@ -69,6 +73,19 @@ export default {
   watch: {
     "$route.query.type"(val) {
       this.breadcrumbs[1].name = `${this.$route.query.type}`;
+      window.axios
+        .get(
+          "/authors/" +
+            this.$route.query.type +
+            "?page=" +
+            val +
+            (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+        )
+        .then(response => {
+          this.listauthor = response.data.data;
+          this.panigation.page = response.data.current_page;
+          this.panigation.length = response.data.last_page;
+        });
     },
     //
     "$route.query.page"(val) {
@@ -78,10 +95,13 @@ export default {
             "/authors/" +
               this.$route.query.type +
               "?page=" +
-              val +
+              (this.$route.query.page
+                ? "&&page=" + this.$route.query.page
+                : "") +
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
+            window.scrollTo(0, 0);
             this.listauthor = res.data.data;
             this.panigation.page = res.data.current_page;
             this.panigation.length = res.data.last_page;
@@ -106,14 +126,12 @@ export default {
             this.panigation.length = response.data.last_page;
           });
       }
-      console.log("chuyển axios thành công");
     },
     //
     filter_value(val) {
       this.$router.push(
         "/list-author/?type=" + this.$route.query.type + "&&sort=" + val.linkto
       );
-      console.log("lên url");
     }
   },
   methods: {
