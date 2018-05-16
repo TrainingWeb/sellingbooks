@@ -68,6 +68,7 @@ class PageController extends APIBaseController
         return $this->sendData([
             'tagtrendings' => $tagtrendings,
             'featuredbooks' => $featuredbooks,
+            // 'countbooksfavorite' => $countbooksfavorite,
             'discountbooks' => $discountbooks,
             'newbooks' => $newbooks,
             'menucategories' => $menucategories,
@@ -77,11 +78,11 @@ class PageController extends APIBaseController
 
     public function tagInfo($slug)
     {
-        $tag = Tag::with('books')->where('slug', $slug)->first();
+        $tag = Tag::where('slug', $slug)->first();
         if (!$tag) {
             return $this->sendErrorNotFound('Tag not found !');
         }
-        return $this->sort($tag->books());
+        return $this->sortt($tag->books(), $tag);
     }
 
     public function search()
@@ -185,7 +186,7 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        return $this->sort(Book::where('id_author', $author->id));
+        return $this->sortt(Book::where('id_author', $author->id), $author);
     }
 
     public function getCategoies()
@@ -203,7 +204,7 @@ class PageController extends APIBaseController
         if (!$category) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        return $this->sort(Book::where('id_category', $category->id));
+        return $this->sortt(Book::where('id_category', $category->id), $category);
     }
 
     public function postComment(Request $request, $slug)
@@ -331,28 +332,7 @@ class PageController extends APIBaseController
     public function getFavoriteBook(Request $request)
     {
         $user = User::find($request->user()->id);
-        $books = $user->books()->with('tags')->with('author')->paginate(18);
-        $countbooks = count($books);
-        switch ($request->sort) {
-            case 'atoz':
-                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name')->paginate(18);
-                break;
-            case 'atozdesc':
-                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name', 'DESC')->paginate(18);
-                break;
-            case 'price';
-                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price')->paginate(18);
-                break;
-            case 'pricedesc';
-                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price', 'DESC')->paginate(18);
-                break;
-            default:
-                $books = $user->books()->with('author')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
-        }
-        if (count($books) < 1) {
-            return response()->json('Found 0 books.', 200);
-        }
-        return response()->json(['countbooks' => $countbooks, 'books' => $books]);
+        return $this->sort($user->books());
     }
 
     public function checkInfo(Request $request)
@@ -452,6 +432,7 @@ class PageController extends APIBaseController
             return $this->sendMessage('Have no account have this email, please check it again !');
         }
         Mail::to($request->email)->send(new SendMailResetPassword());
+        return $this->sendMessage('Send reset password successfully !');
     }
 
     public function resetPassword(Request $request, $token)

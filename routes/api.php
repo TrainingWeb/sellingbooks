@@ -51,10 +51,12 @@ Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
     Route::post('/add-favorite/{id}', 'PageController@postFavorite');
     Route::get('/get-favorite-books', 'PageController@getFavoriteBook');
     Route::get('/removefavorite/{id}', 'PageController@removeFavorite');
+    Route::get('/test', 'PageController@test');
+    Route::get('/index', 'PageController@index');
 });
 
-Route::get('/search', 'PageController@search');
 Route::get('/index', 'PageController@index');
+Route::get('/search', 'PageController@search');
 Route::get('/books/type/{type}', 'PageController@typeBooks');
 Route::get('/books/{slug}', 'PageController@getBookInfo');
 Route::get('/getmorecomments/{slug}', 'PageController@getMoreComments');
