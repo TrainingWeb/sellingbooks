@@ -30889,10 +30889,13 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
 
 
 
@@ -30956,6 +30959,10 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     path: "/forgotpassword",
     name: "forgotpassword",
     component: __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue___default.a
+  }, {
+    path: "/resetpassword",
+    name: "resetpassword",
+    component: __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue___default.a
   }]
 });
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -37809,7 +37816,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     next: function next(page) {
-      // let type = this.$route.query.name;
       this.$router.push("/search?name=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
       console.log("đưa lên url thành công");
     }
@@ -38644,10 +38650,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-var _data$methods$watch$m;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -38676,7 +38678,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = (_data$methods$watch$m = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       breadcrumbs: [{
@@ -38688,6 +38690,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url: "/list-products",
         disabled: true
       }],
+      namepage: "Danh sách sản phẩm",
       e1: null,
       filter: [{
         text: "Lọc theo tên A-Z",
@@ -38699,72 +38702,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: "Lọc Theo Giá tiền",
         linkto: "price"
       }, { text: "Lọc theo giá tiền giảm giá" }],
-      namepage: "Danh sách sản phẩm",
       listCatagory: {},
-      filter_listcategory: "",
-      book: {},
+
       panigation: {
         page: 1,
         visible: 4,
         length: 5
-      }
+      },
+      filter_listCatagory: ""
     };
   },
   methods: {
-    loadauthor: function loadauthor() {
-      var _this = this;
-
-      window.axios.get("/categories/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-        _this.listCatagory = response.data.data;
-        console.log("đây là tác phẩm tác giả", response.data.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
+    next: function next(page) {
+      this.$router.push("/list-category/?type=" + this.$route.query.type + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+      console.log("đưa lên url thành công");
     }
   },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
-      this.loadauthor();
     },
     "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
+
+      if (val) {
+        window.axios.get("/categories/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.listCatagory = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
       var _this2 = this;
 
       if (val) {
-        window.axios.get("/categories?type=" + this.$route.query.type + "&page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-          _this2.search = res.data.data;
+        window.axios.get("/categories/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this2.listCatagory = res.data.data;
           _this2.panigation.page = res.data.current_page;
           _this2.panigation.length = res.data.last_page;
         });
       }
       console.log("chuyển axios thành công");
     },
-    "$route.query.sort": function $routeQuerySort(val) {
-      var _this3 = this;
-
-      if (val) {
-        window.axios.get("/categories?type=" + this.$route.query.type + "&sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-          _this3.search = res.data.data;
-          _this3.panigation.page = res.data.current_page;
-          _this3.panigation.length = res.data.last_page;
-        });
-      }
-      console.log("chuyển axios thành công");
-    },
-    filter_author: function filter_author(val) {
-      this.$router.push("/categories?type=" + this.$route.query.type + "&&sort=" + val.linkto);
+    filter_listCatagory: function filter_listCatagory(val) {
+      this.$router.push("/list-category/?type=" + this.$route.query.type + "&&sort=" + val.linkto);
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.breadcrumbs[1].name = "" + this.$route.query.type;
+    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+      _this3.listCatagory = response.data.data;
+      // console.log(this.listCatagory);
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
-}, _defineProperty(_data$methods$watch$m, "methods", {
-  next: function next(page) {
-    // let type = this.$route.query.name;
-    this.$router.push("/categories?type=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
-    console.log("đưa lên url thành công");
-  }
-}), _defineProperty(_data$methods$watch$m, "mounted", function mounted() {
-  this.breadcrumbs[1].name = "" + this.$route.query.type;
-  this.loadauthor();
-}), _data$methods$watch$m);
+});
 
 /***/ }),
 /* 68 */
@@ -38810,11 +38809,11 @@ var render = function() {
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.filter_listcategory,
+                      value: _vm.filter_listCatagory,
                       callback: function($$v) {
-                        _vm.filter_listcategory = $$v
+                        _vm.filter_listCatagory = $$v
                       },
-                      expression: "filter_listcategory"
+                      expression: "filter_listCatagory"
                     }
                   })
                 ],
@@ -39579,7 +39578,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -39649,11 +39648,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     forgotPassword: function forgotPassword() {
-      this.dialogForgotPassword = true;
+      var _this = this;
+
+      window.axios.post("/sendmail", {
+        email: this.email
+      }).then(function (response) {
+        _this.dialogForgotPassword = false;
+        window.location = "#/";
+        console.log("thanhcong");
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     submit: function submit() {
       if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
           email: this.email
         });
@@ -39662,7 +39670,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     clear: function clear() {
       this.$refs.form.reset();
     }
-  }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -40692,11 +40701,7 @@ var render = function() {
                               _c(
                                 "v-btn",
                                 {
-                                  attrs: {
-                                    color: "green darken-1",
-                                    flat: "",
-                                    to: "/"
-                                  },
+                                  attrs: { color: "green darken-1", flat: "" },
                                   nativeOn: {
                                     click: function($event) {
                                       _vm.dialogForgotPassword = false
@@ -41128,6 +41133,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -41178,7 +41201,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //    popover
       e2: false,
       e3: false
-    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _ref;
+    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _defineProperty(_ref, "infoUser", false), _ref;
   },
   props: {
     source: String
@@ -41537,38 +41560,158 @@ var render = function() {
                               "v-toolbar-title",
                               [
                                 _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mr-0",
-                                    attrs: { flat: "", icon: "" }
-                                  },
-                                  [_c("v-icon", [_vm._v("account_circle")])],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "caption" }, [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(_vm.$store.state.user.name) +
-                                      "\n              "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
+                                  "v-menu",
                                   {
                                     attrs: {
-                                      flat: "",
-                                      icon: "",
-                                      color: "grey darken-1"
+                                      "close-on-content-click": false,
+                                      "nudge-width": 150,
+                                      "offset-x": ""
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.logout()
-                                      }
+                                    model: {
+                                      value: _vm.infoUser,
+                                      callback: function($$v) {
+                                        _vm.infoUser = $$v
+                                      },
+                                      expression: "infoUser"
                                     }
                                   },
-                                  [_c("v-icon", [_vm._v("exit_to_app")])],
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          slot: "activator",
+                                          flat: "",
+                                          icon: ""
+                                        },
+                                        slot: "activator"
+                                      },
+                                      [
+                                        _c("v-icon", [_vm._v("account_circle")])
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        _c(
+                                          "v-card-text",
+                                          { staticClass: "text-xs-center" },
+                                          [
+                                            _c(
+                                              "v-avatar",
+                                              { staticClass: "mt-5" },
+                                              [
+                                                _c("img", {
+                                                  staticStyle: {
+                                                    height: "110px",
+                                                    width: "110px"
+                                                  },
+                                                  attrs: {
+                                                    src:
+                                                      "/storage/images/" +
+                                                      _vm.$store.state.user
+                                                        .avatar
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-card-text", [
+                                          _c(
+                                            "h3",
+                                            { staticClass: "headline my-2" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(
+                                                    _vm.$store.state.user.name
+                                                  )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("span", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm.$store.state.user.email
+                                                )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("v-divider"),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card-text",
+                                          {},
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  outline: "",
+                                                  fab: "",
+                                                  dark: "",
+                                                  large: "",
+                                                  color: "cyan"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { dark: "" } },
+                                                  [_vm._v("edit")]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card-actions",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  flat: "",
+                                                  color: "green"
+                                                }
+                                              },
+                                              [_vm._v("Cá Nhân")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  flat: "",
+                                                  color: "black"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.logout()
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Đăng xuất")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
                                   1
                                 )
                               ],
@@ -44284,6 +44427,425 @@ window.axios.defaults.baseURL = "" + host + api;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 121 */,
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(123)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(125)
+/* template */
+var __vue_template__ = __webpack_require__(126)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\pages\\resetpassword.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58fa734b", Component.options)
+  } else {
+    hotAPI.reload("data-v-58fa734b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(124);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("51482ee0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-58fa734b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resetpassword.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-58fa734b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resetpassword.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialogForgotPassword: false,
+      valid: true,
+      email: "",
+      emailRules: [function (v) {
+        return !!v || "E-mail là bắt buộc";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+        );
+      }],
+      passRules: [function (v) {
+        return !!v || "Mật khẩu là bắt buộc";
+      }, function (v) {
+        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
+      }],
+      emailReset: "",
+      passReset: "",
+      passResetReset: "",
+      e2: false
+    };
+  },
+  methods: {
+    forgotPassword: function forgotPassword() {
+      this.dialogForgotPassword = true;
+    },
+    submit: function submit() {
+      if (this.$refs.form.validate()) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
+          emailReset: this.emailReset,
+          passReset: this.passReset,
+          passResetReset: this.passResetReset
+        });
+      }
+    },
+    clear: function clear() {
+      this.$refs.form.reset();
+    }
+  },
+  mounted: function mounted() {}
+});
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { attrs: { "fill-height": "", fluid: "" } },
+    [
+      _c(
+        "v-layout",
+        { attrs: { "align-center": "", "justify-center": "" } },
+        [
+          _c(
+            "v-card",
+            { attrs: { width: "300px", height: "350px" } },
+            [
+              _c(
+                "v-list",
+                { staticClass: "green accent-4 white--text text-xs-center" },
+                [_c("span", {}, [_vm._v("ĐẶT LẠI MẬT KHẨU")])]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-container",
+                [
+                  [
+                    _c(
+                      "v-form",
+                      {
+                        ref: "form",
+                        attrs: { "lazy-validation": "" },
+                        model: {
+                          value: _vm.valid,
+                          callback: function($$v) {
+                            _vm.valid = $$v
+                          },
+                          expression: "valid"
+                        }
+                      },
+                      [
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                rules: _vm.emailRules,
+                                label: "E-mail",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.emailReset,
+                                callback: function($$v) {
+                                  _vm.emailReset = $$v
+                                },
+                                expression: "emailReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                required: "",
+                                label: "Mật khẩu",
+                                rules: _vm.passRules,
+                                "append-icon": _vm.e2
+                                  ? "visibility"
+                                  : "visibility_off",
+                                "append-icon-cb": function() {
+                                  return (_vm.e2 = !_vm.e2)
+                                },
+                                type: _vm.e2 ? "password" : "text"
+                              },
+                              model: {
+                                value: _vm.passReset,
+                                callback: function($$v) {
+                                  _vm.passReset = $$v
+                                },
+                                expression: "passReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                required: "",
+                                label: "Nhập lại mật khẩu",
+                                rules: _vm.passRules,
+                                "append-icon": _vm.e2
+                                  ? "visibility"
+                                  : "visibility_off",
+                                "append-icon-cb": function() {
+                                  return (_vm.e2 = !_vm.e2)
+                                },
+                                type: _vm.e2 ? "password" : "text"
+                              },
+                              model: {
+                                value: _vm.passResetReset,
+                                callback: function($$v) {
+                                  _vm.passResetReset = $$v
+                                },
+                                expression: "passResetReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("v-btn", { on: { click: _vm.clear } }, [
+                          _vm._v("Đóng")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { disabled: !_vm.valid },
+                            on: { click: _vm.submit }
+                          },
+                          [_vm._v("Gửi")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { persistent: "", "max-width": "290" },
+                      model: {
+                        value: _vm.dialogForgotPassword,
+                        callback: function($$v) {
+                          _vm.dialogForgotPassword = $$v
+                        },
+                        expression: "dialogForgotPassword"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", { staticClass: "headline ml-1" }, [
+                            _vm._v("Thông báo !")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-card-text", [
+                            _vm._v(
+                              "Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "green darken-1",
+                                    flat: "",
+                                    to: "/"
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.dialogForgotPassword = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Đóng")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-58fa734b", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

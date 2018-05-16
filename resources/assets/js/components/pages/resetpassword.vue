@@ -1,21 +1,26 @@
 <template>
   <v-container fill-height fluid>
     <v-layout align-center justify-center>
-      <v-card width="300px" height="250px">
+      <v-card width="300px" height="350px">
         <v-list class="green accent-4 white--text text-xs-center">
-          <span class="">QUÊN MẬT KHẨU</span>
+          <span class="">ĐẶT LẠI MẬT KHẨU</span>
         </v-list>
         <v-divider></v-divider>
         <v-container>
           <template>
+
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field class="mt-3" v-model="email" :rules="emailRules" label="E-mail" @keyup.enter="forgotPassword" required></v-text-field>
-              <div class="text-xs-right mt-5">
-                <v-btn flat to="/">TRANG CHỦ</v-btn>
-                <v-btn :disabled="!valid" @click="forgotPassword">
-                  Gửi
-                </v-btn>
-              </div>
+              <v-flex xs12>
+                <v-text-field v-model="emailReset" :rules="emailRules" label="E-mail" required></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field v-model="passReset" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field v-model="passResetReset" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+              </v-flex>
+              <v-btn @click="clear">Đóng</v-btn>
+              <v-btn :disabled="!valid" @click="submit">Gửi</v-btn>
             </v-form>
           </template>
         </v-container>
@@ -27,7 +32,7 @@
               <v-card-text>Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false">Đóng</v-btn>
+                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false" to="/">Đóng</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -49,27 +54,26 @@ export default {
       v =>
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
         "E-mail phải hợp lệ"
-    ]
+    ],
+    passRules: [
+      v => !!v || "Mật khẩu là bắt buộc",
+      v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
+    ],
+    emailReset: "",
+    passReset: "",
+    passResetReset: "",
+    e2: false
   }),
   methods: {
     forgotPassword() {
-      window.axios
-        .post("/sendmail", {
-          email: this.email
-        })
-        .then(response => {
-          this.dialogForgotPassword = false;
-          window.location = "#/";
-          console.log("thanhcong");
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      this.dialogForgotPassword = true;
     },
     submit() {
       if (this.$refs.form.validate()) {
         axios.post("/api/submit", {
-          email: this.email
+          emailReset: this.emailReset,
+          passReset: this.passReset,
+          passResetReset: this.passResetReset
         });
       }
     },
@@ -81,4 +85,5 @@ export default {
 };
 </script>
 <style>
+
 </style>

@@ -84,15 +84,33 @@
                 <!-- <v-avatar :tile="tile" :size="avatarSize" color="grey lighten-4">
                   <img :src="'/storage/images/'+$store.state.user.avatar">
                 </v-avatar> -->
-                <v-btn flat icon class="mr-0">
-                  <v-icon>account_circle</v-icon>
-                </v-btn>
-                <span class="caption">
-                  {{$store.state.user.name}}
-                </span>
-                <v-btn flat icon color="grey darken-1" @click="logout()">
-                  <v-icon>exit_to_app</v-icon>
-                </v-btn>
+                <v-menu :close-on-content-click="false" :nudge-width="150" v-model="infoUser" offset-x>
+                  <v-btn flat icon slot="activator">
+                    <v-icon>account_circle</v-icon>
+                  </v-btn>
+                  <v-card class="text-xs-center">
+                    <v-card-text class="text-xs-center">
+                      <v-avatar class="mt-5">
+                        <img :src="'/storage/images/'+$store.state.user.avatar" style="height:110px; width:110px">
+                      </v-avatar>
+                    </v-card-text>
+                    <v-card-text>
+                      <h3 class="headline my-2"> {{$store.state.user.name}}</h3>
+                      <span> {{$store.state.user.email}}</span>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-text class="">
+                      <v-btn outline fab dark large color="cyan">
+                        <v-icon dark>edit</v-icon>
+                      </v-btn>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn flat color="green">Cá Nhân</v-btn>
+                      <v-btn flat color="black" @click="logout()">Đăng xuất</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-menu>
+
               </v-toolbar-title>
             </template>
           </v-toolbar>
@@ -360,7 +378,8 @@ export default {
     emailLogin: "",
     passLogin: "",
     data: {},
-    snackbarlogin: false
+    snackbarlogin: false,
+    infoUser: false
   }),
   props: {
     source: String
