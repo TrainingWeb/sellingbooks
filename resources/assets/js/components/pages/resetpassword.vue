@@ -8,7 +8,6 @@
         <v-divider></v-divider>
         <v-container>
           <template>
-
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-flex xs12>
                 <v-text-field v-model="emailReset" :rules="emailRules" label="E-mail" required></v-text-field>
@@ -26,19 +25,18 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialogForgotPassword" persistent max-width="290">
+          <v-dialog v-model="dialogResetPassword" persistent max-width="290">
             <v-card>
               <v-card-title class="headline ml-1">Thông báo !</v-card-title>
-              <v-card-text>Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu</v-card-text>
+              <v-card-text>Bạn đã thay đổi mật khẩu thành công</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false" to="/">Đóng</v-btn>
+                <v-btn color="green darken-1" flat @click.native="dialogResetPassword = false" to="/">Đóng</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
         </v-card-actions>
       </v-card>
-
     </v-layout>
   </v-container>
 </template>
@@ -46,7 +44,7 @@
 import axios from "axios";
 export default {
   data: () => ({
-    dialogForgotPassword: false,
+    dialogResetPassword: false,
     valid: true,
     email: "",
     emailRules: [
@@ -65,9 +63,9 @@ export default {
     e2: false
   }),
   methods: {
-    forgotPassword() {
-      this.dialogForgotPassword = true;
-    },
+    // forgotPassword() {
+    //   this.dialogForgotPassword = true;
+    // },
     submit() {
       if (this.$refs.form.validate()) {
         axios.post("/api/submit", {
@@ -79,11 +77,21 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
+    },
+    submit() {
+      window.axios
+        .get("reset/password")
+        .then(response => {
+          this.dialogResetPassword = true;
+          console.log("Reset_Password");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   mounted() {}
 };
 </script>
 <style>
-
 </style>

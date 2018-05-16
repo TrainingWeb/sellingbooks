@@ -103,6 +103,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-btn flat color="green">Cá Nhân</v-btn>
+                      <v-spacer></v-spacer>
                       <v-btn flat color="black" @click="logout()">Đăng xuất</v-btn>
                     </v-card-actions>
                   </v-card>

@@ -86,7 +86,7 @@ return [
 
     'username' => env('MAIL_USERNAME', 'noreply@noreply.com'),
 
-    'password' => env('MAIL_PASSWORD', 'iamdeveloper1@'),
+    'password' => env('MAIL_PASSWORD', '0905067607'),
 
     /*
     |--------------------------------------------------------------------------
