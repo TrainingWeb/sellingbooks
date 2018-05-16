@@ -43,13 +43,13 @@ class AdminController extends APIBaseController
     public function bandUser(Request $request, $id)
     {
         $user = User::find($id);
+        if (is_null($user)) {
+            return $this->sendErrorNotFound('User not found !');
+        }
         if ($user->id == $request->user()->id) {
             return $this->sendMessage('You are can not band yourself !');
         } elseif ($user->role == 1) {
             return $this->sendMessage('You are can not band another administrator !');
-        }
-        if (is_null($user)) {
-            return $this->sendErrorNotFound('User not found !');
         }
         if ($user->role == 2) {
             return $this->sendMessage('User ' . $user->name . ' got banned before !');
@@ -59,7 +59,7 @@ class AdminController extends APIBaseController
         return $this->sendMessage('User ' . $user->name . ' just banned successfully !');
     }
 
-    public function changUserRole(Request $request, $id)
+    public function changeUserRole(Request $request, $id)
     {
         $user = User::find($id);
         if (is_null($user)) {

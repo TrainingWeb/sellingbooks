@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="{{route('resetpassword', $token)}}" method="POST">
+    {{-- <form action="{{route('resetpassword', $token)}}" method="POST">
         @csrf
         <label for="email">Nhap email</label>
         <input type="hidden" name="email" value="{{$email}}">
@@ -19,7 +19,10 @@
         <label for="email">Nhap lai mat khau</label>
         <input type="passowrd" name="confirm_password"><br>
         <input type="submit" name="Reset" value="Reset">
-    </form>
+    </form> --}}
+    <script>
+        window.location="sellingbookstore.test:8080/#/resetpassword?token=".$token."&&email=".$email""
+    </script>
 </body>
 
 </html>
