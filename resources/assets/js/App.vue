@@ -109,6 +109,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-btn flat color="green">Cá Nhân</v-btn>
+                      <v-spacer></v-spacer>
                       <v-btn flat color="black" @click="logout()">Đăng xuất</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -325,6 +326,10 @@ export default {
     validRegiter: true,
     snackbarResgiter: false,
     name: "",
+<<<<<<< HEAD
+=======
+    nameRules: [v => !!v || "Tên là bắt buộc"],
+>>>>>>> fafd8c3e20a7640c077cafa9222464827535c391
     passLogin: "",
     passRegister: "",
     emailRegister: "",

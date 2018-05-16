@@ -36875,7 +36875,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, { text: "Lọc theo giá tiền giảm giá" }],
       books: {},
       namepage: "Danh sách sản phẩm",
-      // page: 1,
       panigation: {
         page: 1,
         visible: 4,
@@ -39418,20 +39417,75 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: "/list-products",
         disabled: true
       }],
-      e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
-
-      tags: {},
       namepage: "Tags",
-      page: 1
+      e1: null,
+      tags: {},
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: 7
+      },
+      filter_tags: ""
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    next: function next(page) {
+      this.$router.push("/tags?name=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "sort=" + this.$route.query.sort : ""));
+      console.log("đưa lên url thành công");
+    }
+  },
+  watch: {
+    "$route.query.type": function $routeQueryType(val) {
+      this.breadcrumbs[1].name = "" + this.$route.query.type;
+    },
+    "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
 
-    window.axios.get("/tags/" + this.$route.query.name + "?slug=" + this.$route.query.name).then(function (response) {
-      _this.tags = response.data.data;
+      if (val) {
+        console.log(this.$route);
+        window.axios.get("/tags/" + this.$route.query.name + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.tags = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/tags/" + this.$route.query.name + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this2.tags = res.data.data;
+          _this2.panigation.page = res.data.current_page;
+          _this2.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    filter_tags: function filter_tags(val) {
+      this.$router.push("/tags?name=" + this.$route.query.name + "&&sort=" + val.linkto);
+    }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    console.log(this.$route);
+    window.axios.get("/tags/" + this.$route.query.name + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+      _this3.tags = response.data.data;
       console.log("đây là tác phẩm của tags", response.data.data);
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
     }).catch(function (error) {
       console.log(error);
     });
@@ -39476,15 +39530,17 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       items: _vm.filter,
+                      "item-text": "text",
+                      "return-object": "",
                       label: "--Chọn--",
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.e1,
+                      value: _vm.filter_tags,
                       callback: function($$v) {
-                        _vm.e1 = $$v
+                        _vm.filter_tags = $$v
                       },
-                      expression: "e1"
+                      expression: "filter_tags"
                     }
                   })
                 ],
@@ -39523,13 +39579,14 @@ var render = function() {
               { staticClass: "text-xs-center mt-5" },
               [
                 _c("v-pagination", {
-                  attrs: { length: 3 },
+                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
+                  on: { input: _vm.next },
                   model: {
-                    value: _vm.page,
+                    value: _vm.panigation.page,
                     callback: function($$v) {
-                      _vm.page = $$v
+                      _vm.$set(_vm.panigation, "page", $$v)
                     },
-                    expression: "page"
+                    expression: "panigation.page"
                   }
                 })
               ],
@@ -39690,7 +39747,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -39714,9 +39770,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.axios.post("/sendmail", {
         email: this.email
       }).then(function (response) {
-        _this.dialogForgotPassword = false;
-        window.location = "#/";
+        _this.dialogForgotPassword = true;
+        // window.location = "#/";
         console.log("thanhcong");
+        _this.email = "";
       }).catch(function (error) {
         console.log(error);
       });
@@ -40762,7 +40819,11 @@ var render = function() {
                               _c(
                                 "v-btn",
                                 {
-                                  attrs: { color: "green darken-1", flat: "" },
+                                  attrs: {
+                                    color: "green darken-1",
+                                    flat: "",
+                                    to: "/"
+                                  },
                                   nativeOn: {
                                     click: function($event) {
                                       _vm.dialogForgotPassword = false
@@ -40889,7 +40950,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40944,16 +41005,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      dialogForgotPassword: false,
+      dialogResetPassword: false,
       valid: true,
-      email: "",
+
       emailRules: [function (v) {
         return !!v || "E-mail là bắt buộc";
       }, function (v) {
@@ -40965,22 +41024,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, function (v) {
         return v.length >= 8 || "Nhập ít nhất 8 ký tự";
       }],
-      emailReset: "",
-      passReset: "",
-      passResetReset: "",
+      email: "",
+      password: "",
+      confirm_password: "",
       e2: false
     };
   },
   methods: {
-    forgotPassword: function forgotPassword() {
-      this.dialogForgotPassword = true;
-    },
+    // forgotPassword() {
+    //   this.dialogForgotPassword = true;
+    // },
     submit: function submit() {
+      var _this = this;
+
       if (this.$refs.form.validate()) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          emailReset: this.emailReset,
-          passReset: this.passReset,
-          passResetReset: this.passResetReset
+        window.axios.post("/reset/password/" + this.$route.query.token, {
+          email: this.$route.query.email,
+          password: this.password,
+          confirm_password: this.confirm_password
+        }).then(function (response) {
+          console.log(_this.$route.query.token);
+          _this.dialogResetPassword = true;
+          console.log("Reset_Password");
+          _this.data = response.data;
+          // console.log(response.data);
+          _this.$store.dispatch("setToken", _this.data.api_token);
+          _this.$store.dispatch("setUser", _this.data.user);
+        }).catch(function (error) {
+          console.log(error);
         });
       }
     },
@@ -41044,15 +41115,10 @@ var render = function() {
                             _c("v-text-field", {
                               attrs: {
                                 rules: _vm.emailRules,
+                                value: _vm.$route.query.email,
+                                disabled: "",
                                 label: "E-mail",
                                 required: ""
-                              },
-                              model: {
-                                value: _vm.emailReset,
-                                callback: function($$v) {
-                                  _vm.emailReset = $$v
-                                },
-                                expression: "emailReset"
                               }
                             })
                           ],
@@ -41077,11 +41143,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-                                value: _vm.passReset,
+                                value: _vm.password,
                                 callback: function($$v) {
-                                  _vm.passReset = $$v
+                                  _vm.password = $$v
                                 },
-                                expression: "passReset"
+                                expression: "password"
                               }
                             })
                           ],
@@ -41106,11 +41172,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-                                value: _vm.passResetReset,
+                                value: _vm.confirm_password,
                                 callback: function($$v) {
-                                  _vm.passResetReset = $$v
+                                  _vm.confirm_password = $$v
                                 },
-                                expression: "passResetReset"
+                                expression: "confirm_password"
                               }
                             })
                           ],
@@ -41121,14 +41187,9 @@ var render = function() {
                           _vm._v("Đóng")
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { disabled: !_vm.valid },
-                            on: { click: _vm.submit }
-                          },
-                          [_vm._v("Gửi")]
-                        )
+                        _c("v-btn", { on: { click: _vm.submit } }, [
+                          _vm._v("Gửi")
+                        ])
                       ],
                       1
                     )
@@ -41147,11 +41208,11 @@ var render = function() {
                     {
                       attrs: { persistent: "", "max-width": "290" },
                       model: {
-                        value: _vm.dialogForgotPassword,
+                        value: _vm.dialogResetPassword,
                         callback: function($$v) {
-                          _vm.dialogForgotPassword = $$v
+                          _vm.dialogResetPassword = $$v
                         },
-                        expression: "dialogForgotPassword"
+                        expression: "dialogResetPassword"
                       }
                     },
                     [
@@ -41163,9 +41224,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("v-card-text", [
-                            _vm._v(
-                              "Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu"
-                            )
+                            _vm._v("Bạn đã thay đổi mật khẩu thành công")
                           ]),
                           _vm._v(" "),
                           _c(
@@ -41183,7 +41242,7 @@ var render = function() {
                                   },
                                   nativeOn: {
                                     click: function($event) {
-                                      _vm.dialogForgotPassword = false
+                                      _vm.dialogResetPassword = false
                                     }
                                   }
                                 },
@@ -41314,469 +41373,9 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 /***/ }),
 /* 110 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    var _ref;
-
-    return _ref = {
-      valid: true,
-      validRegiter: true,
-      snackbarResgiter: false,
-      name: "",
-      passLogin: "",
-      passRegister: "",
-      emailRegister: "",
-      emailLogin: "",
-      passRules: [function (v) {
-        return !!v || "Mật khẩu là bắt buộc";
-      }],
-      nameRules: [function (v) {
-        return !!v || "Tên là bắt buộc";
-      }],
-      emailRules: [function (v) {
-        return !!v || "E-mail là bắt buộc";
-      }, function (v) {
-        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
-        );
-      }],
-      password: "",
-      drawer: null,
-      icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
-      rows: [{
-        title: "DỊCH VỤ",
-        children: ["Điều khoản và sử dụng", "Thông tin giao hàng", "Chính sách bảo mật", "Dịch vụ khách hàng"]
-      }, {
-        title: "HỖ TRỢ",
-        children: ["Chính sách đổi - trả - hoàn tiền", "Chính sách khách sỉ", "Phương thức vận chuyển", "Phương thức thanh toán"]
-      }, {
-        title: "TÀI KHOẢN CỦA TÔI",
-        children: ["Chi tiết tài khoản", "Lịch sử mua hàng"],
-        icons: ["fab fa-facebook", "fab fa-twitter", "fab fa-google-plus", "fab fa-linkedin", "fab fa-instagram"]
-      }],
-      // popover
-      register: false,
-      login: false,
-      message: false,
-      hints: true,
-      //    popover
-      e2: false,
-      e3: false
-    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _defineProperty(_ref, "infoUser", false), _ref;
-  },
-  props: {
-    source: String
-  },
-  methods: {
-    textSearch: function textSearch() {
-      window.location = "#/search?name=" + this.search;
-      this.search = "";
-    },
-    loginpage: function loginpage() {
-      var _this = this;
-
-      if (this.$refs.formlogin.validate()) {
-        window.axios.post("/login", {
-          email: this.emailLogin,
-          password: this.passLogin
-        }).then(function (response) {
-          var data = response.data;
-          console.log(response.data);
-          if (data.user) {
-            _this.$store.dispatch("setToken", data.api_token);
-            _this.$store.dispatch("setUser", data.user);
-            _this.snackbarlogin = true;
-            _this.emailLogin = "";
-            _this.passLogin = "";
-            _this.login = false;
-          } else {
-            _this.snackbarlogin = true;
-          }
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
-    },
-    logout: function logout() {
-      var user = this.$store.state.user;
-      var token = this.$store.state.token;
-      var cart = this.$store.state.cart;
-      token = "";
-      user = {};
-      cart = [];
-      this.$store.dispatch("setUser", user);
-      this.$store.dispatch("setToken", token);
-      this.$store.dispatch("setCart", cart);
-    },
-    registerUser: function registerUser() {
-      var _this2 = this;
-
-      if (this.$refs.formRegister.validate()) {
-        window.axios.post("/register", {
-          name: this.name,
-          email: this.emailRegister,
-          password: this.passRegister
-        }).then(function (response) {
-          _this2.data = response.data;
-          console.log(response.data);
-          _this2.$store.dispatch("setToken", _this2.data.api_token);
-          _this2.$store.dispatch("setUser", _this2.data.user);
-          _this2.snackbarResgiter = true;
-          _this2.register = false;
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
-    }
-  },
-  computed: {
-    totalCard: function totalCard() {
-      return this.$store.state.cart.reduce(function (total, p) {
-        return total + p.quantity;
-        console.log("Tổng tiền 2" + (total + p.quantity));
-      }, 0);
-    }
-  },
-
-  mounted: function mounted() {
-    var _this3 = this;
-
-    //
-    window.axios.get("/index").then(function (response) {
-      _this3.dataApp = response.data.data;
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-});
+throw new Error("Module build failed: SyntaxError: F:/laragon/www/sellingbooks/resources/assets/js/App.vue: Unexpected token (329:0)\n\n\u001b[0m \u001b[90m 327 | \u001b[39m    snackbarResgiter\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 328 | \u001b[39m    name\u001b[33m:\u001b[39m \u001b[32m\"\"\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 330 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 331 | \u001b[39m    nameRules\u001b[33m:\u001b[39m [v \u001b[33m=>\u001b[39m \u001b[33m!\u001b[39m\u001b[33m!\u001b[39mv \u001b[33m||\u001b[39m \u001b[32m\"Tên là bắt buộc\"\u001b[39m]\u001b[33m,\u001b[39m\n \u001b[90m 332 | \u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>\u001b[39m fafd8c3e20a7640c077cafa9222464827535c391\u001b[0m\n");
 
 /***/ }),
 /* 111 */
@@ -42373,6 +41972,8 @@ var render = function() {
                                               },
                                               [_vm._v("Cá Nhân")]
                                             ),
+                                            _vm._v(" "),
+                                            _c("v-spacer"),
                                             _vm._v(" "),
                                             _c(
                                               "v-btn",
@@ -45142,7 +44743,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
+var host = "http://selling-books.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

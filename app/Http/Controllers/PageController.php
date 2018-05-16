@@ -75,15 +75,6 @@ class PageController extends APIBaseController
         ]);
     }
 
-    public function tagInfo($slug)
-    {
-        $tag = Tag::with('books')->where('slug', $slug)->first();
-        if (!$tag) {
-            return $this->sendErrorNotFound('Tag not found !');
-        }
-        return $this->sort($tag->books());
-    }
-
     public function search()
     {
         $items01 = array();
@@ -170,6 +161,24 @@ class PageController extends APIBaseController
         return $this->sort(Book::where('id_category', $book->id_category));
     }
 
+    public function getTags()
+    {
+        $tags = Tag::withCount('books')->paginate(20);
+        if (count($tags) < 1) {
+            return $this->sendMessage('Found 0 books !');
+        }
+        return $this->sendData($tags);
+    }
+
+    public function tagInfo($slug)
+    {
+        $tag = Tag::where('slug', $slug)->first();
+        if (!$tag) {
+            return $this->sendErrorNotFound('Tag not found !');
+        }
+        return $this->sortt($tag->books(), $tag);
+    }
+
     public function getAuthors()
     {
         $authors = Author::withCount('books')->paginate(18);
@@ -185,7 +194,7 @@ class PageController extends APIBaseController
         if (is_null($author)) {
             return $this->sendErrorNotFound('Author not found !');
         }
-        return $this->sort(Book::where('id_author', $author->id));
+        return $this->sortt(Book::where('id_author', $author->id), $author);
     }
 
     public function getCategoies()
@@ -452,6 +461,7 @@ class PageController extends APIBaseController
             return $this->sendMessage('Have no account have this email, please check it again !');
         }
         Mail::to($request->email)->send(new SendMailResetPassword());
+        return $this->sendMessage('Send reset mail successfully !');
     }
 
     public function resetPassword(Request $request, $token)
@@ -489,7 +499,10 @@ class PageController extends APIBaseController
         $user->update([
             'password' => Hash::make($request->password),
         ]);
-        return $this->sendMessage('Your account has been reset password !');
+        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $api_token = Auth::user()->createToken('test')->accessToken;
+        $user = Auth::user();
+        return response()->json(['api_token' => $api_token, 'user' => $user], 200);
     }
 
     public function testmail()

@@ -27,13 +27,12 @@
               <v-card-text>Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false">Đóng</v-btn>
+                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false" to="/">Đóng</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
         </v-card-actions>
       </v-card>
-
     </v-layout>
   </v-container>
 </template>
@@ -58,9 +57,10 @@ export default {
           email: this.email
         })
         .then(response => {
-          this.dialogForgotPassword = false;
-          window.location = "#/";
+          this.dialogForgotPassword = true;
+          // window.location = "#/";
           console.log("thanhcong");
+          this.email = "";
         })
         .catch(function(error) {
           console.log(error);

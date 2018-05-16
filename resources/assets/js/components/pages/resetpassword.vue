@@ -8,37 +8,35 @@
         <v-divider></v-divider>
         <v-container>
           <template>
-
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-flex xs12>
-                <v-text-field v-model="emailReset" :rules="emailRules" label="E-mail" required></v-text-field>
+                <v-text-field :rules="emailRules" :value="$route.query.email" disabled label="E-mail" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="passReset" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="password" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="passResetReset" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-btn @click="clear">Đóng</v-btn>
-              <v-btn :disabled="!valid" @click="submit">Gửi</v-btn>
+              <v-btn @click="submit">Gửi</v-btn>
             </v-form>
           </template>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialogForgotPassword" persistent max-width="290">
+          <v-dialog v-model="dialogResetPassword" persistent max-width="290">
             <v-card>
               <v-card-title class="headline ml-1">Thông báo !</v-card-title>
-              <v-card-text>Xin hãy kiểm tra E-mail của bạn để thay đổi mật khẩu</v-card-text>
+              <v-card-text>Bạn đã thay đổi mật khẩu thành công</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click.native="dialogForgotPassword = false" to="/">Đóng</v-btn>
+                <v-btn color="green darken-1" flat @click.native="dialogResetPassword = false" to="/">Đóng</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
         </v-card-actions>
       </v-card>
-
     </v-layout>
   </v-container>
 </template>
@@ -46,9 +44,9 @@
 import axios from "axios";
 export default {
   data: () => ({
-    dialogForgotPassword: false,
+    dialogResetPassword: false,
     valid: true,
-    email: "",
+
     emailRules: [
       v => !!v || "E-mail là bắt buộc",
       v =>
@@ -59,31 +57,45 @@ export default {
       v => !!v || "Mật khẩu là bắt buộc",
       v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
     ],
-    emailReset: "",
-    passReset: "",
-    passResetReset: "",
+    email: "",
+    password: "",
+    confirm_password: "",
     e2: false
   }),
   methods: {
-    forgotPassword() {
-      this.dialogForgotPassword = true;
-    },
+    // forgotPassword() {
+    //   this.dialogForgotPassword = true;
+    // },
     submit() {
       if (this.$refs.form.validate()) {
-        axios.post("/api/submit", {
-          emailReset: this.emailReset,
-          passReset: this.passReset,
-          passResetReset: this.passResetReset
+      window.axios
+        .post("/reset/password/" + this.$route.query.token,{
+          email : this.$route.query.email,
+          password : this.password,
+          confirm_password : this.confirm_password
+        })
+        .then(response => {
+          console.log(this.$route.query.token)
+          this.dialogResetPassword = true;
+          console.log("Reset_Password");
+          this.data = response.data;
+          // console.log(response.data);
+          this.$store.dispatch("setToken", this.data.api_token);
+          this.$store.dispatch("setUser", this.data.user);
+        })
+        .catch(function(error) {
+          console.log(error);
         });
+        
       }
     },
     clear() {
       this.$refs.form.reset();
-    }
+    },
+  
   },
   mounted() {}
 };
 </script>
 <style>
-
 </style>
