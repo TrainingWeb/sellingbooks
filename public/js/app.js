@@ -40889,11 +40889,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-<<<<<<< HEAD
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-=======
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
->>>>>>> d412165b4521ca8cbbc51ba9a1bb2f4823e920fe
 
 // exports
 
@@ -40952,9 +40948,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       dialogResetPassword: false,
       valid: true,
 
@@ -40968,17 +40962,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return !!v || "Mật khẩu là bắt buộc";
       }, function (v) {
         return v.length >= 8 || "Nhập ít nhất 8 ký tự";
-<<<<<<< HEAD
-      }]
-    }, _defineProperty(_ref, "email", ""), _defineProperty(_ref, "password", ""), _defineProperty(_ref, "confirm_password", ""), _defineProperty(_ref, "e2", false), _ref;
-=======
       }],
       email: "",
       password: "",
-      resetpassword: "",
+      confirm_password: "",
       e2: false
     };
->>>>>>> d412165b4521ca8cbbc51ba9a1bb2f4823e920fe
   },
   methods: {
     // forgotPassword() {
@@ -40988,7 +40977,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       if (this.$refs.form.validate()) {
-<<<<<<< HEAD
         window.axios.post("/reset/password/" + this.$route.query.token, {
           email: this.$route.query.email,
           password: this.password,
@@ -41003,20 +40991,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this.$store.dispatch("setUser", _this.data.user);
         }).catch(function (error) {
           console.log(error);
-=======
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          email: this.email,
-          password: this.password,
-          resetpassword: this.resetpassword
->>>>>>> d412165b4521ca8cbbc51ba9a1bb2f4823e920fe
         });
       }
-      window.axios.get("reset/password").then(function (response) {
-        _this.dialogResetPassword = true;
-        console.log("Reset Password");
-      }).catch(function (error) {
-        console.log(error);
-      });
     },
     clear: function clear() {
       this.$refs.form.reset();
@@ -41082,16 +41058,6 @@ var render = function() {
                                 disabled: "",
                                 label: "E-mail",
                                 required: ""
-<<<<<<< HEAD
-=======
-                              },
-                              model: {
-                                value: _vm.email,
-                                callback: function($$v) {
-                                  _vm.email = $$v
-                                },
-                                expression: "email"
->>>>>>> d412165b4521ca8cbbc51ba9a1bb2f4823e920fe
                               }
                             })
                           ],
@@ -41145,19 +41111,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-<<<<<<< HEAD
                                 value: _vm.confirm_password,
                                 callback: function($$v) {
                                   _vm.confirm_password = $$v
                                 },
                                 expression: "confirm_password"
-=======
-                                value: _vm.resetpassword,
-                                callback: function($$v) {
-                                  _vm.resetpassword = $$v
-                                },
-                                expression: "resetpassword"
->>>>>>> d412165b4521ca8cbbc51ba9a1bb2f4823e920fe
                               }
                             })
                           ],
@@ -41168,14 +41126,9 @@ var render = function() {
                           _vm._v("Đóng")
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { disabled: !_vm.valid },
-                            on: { click: _vm.submit }
-                          },
-                          [_vm._v("Gửi")]
-                        )
+                        _c("v-btn", { on: { click: _vm.submit } }, [
+                          _vm._v("Gửi")
+                        ])
                       ],
                       1
                     )
@@ -45119,7 +45072,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test:8080";
+var host = "http://selling-books.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

@@ -461,6 +461,7 @@ class PageController extends APIBaseController
             return $this->sendMessage('Have no account have this email, please check it again !');
         }
         Mail::to($request->email)->send(new SendMailResetPassword());
+        return $this->sendMessage('Send reset mail successfully !');
     }
 
     public function resetPassword(Request $request, $token)

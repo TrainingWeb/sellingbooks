@@ -19,7 +19,7 @@
                 <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-btn @click="clear">Đóng</v-btn>
-              <v-btn :disabled="!valid" @click="submit">Gửi</v-btn>
+              <v-btn @click="submit">Gửi</v-btn>
             </v-form>
           </template>
         </v-container>
