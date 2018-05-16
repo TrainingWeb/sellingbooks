@@ -27,7 +27,7 @@
                   <v-container>
                     <v-form ref="form" v-model="valid" lazy-validation>
                       <v-flex xs12>
-                        <v-text-field label="Họ và tên" :rules="nameRules" v-model="name"></v-text-field>
+                        <v-text-field label="Họ và tên" :rules="nameRules" v-model="emailLogin"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
                         <v-text-field v-model="passLogin" :rules="passRules" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
@@ -298,8 +298,7 @@ export default {
       v => !!v || "Tên là bắt buộc",
       v =>
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-        "E-mail phải hợp lệ",
-      v => !!v === this.data.message || "Email hoặc mật khẩu sai"
+        "E-mail phải hợp lệ"
     ],
     passLogin: "",
     passRegister: "",
@@ -380,10 +379,16 @@ export default {
           })
           .then(response => {
             let data = response.data;
-            this.$store.dispatch("setToken", data.api_token);
-            this.$store.dispatch("setUser", data.user);
-            this.snackbarlogin = true;
-            this.login = false;
+            if (data.user) {
+              this.$store.dispatch("setToken", data.api_token);
+              this.$store.dispatch("setUser", data.user);
+              this.snackbarlogin = true;
+              this.emailLogin = "";
+              this.passLogin = "";
+              this.login = false;
+            } else {
+              let message = "sai";
+            }
           })
 
           .catch(function(error) {
@@ -394,10 +399,13 @@ export default {
     logout() {
       let user = this.$store.state.user;
       let token = this.$store.state.token;
+      let cart = this.$store.state.cart;
       token = "";
       user = {};
+      cart = [];
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
+      this.$store.dispatch("setCart", cart);
     },
     registerUser() {
       window.axios
@@ -421,6 +429,7 @@ export default {
     totalCard() {
       return this.$store.state.cart.reduce((total, p) => {
         return total + p.quantity;
+        console.log("Tổng tiền 2" + (total + p.quantity));
       }, 0);
     }
   },
@@ -429,6 +438,7 @@ export default {
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
+        console.log(this.dataApp);
       })
       .catch(function(error) {
         console.log(error);

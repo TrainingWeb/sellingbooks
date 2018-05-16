@@ -120,13 +120,13 @@ export default {
       let cart = this.$store.state.cart;
       for (var index in cart) {
         if (cart[index].book.id == id) {
-          console.log("vẫn giảm đc");
-          cart[index].quantity = e;
+          cart[index].quantity = parseInt(e);
           this.$store.dispatch("setCart", cart);
           return;
         }
       }
     },
+
     delCart(item) {
       let cart = this.$store.state.cart;
       let index = cart.indexOf(item);
