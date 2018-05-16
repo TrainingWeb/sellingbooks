@@ -59,7 +59,6 @@ export default {
     ],
     books: {},
     namepage: "Danh sách sản phẩm",
-    // page: 1,
     panigation: {
       page: 1,
       visible: 4,

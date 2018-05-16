@@ -50,7 +50,7 @@
               </v-menu>
               <!-- Hết Đăng nhập -->
               <!-- Đăng Ký -->
-              <!-- <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
+              <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
                 <v-card flat>
                   <v-list class="green accent-4 white--text text-xs-center">
@@ -77,7 +77,7 @@
                     </v-form>
                   </v-container>
                 </v-card>
-              </v-menu> -->
+              </v-menu>
             </template>
             <template v-else>
               <v-toolbar-title>
@@ -313,12 +313,7 @@ export default {
   data: () => ({
     valid: true,
     name: "",
-    nameRules: [
-      v => !!v || "Tên là bắt buộc",
-      v =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-        "E-mail phải hợp lệ"
-    ],
+    nameRules: [v => !!v || "Tên là bắt buộc"],
     passLogin: "",
     passRegister: "",
     passRules: [v => !!v || "Mật khẩu là bắt buộc"],

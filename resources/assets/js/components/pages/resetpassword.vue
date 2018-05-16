@@ -10,13 +10,13 @@
           <template>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-flex xs12>
-                <v-text-field v-model="emailReset" :rules="emailRules" label="E-mail" required></v-text-field>
+                <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="passReset" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="password" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="passResetReset" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="resetpassword" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-btn @click="clear">Đóng</v-btn>
               <v-btn :disabled="!valid" @click="submit">Gửi</v-btn>
@@ -46,7 +46,7 @@ export default {
   data: () => ({
     dialogResetPassword: false,
     valid: true,
-    email: "",
+
     emailRules: [
       v => !!v || "E-mail là bắt buộc",
       v =>
@@ -57,9 +57,9 @@ export default {
       v => !!v || "Mật khẩu là bắt buộc",
       v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
     ],
-    emailReset: "",
-    passReset: "",
-    passResetReset: "",
+    email: "",
+    password: "",
+    resetpassword: "",
     e2: false
   }),
   methods: {
@@ -69,25 +69,23 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         axios.post("/api/submit", {
-          emailReset: this.emailReset,
-          passReset: this.passReset,
-          passResetReset: this.passResetReset
+          email: this.email,
+          password: this.password,
+          resetpassword: this.resetpassword
         });
       }
-    },
-    clear() {
-      this.$refs.form.reset();
-    },
-    submit() {
       window.axios
         .get("reset/password")
         .then(response => {
           this.dialogResetPassword = true;
-          console.log("Reset_Password");
+          console.log("Reset Password");
         })
         .catch(function(error) {
           console.log(error);
         });
+    },
+    clear() {
+      this.$refs.form.reset();
     }
   },
   mounted() {}
