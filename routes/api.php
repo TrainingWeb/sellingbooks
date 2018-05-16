@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:api', 'RedirectIfAuthenticated']], function
     Route::post('/admin/editstoragequantity/{id}', 'AdminController@editStorage');
     Route::post('/admin/book/updatequantity/{id}', 'AdminController@addBookQuantity');
     Route::post('/admin/users/banneduser/{id}', 'AdminController@bandUser');
-    Route::post('/admin/users/changeroleuser/{id}', 'AdminController@changeUserRole');
+    Route::post('/admin/users/changeroleuser/{id}', 'AdminController@changUserRole');
 });
 
 Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
@@ -51,12 +51,10 @@ Route::group(['middleware' => ['auth:api', 'ProtectedUserLogin']], function () {
     Route::post('/add-favorite/{id}', 'PageController@postFavorite');
     Route::get('/get-favorite-books', 'PageController@getFavoriteBook');
     Route::get('/removefavorite/{id}', 'PageController@removeFavorite');
-    Route::get('/test', 'PageController@test');
-    Route::get('/index', 'PageController@index');
 });
 
-Route::get('/index', 'PageController@index');
 Route::get('/search', 'PageController@search');
+Route::get('/index', 'PageController@index');
 Route::get('/books/type/{type}', 'PageController@typeBooks');
 Route::get('/books/{slug}', 'PageController@getBookInfo');
 Route::get('/getmorecomments/{slug}', 'PageController@getMoreComments');
@@ -65,7 +63,6 @@ Route::get('/authors', 'PageController@getAuthors');
 Route::get('/authors/{slug}', 'PageController@getInfoAuthor');
 Route::get('/categories', 'PageController@getCategoies');
 Route::get('/categories/{slug}', 'PageController@getInfoCategory');
-Route::get('/tags', 'PageController@getTags');
 Route::get('/tags/{slug}', 'PageController@tagInfo');
 
 Route::post('/sendmail', 'PageController@sendMailResetPassword');

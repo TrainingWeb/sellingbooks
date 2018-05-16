@@ -46,7 +46,7 @@ export default {
   data: () => ({
     dialogResetPassword: false,
     valid: true,
-    email: "",
+
     emailRules: [
       v => !!v || "E-mail là bắt buộc",
       v =>
