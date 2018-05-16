@@ -796,6 +796,12 @@ module.exports = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(83);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
  * Vue.js v2.5.16
@@ -11756,10 +11762,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(16).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(16).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11784,12 +11790,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(83);
 
 /***/ }),
 /* 7 */
@@ -12358,7 +12358,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(120);
+module.exports = __webpack_require__(125);
 
 
 /***/ }),
@@ -12367,19 +12367,19 @@ module.exports = __webpack_require__(120);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify_dist_vuetify_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_extends_BookItem__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_extends_Banner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12401,7 +12401,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("BookItem", __WEBPACK_IMPO
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component("VBanner", __WEBPACK_IMPORTED_MODULE_7__components_extends_Banner___default.a);
 
-__webpack_require__(119);
+__webpack_require__(124);
 //
 
 // Save card
@@ -12410,13 +12410,10 @@ if (localStorage.cart) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].c
 //
 if (localStorage.favorite) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_FAVORITE", JSON.parse(localStorage.favorite));
 //
-if (localStorage.selected) __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].commit("SET_SELECTED", JSON.parse(localStorage.selected));
-//
+
 if (localStorage.token && localStorage.token != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setToken", localStorage.token);
 
 if (localStorage.user && localStorage.user != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setUser", JSON.parse(localStorage.user));
-
-if (localStorage.message && localStorage.message != "undefined") __WEBPACK_IMPORTED_MODULE_5__store__["a" /* default */].dispatch("setMessage", localStorage.message);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
@@ -12497,7 +12494,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 17 */
@@ -12690,7 +12687,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(8)))
 
 /***/ }),
 /* 18 */
@@ -30865,7 +30862,7 @@ module.exports = function (css) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Home_vue__ = __webpack_require__(25);
@@ -30892,10 +30889,13 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_pages_tags_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue__);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 //
+
 
 
 
@@ -30959,6 +30959,10 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     path: "/forgotpassword",
     name: "forgotpassword",
     component: __WEBPACK_IMPORTED_MODULE_13__components_pages_forgotpassword_vue___default.a
+  }, {
+    path: "/resetpassword",
+    name: "resetpassword",
+    component: __WEBPACK_IMPORTED_MODULE_14__components_pages_resetpassword_vue___default.a
   }]
 });
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -37241,8 +37245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cart = this.$store.state.cart;
       for (var index in cart) {
         if (cart[index].book.id == id) {
-          console.log("vẫn giảm đc");
-          cart[index].quantity = e;
+          cart[index].quantity = parseInt(e);
           this.$store.dispatch("setCart", cart);
           return;
         }
@@ -37813,7 +37816,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     next: function next(page) {
-      // let type = this.$route.query.name;
       this.$router.push("/search?name=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
       console.log("đưa lên url thành công");
     }
@@ -38122,6 +38124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -38145,51 +38148,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       page: 1,
       dialogDelete: false,
       snackbarCart: false,
-      timeout: 3000
+      timeout: 3000,
+      favoriteBook: []
     };
   },
   methods: {
-    favoriteBooks: function favoriteBooks() {
-      window.axios.get("/index").then(function (res) {});
-    },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    deleteItem: function deleteItem(item) {
-      var favorite = this.$store.state.favorite;
-      var index = favorite.indexOf(item);
-      if (index >= 0) {
-        favorite.splice(index, 1);
-        this.$store.dispatch("setFavorite", favorite);
-      }
+    delFavorite: function delFavorite(index) {
+      var _this = this;
+
+      window.axios.get("/removefavorite/" + this.favoriteBook[index].id).then(function (response) {
+        _this.favoriteBook.splice(index, 1);
+        _this.dialogDelete = false;
+      }).catch(function (error) {
+        console.log(error);
+      });
+      //
     },
-    addCartPageFavorite: function addCartPageFavorite(val) {
-      for (var index in this.$store.state.cart) {
-        if (this.$store.state.cart[index].book.id === val.id) {
+    addCartPageFavorite: function addCartPageFavorite(item) {
+      var cart = this.$store.state.cart;
+      for (var index in cart) {
+        if (cart[index].book.id === item.id) {
+          cart[index].quantity = cart[index].quantity + 1;
           this.snackbarCart = true;
           return;
         }
       }
       var itemBook = {
-        book: val.book,
-        quantity: val.quantity
+        book: item,
+        quantity: 1
       };
-      var cart = this.$store.state.cart;
       cart.push(itemBook);
       this.$store.dispatch("setCart", cart);
       this.snackbarCart = true;
-    },
-    upadateQantity: function upadateQantity(id, e) {
-      var favorite = this.$store.state.favorite;
-      for (var index = 0; index < this.$store.state.favorite.length; index++) {
-        if (this.$store.state.favorite[index].book.id == id) {
-          this.$store.state.favorite[index].quantity = e;
-          this.$store.dispatch("setFavorite", favorite);
-          break;
-        }
-      }
     }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    window.axios.get("/get-favorite-books").then(function (response) {
+      _this2.favoriteBook = response.data.data;
+      console.log(response.data, "danh sách");
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -38220,126 +38225,130 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c("v-data-table", {
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.$store.state.favorite,
-              "hide-actions": "",
-              flat: ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c("tr", { staticClass: "py-1" }, [
-                      _c(
-                        "td",
-                        { staticClass: "text-xs-center layout px-0 py-5" },
-                        [
+          _vm.favoriteBook
+            ? _c("v-data-table", {
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.favoriteBook,
+                  "hide-actions": "",
+                  flat: ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("tr", { staticClass: "py-1" }, [
                           _c(
-                            "v-layout",
-                            { attrs: { row: "", "justify-center": "" } },
+                            "td",
+                            { staticClass: "text-xs-center layout px-0 py-5" },
                             [
                               _c(
-                                "v-dialog",
-                                {
-                                  attrs: {
-                                    flat: "",
-                                    persistent: "",
-                                    "max-width": "290"
-                                  },
-                                  model: {
-                                    value: _vm.dialogDelete,
-                                    callback: function($$v) {
-                                      _vm.dialogDelete = $$v
-                                    },
-                                    expression: "dialogDelete"
-                                  }
-                                },
+                                "v-layout",
+                                { attrs: { row: "", "justify-center": "" } },
                                 [
                                   _c(
-                                    "v-btn",
+                                    "v-dialog",
                                     {
-                                      attrs: { slot: "activator", icon: "" },
-                                      slot: "activator"
+                                      attrs: {
+                                        flat: "",
+                                        persistent: "",
+                                        "max-width": "290"
+                                      },
+                                      model: {
+                                        value: _vm.dialogDelete,
+                                        callback: function($$v) {
+                                          _vm.dialogDelete = $$v
+                                        },
+                                        expression: "dialogDelete"
+                                      }
                                     },
                                     [
                                       _c(
-                                        "v-icon",
+                                        "v-btn",
                                         {
-                                          staticClass:
-                                            "red--text text--darken-4"
+                                          attrs: {
+                                            slot: "activator",
+                                            icon: ""
+                                          },
+                                          slot: "activator"
                                         },
-                                        [_vm._v("clear")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-card",
-                                    { attrs: { flat: "" } },
-                                    [
-                                      _c(
-                                        "v-card-title",
-                                        {
-                                          staticClass:
-                                            "subheading ml-0 green accent-4 white--text"
-                                        },
-                                        [_vm._v("Thông báo !")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-card-text",
-                                        { staticClass: "body-1" },
                                         [
-                                          _vm._v(
-                                            "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-card-actions",
-                                        [
-                                          _c("v-spacer"),
-                                          _vm._v(" "),
                                           _c(
-                                            "v-btn",
+                                            "v-icon",
                                             {
-                                              attrs: {
-                                                color: "green darken-1",
-                                                flat: ""
-                                              },
-                                              nativeOn: {
-                                                click: function($event) {
-                                                  _vm.dialogDelete = false
-                                                }
-                                              }
+                                              staticClass:
+                                                "red--text text--darken-4"
                                             },
-                                            [_vm._v("Hủy")]
+                                            [_vm._v("clear")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card",
+                                        { attrs: { flat: "" } },
+                                        [
+                                          _c(
+                                            "v-card-title",
+                                            {
+                                              staticClass:
+                                                "subheading ml-0 green accent-4 white--text"
+                                            },
+                                            [_vm._v("Thông báo !")]
                                           ),
                                           _vm._v(" "),
                                           _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                color: "green darken-1",
-                                                flat: ""
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.deleteItem(props.item)
-                                                }
-                                              },
-                                              nativeOn: {
-                                                click: function($event) {
-                                                  _vm.dialogDelete = false
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Xóa")]
+                                            "v-card-text",
+                                            { staticClass: "body-1" },
+                                            [
+                                              _vm._v(
+                                                "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-actions",
+                                            [
+                                              _c("v-spacer"),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "green darken-1",
+                                                    flat: ""
+                                                  },
+                                                  nativeOn: {
+                                                    click: function($event) {
+                                                      _vm.dialogDelete = false
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Hủy")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "green darken-1",
+                                                    flat: ""
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.delFavorite(
+                                                        props.index
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Xóa")]
+                                              )
+                                            ],
+                                            1
                                           )
                                         ],
                                         1
@@ -38352,122 +38361,131 @@ var render = function() {
                               )
                             ],
                             1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "py-2" }, [
-                        _c("img", {
-                          attrs: {
-                            src: "/storage/images/" + props.item.book.image,
-                            alt: "",
-                            width: "80px",
-                            height: "120px"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "py-2" }, [
+                            _c("img", {
+                              attrs: {
+                                src: "/storage/images/" + props.item.image,
+                                alt: "",
+                                width: "80px",
+                                height: "120px"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
                           _c(
-                            "router-link",
-                            {
-                              staticClass:
-                                "subheading text-xs-left red--text text--darken-4",
-                              staticStyle: { "text-decoration": "none" },
-                              attrs: { to: "/detail" }
-                            },
-                            [_vm._v(_vm._s(props.item.book.name))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-xs-left" }, [
-                        props.item.book.promotion_price
-                          ? _c("div", [
+                            "td",
+                            [
                               _c(
-                                "span",
+                                "router-link",
                                 {
                                   staticClass:
-                                    "green--text text--accent-4 title "
+                                    "subheading text-xs-left red--text text--darken-4",
+                                  staticStyle: { "text-decoration": "none" },
+                                  attrs: { to: "/detail" }
                                 },
                                 [
                                   _vm._v(
-                                    " " +
-                                      _vm._s(
-                                        _vm.formatPrice(
-                                          props.item.book.promotion_price
-                                        )
-                                      ) +
-                                      "đ"
+                                    _vm._s(props.item.name) +
+                                      " " +
+                                      _vm._s(props.item.id) +
+                                      "\n            "
                                   )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-left" }, [
+                            props.item.promotion_price
+                              ? _c("div", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "green--text text--accent-4 title "
+                                    },
+                                    [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              props.item.promotion_price
+                                            )
+                                          ) +
+                                          "đ"
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "grey--text text--darken-1 title ml-3"
+                                    },
+                                    [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.formatPrice(props.item.price)
+                                          ) + "đ"
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ])
+                              : _c("div", [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "green--text text--accent-4 title ml-3"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(
+                                            _vm.formatPrice(props.item.price)
+                                          ) +
+                                          "đ\n              "
+                                      )
+                                    ]
+                                  )
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mx-0 my-3",
+                                  attrs: {
+                                    color: "green accent-4 white--text"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.addCartPageFavorite(props.item)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass:
+                                        "material-icons add-shopping mr-2 white--text"
+                                    },
+                                    [_vm._v("add_shopping_cart")]
+                                  ),
+                                  _vm._v("Thêm\n            ")
                                 ]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "grey--text text--darken-1 title ml-3"
-                                },
-                                [
-                                  _c("del", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) + "đ"
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "green--text text--accent-4 title ml-3"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(
-                                        _vm.formatPrice(props.item.book.price)
-                                      ) +
-                                      "đ\n              "
-                                  )
-                                ]
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "mx-0 my-3",
-                              attrs: { color: "green accent-4 white--text" },
-                              on: {
-                                click: function($event) {
-                                  _vm.addCartPageFavorite(props.item)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "i",
-                                {
-                                  staticClass:
-                                    "material-icons add-shopping mr-2 white--text"
-                                },
-                                [_vm._v("add_shopping_cart")]
-                              ),
-                              _vm._v("Thêm\n              "),
                               _c(
                                 "v-snackbar",
                                 {
@@ -38486,7 +38504,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                Thêm vào giỏ hàng thành công\n                "
+                                    "\n              Thêm vào giỏ hàng thành công\n              "
                                   ),
                                   _c(
                                     "v-btn",
@@ -38511,15 +38529,13 @@ var render = function() {
                             ],
                             1
                           )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                }
-              }
-            ])
-          })
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            : _vm._e()
         ],
         1
       )
@@ -38634,10 +38650,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-var _data$methods$watch$m;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -38666,7 +38678,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = (_data$methods$watch$m = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       breadcrumbs: [{
@@ -38678,6 +38690,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url: "/list-products",
         disabled: true
       }],
+      namepage: "Danh sách sản phẩm",
       e1: null,
       filter: [{
         text: "Lọc theo tên A-Z",
@@ -38689,72 +38702,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: "Lọc Theo Giá tiền",
         linkto: "price"
       }, { text: "Lọc theo giá tiền giảm giá" }],
-      namepage: "Danh sách sản phẩm",
       listCatagory: {},
-      filter_listcategory: "",
-      book: {},
+
       panigation: {
         page: 1,
         visible: 4,
         length: 5
-      }
+      },
+      filter_listCatagory: ""
     };
   },
   methods: {
-    loadauthor: function loadauthor() {
-      var _this = this;
-
-      window.axios.get("/categories/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-        _this.listCatagory = response.data.data.data;
-        console.log("đây là tác phẩm", _this.listauthor);
-      }).catch(function (error) {
-        console.log(error);
-      });
+    next: function next(page) {
+      this.$router.push("/list-category/?type=" + this.$route.query.type + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+      console.log("đưa lên url thành công");
     }
   },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
-      this.loadauthor();
     },
     "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
+
+      if (val) {
+        window.axios.get("/categories/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.listCatagory = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+    "$route.query.sort": function $routeQuerySort(val) {
       var _this2 = this;
 
       if (val) {
-        window.axios.get("/categories?type=" + this.$route.query.type + "&page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-          _this2.search = res.data.data;
+        window.axios.get("/categories/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+          _this2.listCatagory = res.data.data;
           _this2.panigation.page = res.data.current_page;
           _this2.panigation.length = res.data.last_page;
         });
       }
       console.log("chuyển axios thành công");
     },
-    "$route.query.sort": function $routeQuerySort(val) {
-      var _this3 = this;
-
-      if (val) {
-        window.axios.get("/categories?type=" + this.$route.query.type + "&sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-          _this3.search = res.data.data;
-          _this3.panigation.page = res.data.current_page;
-          _this3.panigation.length = res.data.last_page;
-        });
-      }
-      console.log("chuyển axios thành công");
-    },
-    filter_author: function filter_author(val) {
-      this.$router.push("/categories?type=" + this.$route.query.type + "&&sort=" + val.linkto);
+    filter_listCatagory: function filter_listCatagory(val) {
+      this.$router.push("/list-category/?type=" + this.$route.query.type + "&&sort=" + val.linkto);
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.breadcrumbs[1].name = "" + this.$route.query.type;
+    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+      _this3.listCatagory = response.data.data;
+      // console.log(this.listCatagory);
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
-}, _defineProperty(_data$methods$watch$m, "methods", {
-  next: function next(page) {
-    // let type = this.$route.query.name;
-    this.$router.push("/categories?type=" + this.$route.query.name + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
-    console.log("đưa lên url thành công");
-  }
-}), _defineProperty(_data$methods$watch$m, "mounted", function mounted() {
-  this.breadcrumbs[1].name = "" + this.$route.query.type;
-  this.loadauthor();
-}), _data$methods$watch$m);
+});
 
 /***/ }),
 /* 68 */
@@ -38800,11 +38809,11 @@ var render = function() {
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.filter_listcategory,
+                      value: _vm.filter_listCatagory,
                       callback: function($$v) {
-                        _vm.filter_listcategory = $$v
+                        _vm.filter_listCatagory = $$v
                       },
-                      expression: "filter_listcategory"
+                      expression: "filter_listCatagory"
                     }
                   })
                 ],
@@ -39002,6 +39011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      filter_value: "",
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -39012,26 +39022,80 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disabled: true
       }],
       e1: null,
-      filter: [{ text: "Lọc theo tên A-Z" }, { text: "Lọc Theo Giá tiền" }, { text: "Lọc theo giá tiền giảm giá" }],
+      filter: [{
+        text: "Lọc theo tên A-Z",
+        linkto: "atoz"
+      }, {
+        text: "Lọc theo tên Z-A",
+        linkto: "atozdesc"
+      }, {
+        text: "Lọc Theo Giá tiền",
+        linkto: "price"
+      }, { text: "Lọc theo giá tiền giảm giá" }],
+      panigation: {
+        page: 1,
+        visible: 4,
+        length: null
+      },
 
       namepage: "Tác giả",
-      page: 1,
-      listauthor: []
+      listauthor: {}
     };
   },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       this.breadcrumbs[1].name = "" + this.$route.query.type;
+    },
+
+    //
+    "$route.query.page": function $routeQueryPage(val) {
+      var _this = this;
+
+      if (val) {
+        window.axios.get("/authors/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          _this.listauthor = res.data.data;
+          _this.panigation.page = res.data.current_page;
+          _this.panigation.length = res.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+
+    //
+    "$route.query.sort": function $routeQuerySort(val) {
+      var _this2 = this;
+
+      if (val) {
+        window.axios.get("/authors/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+          _this2.listauthor = response.data.data;
+          _this2.panigation.page = response.data.current_page;
+          _this2.panigation.length = response.data.last_page;
+        });
+      }
+      console.log("chuyển axios thành công");
+    },
+
+    //
+    filter_value: function filter_value(val) {
+      this.$router.push("/list-author/?type=" + this.$route.query.type + "&&sort=" + val.linkto);
+      console.log("lên url");
+    }
+  },
+  methods: {
+    next: function next(page) {
+      this.$router.push("/list-author/?type=" + this.$route.query.type + "&&page=" + page + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : ""));
+      console.log("thành công");
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
 
     this.breadcrumbs[1].name = "" + this.$route.query.type;
-
-    window.axios.get("/authors/" + this.$route.query.type + "?slug=" + this.$route.query.type).then(function (response) {
-      _this.listauthor = response.data.data.data;
-      console.log("đây là tác phẩm", _this.listauthor);
+    window.axios.get("/authors/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
+      _this3.listauthor = response.data.data;
+      console.log(_this3.listauthor);
+      _this3.panigation.page = response.data.current_page;
+      _this3.panigation.length = response.data.last_page;
     }).catch(function (error) {
       console.log(error);
     });
@@ -39076,15 +39140,17 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       items: _vm.filter,
+                      "item-text": "text",
+                      "return-object": "",
                       label: "--Chọn--",
                       "single-line": ""
                     },
                     model: {
-                      value: _vm.e1,
+                      value: _vm.filter_value,
                       callback: function($$v) {
-                        _vm.e1 = $$v
+                        _vm.filter_value = $$v
                       },
-                      expression: "e1"
+                      expression: "filter_value"
                     }
                   })
                 ],
@@ -39123,13 +39189,14 @@ var render = function() {
               { staticClass: "text-xs-center mt-5" },
               [
                 _c("v-pagination", {
-                  attrs: { length: 3 },
+                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
+                  on: { input: _vm.next },
                   model: {
-                    value: _vm.page,
+                    value: _vm.panigation.page,
                     callback: function($$v) {
-                      _vm.page = $$v
+                      _vm.$set(_vm.panigation, "page", $$v)
                     },
-                    expression: "page"
+                    expression: "panigation.page"
                   }
                 })
               ],
@@ -39511,7 +39578,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -39522,9 +39589,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
 //
 //
 //
@@ -39581,11 +39647,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     forgotPassword: function forgotPassword() {
-      this.dialogForgotPassword = true;
+      var _this = this;
+
+      window.axios.post("/sendmail", {
+        email: this.email
+      }).then(function (response) {
+        _this.dialogForgotPassword = true;
+        // window.location = "#/";
+        console.log("thanhcong");
+        _this.email = "";
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     submit: function submit() {
       if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
           email: this.email
         });
@@ -39594,7 +39670,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     clear: function clear() {
       this.$refs.form.reset();
     }
-  }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -40699,6 +40776,431 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources\\assets\\js\\components\\pages\\resetpassword.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58fa734b", Component.options)
+  } else {
+    hotAPI.reload("data-v-58fa734b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(104);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("51482ee0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-58fa734b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resetpassword.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-58fa734b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resetpassword.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialogResetPassword: false,
+      valid: true,
+      email: "",
+      emailRules: [function (v) {
+        return !!v || "E-mail là bắt buộc";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+        );
+      }],
+      passRules: [function (v) {
+        return !!v || "Mật khẩu là bắt buộc";
+      }, function (v) {
+        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
+      }],
+      emailReset: "",
+      passReset: "",
+      passResetReset: "",
+      e2: false
+    };
+  },
+  methods: _defineProperty({
+    // forgotPassword() {
+    //   this.dialogForgotPassword = true;
+    // },
+    submit: function submit() {
+      if (this.$refs.form.validate()) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
+          emailReset: this.emailReset,
+          passReset: this.passReset,
+          passResetReset: this.passResetReset
+        });
+      }
+    },
+    clear: function clear() {
+      this.$refs.form.reset();
+    }
+  }, "submit", function submit() {
+    var _this = this;
+
+    window.axios.get("reset/password").then(function (response) {
+      _this.dialogResetPassword = true;
+      console.log("Reset_Password");
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }),
+  mounted: function mounted() {}
+});
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { attrs: { "fill-height": "", fluid: "" } },
+    [
+      _c(
+        "v-layout",
+        { attrs: { "align-center": "", "justify-center": "" } },
+        [
+          _c(
+            "v-card",
+            { attrs: { width: "300px", height: "350px" } },
+            [
+              _c(
+                "v-list",
+                { staticClass: "green accent-4 white--text text-xs-center" },
+                [_c("span", {}, [_vm._v("ĐẶT LẠI MẬT KHẨU")])]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-container",
+                [
+                  [
+                    _c(
+                      "v-form",
+                      {
+                        ref: "form",
+                        attrs: { "lazy-validation": "" },
+                        model: {
+                          value: _vm.valid,
+                          callback: function($$v) {
+                            _vm.valid = $$v
+                          },
+                          expression: "valid"
+                        }
+                      },
+                      [
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                rules: _vm.emailRules,
+                                label: "E-mail",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.emailReset,
+                                callback: function($$v) {
+                                  _vm.emailReset = $$v
+                                },
+                                expression: "emailReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                required: "",
+                                label: "Mật khẩu",
+                                rules: _vm.passRules,
+                                "append-icon": _vm.e2
+                                  ? "visibility"
+                                  : "visibility_off",
+                                "append-icon-cb": function() {
+                                  return (_vm.e2 = !_vm.e2)
+                                },
+                                type: _vm.e2 ? "password" : "text"
+                              },
+                              model: {
+                                value: _vm.passReset,
+                                callback: function($$v) {
+                                  _vm.passReset = $$v
+                                },
+                                expression: "passReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { attrs: { xs12: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                required: "",
+                                label: "Nhập lại mật khẩu",
+                                rules: _vm.passRules,
+                                "append-icon": _vm.e2
+                                  ? "visibility"
+                                  : "visibility_off",
+                                "append-icon-cb": function() {
+                                  return (_vm.e2 = !_vm.e2)
+                                },
+                                type: _vm.e2 ? "password" : "text"
+                              },
+                              model: {
+                                value: _vm.passResetReset,
+                                callback: function($$v) {
+                                  _vm.passResetReset = $$v
+                                },
+                                expression: "passResetReset"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("v-btn", { on: { click: _vm.clear } }, [
+                          _vm._v("Đóng")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { disabled: !_vm.valid },
+                            on: { click: _vm.submit }
+                          },
+                          [_vm._v("Gửi")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { persistent: "", "max-width": "290" },
+                      model: {
+                        value: _vm.dialogResetPassword,
+                        callback: function($$v) {
+                          _vm.dialogResetPassword = $$v
+                        },
+                        expression: "dialogResetPassword"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", { staticClass: "headline ml-1" }, [
+                            _vm._v("Thông báo !")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-card-text", [
+                            _vm._v("Bạn đã thay đổi mật khẩu thành công")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "green darken-1",
+                                    flat: "",
+                                    to: "/"
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.dialogResetPassword = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Đóng")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-58fa734b", module.exports)
+  }
+}
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(108)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(110)
+/* template */
+var __vue_template__ = __webpack_require__(111)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources\\assets\\js\\App.vue"
 
 /* hot reload */
@@ -40721,13 +41223,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 103 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(104);
+var content = __webpack_require__(109);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -40747,7 +41249,7 @@ if(false) {
 }
 
 /***/ }),
-/* 104 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -40761,15 +41263,37 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 
 /***/ }),
-/* 105 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41068,13 +41592,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       name: "",
       nameRules: [function (v) {
         return !!v || "Tên là bắt buộc";
+      }, function (v) {
+        return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+        );
       }],
       passLogin: "",
       passRegister: "",
       passRules: [function (v) {
         return !!v || "Mật khẩu là bắt buộc";
-      }, function (v) {
-        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
       }],
       emailRegister: "",
       emailLogin: "",
@@ -41085,7 +41610,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         );
       }],
       password: "",
-
       drawer: null,
       icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
       rows: [{
@@ -41107,7 +41631,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //    popover
       e2: false,
       e3: false
-    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _ref;
+    }, _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _defineProperty(_ref, "infoUser", false), _ref;
   },
   props: {
     source: String
@@ -41117,39 +41641,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.location = "#/search?name=" + this.search;
       this.search = "";
     },
-    submit: function submit() {
-      if (this.$refs.form.validate()) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          name: this.name,
-          email: this.email
-        });
-      }
-    },
     loginpage: function loginpage() {
       var _this = this;
 
-      window.axios.post("/login", {
-        email: this.emailLogin,
-        password: this.passLogin
-      }).then(function (response) {
-        var data = response.data;
-        _this.$store.dispatch("setToken", data.api_token);
-        _this.$store.dispatch("setUser", data.user);
-        if (data.message) {
-          _this.snackbarlogin = true;
-          _this.login = false;
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
+      if (this.$refs.form.validate()) {
+        window.axios.post("/login", {
+          email: this.emailLogin,
+          password: this.passLogin
+        }).then(function (response) {
+          var data = response.data;
+          if (data.user) {
+            _this.$store.dispatch("setToken", data.api_token);
+            _this.$store.dispatch("setUser", data.user);
+            _this.snackbarlogin = true;
+            _this.emailLogin = "";
+            _this.passLogin = "";
+            _this.login = false;
+          } else {
+            var message = "sai";
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     },
     logout: function logout() {
       var user = this.$store.state.user;
       var token = this.$store.state.token;
+      var cart = this.$store.state.cart;
       token = "";
       user = {};
+      cart = [];
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
+      this.$store.dispatch("setCart", cart);
     },
     registerUser: function registerUser() {
       var _this2 = this;
@@ -41172,6 +41697,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     totalCard: function totalCard() {
       return this.$store.state.cart.reduce(function (total, p) {
         return total + p.quantity;
+        console.log("Tổng tiền 2" + (total + p.quantity));
       }, 0);
     }
   },
@@ -41180,6 +41706,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     window.axios.get("/index").then(function (response) {
       _this3.dataApp = response.data.data;
+      console.log(_this3.dataApp);
     }).catch(function (error) {
       console.log(error);
     });
@@ -41187,7 +41714,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 });
 
 /***/ }),
-/* 106 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -41259,7 +41786,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n              0123 456 789\n            "
+                                "\n              0123 456 789 " +
+                                  _vm._s(_vm.data.message) +
+                                  "\n            "
                               )
                             ]
                           )
@@ -41304,12 +41833,19 @@ var render = function() {
                                   { attrs: { flat: "" } },
                                   [
                                     _c(
-                                      "v-list",
+                                      "v-toolbar",
                                       {
-                                        staticClass:
-                                          "green accent-4 white--text text-xs-center"
+                                        attrs: {
+                                          color: "green accent-4",
+                                          dark: ""
+                                        }
                                       },
-                                      [_c("span", {}, [_vm._v("ĐĂNG NHẬP")])]
+                                      [
+                                        _c("v-toolbar-title", [
+                                          _vm._v("Đăng nhập")
+                                        ])
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
                                     _c("v-divider"),
@@ -41337,9 +41873,8 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
-                                                    rules: _vm.emailRules,
-                                                    label: "E-mail",
-                                                    required: ""
+                                                    label: "Họ và tên",
+                                                    rules: _vm.nameRules
                                                   },
                                                   model: {
                                                     value: _vm.emailLogin,
@@ -41359,6 +41894,7 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
+                                                    rules: _vm.passRules,
                                                     required: "",
                                                     name: "input-10-2",
                                                     label: "Mật khẩu",
@@ -41384,200 +41920,21 @@ var render = function() {
                                               1
                                             ),
                                             _vm._v(" "),
-                                            _c("div", [
-                                              _vm.data.message
-                                                ? _c(
-                                                    "span",
-                                                    {
-                                                      staticClass: "red--text"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Email hoặc mật khẩu không đúng"
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e()
-                                            ]),
-                                            _vm._v(" "),
                                             _c(
-                                              "div",
+                                              "v-card-actions",
                                               [
+                                                _c("v-spacer"),
+                                                _vm._v(" "),
                                                 _c(
-                                                  "v-btn",
+                                                  "router-link",
                                                   {
                                                     attrs: {
                                                       flat: "",
                                                       to: "/forgotpassword"
                                                     }
                                                   },
-                                                  [_vm._v("Quên mật khẩu")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    staticClass:
-                                                      "text-xs-center",
-                                                    attrs: {
-                                                      disabled: !_vm.valid
-                                                    },
-                                                    on: { click: _vm.loginpage }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                        Đăng nhập\n                      "
-                                                    )
-                                                  ]
+                                                  [_vm._v(" Quên mật khẩu?")]
                                                 )
-                                              ],
-                                              1
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-menu",
-                              {
-                                attrs: {
-                                  fluid: "",
-                                  bottom: "",
-                                  "offset-y": "",
-                                  "max-width": 400,
-                                  "close-on-content-click": false
-                                },
-                                model: {
-                                  value: _vm.register,
-                                  callback: function($$v) {
-                                    _vm.register = $$v
-                                  },
-                                  expression: "register"
-                                }
-                              },
-                              [
-                                _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "white",
-                                    attrs: { slot: "activator", flat: "" },
-                                    slot: "activator"
-                                  },
-                                  [_vm._v("Đăng Ký")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card",
-                                  { attrs: { flat: "" } },
-                                  [
-                                    _c(
-                                      "v-list",
-                                      {
-                                        staticClass:
-                                          "green accent-4 white--text text-xs-center"
-                                      },
-                                      [_c("span", [_vm._v("ĐĂNG KÝ")])]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("v-divider"),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-container",
-                                      [
-                                        _c(
-                                          "v-form",
-                                          {
-                                            ref: "form",
-                                            attrs: { "lazy-validation": "" },
-                                            model: {
-                                              value: _vm.valid,
-                                              callback: function($$v) {
-                                                _vm.valid = $$v
-                                              },
-                                              expression: "valid"
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    rules: _vm.nameRules,
-                                                    label: "Tên",
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value: _vm.name,
-                                                    callback: function($$v) {
-                                                      _vm.name = $$v
-                                                    },
-                                                    expression: "name"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    rules: _vm.emailRules,
-                                                    label: "E-mail",
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value: _vm.emailRegister,
-                                                    callback: function($$v) {
-                                                      _vm.emailRegister = $$v
-                                                    },
-                                                    expression: "emailRegister"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-flex",
-                                              { attrs: { xs12: "" } },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    required: "",
-                                                    label: "Mật khẩu",
-                                                    rules: _vm.passRules,
-                                                    "append-icon": _vm.e2
-                                                      ? "visibility"
-                                                      : "visibility_off",
-                                                    "append-icon-cb": function() {
-                                                      return (_vm.e2 = !_vm.e2)
-                                                    },
-                                                    type: _vm.e2
-                                                      ? "password"
-                                                      : "text"
-                                                  },
-                                                  model: {
-                                                    value: _vm.passRegister,
-                                                    callback: function($$v) {
-                                                      _vm.passRegister = $$v
-                                                    },
-                                                    expression: "passRegister"
-                                                  }
-                                                })
                                               ],
                                               1
                                             ),
@@ -41586,26 +41943,31 @@ var render = function() {
                                               "div",
                                               [
                                                 _c(
-                                                  "v-btn",
-                                                  { attrs: { flat: "" } },
-                                                  [_vm._v("Đóng")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    attrs: {
-                                                      disabled: !_vm.valid
-                                                    },
-                                                    on: {
-                                                      click: _vm.registerUser
-                                                    }
-                                                  },
+                                                  "v-card-actions",
+                                                  { staticClass: "mt-5" },
                                                   [
-                                                    _vm._v(
-                                                      "\n                        Đăng ký\n                      "
+                                                    _c("v-spacer"),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-btn",
+                                                      {
+                                                        attrs: {
+                                                          color:
+                                                            "green accent-4",
+                                                          dark: ""
+                                                        },
+                                                        on: {
+                                                          click: _vm.loginpage
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          Đăng nhập\n                        "
+                                                        )
+                                                      ]
                                                     )
-                                                  ]
+                                                  ],
+                                                  1
                                                 )
                                               ],
                                               1
@@ -41628,38 +41990,160 @@ var render = function() {
                               "v-toolbar-title",
                               [
                                 _c(
-                                  "v-btn",
-                                  {
-                                    staticClass: "mr-0",
-                                    attrs: { flat: "", icon: "" }
-                                  },
-                                  [_c("v-icon", [_vm._v("account_circle")])],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "caption" }, [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(_vm.$store.state.user.name) +
-                                      "\n              "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "v-btn",
+                                  "v-menu",
                                   {
                                     attrs: {
-                                      flat: "",
-                                      icon: "",
-                                      color: "grey darken-1"
+                                      "close-on-content-click": false,
+                                      "nudge-width": 150,
+                                      "offset-x": ""
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.logout()
-                                      }
+                                    model: {
+                                      value: _vm.infoUser,
+                                      callback: function($$v) {
+                                        _vm.infoUser = $$v
+                                      },
+                                      expression: "infoUser"
                                     }
                                   },
-                                  [_c("v-icon", [_vm._v("exit_to_app")])],
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          slot: "activator",
+                                          flat: "",
+                                          icon: ""
+                                        },
+                                        slot: "activator"
+                                      },
+                                      [
+                                        _c("v-icon", [_vm._v("account_circle")])
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        _c(
+                                          "v-card-text",
+                                          { staticClass: "text-xs-center" },
+                                          [
+                                            _c(
+                                              "v-avatar",
+                                              { staticClass: "mt-5" },
+                                              [
+                                                _c("img", {
+                                                  staticStyle: {
+                                                    height: "110px",
+                                                    width: "110px"
+                                                  },
+                                                  attrs: {
+                                                    src:
+                                                      "/storage/images/" +
+                                                      _vm.$store.state.user
+                                                        .avatar
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-card-text", [
+                                          _c(
+                                            "h3",
+                                            { staticClass: "headline my-2" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(
+                                                    _vm.$store.state.user.name
+                                                  )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("span", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm.$store.state.user.email
+                                                )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("v-divider"),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card-text",
+                                          {},
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  outline: "",
+                                                  fab: "",
+                                                  dark: "",
+                                                  large: "",
+                                                  color: "cyan"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { dark: "" } },
+                                                  [_vm._v("edit")]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-card-actions",
+                                          [
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  flat: "",
+                                                  color: "green"
+                                                }
+                                              },
+                                              [_vm._v("Cá Nhân")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("v-spacer"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-btn",
+                                              {
+                                                attrs: {
+                                                  flat: "",
+                                                  color: "black"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.logout()
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Đăng xuất")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
                                   1
                                 )
                               ],
@@ -42600,13 +43084,13 @@ if (false) {
 }
 
 /***/ }),
-/* 107 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(113);
 
 
 
@@ -42615,10 +43099,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
     cart: [],
     favorite: [],
-    selected: [],
     token: null,
-    user: {},
-    message: null
+    user: {}
   },
   mutations: {
     SET_CART: function SET_CART(state, cart) {
@@ -42627,17 +43109,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     SET_FAVORITE: function SET_FAVORITE(state, favorite) {
       state.favorite = favorite;
     },
-    SET_SELECTED: function SET_SELECTED(state, selected) {
-      state.selected = selected;
-    },
+
     SET_TOKEN: function SET_TOKEN(state, token) {
       state.token = token;
     },
     SET_USER: function SET_USER(state, user) {
       state.user = user;
-    },
-    SET_MESSAGE: function SET_MESSAGE(state, message) {
-      state.message = message;
     }
   },
   actions: {
@@ -42653,40 +43130,25 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       commit("SET_FAVORITE", val);
       localStorage.favorite = JSON.stringify(val);
     },
-    setSelected: function setSelected(_ref3, val) {
+    setToken: function setToken(_ref3, val) {
       var commit = _ref3.commit;
-
-      commit("SET_SELECTED", val);
-      localStorage.selected = JSON.stringify(val);
-    },
-    setToken: function setToken(_ref4, val) {
-      var commit = _ref4.commit;
 
       commit("SET_TOKEN", val);
       localStorage.token = val;
-      // window.axios.defaults.headers = {
-      //   "Authorization": 'Bearer ' + val
-      // }
       window.axios.defaults.headers.common["Authorization"] = "Bearer " + val;
     },
-    setUser: function setUser(_ref5, val) {
-      var commit = _ref5.commit;
+    setUser: function setUser(_ref4, val) {
+      var commit = _ref4.commit;
 
       commit("SET_USER", val);
       localStorage.user = JSON.stringify(val);
-    },
-    setMessage: function setMessage(_ref6, val) {
-      var commit = _ref6.commit;
-
-      commit("SET_MESSAGE", val);
-      localStorage.message = val;
     }
   }
 });
 /* harmony default export */ __webpack_exports__["a"] = (store);
 
 /***/ }),
-/* 108 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43631,19 +44093,19 @@ var index_esm = {
 
 
 /***/ }),
-/* 109 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(110)
+  __webpack_require__(115)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(112)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(113)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43682,13 +44144,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 110 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(111);
+var content = __webpack_require__(116);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43708,7 +44170,7 @@ if(false) {
 }
 
 /***/ }),
-/* 111 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -43722,11 +44184,12 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 
 /***/ }),
-/* 112 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -43825,26 +44288,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.snackbar = true;
     },
     addItemfavorite: function addItemfavorite() {
-      var favorite = this.$store.state.favorite;
-      for (var index in favorite) {
-        if (favorite[index].book.id === this.book.id) {
-          if (i > -1) {
-            favorite.splice(favorite[index], 1);
-            love: false, this.$store.dispatch("setFavorite", favorite);
-            this.snackbarFav = true;
-            return;
-          }
-        }
-      }
+      var _this = this;
 
-      var itemBook = {
-        book: this.book,
-        quantity: 1,
-        love: true
-      };
-      favorite.push(itemBook);
-      this.$store.dispatch("setFavorite", favorite);
-      this.snackbarFavorite = true;
+      if (this.$store.state.token) {
+        window.axios.post("/add-favorite/" + this.book.id, {
+          id_book: this.book.id
+        }).then(function (response) {
+          _this.snackbarFavorite = true;
+        }).catch(function (error) {
+          console.log(error);
+        });
+      } else {
+        this.snackbarFavorite = true;
+      }
     },
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
@@ -43854,7 +44310,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 113 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44105,46 +44561,49 @@ var render = function() {
                                   )
                                 : _c("v-icon", { attrs: { color: "red" } }, [
                                     _vm._v("favorite")
+                                  ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-snackbar",
+                            {
+                              attrs: {
+                                timeout: _vm.timeout,
+                                top: "",
+                                color: "green accent-4"
+                              },
+                              model: {
+                                value: _vm.snackbarFavorite,
+                                callback: function($$v) {
+                                  _vm.snackbarFavorite = $$v
+                                },
+                                expression: "snackbarFavorite"
+                              }
+                            },
+                            [
+                              _vm.$store.state.token
+                                ? _c("span", [
+                                    _vm._v("Thêm vào yêu thích thành công")
+                                  ])
+                                : _c("span", [
+                                    _vm._v(
+                                      "Vui lòng đăng nhập hoặc đăng ký tài khoản"
+                                    )
                                   ]),
                               _vm._v(" "),
                               _c(
-                                "v-snackbar",
+                                "v-btn",
                                 {
-                                  attrs: {
-                                    timeout: _vm.timeout,
-                                    top: "",
-                                    color: "green accent-4"
-                                  },
-                                  model: {
-                                    value: _vm.snackbarFavorite,
-                                    callback: function($$v) {
-                                      _vm.snackbarFavorite = $$v
-                                    },
-                                    expression: "snackbarFavorite"
+                                  attrs: { flat: "", icon: "", color: "white" },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.snackbarFavorite = false
+                                    }
                                   }
                                 },
-                                [
-                                  _vm._v(
-                                    "\n                Thêm vào yêu thích thành công\n                "
-                                  ),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        flat: "",
-                                        icon: "",
-                                        color: "white"
-                                      },
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.snackbarFavorite = false
-                                        }
-                                      }
-                                    },
-                                    [_c("v-icon", [_vm._v("clear")])],
-                                    1
-                                  )
-                                ],
+                                [_c("v-icon", [_vm._v("clear")])],
                                 1
                               )
                             ],
@@ -44179,19 +44638,19 @@ if (false) {
 }
 
 /***/ }),
-/* 114 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(115)
+  __webpack_require__(120)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(117)
+var __vue_script__ = __webpack_require__(122)
 /* template */
-var __vue_template__ = __webpack_require__(118)
+var __vue_template__ = __webpack_require__(123)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44230,13 +44689,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 115 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(116);
+var content = __webpack_require__(121);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -44256,7 +44715,7 @@ if(false) {
 }
 
 /***/ }),
-/* 116 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -44270,7 +44729,7 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 
 /***/ }),
-/* 117 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44300,7 +44759,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 118 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44385,18 +44844,18 @@ if (false) {
 }
 
 /***/ }),
-/* 119 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.axios = __webpack_require__(6);
+window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 
 /***/ }),
-/* 120 */
+/* 125 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

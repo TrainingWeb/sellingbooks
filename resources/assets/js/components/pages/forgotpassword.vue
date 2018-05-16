@@ -33,7 +33,6 @@
           </v-dialog>
         </v-card-actions>
       </v-card>
-
     </v-layout>
   </v-container>
 </template>
@@ -53,11 +52,22 @@ export default {
   }),
   methods: {
     forgotPassword() {
-      this.dialogForgotPassword = true;
+      window.axios
+        .post("/sendmail", {
+          email: this.email
+        })
+        .then(response => {
+          this.dialogForgotPassword = true;
+          // window.location = "#/";
+          console.log("thanhcong");
+          this.email = "";
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     submit() {
       if (this.$refs.form.validate()) {
-        // Native form submission is not yet supported
         axios.post("/api/submit", {
           email: this.email
         });
@@ -66,9 +76,9 @@ export default {
     clear() {
       this.$refs.form.reset();
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 <style>
-
 </style>

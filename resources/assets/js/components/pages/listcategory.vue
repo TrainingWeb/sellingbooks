@@ -6,7 +6,7 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
-          <v-select :items="filter" item-text="text" return-object v-model="filter_listcategory" label="--Chọn--" single-line></v-select>
+          <v-select :items="filter" item-text="text" return-object v-model="filter_listCatagory" label="--Chọn--" single-line></v-select>
         </v-flex>
       </v-layout>
       <v-container grid-list-xs>
@@ -40,6 +40,7 @@ export default {
         disabled: true
       }
     ],
+    namepage: "Danh sách sản phẩm",
     e1: null,
     filter: [
       {
@@ -56,51 +57,43 @@ export default {
       },
       { text: "Lọc theo giá tiền giảm giá" }
     ],
-    namepage: "Danh sách sản phẩm",
     listCatagory: {},
-    filter_listcategory: "",
-    book: {},
+
     panigation: {
       page: 1,
       visible: 4,
       length: 5
-    }
+    },
+    filter_listCatagory: ""
   }),
   methods: {
-    loadauthor() {
-      window.axios
-        .get(
-          "/categories/" +
-            this.$route.query.type +
-            "?slug=" +
-            this.$route.query.type
-        )
-        .then(response => {
-          this.listCatagory = response.data.data.data;
-          console.log("đây là tác phẩm", this.listauthor);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+    next(page) {
+      this.$router.push(
+        "/list-category/?type=" +
+          this.$route.query.type +
+          "&&page=" +
+          page +
+          (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+      );
+      console.log("đưa lên url thành công");
     }
   },
   watch: {
     "$route.query.type"(val) {
       this.breadcrumbs[1].name = `${this.$route.query.type}`;
-      this.loadauthor();
     },
     "$route.query.page"(val) {
       if (val) {
         window.axios
           .get(
-            "/categories?type=" +
+            "/categories/" +
               this.$route.query.type +
-              "&page=" +
+              "?page=" +
               val +
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
-            this.search = res.data.data;
+            this.listCatagory = res.data.data;
             this.panigation.page = res.data.current_page;
             this.panigation.length = res.data.last_page;
           });
@@ -111,42 +104,48 @@ export default {
       if (val) {
         window.axios
           .get(
-            "/categories?type=" +
+            "/categories/" +
               this.$route.query.type +
-              "&sort=" +
+              "?sort=" +
               val +
               (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
           )
           .then(res => {
-            this.search = res.data.data;
+            this.listCatagory = res.data.data;
             this.panigation.page = res.data.current_page;
             this.panigation.length = res.data.last_page;
           });
       }
       console.log("chuyển axios thành công");
     },
-    filter_author(val) {
+    filter_listCatagory(val) {
       this.$router.push(
-        "/categories?type=" + this.$route.query.type + "&&sort=" + val.linkto
+        "/list-category/?type=" +
+          this.$route.query.type +
+          "&&sort=" +
+          val.linkto
       );
-    }
-  },
-  methods: {
-    next(page) {
-      // let type = this.$route.query.name;
-      this.$router.push(
-        "/categories?type=" +
-          this.$route.query.name +
-          "&&page=" +
-          page +
-          (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
-      );
-      console.log("đưa lên url thành công");
     }
   },
   mounted() {
     this.breadcrumbs[1].name = `${this.$route.query.type}`;
-    this.loadauthor();
+    window.axios
+      .get(
+        "/categories/" +
+          this.$route.query.type +
+          "?" +
+          (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") +
+          (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
+      )
+      .then(response => {
+        this.listCatagory = response.data.data;
+        // console.log(this.listCatagory);
+        this.panigation.page = response.data.current_page;
+        this.panigation.length = response.data.last_page;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

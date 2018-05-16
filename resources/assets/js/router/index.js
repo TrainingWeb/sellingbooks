@@ -14,11 +14,11 @@ import Listcategory from "../components/pages/listcategory.vue";
 import Listauthor from "../components/pages/listauthor.vue";
 import Tags from "../components/pages/tags.vue";
 import Forgotpassword from "../components/pages/forgotpassword.vue";
+import Resetpassword from "../components/pages/resetpassword.vue";
 
 //
 const router = new VueRouter({
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "home",
       component: Home
@@ -77,6 +77,11 @@ const router = new VueRouter({
       path: "/forgotpassword",
       name: "forgotpassword",
       component: Forgotpassword
+    },
+    {
+      path: "/resetpassword",
+      name: "resetpassword",
+      component: Resetpassword
     }
   ]
 });

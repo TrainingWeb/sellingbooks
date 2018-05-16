@@ -49,13 +49,14 @@
               <v-btn flat icon color="grey" @click="addItemfavorite()">
                 <v-icon v-if="!love" color="grey lighten-1">favorite</v-icon>
                 <v-icon v-else color="red">favorite</v-icon>
-                <v-snackbar :timeout="timeout" top v-model="snackbarFavorite" color="green accent-4">
-                  Thêm vào yêu thích thành công
-                  <v-btn flat icon color="white" @click.native="snackbarFavorite = false">
-                    <v-icon>clear</v-icon>
-                  </v-btn>
-                </v-snackbar>
               </v-btn>
+              <v-snackbar :timeout="timeout" top v-model="snackbarFavorite" color="green accent-4">
+                <span v-if="$store.state.token">Thêm vào yêu thích thành công</span>
+                <span v-else>Vui lòng đăng nhập hoặc đăng ký tài khoản</span>
+                <v-btn flat icon color="white" @click.native="snackbarFavorite = false">
+                  <v-icon>clear</v-icon>
+                </v-btn>
+              </v-snackbar>
             </v-card-actions>
           </div>
         </v-flex>
@@ -95,26 +96,20 @@ export default {
       this.snackbar = true;
     },
     addItemfavorite() {
-      let favorite = this.$store.state.favorite;
-      for (var index in favorite) {
-        if (favorite[index].book.id === this.book.id) {
-          if (i > -1) {
-            favorite.splice(favorite[index], 1);
-            love: false, this.$store.dispatch("setFavorite", favorite);
-            this.snackbarFav = true;
-            return;
-          }
-        }
+      if (this.$store.state.token) {
+        window.axios
+          .post("/add-favorite/" + this.book.id, {
+            id_book: this.book.id
+          })
+          .then(response => {
+            this.snackbarFavorite = true;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        this.snackbarFavorite = true;
       }
-
-      let itemBook = {
-        book: this.book,
-        quantity: 1,
-        love: true
-      };
-      favorite.push(itemBook);
-      this.$store.dispatch("setFavorite", favorite);
-      this.snackbarFavorite = true;
     },
     formatPrice(price) {
       let val = (price / 1).toFixed(0).replace(".", ",");

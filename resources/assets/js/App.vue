@@ -11,7 +11,7 @@
               </span>
               <v-icon small class="green--text text--accent-4">smartphone</v-icon>
               <span class="caption grey--text  text--darken-1">
-                0123 456 789
+                0123 456 789 {{data.message}}
               </span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -20,26 +20,29 @@
               <v-menu v-model="login" bottom offset-y :max-width="350" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng nhập</v-btn>
                 <v-card flat>
-                  <v-list class="green accent-4 white--text text-xs-center">
-                    <span class="">ĐĂNG NHẬP</span>
-                  </v-list>
+                  <v-toolbar color="green accent-4" dark>
+                    <v-toolbar-title>Đăng nhập</v-toolbar-title>
+                  </v-toolbar>
                   <v-divider></v-divider>
                   <v-container>
                     <v-form ref="form" v-model="valid" lazy-validation>
                       <v-flex xs12>
-                        <v-text-field v-model="emailLogin" :rules="emailRules" label="E-mail" required></v-text-field>
+                        <v-text-field label="Họ và tên" :rules="nameRules" v-model="emailLogin"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
-                        <v-text-field v-model="passLogin" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                        <v-text-field v-model="passLogin" :rules="passRules" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                       </v-flex>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <router-link flat to="/forgotpassword"> Quên mật khẩu?</router-link>
+                      </v-card-actions>
                       <div>
-                        <span v-if="data.message" class="red--text">Email hoặc mật khẩu không đúng</span>
-                      </div>
-                      <div>
-                        <v-btn flat to="/forgotpassword">Quên mật khẩu</v-btn>
-                        <v-btn class="text-xs-center" :disabled="!valid" @click="loginpage">
-                          Đăng nhập
-                        </v-btn>
+                        <v-card-actions class="mt-5">
+                          <v-spacer></v-spacer>
+                          <v-btn color="green accent-4" dark @click="loginpage">
+                            Đăng nhập
+                          </v-btn>
+                        </v-card-actions>
                       </div>
                     </v-form>
                   </v-container>
@@ -47,7 +50,7 @@
               </v-menu>
               <!-- Hết Đăng nhập -->
               <!-- Đăng Ký -->
-              <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
+              <!-- <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
                 <v-card flat>
                   <v-list class="green accent-4 white--text text-xs-center">
@@ -74,22 +77,41 @@
                     </v-form>
                   </v-container>
                 </v-card>
-              </v-menu>
+              </v-menu> -->
             </template>
             <template v-else>
               <v-toolbar-title>
                 <!-- <v-avatar :tile="tile" :size="avatarSize" color="grey lighten-4">
                   <img :src="'/storage/images/'+$store.state.user.avatar">
                 </v-avatar> -->
-                <v-btn flat icon class="mr-0">
-                  <v-icon>account_circle</v-icon>
-                </v-btn>
-                <span class="caption">
-                  {{$store.state.user.name}}
-                </span>
-                <v-btn flat icon color="grey darken-1" @click="logout()">
-                  <v-icon>exit_to_app</v-icon>
-                </v-btn>
+                <v-menu :close-on-content-click="false" :nudge-width="150" v-model="infoUser" offset-x>
+                  <v-btn flat icon slot="activator">
+                    <v-icon>account_circle</v-icon>
+                  </v-btn>
+                  <v-card class="text-xs-center">
+                    <v-card-text class="text-xs-center">
+                      <v-avatar class="mt-5">
+                        <img :src="'/storage/images/'+$store.state.user.avatar" style="height:110px; width:110px">
+                      </v-avatar>
+                    </v-card-text>
+                    <v-card-text>
+                      <h3 class="headline my-2"> {{$store.state.user.name}}</h3>
+                      <span> {{$store.state.user.email}}</span>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-text class="">
+                      <v-btn outline fab dark large color="cyan">
+                        <v-icon dark>edit</v-icon>
+                      </v-btn>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn flat color="green">Cá Nhân</v-btn>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="black" @click="logout()">Đăng xuất</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-menu>
+
               </v-toolbar-title>
             </template>
           </v-toolbar>
@@ -291,13 +313,15 @@ export default {
   data: () => ({
     valid: true,
     name: "",
-    nameRules: [v => !!v || "Tên là bắt buộc"],
+    nameRules: [
+      v => !!v || "Tên là bắt buộc",
+      v =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail phải hợp lệ"
+    ],
     passLogin: "",
     passRegister: "",
-    passRules: [
-      v => !!v || "Mật khẩu là bắt buộc",
-      v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
-    ],
+    passRules: [v => !!v || "Mật khẩu là bắt buộc"],
     emailRegister: "",
     emailLogin: "",
     emailRules: [
@@ -307,7 +331,6 @@ export default {
         "E-mail phải hợp lệ"
     ],
     password: "",
-
     drawer: null,
     icons: ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"],
     rows: [
@@ -356,7 +379,8 @@ export default {
     emailLogin: "",
     passLogin: "",
     data: {},
-    snackbarlogin: false
+    snackbarlogin: false,
+    infoUser: false
   }),
   props: {
     source: String
@@ -366,40 +390,42 @@ export default {
       window.location = `#/search?name=${this.search}`;
       this.search = "";
     },
-    submit() {
-      if (this.$refs.form.validate()) {
-        axios.post("/api/submit", {
-          name: this.name,
-          email: this.email
-        });
-      }
-    },
     loginpage() {
-      window.axios
-        .post("/login", {
-          email: this.emailLogin,
-          password: this.passLogin
-        })
-        .then(response => {
-          let data = response.data;
-          this.$store.dispatch("setToken", data.api_token);
-          this.$store.dispatch("setUser", data.user);
-          if (data.message) {
-            this.snackbarlogin = true;
-            this.login = false;
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      if (this.$refs.form.validate()) {
+        window.axios
+          .post("/login", {
+            email: this.emailLogin,
+            password: this.passLogin
+          })
+          .then(response => {
+            let data = response.data;
+            if (data.user) {
+              this.$store.dispatch("setToken", data.api_token);
+              this.$store.dispatch("setUser", data.user);
+              this.snackbarlogin = true;
+              this.emailLogin = "";
+              this.passLogin = "";
+              this.login = false;
+            } else {
+              let message = "sai";
+            }
+          })
+
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     },
     logout() {
       let user = this.$store.state.user;
       let token = this.$store.state.token;
+      let cart = this.$store.state.cart;
       token = "";
       user = {};
+      cart = [];
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
+      this.$store.dispatch("setCart", cart);
     },
     registerUser() {
       window.axios
@@ -423,6 +449,7 @@ export default {
     totalCard() {
       return this.$store.state.cart.reduce((total, p) => {
         return total + p.quantity;
+        console.log("Tổng tiền 2" + (total + p.quantity));
       }, 0);
     }
   },
@@ -431,6 +458,7 @@ export default {
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
+        console.log(this.dataApp);
       })
       .catch(function(error) {
         console.log(error);
