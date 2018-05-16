@@ -40889,7 +40889,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40965,7 +40965,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       email: "",
       password: "",
-      resetpassword: "",
+      confirm_password: "",
       e2: false
     };
   },
@@ -40977,18 +40977,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       if (this.$refs.form.validate()) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/submit", {
-          email: this.email,
+        window.axios.post("/reset/password/" + this.$route.query.token, {
+          email: this.$route.query.email,
           password: this.password,
-          resetpassword: this.resetpassword
+          confirm_password: this.confirm_password
+        }).then(function (response) {
+          console.log(_this.$route.query.token);
+          _this.dialogResetPassword = true;
+          console.log("Reset_Password");
+          _this.data = response.data;
+          // console.log(response.data);
+          _this.$store.dispatch("setToken", _this.data.api_token);
+          _this.$store.dispatch("setUser", _this.data.user);
+        }).catch(function (error) {
+          console.log(error);
         });
       }
-      window.axios.get("reset/password").then(function (response) {
-        _this.dialogResetPassword = true;
-        console.log("Reset Password");
-      }).catch(function (error) {
-        console.log(error);
-      });
     },
     clear: function clear() {
       this.$refs.form.reset();
@@ -41050,15 +41054,10 @@ var render = function() {
                             _c("v-text-field", {
                               attrs: {
                                 rules: _vm.emailRules,
+                                value: _vm.$route.query.email,
+                                disabled: "",
                                 label: "E-mail",
                                 required: ""
-                              },
-                              model: {
-                                value: _vm.email,
-                                callback: function($$v) {
-                                  _vm.email = $$v
-                                },
-                                expression: "email"
                               }
                             })
                           ],
@@ -41112,11 +41111,11 @@ var render = function() {
                                 type: _vm.e2 ? "password" : "text"
                               },
                               model: {
-                                value: _vm.resetpassword,
+                                value: _vm.confirm_password,
                                 callback: function($$v) {
-                                  _vm.resetpassword = $$v
+                                  _vm.confirm_password = $$v
                                 },
-                                expression: "resetpassword"
+                                expression: "confirm_password"
                               }
                             })
                           ],
@@ -41127,14 +41126,9 @@ var render = function() {
                           _vm._v("Đóng")
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { disabled: !_vm.valid },
-                            on: { click: _vm.submit }
-                          },
-                          [_vm._v("Gửi")]
-                        )
+                        _c("v-btn", { on: { click: _vm.submit } }, [
+                          _vm._v("Gửi")
+                        ])
                       ],
                       1
                     )
@@ -45078,7 +45072,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test:8080";
+var host = "http://selling-books.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

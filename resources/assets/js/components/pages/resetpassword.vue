@@ -10,16 +10,16 @@
           <template>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-flex xs12>
-                <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                <v-text-field :rules="emailRules" :value="$route.query.email" disabled label="E-mail" required></v-text-field>
               </v-flex>
               <v-flex xs12>
                 <v-text-field v-model="password" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="resetpassword" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-btn @click="clear">Đóng</v-btn>
-              <v-btn :disabled="!valid" @click="submit">Gửi</v-btn>
+              <v-btn @click="submit">Gửi</v-btn>
             </v-form>
           </template>
         </v-container>
@@ -59,7 +59,7 @@ export default {
     ],
     email: "",
     password: "",
-    resetpassword: "",
+    confirm_password: "",
     e2: false
   }),
   methods: {
@@ -68,25 +68,31 @@ export default {
     // },
     submit() {
       if (this.$refs.form.validate()) {
-        axios.post("/api/submit", {
-          email: this.email,
-          password: this.password,
-          resetpassword: this.resetpassword
-        });
-      }
       window.axios
-        .get("reset/password")
+        .post("/reset/password/" + this.$route.query.token,{
+          email : this.$route.query.email,
+          password : this.password,
+          confirm_password : this.confirm_password
+        })
         .then(response => {
+          console.log(this.$route.query.token)
           this.dialogResetPassword = true;
-          console.log("Reset Password");
+          console.log("Reset_Password");
+          this.data = response.data;
+          // console.log(response.data);
+          this.$store.dispatch("setToken", this.data.api_token);
+          this.$store.dispatch("setUser", this.data.user);
         })
         .catch(function(error) {
           console.log(error);
         });
+        
+      }
     },
     clear() {
       this.$refs.form.reset();
-    }
+    },
+  
   },
   mounted() {}
 };
