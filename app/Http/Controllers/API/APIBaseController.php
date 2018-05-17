@@ -109,6 +109,30 @@ class APIBaseController extends Controller
         return response()->json($books);
     }
 
+    public function sortt($result, $data)
+    {
+        switch (request()->sort) {
+            case 'atoz':
+                $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name')->paginate(18);
+                break;
+            case 'atozdesc':
+                $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('name', 'DESC')->paginate(18);
+                break;
+            case 'price';
+                $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price')->paginate(18);
+                break;
+            case 'pricedesc';
+                $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->orderBy('price', 'DESC')->paginate(18);
+                break;
+            default:
+                $books = $result->with('author')->with('storage')->whereIn('highlights', [0, 1])->paginate(18);
+        }
+        if (count($books) < 1) {
+            return response()->json(['Message'=>'Found 0 books', 'data'=>$data]);
+        }
+        return response()->json(['books'=>$books, 'data'=>$data]);
+    }
+
     public function sendData($result)
     {
         $response = [
