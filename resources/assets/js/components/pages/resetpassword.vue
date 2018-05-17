@@ -16,7 +16,7 @@
                 <v-text-field v-model="password" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="[comparePasswords]" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="comparePasswords" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-card-actions class="ml-5">
                 <v-btn @click="clear">Đóng</v-btn>
@@ -30,7 +30,9 @@
           <v-dialog v-model="dialogResetPassword" persistent max-width="290">
             <v-card>
               <v-card-title class="headline ml-1 ">Thông báo !</v-card-title>
-              <v-card-text>Bạn đã thay đổi mật khẩu thành công</v-card-text>
+               <v-card-text v-if="status==false">Mã của bạn đã hết hạn hoặc không đúng</v-card-text>
+              <v-card-text v-else>Bạn đã thay đổi mật khẩu thành công
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" flat @click.native="dialogResetPassword = false" to="/">Đóng</v-btn>
@@ -57,13 +59,21 @@ export default {
     ],
     passRules: [
       v => !!v || "Mật khẩu là bắt buộc",
-      v => v.length >= 8 || "Nhập ít nhất 8 ký tự"
+      v => v.length >= 6 || "Nhập ít nhất 6 ký tự"
     ],
     email: "",
     password: "",
     confirm_password: "",
-    e2: false
+    e2: false,
+    status:true,
   }),
+  computed: {
+    comparePasswords() {
+      return this.password !== this.confirm_password
+        ? [`Mật khẩu chưa khớp`]
+        : [];
+    }
+  },
   methods: {
     // forgotPassword() {
     //   this.dialogForgotPassword = true;
@@ -77,11 +87,11 @@ export default {
             confirm_password: this.confirm_password
           })
           .then(response => {
-            console.log(this.$route.query.token);
+            console.log(
+              response.data.status)
+              this.status=response.data.status
             this.dialogResetPassword = true;
-            console.log("Reset_Password");
             this.data = response.data;
-            // console.log(response.data);
             this.$store.dispatch("setToken", this.data.api_token);
             this.$store.dispatch("setUser", this.data.user);
           })
@@ -92,13 +102,6 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
-    }
-  },
-  computed: {
-    comparePasswords() {
-      return this.password !== this.confirm_password
-        ? `Mật khẩu chưa khớp`
-        : ``;
     }
   }
 };

@@ -27,14 +27,14 @@
                   <v-container>
                     <v-form ref="formlogin" v-model="valid" lazy-validation>
                       <v-flex xs12>
-                        <v-text-field label="Họ và tên" :rules="nameRules" v-model="emailLogin"></v-text-field>
+                        <v-text-field label="E-mail" :rules="emailRules" v-model="emailLogin"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
                         <v-text-field v-model="passLogin" :rules="passRules" required name="input-10-2" label="Mật khẩu" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                       </v-flex>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <router-link flat to="/forgotpassword"> Quên mật khẩu?</router-link>
+                        <router-link flat to="/forgotpassword" style="text-decoration:none"> Quên mật khẩu?</router-link>
                       </v-card-actions>
                       <div>
                         <v-card-actions class="mt-4">
@@ -93,10 +93,14 @@
                   </v-btn>
                   <v-card class="text-xs-center">
                     <v-card-text class="text-xs-center">
-                      <v-avatar class="mt-5">
+                      <v-avatar class="mt-5" v-if="$store.state.user.avatar">
                         <img :src="'/storage/images/'+$store.state.user.avatar" style="height:110px; width:110px">
                       </v-avatar>
+                      <v-avatar class="mt-5" v-else>
+                        <img :src="'/storage/images/author.jpg'" style="height:110px; width:110px">
+                      </v-avatar>
                     </v-card-text>
+
                     <v-card-text>
                       <h3 class="headline my-2"> {{$store.state.user.name}}</h3>
                       <span> {{$store.state.user.email}}</span>

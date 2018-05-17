@@ -34381,6 +34381,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -34556,6 +34559,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-container",
+        { staticClass: "mt-2" },
         [
           _c(
             "v-layout",
@@ -34654,7 +34658,7 @@ var render = function() {
                                                         "div",
                                                         {
                                                           staticClass:
-                                                            "grey--text accent-4 body-2 py-2"
+                                                            "grey--text accent-4 body-2 py-3"
                                                         },
                                                         [
                                                           _c("span", [
@@ -34954,7 +34958,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                              Thêm vào giỏ hàng thành công\n                              "
+                                                                    "\n                              Thêm vào yêu thích thành công\n                              "
                                                                   ),
                                                                   _c(
                                                                     "v-btn",
@@ -35111,6 +35115,7 @@ var render = function() {
                   _c(
                     "v-tabs",
                     {
+                      staticClass: "my-4",
                       attrs: {
                         "icons-and-text": "",
                         dark: "",
@@ -35207,9 +35212,24 @@ var render = function() {
                                             attrs: { avatar: "" }
                                           },
                                           [
-                                            _c("v-list-tile-avatar", [
-                                              _c("img", { attrs: { src: "#" } })
-                                            ]),
+                                            item.user.avatar
+                                              ? _c("v-list-tile-avatar", [
+                                                  _c("img", {
+                                                    attrs: {
+                                                      src:
+                                                        "/storage/images/" +
+                                                        item.user.avatar
+                                                    }
+                                                  })
+                                                ])
+                                              : _c("v-list-tile-avatar", [
+                                                  _c("img", {
+                                                    attrs: {
+                                                      src:
+                                                        "/storage/images/author.jpg"
+                                                    }
+                                                  })
+                                                ]),
                                             _vm._v(" "),
                                             _c(
                                               "v-list-tile-content",
@@ -35375,7 +35395,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "my-5", attrs: { "grid-list-xs": "" } },
+                    { staticClass: "my-3", attrs: { "grid-list-xs": "" } },
                     [
                       _c(
                         "div",
@@ -35611,12 +35631,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35750,11 +35764,14 @@ var render = function() {
                                     "div",
                                     {
                                       staticClass:
-                                        "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
+                                        "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2",
+                                      staticStyle: {
+                                        "border-left": "2px solid red"
+                                      }
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
+                                        "\n                  Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                "
                                       )
                                     ]
                                   )
@@ -35780,209 +35797,174 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "div",
+        "v-container",
+        {
+          staticClass: "mt-2",
+          staticStyle: { "min-height": "0" },
+          attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+        },
         [
           _c(
-            "v-container",
+            "v-card",
             {
-              staticStyle: { "min-height": "0" },
-              attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+              staticClass: "white--text",
+              attrs: { flat: "", color: "grey lighten-4" }
             },
             [
               _c(
-                "v-layout",
-                { attrs: { row: "", wrap: "" } },
+                "v-container",
+                { attrs: { "grid-list-lg": "" } },
                 [
                   _c(
-                    "v-flex",
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
                     [
                       _c(
-                        "v-card",
-                        {
-                          staticClass: "white--text",
-                          attrs: { flat: "", color: "grey lighten-4" }
-                        },
+                        "v-flex",
+                        { attrs: { xs12: "", md5: "", "mt-2": "" } },
                         [
                           _c(
-                            "v-container",
-                            { attrs: { "grid-list-lg": "" } },
+                            "div",
                             [
                               _c(
-                                "v-layout",
-                                { attrs: { row: "", wrap: "" } },
+                                "div",
+                                {
+                                  staticClass: "title grey--text text--darken-3"
+                                },
+                                [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "grey--text text--darken-2 py-3"
+                                },
+                                [
+                                  _vm._v(
+                                    "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mx-0 green accent-4 white--text"
+                                },
+                                [_vm._v(" Tham gia với chúng tôi")]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md7: "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
                                 [
                                   _c(
-                                    "v-flex",
-                                    {
-                                      attrs: { xs12: "", md5: "", "mt-2": "" }
-                                    },
+                                    "v-card",
                                     [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-1.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
-                                        "div",
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
                                         [
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "title grey--text text--darken-3"
-                                            },
-                                            [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "grey--text text--darken-2 py-3"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass:
-                                                "mx-0 green accent-4 white--text"
-                                            },
-                                            [_vm._v(" Tham gia với chúng tôi")]
-                                          )
+                                          _c("v-spacer")
                                         ],
                                         1
                                       )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
+                                [
                                   _c(
-                                    "v-flex",
-                                    { attrs: { xs12: "", md7: "" } },
+                                    "v-card",
                                     [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-3.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
-                                        "v-layout",
-                                        { attrs: { row: "", wrap: "" } },
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
                                         [
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-1.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-3.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
+                                          _c("v-spacer")
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
+                                [
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-4.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-4.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          )
+                                          _c("v-spacer")
                                         ],
                                         1
                                       )
@@ -39111,7 +39093,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: "/list-products",
         disabled: true
       }],
-      namepage: "Danh sách sản phẩm",
+      namepage: "Danh mục sản phẩm",
       e1: null,
       filter: [{
         text: "Lọc theo tên A-Z",
@@ -39128,9 +39110,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       panigation: {
         page: 1,
         visible: 4,
-        length: 5
+        length: null
       },
-      filter_listCatagory: ""
+      filter_listCatagory: "",
+      category: ""
     };
   },
   methods: {
@@ -39143,11 +39126,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     "$route.query.type": function $routeQueryType(val) {
       var _this = this;
 
-      this.breadcrumbs[1].name = "" + this.$route.query.type;
       window.axios.get("/categories/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-        _this.listCatagory = response.data.books.data;
-        _this.panigation.page = response.data.books.current_page;
-        _this.panigation.length = response.data.books.last_page;
+        if (!res.data.Message) {
+          _this.listCatagory = res.data.books;
+          _this.category = res.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.category;
+          _this.panigation.page = res.data.books.current_page;
+          _this.panigation.length = res.data.books.last_page;
+        } else {
+          console.log(res.data.data.name);
+          _this.listCatagory = res.data.books;
+          _this.category = res.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.category;
+        }
       });
     },
     "$route.query.page": function $routeQueryPage(val) {
@@ -39155,7 +39146,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/categories/" + this.$route.query.type + "?page=" + (this.$route.query.page ? "&&page=" + this.$route.query.page : "") + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-          _this2.listCatagory = res.data.books.data;
+          window.scrollTo(0, 0);
+          _this2.listCatagory = res.data.books;
           _this2.panigation.page = res.data.books.current_page;
           _this2.panigation.length = res.data.books.last_page;
         });
@@ -39166,7 +39158,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/categories/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-          _this3.listCatagory = res.data.books.data;
+          _this3.listCatagory = res.data.books;
           _this3.panigation.page = res.data.books.current_page;
           _this3.panigation.length = res.data.books.last_page;
         });
@@ -39181,10 +39173,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this4 = this;
 
     this.breadcrumbs[1].name = "" + this.$route.query.type;
-    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-      _this4.listCatagory = response.data.books.data;
-      _this4.panigation.page = response.data.books.current_page;
-      _this4.panigation.length = response.data.books.last_page;
+    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+      if (!res.data.Message) {
+        _this4.listCatagory = res.data.books;
+        console.log(response.data.Message);
+        _this4.category = res.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.category;
+        _this4.panigation.page = res.data.books.current_page;
+        _this4.panigation.length = res.data.books.last_page;
+      } else {
+        _this4.listCatagory = res.data.books;
+        _this4.category = res.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.category;
+      }
     }).catch(function (error) {
       console.log(error);
     });
@@ -39257,7 +39258,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     { attrs: { row: "", wrap: "" } },
-                    _vm._l(_vm.listCatagory, function(item, index) {
+                    _vm._l(_vm.listCatagory.data, function(item, index) {
                       return _c(
                         "v-flex",
                         {
@@ -39300,7 +39301,7 @@ var render = function() {
             2
           )
         : _c("v-container", [
-            _c("h1", { staticClass: "py-5" }, [
+            _c("h1", { staticClass: "py-5 text-xs-center" }, [
               _vm._v("Không có tác phẩm nào thuộc danh mục này")
             ])
           ])
@@ -41360,7 +41361,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -41373,6 +41374,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
 //
 //
 //
@@ -41434,13 +41437,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       passRules: [function (v) {
         return !!v || "Mật khẩu là bắt buộc";
       }, function (v) {
-        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
+        return v.length >= 6 || "Nhập ít nhất 6 ký tự";
       }],
       email: "",
       password: "",
       confirm_password: "",
-      e2: false
+      e2: false,
+      status: true
     };
+  },
+  computed: {
+    comparePasswords: function comparePasswords() {
+      return this.password !== this.confirm_password ? ["M\u1EADt kh\u1EA9u ch\u01B0a kh\u1EDBp"] : [];
+    }
   },
   methods: {
     // forgotPassword() {
@@ -41455,11 +41464,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           password: this.password,
           confirm_password: this.confirm_password
         }).then(function (response) {
-          console.log(_this.$route.query.token);
+          console.log(response.data.status);
+          _this.status = response.data.status;
           _this.dialogResetPassword = true;
-          console.log("Reset_Password");
           _this.data = response.data;
-          // console.log(response.data);
           _this.$store.dispatch("setToken", _this.data.api_token);
           _this.$store.dispatch("setUser", _this.data.user);
         }).catch(function (error) {
@@ -41469,11 +41477,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     clear: function clear() {
       this.$refs.form.reset();
-    }
-  },
-  computed: {
-    comparePasswords: function comparePasswords() {
-      return this.password !== this.confirm_password ? "M\u1EADt kh\u1EA9u ch\u01B0a kh\u1EDBp" : "";
     }
   }
 });
@@ -41584,7 +41587,7 @@ var render = function() {
                               attrs: {
                                 required: "",
                                 label: "Nhập lại mật khẩu",
-                                rules: [_vm.comparePasswords],
+                                rules: _vm.comparePasswords,
                                 "append-icon": _vm.e2
                                   ? "visibility"
                                   : "visibility_off",
@@ -41659,9 +41662,15 @@ var render = function() {
                             [_vm._v("Thông báo !")]
                           ),
                           _vm._v(" "),
-                          _c("v-card-text", [
-                            _vm._v("Bạn đã thay đổi mật khẩu thành công")
-                          ]),
+                          _vm.status == false
+                            ? _c("v-card-text", [
+                                _vm._v("Mã của bạn đã hết hạn hoặc không đúng")
+                              ])
+                            : _c("v-card-text", [
+                                _vm._v(
+                                  "Bạn đã thay đổi mật khẩu thành công\n            "
+                                )
+                              ]),
                           _vm._v(" "),
                           _c(
                             "v-card-actions",
@@ -41817,6 +41826,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -42435,8 +42448,8 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
-                                                    label: "Họ và tên",
-                                                    rules: _vm.nameRules
+                                                    label: "E-mail",
+                                                    rules: _vm.emailRules
                                                   },
                                                   model: {
                                                     value: _vm.emailLogin,
@@ -42490,6 +42503,9 @@ var render = function() {
                                                 _c(
                                                   "router-link",
                                                   {
+                                                    staticStyle: {
+                                                      "text-decoration": "none"
+                                                    },
                                                     attrs: {
                                                       flat: "",
                                                       to: "/forgotpassword"
@@ -42781,24 +42797,41 @@ var render = function() {
                                           "v-card-text",
                                           { staticClass: "text-xs-center" },
                                           [
-                                            _c(
-                                              "v-avatar",
-                                              { staticClass: "mt-5" },
-                                              [
-                                                _c("img", {
-                                                  staticStyle: {
-                                                    height: "110px",
-                                                    width: "110px"
-                                                  },
-                                                  attrs: {
-                                                    src:
-                                                      "/storage/images/" +
-                                                      _vm.$store.state.user
-                                                        .avatar
-                                                  }
-                                                })
-                                              ]
-                                            )
+                                            _vm.$store.state.user.avatar
+                                              ? _c(
+                                                  "v-avatar",
+                                                  { staticClass: "mt-5" },
+                                                  [
+                                                    _c("img", {
+                                                      staticStyle: {
+                                                        height: "110px",
+                                                        width: "110px"
+                                                      },
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/images/" +
+                                                          _vm.$store.state.user
+                                                            .avatar
+                                                      }
+                                                    })
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "v-avatar",
+                                                  { staticClass: "mt-5" },
+                                                  [
+                                                    _c("img", {
+                                                      staticStyle: {
+                                                        height: "110px",
+                                                        width: "110px"
+                                                      },
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/images/author.jpg"
+                                                      }
+                                                    })
+                                                  ]
+                                                )
                                           ],
                                           1
                                         ),
@@ -45674,7 +45707,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbooks.local";
+var host = "http://sellingbookstore.test";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

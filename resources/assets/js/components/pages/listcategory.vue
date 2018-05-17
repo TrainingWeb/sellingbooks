@@ -11,7 +11,7 @@
       </v-layout>
       <v-container grid-list-xs>
         <v-layout row wrap>
-          <v-flex xs12 md6 lg4 v-for="(item,index) in listCatagory" :key="`khoa${index}`">
+          <v-flex xs12 md6 lg4 v-for="(item,index) in listCatagory.data" :key="`khoa${index}`">
             <book-item :book="item"></book-item>
           </v-flex>
         </v-layout>
@@ -23,7 +23,7 @@
       </template>
     </v-container>
     <v-container v-else>
-      <h1 class="py-5">Không có tác phẩm nào thuộc danh mục này</h1>
+      <h1 class="py-5 text-xs-center">Không có tác phẩm nào thuộc danh mục này</h1>
     </v-container>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
         disabled: true
       }
     ],
-    namepage: "Danh sách sản phẩm",
+    namepage: "Danh mục sản phẩm",
     e1: null,
     filter: [
       {
@@ -65,9 +65,10 @@ export default {
     panigation: {
       page: 1,
       visible: 4,
-      length: 5
+      length: null
     },
-    filter_listCatagory: ""
+    filter_listCatagory: "",
+    category: ""
   }),
   methods: {
     next(page) {
@@ -83,7 +84,6 @@ export default {
   },
   watch: {
     "$route.query.type"(val) {
-      this.breadcrumbs[1].name = `${this.$route.query.type}`;
       window.axios
         .get(
           "/categories/" +
@@ -93,9 +93,18 @@ export default {
             (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
         )
         .then(res => {
-        this.listCatagory = response.data.books.data;
-        this.panigation.page = response.data.books.current_page;
-        this.panigation.length = response.data.books.last_page;
+          if (!res.data.Message) {
+            this.listCatagory = res.data.books;
+            this.category = res.data.data.name;
+            this.breadcrumbs[1].name = `${this.category}`;
+            this.panigation.page = res.data.books.current_page;
+            this.panigation.length = res.data.books.last_page;
+          } else {
+            console.log(res.data.data.name);
+            this.listCatagory = res.data.books;
+            this.category = res.data.data.name;
+            this.breadcrumbs[1].name = `${this.category}`;
+          }
         });
     },
     "$route.query.page"(val) {
@@ -111,7 +120,8 @@ export default {
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
-            this.listCatagory = res.data.books.data;
+            window.scrollTo(0, 0);
+            this.listCatagory = res.data.books;
             this.panigation.page = res.data.books.current_page;
             this.panigation.length = res.data.books.last_page;
           });
@@ -128,7 +138,7 @@ export default {
               (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
           )
           .then(res => {
-            this.listCatagory = res.data.books.data;
+            this.listCatagory = res.data.books;
             this.panigation.page = res.data.books.current_page;
             this.panigation.length = res.data.books.last_page;
           });
@@ -154,10 +164,19 @@ export default {
           (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") +
           (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
       )
-      .then(response => {
-        this.listCatagory = response.data.books.data;
-        this.panigation.page = response.data.books.current_page;
-        this.panigation.length = response.data.books.last_page;
+      .then(res => {
+        if (!res.data.Message) {
+          this.listCatagory = res.data.books;
+          console.log(response.data.Message);
+          this.category = res.data.data.name;
+          this.breadcrumbs[1].name = `${this.category}`;
+          this.panigation.page = res.data.books.current_page;
+          this.panigation.length = res.data.books.last_page;
+        } else {
+          this.listCatagory = res.data.books;
+          this.category = res.data.data.name;
+          this.breadcrumbs[1].name = `${this.category}`;
+        }
       })
       .catch(function(error) {
         console.log(error);
