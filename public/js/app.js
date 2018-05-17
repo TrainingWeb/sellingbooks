@@ -37230,13 +37230,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialogDel: false,
+      snackbarlogin: false,
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37278,6 +37277,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     formatPrice: function formatPrice(price) {
       var val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    checkout: function checkout() {
+      if (!this.$store.state.token) {
+        this.snackbarlogin = true;
+      } else {
+        window.location = "#/check-out";
+      }
     }
   },
   computed: {
@@ -37607,15 +37613,43 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      attrs: {
-                        dark: "",
-                        color: "green accent-4",
-                        to: "/check-out"
-                      }
+                      attrs: { dark: "", color: "green accent-4" },
+                      on: { click: _vm.checkout }
                     },
                     [_vm._v("\n          thanh toán\n        ")]
                   )
                 ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: { timeout: 4000, top: "", color: "green accent-4" },
+              model: {
+                value: _vm.snackbarlogin,
+                callback: function($$v) {
+                  _vm.snackbarlogin = $$v
+                },
+                expression: "snackbarlogin"
+              }
+            },
+            [
+              _vm._v("\n     Vui lòng hoặc đăng ký tài khoản\n    "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", icon: "", color: "white" },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.snackbarlogin = false
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("clear")])],
                 1
               )
             ],
@@ -39054,6 +39088,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -39086,14 +39121,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
 
       namepage: "Tác giả",
-      listauthor: {}
+      listauthor: {},
+      author: ""
     };
   },
   watch: {
     "$route.query.type": function $routeQueryType(val) {
       var _this = this;
 
-      this.breadcrumbs[1].name = "" + this.$route.query.type;
+      this.breadcrumbs[1].name = "" + this.author;
       window.axios.get("/authors/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (response) {
         _this.listauthor = response.data.data;
         _this.panigation.page = response.data.current_page;
@@ -39106,11 +39142,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       if (val) {
-        window.axios.get("/authors/" + this.$route.query.type + "?page=" + (this.$route.query.page ? "&&page=" + this.$route.query.page : "") + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+        window.axios.get("/authors/" + this.$route.query.type + "?page=" + (this.$route.query.page ? "&&page=" + this.$route.query.page : "") + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (response) {
           window.scrollTo(0, 0);
-          _this2.listauthor = res.data.data;
-          _this2.panigation.page = res.data.current_page;
-          _this2.panigation.length = res.data.last_page;
+          _this2.listauthor = response.data.books.data;
+          _this2.panigation.page = response.data.books.current_page;
+          _this2.panigation.length = response.data.books.last_page;
         });
       }
       console.log("chuyển axios thành công");
@@ -39122,9 +39158,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/authors/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-          _this3.listauthor = response.data.data;
-          _this3.panigation.page = response.data.current_page;
-          _this3.panigation.length = response.data.last_page;
+          _this3.listauthor = response.data.books.data;
+          _this3.panigation.page = response.data.books.current_page;
+          _this3.panigation.length = response.data.books.last_page;
         });
       }
     },
@@ -39143,12 +39179,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     var _this4 = this;
 
-    this.breadcrumbs[1].name = "" + this.$route.query.type;
     window.axios.get("/authors/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-      _this4.listauthor = response.data.data;
-      console.log(_this4.listauthor);
-      _this4.panigation.page = response.data.current_page;
-      _this4.panigation.length = response.data.last_page;
+      _this4.listauthor = response.data.books.data;
+      _this4.author = response.data.data.name;
+      _this4.breadcrumbs[1].name = "" + _this4.author;
+      console.log(response.data.books);
+      _this4.author = response.data.data.name;
+      _this4.panigation.page = response.data.books.current_page;
+      _this4.panigation.length = response.data.books.last_page;
     }).catch(function (error) {
       console.log(error);
     });
@@ -43355,7 +43393,7 @@ var render = function() {
           }
         },
         [
-          _vm.$store.state.api_token
+          _vm.$store.state.token
             ? _c("span", [_vm._v(" Đăng nhập thành công")])
             : _c("span", [_vm._v(" Email hoặc mật khẩu không đúng")]),
           _vm._v(" "),

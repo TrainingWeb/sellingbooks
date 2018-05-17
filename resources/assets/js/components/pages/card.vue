@@ -62,24 +62,22 @@
           </td>
         </template>
       </v-data-table>
-      <!-- <v-layout row wrap class="py-4 border-top">
-        <v-flex xs6>
-          <strong class="title" color="black">Tổng tiền</strong>
-        </v-flex>
-        <v-flex xs4 text-xs-right>
-          <strong color="black">{{formatPrice(total)}} đ</strong>
-        </v-flex>
-      </v-layout> -->
       <v-layout row wrap class="pt-3 border-top">
         <v-flex xs6>
           <v-btn dark color="green accent-4" to="/"> Tiếp tục mua hàng</v-btn>
         </v-flex>
         <v-flex xs6 text-xs-right>
-          <v-btn dark color="green accent-4" to="/check-out">
+          <v-btn dark color="green accent-4" @click="checkout">
             thanh toán
           </v-btn>
         </v-flex>
       </v-layout>
+      <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
+       Vui lòng hoặc đăng ký tài khoản
+      <v-btn flat icon color="white" @click.native="snackbarlogin = false">
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
     </v-container>
   </div>
 </template>
@@ -88,6 +86,7 @@
 export default {
   data: () => ({
     dialogDel: false,
+    snackbarlogin: false,
     breadcrumbs: [
       {
         name: "Trang Chủ",
@@ -139,6 +138,14 @@ export default {
     formatPrice(price) {
       let val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    checkout(){
+      if(!this.$store.state.token){
+          this.snackbarlogin = true  
+      }
+      else{
+        window.location="#/check-out"
+      }
     }
   },
   computed: {

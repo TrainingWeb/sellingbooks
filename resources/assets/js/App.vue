@@ -302,7 +302,7 @@
       </v-card>
     </v-footer>
     <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
-      <span v-if="$store.state.api_token"> Đăng nhập thành công</span>
+      <span v-if="$store.state.token"> Đăng nhập thành công</span>
       <span v-else> Email hoặc mật khẩu không đúng</span>
       <v-btn flat icon color="white" @click.native="snackbarlogin = false">
         <v-icon>clear</v-icon>
