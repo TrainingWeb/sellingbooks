@@ -488,7 +488,7 @@ class PageController extends APIBaseController
         $sub5m = Carbon::now()->subMinutes(5);
         $resetpassword = ResetPassword::where('token', $token)->whereBetween('created_at', [$sub5m, $nowtime])->first();
         if (!$resetpassword) {
-            return $this->sendMessage('Your token has expired, please send another request reset mail !');
+            return response()->json(['status'=>false,'Message'=>'Your token has expired, please send another request reset mail !']);
         }
         if ($request->email !== $resetpassword->email) {
             return $this->sendMessage('This email have no request reset password !');
