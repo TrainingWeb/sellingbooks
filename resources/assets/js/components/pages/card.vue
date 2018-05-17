@@ -74,8 +74,13 @@
       </v-layout>
       <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
         <span v-if="!$store.state.token"> Vui lòng hoặc đăng ký tài khoản</span>
-        <span v-else-if="!$store.state.card"> Giỏ hàng của bạn trống</span>
         <v-btn flat icon color="white" @click.native="snackbarlogin = false">
+          <v-icon>clear</v-icon>
+        </v-btn>
+      </v-snackbar>
+      <v-snackbar :timeout="4000" top v-model="snackbarloginCheck" color="green accent-4">
+          Giỏ hàng trống
+        <v-btn flat icon color="white" @click.native="snackbarloginCheck = false">
           <v-icon>clear</v-icon>
         </v-btn>
       </v-snackbar>
@@ -88,6 +93,7 @@ export default {
   data: () => ({
     dialogDel: false,
     snackbarlogin: false,
+    snackbarloginCheck: false,
     breadcrumbs: [
       {
         name: "Trang Chủ",
@@ -143,13 +149,14 @@ export default {
     checkout() {
       if (!this.$store.state.token) {
         this.snackbarlogin = true;
+      } 
+      else if (this.$store.state.cart.length === 0) {
+          this.snackbarloginCheck = true;
       }
-      if (!this.$store.state.card) {
-        this.snackbarlogin = true;
-      } else {
-        window.location = "#/check-out";
+      else
+      {
+        window.location = "#/check-out";}
       }
-    }
   },
   computed: {
     total() {
