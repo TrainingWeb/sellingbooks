@@ -45289,7 +45289,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+var host = "http://selling-books.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 
