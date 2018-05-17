@@ -93,9 +93,9 @@ export default {
             (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
         )
         .then(res => {
-          this.listCatagory = res.data.data;
-          this.panigation.page = res.data.current_page;
-          this.panigation.length = res.data.last_page;
+        this.listCatagory = response.data.books.data;
+        this.panigation.page = response.data.books.current_page;
+        this.panigation.length = response.data.books.last_page;
         });
     },
     "$route.query.page"(val) {
@@ -156,7 +156,6 @@ export default {
       )
       .then(response => {
         this.listCatagory = response.data.books.data;
-        // console.log(this.listCatagory);
         this.panigation.page = response.data.books.current_page;
         this.panigation.length = response.data.books.last_page;
       })
