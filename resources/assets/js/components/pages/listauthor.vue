@@ -11,7 +11,7 @@
       </v-layout>
       <v-container grid-list-xs>
         <v-layout row wrap>
-          <v-flex xs12 md6 lg4 v-for="(item,index) in listauthor" :key="`khoaauthor-${index}`">
+          <v-flex xs12 md6 lg4 v-for="(item,index) in listauthor.data" :key="`khoaauthor-${index}`">
             <book-item :book="item"></book-item>
           </v-flex>
         </v-layout>
@@ -70,11 +70,11 @@ export default {
 
     namepage: "Tác giả",
     listauthor: {},
-    author:""
+    author:"",
   }),
   watch: {
     "$route.query.type"(val) {
-      this.breadcrumbs[1].name = `${this.author}`;
+     
       window.axios
         .get(
           "/authors/" +
@@ -84,9 +84,20 @@ export default {
             (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
         )
         .then(response => {
-          this.listauthor = response.data.data;
-          this.panigation.page = response.data.current_page;
-          this.panigation.length = response.data.last_page;
+          
+         if(!response.data.Message){
+            this.listauthor = response.data.books;
+            this.author = response.data.data.name
+            this.breadcrumbs[1].name = `${this.author}`
+            this.panigation.page = response.data.books.current_page;
+            this.panigation.length = response.data.books.last_page;
+          }else{
+            console.log( response.data.data.name)
+            this.listauthor = response.data.books;
+           this.author = response.data.data.name
+            this.breadcrumbs[1].name = `${this.author}`
+
+          }
         });
     },
     //
@@ -104,7 +115,7 @@ export default {
           )
           .then(response => {
             window.scrollTo(0, 0);
-           this.listauthor = response.data.books.data;
+            this.listauthor = response.data.books;
             this.panigation.page = response.data.books.current_page;
             this.panigation.length = response.data.books.last_page;
           });
@@ -123,7 +134,7 @@ export default {
               (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
           )
           .then(response => {
-            this.listauthor = response.data.books.data;
+            this.listauthor = response.data.books;
             this.panigation.page = response.data.books.current_page;
             this.panigation.length = response.data.books.last_page;
           });
@@ -158,13 +169,19 @@ export default {
           (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
       )
       .then(response => {
-        this.listauthor = response.data.books.data;
-        this.author = response.data.data.name
-        this.breadcrumbs[1].name = `${this.author}`
-        console.log(response.data.books)        
-        this.author = response.data.data.name
-        this.panigation.page = response.data.books.current_page;
-        this.panigation.length = response.data.books.last_page;
+          if(!response.data.Message){
+            this.listauthor = response.data.books;
+            console.log(response.data.Message)
+            this.author = response.data.data.name
+            this.breadcrumbs[1].name = `${this.author}`
+            this.panigation.page = response.data.books.current_page;
+            this.panigation.length = response.data.books.last_page;
+          }else{
+            this.listauthor = response.data.books;
+            this.author = response.data.data.name
+            this.breadcrumbs[1].name = `${this.author}`
+
+          }
       })
       .catch(function(error) {
         console.log(error);

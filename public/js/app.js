@@ -36332,14 +36332,8 @@ var render = function() {
                                             attrs: {
                                               label: "Họ và tên",
                                               value: _vm.$store.state.user.name,
-                                              rules: _vm.nameRules
-                                            },
-                                            model: {
-                                              value: _vm.name,
-                                              callback: function($$v) {
-                                                _vm.name = $$v
-                                              },
-                                              expression: "name"
+                                              rules: _vm.nameRules,
+                                              disabled: ""
                                             }
                                           }),
                                           _vm._v(" "),
@@ -37833,6 +37827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/search?name=" + this.$route.query.name + "&page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
+          window.scrollTo(0, 0);
           _this2.search = res.data.data;
           _this2.panigation.page = res.data.current_page;
           _this2.panigation.length = res.data.last_page;
@@ -38751,9 +38746,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       panigation: {
         page: 1,
         visible: 4,
-        length: 5
+        length: null
       },
-      filter_listCatagory: ""
+      filter_listCatagory: "",
+      category: ""
     };
   },
   methods: {
@@ -38766,11 +38762,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     "$route.query.type": function $routeQueryType(val) {
       var _this = this;
 
-      this.breadcrumbs[1].name = "" + this.$route.query.type;
       window.axios.get("/categories/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-        _this.listCatagory = res.data.books.data;
-        _this.panigation.page = res.data.books.current_page;
-        _this.panigation.length = res.data.books.last_page;
+        if (!res.data.Message) {
+          _this.listCatagory = res.data.books;
+          _this.category = res.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.category;
+          _this.panigation.page = res.data.books.current_page;
+          _this.panigation.length = res.data.books.last_page;
+        } else {
+          console.log(res.data.data.name);
+          _this.listCatagory = res.data.books;
+          _this.category = res.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.category;
+        }
       });
     },
     "$route.query.page": function $routeQueryPage(val) {
@@ -38778,7 +38782,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/categories/" + this.$route.query.type + "?page=" + (this.$route.query.page ? "&&page=" + this.$route.query.page : "") + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-          _this2.listCatagory = res.data.books.data;
+          window.scrollTo(0, 0);
+          _this2.listCatagory = res.data.books;
           _this2.panigation.page = res.data.books.current_page;
           _this2.panigation.length = res.data.books.last_page;
         });
@@ -38789,7 +38794,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/categories/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-          _this3.listCatagory = res.data.books.data;
+          _this3.listCatagory = res.data.books;
           _this3.panigation.page = res.data.books.current_page;
           _this3.panigation.length = res.data.books.last_page;
         });
@@ -38804,11 +38809,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this4 = this;
 
     this.breadcrumbs[1].name = "" + this.$route.query.type;
-    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-      _this4.listCatagory = response.data.books.data;
-      // console.log(this.listCatagory);
-      _this4.panigation.page = response.data.books.current_page;
-      _this4.panigation.length = response.data.books.last_page;
+    window.axios.get("/categories/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+      if (!res.data.Message) {
+        _this4.listCatagory = res.data.books;
+        console.log(response.data.Message);
+        _this4.category = res.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.category;
+        _this4.panigation.page = res.data.books.current_page;
+        _this4.panigation.length = res.data.books.last_page;
+      } else {
+        _this4.listCatagory = res.data.books;
+        _this4.category = res.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.category;
+      }
     }).catch(function (error) {
       console.log(error);
     });
@@ -38881,7 +38894,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     { attrs: { row: "", wrap: "" } },
-                    _vm._l(_vm.listCatagory, function(item, index) {
+                    _vm._l(_vm.listCatagory.data, function(item, index) {
                       return _c(
                         "v-flex",
                         {
@@ -38924,7 +38937,7 @@ var render = function() {
             2
           )
         : _c("v-container", [
-            _c("h1", { staticClass: "py-5" }, [
+            _c("h1", { staticClass: "py-5 text-xs-center" }, [
               _vm._v("Không có tác phẩm nào thuộc danh mục này")
             ])
           ])
@@ -39111,11 +39124,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     "$route.query.type": function $routeQueryType(val) {
       var _this = this;
 
-      this.breadcrumbs[1].name = "" + this.author;
       window.axios.get("/authors/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (response) {
-        _this.listauthor = response.data.data;
-        _this.panigation.page = response.data.current_page;
-        _this.panigation.length = response.data.last_page;
+
+        if (!response.data.Message) {
+          _this.listauthor = response.data.books;
+          _this.author = response.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.author;
+          _this.panigation.page = response.data.books.current_page;
+          _this.panigation.length = response.data.books.last_page;
+        } else {
+          console.log(response.data.data.name);
+          _this.listauthor = response.data.books;
+          _this.author = response.data.data.name;
+          _this.breadcrumbs[1].name = "" + _this.author;
+        }
       });
     },
 
@@ -39126,7 +39148,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (val) {
         window.axios.get("/authors/" + this.$route.query.type + "?page=" + (this.$route.query.page ? "&&page=" + this.$route.query.page : "") + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (response) {
           window.scrollTo(0, 0);
-          _this2.listauthor = response.data.books.data;
+          _this2.listauthor = response.data.books;
           _this2.panigation.page = response.data.books.current_page;
           _this2.panigation.length = response.data.books.last_page;
         });
@@ -39140,7 +39162,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/authors/" + this.$route.query.type + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-          _this3.listauthor = response.data.books.data;
+          _this3.listauthor = response.data.books;
           _this3.panigation.page = response.data.books.current_page;
           _this3.panigation.length = response.data.books.last_page;
         });
@@ -39162,13 +39184,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this4 = this;
 
     window.axios.get("/authors/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
-      _this4.listauthor = response.data.books.data;
-      _this4.author = response.data.data.name;
-      _this4.breadcrumbs[1].name = "" + _this4.author;
-      console.log(response.data.books);
-      _this4.author = response.data.data.name;
-      _this4.panigation.page = response.data.books.current_page;
-      _this4.panigation.length = response.data.books.last_page;
+      if (!response.data.Message) {
+        _this4.listauthor = response.data.books;
+        console.log(response.data.Message);
+        _this4.author = response.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.author;
+        _this4.panigation.page = response.data.books.current_page;
+        _this4.panigation.length = response.data.books.last_page;
+      } else {
+        _this4.listauthor = response.data.books;
+        _this4.author = response.data.data.name;
+        _this4.breadcrumbs[1].name = "" + _this4.author;
+      }
     }).catch(function (error) {
       console.log(error);
     });
@@ -39241,7 +39268,7 @@ var render = function() {
                   _c(
                     "v-layout",
                     { attrs: { row: "", wrap: "" } },
-                    _vm._l(_vm.listauthor, function(item, index) {
+                    _vm._l(_vm.listauthor.data, function(item, index) {
                       return _c(
                         "v-flex",
                         {
@@ -40970,7 +40997,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -41044,13 +41071,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       passRules: [function (v) {
         return !!v || "Mật khẩu là bắt buộc";
       }, function (v) {
-        return v.length >= 8 || "Nhập ít nhất 8 ký tự";
+        return v.length >= 6 || "Nhập ít nhất 6 ký tự";
       }],
       email: "",
       password: "",
       confirm_password: "",
       e2: false
     };
+  },
+  computed: {
+    comparePasswords: function comparePasswords() {
+      return this.password !== this.confirm_password ? ["M\u1EADt kh\u1EA9u ch\u01B0a kh\u1EDBp"] : [];
+    }
   },
   methods: {
     // forgotPassword() {
@@ -41065,11 +41097,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           password: this.password,
           confirm_password: this.confirm_password
         }).then(function (response) {
-          console.log(_this.$route.query.token);
+          // console.log(this.$route.query.token);
           _this.dialogResetPassword = true;
-          console.log("Reset_Password");
+          // console.log("Reset_Password");
           _this.data = response.data;
-          // console.log(response.data);
           _this.$store.dispatch("setToken", _this.data.api_token);
           _this.$store.dispatch("setUser", _this.data.user);
         }).catch(function (error) {
@@ -41079,11 +41110,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     clear: function clear() {
       this.$refs.form.reset();
-    }
-  },
-  computed: {
-    comparePasswords: function comparePasswords() {
-      return this.password !== this.confirm_password ? "M\u1EADt kh\u1EA9u ch\u01B0a kh\u1EDBp" : "";
     }
   }
 });
@@ -41194,7 +41220,7 @@ var render = function() {
                               attrs: {
                                 required: "",
                                 label: "Nhập lại mật khẩu",
-                                rules: [_vm.comparePasswords],
+                                rules: _vm.comparePasswords,
                                 "append-icon": _vm.e2
                                   ? "visibility"
                                   : "visibility_off",
