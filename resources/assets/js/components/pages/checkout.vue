@@ -69,12 +69,16 @@
                       <td class="py-4">
                         <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
                       </td>
+                      <td class="py-4">
+                        <strong>{{props.item.quantity}}</strong>
+                      </td>
                       <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                     </template>
                     <template slot="footer">
                       <td>
                         <strong>Thanh toán</strong>
                       </td>
+                      <td></td>
                       <td class="text-xs-right">
                         <strong>{{total}}</strong>
                       </td>
@@ -135,6 +139,12 @@ export default {
     headers: [
       {
         text: "Sản phẩm",
+        align: "left",
+        sortable: false,
+        value: "name"
+      },
+      {
+        text: "Số lượng",
         align: "left",
         sortable: false,
         value: "name"

@@ -36185,6 +36185,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36196,6 +36200,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       timeout: 3000,
       headers: [{
         text: "Sản phẩm",
+        align: "left",
+        sortable: false,
+        value: "name"
+      }, {
+        text: "Số lượng",
         align: "left",
         sortable: false,
         value: "name"
@@ -36793,6 +36802,20 @@ var render = function() {
                                               _vm._v(" "),
                                               _c(
                                                 "td",
+                                                { staticClass: "py-4" },
+                                                [
+                                                  _c("strong", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        props.item.quantity
+                                                      )
+                                                    )
+                                                  ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
                                                 {
                                                   staticClass: "text-xs-right"
                                                 },
@@ -36815,6 +36838,8 @@ var render = function() {
                                         _c("td", [
                                           _c("strong", [_vm._v("Thanh toán")])
                                         ]),
+                                        _vm._v(" "),
+                                        _c("td"),
                                         _vm._v(" "),
                                         _c(
                                           "td",
@@ -37561,12 +37586,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialogDel: false,
       snackbarlogin: false,
+      snackbarloginCheck: false,
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37612,9 +37643,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     checkout: function checkout() {
       if (!this.$store.state.token) {
         this.snackbarlogin = true;
-      }
-      if (!this.$store.state.card) {
-        this.snackbarlogin = true;
+      } else if (this.$store.state.cart.length === 0) {
+        this.snackbarloginCheck = true;
       } else {
         window.location = "#/check-out";
       }
@@ -37974,9 +38004,7 @@ var render = function() {
             [
               !_vm.$store.state.token
                 ? _c("span", [_vm._v(" Vui lòng hoặc đăng ký tài khoản")])
-                : !_vm.$store.state.card
-                  ? _c("span", [_vm._v(" Giỏ hàng của bạn trống")])
-                  : _vm._e(),
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "v-btn",
@@ -37985,6 +38013,37 @@ var render = function() {
                   nativeOn: {
                     click: function($event) {
                       _vm.snackbarlogin = false
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("clear")])],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: { timeout: 4000, top: "", color: "green accent-4" },
+              model: {
+                value: _vm.snackbarloginCheck,
+                callback: function($$v) {
+                  _vm.snackbarloginCheck = $$v
+                },
+                expression: "snackbarloginCheck"
+              }
+            },
+            [
+              _vm._v("\n        Giỏ hàng trống\n      "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", icon: "", color: "white" },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.snackbarloginCheck = false
                     }
                   }
                 },
@@ -39815,6 +39874,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -39844,9 +39906,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       panigation: {
         page: 1,
         visible: 4,
-        length: 7
+        length: null
       },
-      filter_tags: ""
+      filter_tags: "",
+      tag: ""
     };
   },
   methods: {
@@ -39856,18 +39919,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   watch: {
-    "$route.query.type": function $routeQueryType(val) {
-      this.breadcrumbs[1].name = "" + this.$route.query.type;
-    },
     "$route.query.page": function $routeQueryPage(val) {
       var _this = this;
 
       if (val) {
         console.log(this.$route);
         window.axios.get("/tags/" + this.$route.query.name + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-          _this.tags = res.data.books.data;
-          _this.panigation.page = res.data.books.current_page;
-          _this.panigation.length = res.data.books.last_page;
+          if (!res.data.Message) {
+            _this.tags = res.data.books;
+            _this.tag = res.data.data.name;
+            _this.breadcrumbs[1].name = "" + _this.tag;
+            _this.panigation.page = res.data.books.current_page;
+            _this.panigation.length = res.data.books.last_page;
+          } else {
+            console.log(res.data.data.name);
+            _this.tags = res.data.books;
+            _this.tag = res.data.data.name;
+            _this.breadcrumbs[1].name = "" + _this.category;
+          }
         });
       }
       console.log("chuyển axios thành công");
@@ -39877,7 +39946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (val) {
         window.axios.get("/tags/" + this.$route.query.name + "?sort=" + val + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-          _this2.tags = res.data.books.data;
+          _this2.tags = res.data.books;
           _this2.panigation.page = res.data.books.current_page;
           _this2.panigation.length = res.data.books.last_page;
         });
@@ -39892,11 +39961,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this3 = this;
 
     console.log(this.$route);
-    window.axios.get("/tags/" + this.$route.query.name + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
-      _this3.tags = res.data.books.data;
-      console.log("đây là tác phẩm của tags", res.data.books.data);
-      _this3.panigation.page = response.data.books.current_page;
-      _this3.panigation.length = response.data.books.last_page;
+    window.axios.get("/tags/" + this.$route.query.name + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (res) {
+      if (!res.data.Message) {
+        _this3.tags = res.data.books;
+        console.log(res.data.Message);
+        _this3.tag = res.data.data.name;
+        _this3.breadcrumbs[1].name = "" + _this3.tag;
+        _this3.panigation.page = res.data.books.current_page;
+        _this3.panigation.length = res.data.books.last_page;
+      } else {
+        _this3.tags = res.data.books;
+        _this3.tag = res.data.data.name;
+        _this3.breadcrumbs[1].name = "" + _this3.tag;
+      }
     }).catch(function (error) {
       console.log(error);
     });
@@ -39927,86 +40004,95 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.filter,
-                      "item-text": "text",
-                      "return-object": "",
-                      label: "--Chọn--",
-                      "single-line": ""
-                    },
-                    model: {
-                      value: _vm.filter_tags,
-                      callback: function($$v) {
-                        _vm.filter_tags = $$v
-                      },
-                      expression: "filter_tags"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
+      _vm.tags
+        ? _c(
             "v-container",
-            { attrs: { "grid-list-xs": "" } },
             [
               _c(
                 "v-layout",
                 { attrs: { row: "", wrap: "" } },
-                _vm._l(_vm.tags, function(item, index) {
-                  return _c(
+                [
+                  _c(
                     "v-flex",
-                    {
-                      key: "khoa" + index,
-                      attrs: { xs12: "", md6: "", lg4: "" }
-                    },
-                    [_c("book-item", { attrs: { book: item } })],
+                    { staticClass: "pl-3 pb-3", attrs: { xs12: "", md3: "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter,
+                          "item-text": "text",
+                          "return-object": "",
+                          label: "--Chọn--",
+                          "single-line": ""
+                        },
+                        model: {
+                          value: _vm.filter_tags,
+                          callback: function($$v) {
+                            _vm.filter_tags = $$v
+                          },
+                          expression: "filter_tags"
+                        }
+                      })
+                    ],
                     1
                   )
-                })
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          [
-            _c(
-              "div",
-              { staticClass: "text-xs-center mt-5" },
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-container",
+                { attrs: { "grid-list-xs": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    _vm._l(_vm.tags.data, function(item, index) {
+                      return _c(
+                        "v-flex",
+                        {
+                          key: "khoa" + index,
+                          attrs: { xs12: "", md6: "", lg4: "" }
+                        },
+                        [_c("book-item", { attrs: { book: item } })],
+                        1
+                      )
+                    })
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               [
-                _c("v-pagination", {
-                  attrs: { length: _vm.panigation.length, "total-visible": 7 },
-                  on: { input: _vm.next },
-                  model: {
-                    value: _vm.panigation.page,
-                    callback: function($$v) {
-                      _vm.$set(_vm.panigation, "page", $$v)
-                    },
-                    expression: "panigation.page"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        ],
-        2
-      )
+                _c(
+                  "div",
+                  { staticClass: "text-xs-center mt-5" },
+                  [
+                    _c("v-pagination", {
+                      attrs: {
+                        length: _vm.panigation.length,
+                        "total-visible": 7
+                      },
+                      on: { input: _vm.next },
+                      model: {
+                        value: _vm.panigation.page,
+                        callback: function($$v) {
+                          _vm.$set(_vm.panigation, "page", $$v)
+                        },
+                        expression: "panigation.page"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            ],
+            2
+          )
+        : _c("v-container", [
+            _c("h1", { staticClass: "py-5 text-xs-center" }, [
+              _vm._v("Không có tác phẩm nào thuộc tag này")
+            ])
+          ])
     ],
     1
   )
