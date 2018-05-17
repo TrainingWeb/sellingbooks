@@ -212,7 +212,7 @@ class PageController extends APIBaseController
         if (!$category) {
             return $this->sendErrorNotFound('Category not found !');
         }
-        return $this->sort(Book::where('id_category', $category->id));
+        return $this->sortt(Book::where('id_category', $category->id), $category);
     }
 
     public function postComment(Request $request, $slug)
