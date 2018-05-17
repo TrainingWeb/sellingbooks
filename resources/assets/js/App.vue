@@ -11,7 +11,7 @@
               </span>
               <v-icon small class="green--text text--accent-4">smartphone</v-icon>
               <span class="caption grey--text  text--darken-1">
-                0123 456 789 {{data.message}}
+                0123 456 789 
               </span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -138,7 +138,7 @@
                   <v-icon color="grey">add_shopping_cart</v-icon>
                 </v-badge>
               </v-btn>
-              <v-btn flat to="/favorite">
+              <v-btn flat @click="checkFavorite"  >
                 <v-badge color="indigo" class="p-0">
                   <span slot="badge" class="caption">{{$store.state.favorite.length}}</span>
                   <v-icon color="grey">favorite</v-icon>
@@ -315,7 +315,13 @@
     <v-snackbar :timeout="4000" top v-model="snackbarResgiter" color="green accent-4">
       <span v-if="$store.state.user"> Đăng ký thành công</span>
       <span v-else>Tài khoản này đã tồn tại</span>
-      <v-btn flat icon color="white" @click.native="snackbarlogin = false">
+      <v-btn flat icon color="white" @click.native="snackbarResgiter = false">
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
+    <v-snackbar :timeout="4000" top v-model="snackbarcheck" color="green accent-4">
+        Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn
+      <v-btn flat icon color="white" @click.native="snackbarcheck = false">
         <v-icon>clear</v-icon>
       </v-btn>
     </v-snackbar>
@@ -329,6 +335,7 @@ export default {
     valid: true,
     validRegiter: true,
     snackbarResgiter: false,
+    snackbarcheck:false,
     name: "",
     nameRules: [v => !!v || "Tên là bắt buộc"],
     passLogin: "",
@@ -429,7 +436,14 @@ export default {
           });
       }
     },
-
+    checkFavorite(){
+      if(!this.$store.state.token){
+          this.snackbarcheck = true  
+      }
+      else{
+        window.location="#/favorite"
+      }
+    },
     logout() {
       let user = this.$store.state.user;
       let token = this.$store.state.token;

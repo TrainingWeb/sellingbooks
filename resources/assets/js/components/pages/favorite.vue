@@ -137,6 +137,7 @@ export default {
       .get("/get-favorite-books")
       .then(response => {
         this.favoriteBook = response.data.books.data;
+        console.log(response.data.books.data)
       })
       .catch(function(error) {
         console.log(error);

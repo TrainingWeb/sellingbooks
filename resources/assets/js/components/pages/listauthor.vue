@@ -171,7 +171,7 @@ export default {
       .then(response => {
           if(!response.data.Message){
             this.listauthor = response.data.books;
-            console.log(response.data.Message)
+            console.log(response.data.books)
             this.author = response.data.data.name
             this.breadcrumbs[1].name = `${this.author}`
             this.panigation.page = response.data.books.current_page;
