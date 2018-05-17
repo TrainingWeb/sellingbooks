@@ -1,12 +1,9 @@
-@component('mail::message')
-# Reset your password
+@component('mail::message') 
+# Reset your password Click here to reset your password ! 
+@component('mail::button', ['url' =>'http://sellingbookstore.test/#/resetpassword?token='.$token.'&&email='.$email]) 
+Reset your password 
+@endcomponent 
+Thanks,
 
-Click here to reset your password !
-
-@component('mail::button', ['url' => 'http://selling-books.local/api/reset/password?token='.$token.'&&email='.$email])
-Reset your password
-@endcomponent
-
-Thanks,<br>
-{{ config('app.name') }}
+<br> {{ config('app.name') }}
 @endcomponent
