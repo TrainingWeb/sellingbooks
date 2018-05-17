@@ -3,7 +3,7 @@
     <v-layout xs12>
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
-    <v-container>
+    <v-container class="mt-2">
       <v-layout row wrap>
         <v-flex xs12>
           <v-card flat>
@@ -18,7 +18,7 @@
                       <v-flex xs12 sm6 md8>
                         <div>
                           <div class="headline grey--text text--darken-3">{{bookDetail.name}}</div>
-                          <div class="grey--text accent-4 body-2 py-2">
+                          <div class="grey--text accent-4 body-2 py-3">
                             <span>Tác giả: {{bookDetail.author.name}}</span>
                           </div>
                           <div v-if="bookDetail.promotion_price">
@@ -58,7 +58,7 @@
                             <v-btn color="green accent-4" @click="addFavoriteDetail">
                               <i class="material-icons favorite white--text">favorite</i>
                               <v-snackbar :timeout="timeout" top v-model="snackbarFavDetail" color="green accent-4">
-                                Thêm vào giỏ hàng thành công
+                                Thêm vào yêu thích thành công
                                 <v-btn flat icon color="white" @click.native="snackbarFavDetail = false">
                                   <v-icon>clear</v-icon>
                                 </v-btn>
@@ -81,7 +81,7 @@
               </v-layout>
             </v-container>
           </v-card>
-          <v-tabs icons-and-text dark color="white" height="40px">
+          <v-tabs icons-and-text dark color="white" height="40px" class="my-4">
             <v-tabs-slider color="green accent-4"></v-tabs-slider>
             <v-tab class="green accent-4" href="#tab-1">
               Chi tiết sản phẩm
@@ -102,8 +102,11 @@
                   </div>
                   <v-list three-line>
                     <v-list-tile v-for="item in comments.data" avatar :key="item.title">
-                      <v-list-tile-avatar>
-                        <img src="#">
+                      <v-list-tile-avatar v-if="item.user.avatar">
+                        <img :src="'/storage/images/'+item.user.avatar">
+                      </v-list-tile-avatar>
+                      <v-list-tile-avatar v-else>
+                        <img :src="'/storage/images/author.jpg'">
                       </v-list-tile-avatar>
                       <v-list-tile-content>
                         <v-list-tile-title v-html="item.user.name"></v-list-tile-title>
@@ -132,7 +135,7 @@
               </v-tab-item>
             </v-tabs-items>
           </v-tabs>
-          <div grid-list-xs class="my-5">
+          <div grid-list-xs class="my-3">
             <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
             <v-layout row wrap class="my-4 ml-3">
               <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`Book-${index}`">

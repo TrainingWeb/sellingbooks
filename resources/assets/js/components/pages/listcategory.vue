@@ -43,7 +43,7 @@ export default {
         disabled: true
       }
     ],
-    namepage: "Danh sách sản phẩm",
+    namepage: "Danh mục sản phẩm",
     e1: null,
     filter: [
       {
@@ -93,9 +93,9 @@ export default {
             (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
         )
         .then(res => {
-          this.listCatagory = res.data.data;
-          this.panigation.page = res.data.current_page;
-          this.panigation.length = res.data.last_page;
+         this.listCatagory = res.data.books.data;
+            this.panigation.page = res.data.books.current_page;
+            this.panigation.length = res.data.books.last_page;
         });
     },
     "$route.query.page"(val) {

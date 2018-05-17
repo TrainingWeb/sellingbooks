@@ -34381,6 +34381,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -34556,6 +34559,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-container",
+        { staticClass: "mt-2" },
         [
           _c(
             "v-layout",
@@ -34654,7 +34658,7 @@ var render = function() {
                                                         "div",
                                                         {
                                                           staticClass:
-                                                            "grey--text accent-4 body-2 py-2"
+                                                            "grey--text accent-4 body-2 py-3"
                                                         },
                                                         [
                                                           _c("span", [
@@ -34954,7 +34958,7 @@ var render = function() {
                                                                 },
                                                                 [
                                                                   _vm._v(
-                                                                    "\n                              Thêm vào giỏ hàng thành công\n                              "
+                                                                    "\n                              Thêm vào yêu thích thành công\n                              "
                                                                   ),
                                                                   _c(
                                                                     "v-btn",
@@ -35111,6 +35115,7 @@ var render = function() {
                   _c(
                     "v-tabs",
                     {
+                      staticClass: "my-4",
                       attrs: {
                         "icons-and-text": "",
                         dark: "",
@@ -35207,9 +35212,24 @@ var render = function() {
                                             attrs: { avatar: "" }
                                           },
                                           [
-                                            _c("v-list-tile-avatar", [
-                                              _c("img", { attrs: { src: "#" } })
-                                            ]),
+                                            item.user.avatar
+                                              ? _c("v-list-tile-avatar", [
+                                                  _c("img", {
+                                                    attrs: {
+                                                      src:
+                                                        "/storage/images/" +
+                                                        item.user.avatar
+                                                    }
+                                                  })
+                                                ])
+                                              : _c("v-list-tile-avatar", [
+                                                  _c("img", {
+                                                    attrs: {
+                                                      src:
+                                                        "/storage/images/author.jpg"
+                                                    }
+                                                  })
+                                                ]),
                                             _vm._v(" "),
                                             _c(
                                               "v-list-tile-content",
@@ -35375,7 +35395,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "my-5", attrs: { "grid-list-xs": "" } },
+                    { staticClass: "my-3", attrs: { "grid-list-xs": "" } },
                     [
                       _c(
                         "div",
@@ -35611,12 +35631,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -35750,11 +35764,14 @@ var render = function() {
                                     "div",
                                     {
                                       staticClass:
-                                        "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2"
+                                        "grey lighten-4 grey--text text--accent-4 mt-5 py-2 px-2",
+                                      staticStyle: {
+                                        "border-left": "2px solid red"
+                                      }
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                    Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                                "
+                                        "\n                  Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời. Nhiệm vụ của chúng tôi là cung cấp các loại sách chất lượng cao nhất với giá cả phải chăng, với giao hàng nhanh và dịch vụ khách hàng tuyệt vời.\n                "
                                       )
                                     ]
                                   )
@@ -35780,209 +35797,174 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "div",
+        "v-container",
+        {
+          staticClass: "mt-2",
+          staticStyle: { "min-height": "0" },
+          attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+        },
         [
           _c(
-            "v-container",
+            "v-card",
             {
-              staticStyle: { "min-height": "0" },
-              attrs: { fluid: "", "grid-list-lg": "", "px-0": "" }
+              staticClass: "white--text",
+              attrs: { flat: "", color: "grey lighten-4" }
             },
             [
               _c(
-                "v-layout",
-                { attrs: { row: "", wrap: "" } },
+                "v-container",
+                { attrs: { "grid-list-lg": "" } },
                 [
                   _c(
-                    "v-flex",
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
                     [
                       _c(
-                        "v-card",
-                        {
-                          staticClass: "white--text",
-                          attrs: { flat: "", color: "grey lighten-4" }
-                        },
+                        "v-flex",
+                        { attrs: { xs12: "", md5: "", "mt-2": "" } },
                         [
                           _c(
-                            "v-container",
-                            { attrs: { "grid-list-lg": "" } },
+                            "div",
                             [
                               _c(
-                                "v-layout",
-                                { attrs: { row: "", wrap: "" } },
+                                "div",
+                                {
+                                  staticClass: "title grey--text text--darken-3"
+                                },
+                                [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "grey--text text--darken-2 py-3"
+                                },
+                                [
+                                  _vm._v(
+                                    "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "mx-0 green accent-4 white--text"
+                                },
+                                [_vm._v(" Tham gia với chúng tôi")]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md7: "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
                                 [
                                   _c(
-                                    "v-flex",
-                                    {
-                                      attrs: { xs12: "", md5: "", "mt-2": "" }
-                                    },
+                                    "v-card",
                                     [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-1.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
-                                        "div",
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
                                         [
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "title grey--text text--darken-3"
-                                            },
-                                            [_vm._v("TÁC GIẢ NỖI TIẾNG")]
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "grey--text text--darken-2 py-3"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "Với mong muốn cung cấp kiến thức cho mọi người từ nguồn tri thức của nhân loại, góp phần gìn giữ văn hoá đọc, Công ty cổ phẩn Sách và Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường. Thiết bị giáo dục Trí Tuệ đã và đang xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường,xây dựng hình ảnh của mình trở thành thương hiệu có uy tín trên thị trường"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass:
-                                                "mx-0 green accent-4 white--text"
-                                            },
-                                            [_vm._v(" Tham gia với chúng tôi")]
-                                          )
+                                          _c("v-spacer")
                                         ],
                                         1
                                       )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
+                                [
                                   _c(
-                                    "v-flex",
-                                    { attrs: { xs12: "", md7: "" } },
+                                    "v-card",
                                     [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-3.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
-                                        "v-layout",
-                                        { attrs: { row: "", wrap: "" } },
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
                                         [
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-1.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-3.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
+                                          _c("v-spacer")
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
+                                [
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c("v-card-media", {
+                                        attrs: {
+                                          src: "storage/images/team-4.jpg",
+                                          height: "220px"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-title",
+                                        {
+                                          staticClass: "py-2 subheading",
+                                          staticStyle: { "margin-left": "0px" }
+                                        },
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(
+                                            "\n                    Jone Doe\n                    "
                                           ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-flex",
-                                            { attrs: { xs12: "", md4: "" } },
-                                            [
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c("v-card-media", {
-                                                    attrs: {
-                                                      src:
-                                                        "storage/images/team-4.jpg",
-                                                      height: "220px"
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-title",
-                                                    {
-                                                      staticClass:
-                                                        "py-2 subheading",
-                                                      staticStyle: {
-                                                        "margin-left": "0px"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(
-                                                        "\n                                                    Jone Doe\n                                                    "
-                                                      ),
-                                                      _c("v-spacer")
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          )
+                                          _c("v-spacer")
                                         ],
                                         1
                                       )
@@ -38752,7 +38734,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: "/list-products",
         disabled: true
       }],
-      namepage: "Danh sách sản phẩm",
+      namepage: "Danh mục sản phẩm",
       e1: null,
       filter: [{
         text: "Lọc theo tên A-Z",
@@ -38786,9 +38768,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.breadcrumbs[1].name = "" + this.$route.query.type;
       window.axios.get("/categories/" + this.$route.query.type + "?page=" + val + (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")).then(function (res) {
-        _this.listCatagory = res.data.data;
-        _this.panigation.page = res.data.current_page;
-        _this.panigation.length = res.data.last_page;
+        _this.listCatagory = res.data.books.data;
+        _this.panigation.page = res.data.books.current_page;
+        _this.panigation.length = res.data.books.last_page;
       });
     },
     "$route.query.page": function $routeQueryPage(val) {
@@ -41765,6 +41747,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -42051,8 +42037,8 @@ var render = function() {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
-                                                    label: "Họ và tên",
-                                                    rules: _vm.nameRules
+                                                    label: "E-mail",
+                                                    rules: _vm.emailRules
                                                   },
                                                   model: {
                                                     value: _vm.emailLogin,
@@ -42106,6 +42092,9 @@ var render = function() {
                                                 _c(
                                                   "router-link",
                                                   {
+                                                    staticStyle: {
+                                                      "text-decoration": "none"
+                                                    },
                                                     attrs: {
                                                       flat: "",
                                                       to: "/forgotpassword"
@@ -42397,24 +42386,41 @@ var render = function() {
                                           "v-card-text",
                                           { staticClass: "text-xs-center" },
                                           [
-                                            _c(
-                                              "v-avatar",
-                                              { staticClass: "mt-5" },
-                                              [
-                                                _c("img", {
-                                                  staticStyle: {
-                                                    height: "110px",
-                                                    width: "110px"
-                                                  },
-                                                  attrs: {
-                                                    src:
-                                                      "/storage/images/" +
-                                                      _vm.$store.state.user
-                                                        .avatar
-                                                  }
-                                                })
-                                              ]
-                                            )
+                                            _vm.$store.state.user.avatar
+                                              ? _c(
+                                                  "v-avatar",
+                                                  { staticClass: "mt-5" },
+                                                  [
+                                                    _c("img", {
+                                                      staticStyle: {
+                                                        height: "110px",
+                                                        width: "110px"
+                                                      },
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/images/" +
+                                                          _vm.$store.state.user
+                                                            .avatar
+                                                      }
+                                                    })
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "v-avatar",
+                                                  { staticClass: "mt-5" },
+                                                  [
+                                                    _c("img", {
+                                                      staticStyle: {
+                                                        height: "110px",
+                                                        width: "110px"
+                                                      },
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/images/author.jpg"
+                                                      }
+                                                    })
+                                                  ]
+                                                )
                                           ],
                                           1
                                         ),
