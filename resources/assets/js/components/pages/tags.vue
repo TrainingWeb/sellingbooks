@@ -93,9 +93,9 @@ export default {
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
-            this.tags = res.data.data;
-            this.panigation.page = res.data.current_page;
-            this.panigation.length = res.data.last_page;
+            this.tags = res.data.books.data;
+            this.panigation.page = res.data.books.current_page;
+            this.panigation.length = res.data.books.last_page;
           });
       }
       console.log("chuyển axios thành công");
@@ -111,9 +111,9 @@ export default {
               (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
           )
           .then(res => {
-            this.tags = res.data.data;
-            this.panigation.page = res.data.current_page;
-            this.panigation.length = res.data.last_page;
+            this.tags = res.data.books.data;
+            this.panigation.page = res.data.books.current_page;
+            this.panigation.length = res.data.books.last_page;
           });
       }
       console.log("chuyển axios thành công");
@@ -133,11 +133,11 @@ export default {
           (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") +
           (this.$route.query.page ? "&&page=" + this.$route.query.page : "")
       )
-      .then(response => {
-        this.tags = response.data.data;
-        console.log("đây là tác phẩm của tags", response.data.data);
-        this.panigation.page = response.data.current_page;
-        this.panigation.length = response.data.last_page;
+      .then(res => {
+        this.tags = res.data.books.data;
+        console.log("đây là tác phẩm của tags", res.data.books.data);
+        this.panigation.page = response.data.books.current_page;
+        this.panigation.length = response.data.books.last_page;
       })
       .catch(function(error) {
         console.log(error);
