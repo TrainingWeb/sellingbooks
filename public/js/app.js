@@ -41373,9 +41373,459 @@ exports.push([module.i, "\n.card__title {\r\n  margin-left: -25px;\n}\n.mega-men
 
 /***/ }),
 /* 110 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: F:/laragon/www/sellingbooks/resources/assets/js/App.vue: Unexpected token (329:0)\n\n\u001b[0m \u001b[90m 327 | \u001b[39m    snackbarResgiter\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 328 | \u001b[39m    name\u001b[33m:\u001b[39m \u001b[32m\"\"\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 330 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 331 | \u001b[39m    nameRules\u001b[33m:\u001b[39m [v \u001b[33m=>\u001b[39m \u001b[33m!\u001b[39m\u001b[33m!\u001b[39mv \u001b[33m||\u001b[39m \u001b[32m\"Tên là bắt buộc\"\u001b[39m]\u001b[33m,\u001b[39m\n \u001b[90m 332 | \u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>\u001b[39m fafd8c3e20a7640c077cafa9222464827535c391\u001b[0m\n");
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    var _ref;
+
+    return _ref = {
+      valid: true,
+      validRegiter: true,
+      snackbarResgiter: false,
+      name: "",
+      nameRules: [function (v) {
+        return !!v || "Tên là bắt buộc";
+      }],
+      passLogin: "",
+      passRegister: "",
+      emailRegister: "",
+      emailLogin: "",
+      passRules: [function (v) {
+        return !!v || "Mật khẩu là bắt buộc";
+      }]
+    }, _defineProperty(_ref, "nameRules", [function (v) {
+      return !!v || "Tên là bắt buộc";
+    }]), _defineProperty(_ref, "emailRules", [function (v) {
+      return !!v || "E-mail là bắt buộc";
+    }, function (v) {
+      return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail phải hợp lệ"
+      );
+    }]), _defineProperty(_ref, "password", ""), _defineProperty(_ref, "drawer", null), _defineProperty(_ref, "icons", ["fas fa-home", "fas fa-envelope", "fas fa-phone", "fas fa-print"]), _defineProperty(_ref, "rows", [{
+      title: "DỊCH VỤ",
+      children: ["Điều khoản và sử dụng", "Thông tin giao hàng", "Chính sách bảo mật", "Dịch vụ khách hàng"]
+    }, {
+      title: "HỖ TRỢ",
+      children: ["Chính sách đổi - trả - hoàn tiền", "Chính sách khách sỉ", "Phương thức vận chuyển", "Phương thức thanh toán"]
+    }, {
+      title: "TÀI KHOẢN CỦA TÔI",
+      children: ["Chi tiết tài khoản", "Lịch sử mua hàng"],
+      icons: ["fab fa-facebook", "fab fa-twitter", "fab fa-google-plus", "fab fa-linkedin", "fab fa-instagram"]
+    }]), _defineProperty(_ref, "register", false), _defineProperty(_ref, "login", false), _defineProperty(_ref, "message", false), _defineProperty(_ref, "hints", true), _defineProperty(_ref, "e2", false), _defineProperty(_ref, "e3", false), _defineProperty(_ref, "password", "Password"), _defineProperty(_ref, "dataApp", {}), _defineProperty(_ref, "listauthor", {}), _defineProperty(_ref, "search", null), _defineProperty(_ref, "emailLogin", ""), _defineProperty(_ref, "passLogin", ""), _defineProperty(_ref, "data", {}), _defineProperty(_ref, "snackbarlogin", false), _defineProperty(_ref, "infoUser", false), _ref;
+  },
+  props: {
+    source: String
+  },
+  methods: {
+    textSearch: function textSearch() {
+      window.location = "#/search?name=" + this.search;
+      this.search = "";
+    },
+    loginpage: function loginpage() {
+      var _this = this;
+
+      if (this.$refs.formlogin.validate()) {
+        window.axios.post("/login", {
+          email: this.emailLogin,
+          password: this.passLogin
+        }).then(function (response) {
+          var data = response.data;
+          console.log(response.data);
+          if (data.user) {
+            _this.$store.dispatch("setToken", data.api_token);
+            _this.$store.dispatch("setUser", data.user);
+            _this.snackbarlogin = true;
+            _this.emailLogin = "";
+            _this.passLogin = "";
+            _this.login = false;
+          } else {
+            _this.snackbarlogin = true;
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    },
+    logout: function logout() {
+      var user = this.$store.state.user;
+      var token = this.$store.state.token;
+      var cart = this.$store.state.cart;
+      token = "";
+      user = {};
+      cart = [];
+      this.$store.dispatch("setUser", user);
+      this.$store.dispatch("setToken", token);
+      this.$store.dispatch("setCart", cart);
+    },
+    registerUser: function registerUser() {
+      var _this2 = this;
+
+      if (this.$refs.formRegister.validate()) {
+        window.axios.post("/register", {
+          name: this.name,
+          email: this.emailRegister,
+          password: this.passRegister
+        }).then(function (response) {
+          _this2.data = response.data;
+          console.log(response.data);
+          _this2.$store.dispatch("setToken", _this2.data.api_token);
+          _this2.$store.dispatch("setUser", _this2.data.user);
+          _this2.snackbarResgiter = true;
+          _this2.register = false;
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
+  },
+  computed: {
+    totalCard: function totalCard() {
+      return this.$store.state.cart.reduce(function (total, p) {
+        return total + p.quantity;
+        console.log("Tổng tiền 2" + (total + p.quantity));
+      }, 0);
+    }
+  },
+
+  mounted: function mounted() {
+    var _this3 = this;
+
+    //
+    window.axios.get("/index").then(function (response) {
+      _this3.dataApp = response.data.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+});
 
 /***/ }),
 /* 111 */
@@ -44743,7 +45193,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://selling-books.local";
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 
