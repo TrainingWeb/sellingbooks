@@ -284,7 +284,7 @@
                   + 01 234 567 89
                 </div>
               </v-flex>
-              <v-flex v-for="(col, i) in rows" :key="`col-$`+i" xs12 md3>
+              <v-flex v-for="(col, i) in rows" :key="`col-$`+i" xs12 ms6 md3>
                 <div class="body-2 title-ft my-3" v-text="col.title.toUpperCase()"></div>
                 <div class="my-3 info-ft" v-for="(child, i) in col.children" :key="`child-$`+i" v-text="child"></div>
                 <v-card-title v-if="col.icons">

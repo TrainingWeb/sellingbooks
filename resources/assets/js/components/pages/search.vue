@@ -98,6 +98,7 @@ export default {
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
+             window.scrollTo(0, 0);
             this.search = res.data.data;
             this.panigation.page = res.data.current_page;
             this.panigation.length = res.data.last_page;

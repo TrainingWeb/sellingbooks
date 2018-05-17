@@ -13,7 +13,7 @@
                   <h1 class=" headline grey--text text--darken-3 text-xs-center pt-3">Vui lòng xác nhận lại thông tin của bạn</h1>
                   <v-container>
                     <v-form ref="form" v-model="valid" lazy-validation>
-                      <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules" v-model="name"></v-text-field>
+                      <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules"  disabled></v-text-field>
                       <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
                       <v-text-field v-model="phone" mask="phone" :rules="emailRules" label="Số điện thoại"></v-text-field>
                       <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>

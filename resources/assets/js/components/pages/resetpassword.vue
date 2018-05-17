@@ -8,7 +8,7 @@
         <v-divider></v-divider>
         <v-container>
           <template>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submit">
               <v-flex xs12>
                 <v-text-field :rules="emailRules" :value="$route.query.email" disabled label="E-mail" required></v-text-field>
               </v-flex>
@@ -16,10 +16,12 @@
                 <v-text-field v-model="password" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
+                <v-text-field v-model="confirm_password" required label="Nhập lại mật khẩu" :rules="[comparePasswords]" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
               </v-flex>
-              <v-btn @click="clear">Đóng</v-btn>
-              <v-btn @click="submit">Gửi</v-btn>
+              <v-card-actions class="ml-5">
+                <v-btn @click="clear">Đóng</v-btn>
+                <v-btn class="ml-4 green accent-4 white--text" @click="submit">Gửi</v-btn>
+              </v-card-actions>
             </v-form>
           </template>
         </v-container>
@@ -27,7 +29,7 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialogResetPassword" persistent max-width="290">
             <v-card>
-              <v-card-title class="headline ml-1">Thông báo !</v-card-title>
+              <v-card-title class="headline ml-1 ">Thông báo !</v-card-title>
               <v-card-text>Bạn đã thay đổi mật khẩu thành công</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -68,33 +70,37 @@ export default {
     // },
     submit() {
       if (this.$refs.form.validate()) {
-      window.axios
-        .post("/reset/password/" + this.$route.query.token,{
-          email : this.$route.query.email,
-          password : this.password,
-          confirm_password : this.confirm_password
-        })
-        .then(response => {
-          console.log(this.$route.query.token)
-          this.dialogResetPassword = true;
-          console.log("Reset_Password");
-          this.data = response.data;
-          // console.log(response.data);
-          this.$store.dispatch("setToken", this.data.api_token);
-          this.$store.dispatch("setUser", this.data.user);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-        
+        window.axios
+          .post("/reset/password/" + this.$route.query.token, {
+            email: this.$route.query.email,
+            password: this.password,
+            confirm_password: this.confirm_password
+          })
+          .then(response => {
+            console.log(this.$route.query.token);
+            this.dialogResetPassword = true;
+            console.log("Reset_Password");
+            this.data = response.data;
+            // console.log(response.data);
+            this.$store.dispatch("setToken", this.data.api_token);
+            this.$store.dispatch("setUser", this.data.user);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       }
     },
     clear() {
       this.$refs.form.reset();
-    },
-  
+    }
   },
-  mounted() {}
+  computed: {
+    comparePasswords() {
+      return this.password !== this.confirm_password
+        ? `Mật khẩu chưa khớp`
+        : ``;
+    }
+  }
 };
 </script>
 <style>
