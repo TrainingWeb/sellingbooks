@@ -40889,7 +40889,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40902,6 +40902,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
 //
 //
 //
@@ -40998,7 +41000,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$refs.form.reset();
     }
   },
-  mounted: function mounted() {}
+  computed: {
+    comparePasswords: function comparePasswords() {
+      return this.password !== this.confirm_password ? "M\u1EADt kh\u1EA9u ch\u01B0a kh\u1EDBp" : "";
+    }
+  }
 });
 
 /***/ }),
@@ -41038,6 +41044,12 @@ var render = function() {
                       {
                         ref: "form",
                         attrs: { "lazy-validation": "" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submit($event)
+                          }
+                        },
                         model: {
                           value: _vm.valid,
                           callback: function($$v) {
@@ -41101,7 +41113,7 @@ var render = function() {
                               attrs: {
                                 required: "",
                                 label: "Nhập lại mật khẩu",
-                                rules: _vm.passRules,
+                                rules: [_vm.comparePasswords],
                                 "append-icon": _vm.e2
                                   ? "visibility"
                                   : "visibility_off",
@@ -41122,13 +41134,25 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("v-btn", { on: { click: _vm.clear } }, [
-                          _vm._v("Đóng")
-                        ]),
-                        _vm._v(" "),
-                        _c("v-btn", { on: { click: _vm.submit } }, [
-                          _vm._v("Gửi")
-                        ])
+                        _c(
+                          "v-card-actions",
+                          { staticClass: "ml-5" },
+                          [
+                            _c("v-btn", { on: { click: _vm.clear } }, [
+                              _vm._v("Đóng")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "ml-4 green accent-4 white--text",
+                                on: { click: _vm.submit }
+                              },
+                              [_vm._v("Gửi")]
+                            )
+                          ],
+                          1
+                        )
                       ],
                       1
                     )
@@ -41158,9 +41182,11 @@ var render = function() {
                       _c(
                         "v-card",
                         [
-                          _c("v-card-title", { staticClass: "headline ml-1" }, [
-                            _vm._v("Thông báo !")
-                          ]),
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline ml-1 " },
+                            [_vm._v("Thông báo !")]
+                          ),
                           _vm._v(" "),
                           _c("v-card-text", [
                             _vm._v("Bạn đã thay đổi mật khẩu thành công")
@@ -45072,7 +45098,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://selling-books.local";
+var host = "http://sellingbookstore.test";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

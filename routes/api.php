@@ -63,6 +63,7 @@ Route::get('/authors', 'PageController@getAuthors');
 Route::get('/authors/{slug}', 'PageController@getInfoAuthor');
 Route::get('/categories', 'PageController@getCategoies');
 Route::get('/categories/{slug}', 'PageController@getInfoCategory');
+Route::get('/tags', 'PageController@getTags');
 Route::get('/tags/{slug}', 'PageController@tagInfo');
 
 Route::post('/sendmail', 'PageController@sendMailResetPassword');
