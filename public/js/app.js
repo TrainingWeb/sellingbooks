@@ -36185,6 +36185,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36196,6 +36200,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       timeout: 3000,
       headers: [{
         text: "Sản phẩm",
+        align: "left",
+        sortable: false,
+        value: "name"
+      }, {
+        text: "Số lượng",
         align: "left",
         sortable: false,
         value: "name"
@@ -36793,6 +36802,20 @@ var render = function() {
                                               _vm._v(" "),
                                               _c(
                                                 "td",
+                                                { staticClass: "py-4" },
+                                                [
+                                                  _c("strong", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        props.item.quantity
+                                                      )
+                                                    )
+                                                  ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
                                                 {
                                                   staticClass: "text-xs-right"
                                                 },
@@ -36815,6 +36838,8 @@ var render = function() {
                                         _c("td", [
                                           _c("strong", [_vm._v("Thanh toán")])
                                         ]),
+                                        _vm._v(" "),
+                                        _c("td"),
                                         _vm._v(" "),
                                         _c(
                                           "td",
@@ -37561,12 +37586,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialogDel: false,
       snackbarlogin: false,
+      snackbarloginCheck: false,
       breadcrumbs: [{
         name: "Trang Chủ",
         url: "/",
@@ -37612,9 +37643,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     checkout: function checkout() {
       if (!this.$store.state.token) {
         this.snackbarlogin = true;
-      }
-      if (!this.$store.state.card) {
-        this.snackbarlogin = true;
+      } else if (this.$store.state.cart.length === 0) {
+        this.snackbarloginCheck = true;
       } else {
         window.location = "#/check-out";
       }
@@ -37974,9 +38004,7 @@ var render = function() {
             [
               !_vm.$store.state.token
                 ? _c("span", [_vm._v(" Vui lòng hoặc đăng ký tài khoản")])
-                : !_vm.$store.state.card
-                  ? _c("span", [_vm._v(" Giỏ hàng của bạn trống")])
-                  : _vm._e(),
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "v-btn",
@@ -37985,6 +38013,37 @@ var render = function() {
                   nativeOn: {
                     click: function($event) {
                       _vm.snackbarlogin = false
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("clear")])],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: { timeout: 4000, top: "", color: "green accent-4" },
+              model: {
+                value: _vm.snackbarloginCheck,
+                callback: function($$v) {
+                  _vm.snackbarloginCheck = $$v
+                },
+                expression: "snackbarloginCheck"
+              }
+            },
+            [
+              _vm._v("\n        Giỏ hàng trống\n      "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { flat: "", icon: "", color: "white" },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.snackbarloginCheck = false
                     }
                   }
                 },
