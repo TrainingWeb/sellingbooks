@@ -37576,6 +37576,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37626,6 +37627,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     checkout: function checkout() {
       if (!this.$store.state.token) {
+        this.snackbarlogin = true;
+      }
+      if (!this.$store.state.card) {
         this.snackbarlogin = true;
       } else {
         window.location = "#/check-out";
@@ -37984,7 +37988,14 @@ var render = function() {
               }
             },
             [
-              _vm._v("\n     Vui lòng hoặc đăng ký tài khoản\n    "),
+              !_vm.$store.state.token
+                ? _c("span", [_vm._v(" Vui lòng hoặc đăng ký tài khoản")])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.$store.state.card
+                ? _c("span", [_vm._v(" Giỏ hàng của bạn trống")])
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-btn",
                 {
