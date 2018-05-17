@@ -30,7 +30,9 @@
           <v-dialog v-model="dialogResetPassword" persistent max-width="290">
             <v-card>
               <v-card-title class="headline ml-1 ">Thông báo !</v-card-title>
-              <v-card-text>Bạn đã thay đổi mật khẩu thành công</v-card-text>
+               <v-card-text v-if="status==false">Mã của bạn đã hết hạn hoặc không đúng</v-card-text>
+              <v-card-text v-else>Bạn đã thay đổi mật khẩu thành công
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" flat @click.native="dialogResetPassword = false" to="/">Đóng</v-btn>
@@ -62,7 +64,8 @@ export default {
     email: "",
     password: "",
     confirm_password: "",
-    e2: false
+    e2: false,
+    status:true,
   }),
   computed: {
     comparePasswords() {
@@ -84,9 +87,10 @@ export default {
             confirm_password: this.confirm_password
           })
           .then(response => {
-            // console.log(this.$route.query.token);
+            console.log(
+              response.data.status)
+              this.status=response.data.status
             this.dialogResetPassword = true;
-            // console.log("Reset_Password");
             this.data = response.data;
             this.$store.dispatch("setToken", this.data.api_token);
             this.$store.dispatch("setUser", this.data.user);

@@ -40997,7 +40997,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -41010,6 +41010,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
 //
 //
 //
@@ -41076,7 +41078,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       email: "",
       password: "",
       confirm_password: "",
-      e2: false
+      e2: false,
+      status: true
     };
   },
   computed: {
@@ -41097,9 +41100,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           password: this.password,
           confirm_password: this.confirm_password
         }).then(function (response) {
-          // console.log(this.$route.query.token);
+          console.log(response.data.status);
+          _this.status = response.data.status;
           _this.dialogResetPassword = true;
-          // console.log("Reset_Password");
           _this.data = response.data;
           _this.$store.dispatch("setToken", _this.data.api_token);
           _this.$store.dispatch("setUser", _this.data.user);
@@ -41295,9 +41298,15 @@ var render = function() {
                             [_vm._v("Thông báo !")]
                           ),
                           _vm._v(" "),
-                          _c("v-card-text", [
-                            _vm._v("Bạn đã thay đổi mật khẩu thành công")
-                          ]),
+                          _vm.status == false
+                            ? _c("v-card-text", [
+                                _vm._v("Mã của bạn đã hết hạn hoặc không đúng")
+                              ])
+                            : _c("v-card-text", [
+                                _vm._v(
+                                  "Bạn đã thay đổi mật khẩu thành công\n            "
+                                )
+                              ]),
                           _vm._v(" "),
                           _c(
                             "v-card-actions",
