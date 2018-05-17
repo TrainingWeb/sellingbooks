@@ -36164,6 +36164,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36171,6 +36210,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       dialog: false,
       snackbar: false,
       snackbarcheck: false,
+      dialogEdit: false,
       timeout: 3000,
       headers: [{
         text: "Sản phẩm",
@@ -36208,7 +36248,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         url: "/about",
         disabled: true
       }],
-      namepage: "Kiểm tra đơn hàng"
+      namepage: "Kiểm tra đơn hàng",
+      editedItem: {}
     };
   },
   methods: {
@@ -36216,6 +36257,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (this.$refs.form.validate()) {
         this.dialog = true;
       }
+    },
+    editUser: function editUser() {
+      this.dialogEdit = true;
+      this.editedIndex = this.$store.state.user;
+      this.editedItem = Object.assign({}, this.editedIndex);
     },
     userOrder: function userOrder() {
       var _this = this;
@@ -36239,15 +36285,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).catch(function (error) {
             console.log(error);
           });
-
-          window.axios.post("/check-info", {
-            name: this.name,
-            phone: this.phone,
-            address: this.address
-          }).then(function (response) {}).catch(function (error) {
-            console.log(error);
-          });
-          window.location = "#/";
+          if (this.$store.state.user.phone) {
+            window.axios.post("/check-info", {
+              name: this.$store.state.user.name,
+              phone: this.$store.state.user.phone,
+              address: this.$store.state.user.address
+            }).then(function (response) {}).catch(function (error) {
+              console.log(error);
+            });
+            window.location = "#/";
+          } else {
+            window.axios.post("/check-info", {
+              name: this.$store.state.user.name,
+              phone: this.phone,
+              address: this.address
+            }).then(function (response) {}).catch(function (error) {
+              console.log(error);
+            });
+            window.location = "#/";
+          }
         }
       } else {
         this.snackbarcheck = true;
@@ -36364,34 +36420,330 @@ var render = function() {
                                             }
                                           }),
                                           _vm._v(" "),
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              mask: "phone",
-                                              rules: _vm.emailRules,
-                                              label: "Số điện thoại"
-                                            },
-                                            model: {
-                                              value: _vm.phone,
-                                              callback: function($$v) {
-                                                _vm.phone = $$v
+                                          _vm.$store.state.user.phone
+                                            ? [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    value:
+                                                      _vm.$store.state.user
+                                                        .phone,
+                                                    mask: "phone",
+                                                    rules: _vm.emailRules,
+                                                    label: "Số điện thoại",
+                                                    disabled: ""
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    rules: _vm.addressRules,
+                                                    value:
+                                                      _vm.$store.state.user
+                                                        .address,
+                                                    label: "Địa chỉ",
+                                                    disabled: ""
+                                                  }
+                                                })
+                                              ]
+                                            : [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    mask: "phone",
+                                                    rules: _vm.emailRules,
+                                                    label: "Số điện thoại"
+                                                  },
+                                                  model: {
+                                                    value: _vm.phone,
+                                                    callback: function($$v) {
+                                                      _vm.phone = $$v
+                                                    },
+                                                    expression: "phone"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    rules: _vm.addressRules,
+                                                    label: "Địa chỉ"
+                                                  },
+                                                  model: {
+                                                    value: _vm.address,
+                                                    callback: function($$v) {
+                                                      _vm.address = $$v
+                                                    },
+                                                    expression: "address"
+                                                  }
+                                                })
+                                              ]
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-layout",
+                                        {
+                                          attrs: {
+                                            row: "",
+                                            "justify-center": ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-dialog",
+                                            {
+                                              attrs: {
+                                                persistent: "",
+                                                "max-width": "500px"
                                               },
-                                              expression: "phone"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.addressRules,
-                                              label: "Địa chỉ"
+                                              model: {
+                                                value: _vm.dialogEdit,
+                                                callback: function($$v) {
+                                                  _vm.dialogEdit = $$v
+                                                },
+                                                expression: "dialogEdit"
+                                              }
                                             },
-                                            model: {
-                                              value: _vm.address,
-                                              callback: function($$v) {
-                                                _vm.address = $$v
-                                              },
-                                              expression: "address"
-                                            }
-                                          })
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    slot: "activator",
+                                                    dark: "",
+                                                    color: "green accent-4"
+                                                  },
+                                                  on: { click: _vm.editUser },
+                                                  slot: "activator"
+                                                },
+                                                [_vm._v("Chỉnh Sửa")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-card",
+                                                [
+                                                  _c(
+                                                    "v-toolbar",
+                                                    {
+                                                      attrs: {
+                                                        color: "green accent-4",
+                                                        dark: ""
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("v-toolbar-title", [
+                                                        _vm._v(
+                                                          "Chỉnh sửa thông tin"
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-text",
+                                                    [
+                                                      _c(
+                                                        "v-container",
+                                                        {
+                                                          attrs: {
+                                                            "grid-list-md": ""
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-layout",
+                                                            {
+                                                              attrs: {
+                                                                wrap: ""
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-flex",
+                                                                {
+                                                                  attrs: {
+                                                                    xs12: ""
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "v-text-field",
+                                                                    {
+                                                                      attrs: {
+                                                                        label:
+                                                                          "Tên",
+                                                                        required:
+                                                                          ""
+                                                                      },
+                                                                      model: {
+                                                                        value:
+                                                                          _vm
+                                                                            .editedItem
+                                                                            .name,
+                                                                        callback: function(
+                                                                          $$v
+                                                                        ) {
+                                                                          _vm.$set(
+                                                                            _vm.editedItem,
+                                                                            "name",
+                                                                            $$v
+                                                                          )
+                                                                        },
+                                                                        expression:
+                                                                          "editedItem.name"
+                                                                      }
+                                                                    }
+                                                                  )
+                                                                ],
+                                                                1
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-flex",
+                                                                {
+                                                                  attrs: {
+                                                                    xs12: ""
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "v-text-field",
+                                                                    {
+                                                                      attrs: {
+                                                                        label:
+                                                                          "Số điện thoại",
+                                                                        required:
+                                                                          ""
+                                                                      },
+                                                                      model: {
+                                                                        value:
+                                                                          _vm
+                                                                            .editedItem
+                                                                            .phone,
+                                                                        callback: function(
+                                                                          $$v
+                                                                        ) {
+                                                                          _vm.$set(
+                                                                            _vm.editedItem,
+                                                                            "phone",
+                                                                            $$v
+                                                                          )
+                                                                        },
+                                                                        expression:
+                                                                          "editedItem.phone"
+                                                                      }
+                                                                    }
+                                                                  )
+                                                                ],
+                                                                1
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-flex",
+                                                                {
+                                                                  attrs: {
+                                                                    xs12: ""
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c(
+                                                                    "v-text-field",
+                                                                    {
+                                                                      attrs: {
+                                                                        label:
+                                                                          "Địa chỉ",
+                                                                        required:
+                                                                          ""
+                                                                      },
+                                                                      model: {
+                                                                        value:
+                                                                          _vm
+                                                                            .editedItem
+                                                                            .address,
+                                                                        callback: function(
+                                                                          $$v
+                                                                        ) {
+                                                                          _vm.$set(
+                                                                            _vm.editedItem,
+                                                                            "address",
+                                                                            $$v
+                                                                          )
+                                                                        },
+                                                                        expression:
+                                                                          "editedItem.address"
+                                                                      }
+                                                                    }
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            ],
+                                                            1
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("small", [
+                                                        _vm._v(
+                                                          "*indicates required field"
+                                                        )
+                                                      ])
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-card-actions",
+                                                    [
+                                                      _c("v-spacer"),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            color:
+                                                              "blue darken-1",
+                                                            flat: ""
+                                                          },
+                                                          nativeOn: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.dialogEdit = false
+                                                            }
+                                                          }
+                                                        },
+                                                        [_vm._v("Hủy ")]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-btn",
+                                                        {
+                                                          attrs: {
+                                                            color:
+                                                              "blue darken-1",
+                                                            flat: ""
+                                                          },
+                                                          nativeOn: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              _vm.dialogEdit = false
+                                                            }
+                                                          }
+                                                        },
+                                                        [_vm._v("Lưu")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
                                         ],
                                         1
                                       )
@@ -38246,6 +38598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     window.axios.get("/get-favorite-books").then(function (response) {
       _this2.favoriteBook = response.data.books.data;
+      console.log(response.data.books.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -39185,7 +39538,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     window.axios.get("/authors/" + this.$route.query.type + "?" + (this.$route.query.sort ? "sort=" + this.$route.query.sort : "") + (this.$route.query.page ? "&&page=" + this.$route.query.page : "")).then(function (response) {
       if (!response.data.Message) {
         _this4.listauthor = response.data.books;
-        console.log(response.data.Message);
+        console.log(response.data.books);
         _this4.author = response.data.data.name;
         _this4.breadcrumbs[1].name = "" + _this4.author;
         _this4.panigation.page = response.data.books.current_page;
@@ -41773,6 +42126,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -41783,6 +42142,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       valid: true,
       validRegiter: true,
       snackbarResgiter: false,
+      snackbarcheck: false,
       name: "",
       nameRules: [function (v) {
         return !!v || "Tên là bắt buộc";
@@ -41844,6 +42204,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }).catch(function (error) {
           console.log(error);
         });
+      }
+    },
+    checkFavorite: function checkFavorite() {
+      if (!this.$store.state.token) {
+        this.snackbarcheck = true;
+      } else {
+        window.location = "#/favorite";
       }
     },
     logout: function logout() {
@@ -41972,9 +42339,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n              0123 456 789 " +
-                                  _vm._s(_vm.data.message) +
-                                  "\n            "
+                                "\n              0123 456 789 \n            "
                               )
                             ]
                           )
@@ -42596,7 +42961,10 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-btn",
-                            { attrs: { flat: "", to: "/favorite" } },
+                            {
+                              attrs: { flat: "" },
+                              on: { click: _vm.checkFavorite }
+                            },
                             [
                               _c(
                                 "v-badge",
@@ -43471,7 +43839,40 @@ var render = function() {
               attrs: { flat: "", icon: "", color: "white" },
               nativeOn: {
                 click: function($event) {
-                  _vm.snackbarlogin = false
+                  _vm.snackbarResgiter = false
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("clear")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: 4000, top: "", color: "green accent-4" },
+          model: {
+            value: _vm.snackbarcheck,
+            callback: function($$v) {
+              _vm.snackbarcheck = $$v
+            },
+            expression: "snackbarcheck"
+          }
+        },
+        [
+          _vm._v(
+            "\n      Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn\n    "
+          ),
+          _c(
+            "v-btn",
+            {
+              attrs: { flat: "", icon: "", color: "white" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.snackbarcheck = false
                 }
               }
             },
@@ -44706,9 +45107,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         window.axios.post("/add-favorite/" + this.book.id, {
           id_book: this.book.id
         }).then(function (response) {
-          var favorite = _this.$store.state.favorite;
-          favorite.push(_this.book);
-          _this.$store.dispatch("setFavorite", favorite);
           _this.snackbarFavorite = true;
         }).catch(function (error) {
           console.log(error);
