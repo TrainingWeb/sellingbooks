@@ -117,7 +117,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="timeout" top v-model="snackbarcheck" color="green accent-4">
-      Vui lòng đăng nhập hoặc đăng kí để nhập hàng
+      Vui lòng đăng nhập hoặc đăng kí để nhập hàngđffdf
       <v-btn flat icon color="white" @click.native="snackbar = false">
         <v-icon>clear</v-icon>
       </v-btn>

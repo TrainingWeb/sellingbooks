@@ -37021,7 +37021,9 @@ var render = function() {
           }
         },
         [
-          _vm._v("\n    Vui lòng đăng nhập hoặc đăng kí để nhập hàng\n    "),
+          _vm._v(
+            "\n    Vui lòng đăng nhập hoặc đăng kí để nhập hàngđffdf\n    "
+          ),
           _c(
             "v-btn",
             {
@@ -37972,11 +37974,9 @@ var render = function() {
             [
               !_vm.$store.state.token
                 ? _c("span", [_vm._v(" Vui lòng hoặc đăng ký tài khoản")])
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.$store.state.card
-                ? _c("span", [_vm._v(" Giỏ hàng của bạn trống")])
-                : _vm._e(),
+                : !_vm.$store.state.card
+                  ? _c("span", [_vm._v(" Giỏ hàng của bạn trống")])
+                  : _vm._e(),
               _vm._v(" "),
               _c(
                 "v-btn",
@@ -45707,7 +45707,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

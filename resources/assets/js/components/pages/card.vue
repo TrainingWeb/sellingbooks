@@ -74,7 +74,7 @@
       </v-layout>
       <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
         <span v-if="!$store.state.token"> Vui lòng hoặc đăng ký tài khoản</span>
-        <span v-if="!$store.state.card"> Giỏ hàng của bạn trống</span>
+        <span v-else-if="!$store.state.card"> Giỏ hàng của bạn trống</span>
         <v-btn flat icon color="white" @click.native="snackbarlogin = false">
           <v-icon>clear</v-icon>
         </v-btn>
