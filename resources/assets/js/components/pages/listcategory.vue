@@ -3,7 +3,7 @@
     <v-layout xs12>
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
-    <v-container>
+    <v-container v-if="listCatagory">
       <v-layout row wrap>
         <v-flex xs12 md3 class="pl-3 pb-3">
           <v-select :items="filter" item-text="text" return-object v-model="filter_listCatagory" label="--Chọn--" single-line></v-select>
@@ -21,6 +21,9 @@
           <v-pagination :length="panigation.length" v-model="panigation.page" @input="next" :total-visible="7"></v-pagination>
         </div>
       </template>
+    </v-container>
+    <v-container v-else>
+      <h1 class="py-5">Không có tác phẩm nào thuộc danh mục này</h1>
     </v-container>
   </div>
 </template>
@@ -81,6 +84,19 @@ export default {
   watch: {
     "$route.query.type"(val) {
       this.breadcrumbs[1].name = `${this.$route.query.type}`;
+      window.axios
+        .get(
+          "/categories/" +
+            this.$route.query.type +
+            "?page=" +
+            val +
+            (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+        )
+        .then(res => {
+          this.listCatagory = res.data.data;
+          this.panigation.page = res.data.current_page;
+          this.panigation.length = res.data.last_page;
+        });
     },
     "$route.query.page"(val) {
       if (val) {
@@ -89,7 +105,9 @@ export default {
             "/categories/" +
               this.$route.query.type +
               "?page=" +
-              val +
+              (this.$route.query.page
+                ? "&&page=" + this.$route.query.page
+                : "") +
               (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
           )
           .then(res => {
@@ -98,7 +116,6 @@ export default {
             this.panigation.length = res.data.books.last_page;
           });
       }
-      console.log("chuyển axios thành công");
     },
     "$route.query.sort"(val) {
       if (val) {

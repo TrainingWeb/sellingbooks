@@ -25,7 +25,7 @@
                   </v-toolbar>
                   <v-divider></v-divider>
                   <v-container>
-                    <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-form ref="formlogin" v-model="valid" lazy-validation>
                       <v-flex xs12>
                         <v-text-field label="Họ và tên" :rules="nameRules" v-model="emailLogin"></v-text-field>
                       </v-flex>
@@ -37,7 +37,7 @@
                         <router-link flat to="/forgotpassword"> Quên mật khẩu?</router-link>
                       </v-card-actions>
                       <div>
-                        <v-card-actions class="mt-5">
+                        <v-card-actions class="mt-4">
                           <v-spacer></v-spacer>
                           <v-btn color="green accent-4" dark @click="loginpage">
                             Đăng nhập
@@ -53,12 +53,12 @@
               <v-menu fluid v-model="register" bottom offset-y :max-width="400" :close-on-content-click="false">
                 <v-btn flat slot="activator" class="white">Đăng Ký</v-btn>
                 <v-card flat>
-                  <v-list class="green accent-4 white--text text-xs-center">
-                    <span>ĐĂNG KÝ</span>
-                  </v-list>
+                  <v-toolbar color="green accent-4" dark>
+                    <v-toolbar-title>Đăng ký</v-toolbar-title>
+                  </v-toolbar>
                   <v-divider></v-divider>
                   <v-container>
-                    <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-form ref="formRegister" v-model="validRegiter" lazy-validation>
                       <v-flex xs12>
                         <v-text-field v-model="name" :rules="nameRules" label="Tên" required></v-text-field>
                       </v-flex>
@@ -69,10 +69,13 @@
                         <v-text-field v-model="passRegister" required label="Mật khẩu" :rules="passRules" :append-icon="e2 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e2 = !e2)" :type="e2 ? 'password' : 'text'"></v-text-field>
                       </v-flex>
                       <div>
-                        <v-btn flat>Đóng</v-btn>
-                        <v-btn :disabled="!valid" @click="registerUser">
-                          Đăng ký
-                        </v-btn>
+                        <v-card-actions>
+
+                          <v-spacer></v-spacer>
+                          <v-btn color="green accent-4" dark @click="registerUser">
+                            Đăng ký
+                          </v-btn>
+                        </v-card-actions>
                       </div>
                     </v-form>
                   </v-container>
@@ -299,7 +302,15 @@
       </v-card>
     </v-footer>
     <v-snackbar :timeout="4000" top v-model="snackbarlogin" color="green accent-4">
-      Đăng nhập thành công
+      <span v-if="$store.state.token"> Đăng nhập thành công</span>
+      <span v-else> Email hoặc mật khẩu không đúng</span>
+      <v-btn flat icon color="white" @click.native="snackbarlogin = false">
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
+    <v-snackbar :timeout="4000" top v-model="snackbarResgiter" color="green accent-4">
+      <span v-if="$store.state.user"> Đăng ký thành công</span>
+      <span v-else>Tài khoản này đã tồn tại</span>
       <v-btn flat icon color="white" @click.native="snackbarlogin = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -312,13 +323,16 @@ import axios from "axios";
 export default {
   data: () => ({
     valid: true,
+    validRegiter: true,
+    snackbarResgiter: false,
     name: "",
     nameRules: [v => !!v || "Tên là bắt buộc"],
     passLogin: "",
     passRegister: "",
-    passRules: [v => !!v || "Mật khẩu là bắt buộc"],
     emailRegister: "",
     emailLogin: "",
+    passRules: [v => !!v || "Mật khẩu là bắt buộc"],
+    nameRules: [v => !!v || "Tên là bắt buộc"],
     emailRules: [
       v => !!v || "E-mail là bắt buộc",
       v =>
@@ -386,7 +400,7 @@ export default {
       this.search = "";
     },
     loginpage() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.formlogin.validate()) {
         window.axios
           .post("/login", {
             email: this.emailLogin,
@@ -394,6 +408,7 @@ export default {
           })
           .then(response => {
             let data = response.data;
+            console.log(response.data);
             if (data.user) {
               this.$store.dispatch("setToken", data.api_token);
               this.$store.dispatch("setUser", data.user);
@@ -402,15 +417,15 @@ export default {
               this.passLogin = "";
               this.login = false;
             } else {
-              let message = "sai";
+              this.snackbarlogin = true;
             }
           })
-
           .catch(function(error) {
             console.log(error);
           });
       }
     },
+
     logout() {
       let user = this.$store.state.user;
       let token = this.$store.state.token;
@@ -423,21 +438,25 @@ export default {
       this.$store.dispatch("setCart", cart);
     },
     registerUser() {
-      window.axios
-        .post("/register", {
-          name: this.name,
-          email: this.emailRegister,
-          password: this.passRegister
-        })
-        .then(response => {
-          this.data = response.data;
-          this.$store.dispatch("setToken", this.data.api_token);
-          this.$store.dispatch("setUser", this.data.user);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      this.register = false;
+      if (this.$refs.formRegister.validate()) {
+        window.axios
+          .post("/register", {
+            name: this.name,
+            email: this.emailRegister,
+            password: this.passRegister
+          })
+          .then(response => {
+            this.data = response.data;
+            console.log(response.data);
+            this.$store.dispatch("setToken", this.data.api_token);
+            this.$store.dispatch("setUser", this.data.user);
+            this.snackbarResgiter = true;
+            this.register = false;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     }
   },
   computed: {
@@ -448,12 +467,13 @@ export default {
       }, 0);
     }
   },
+
   mounted() {
+    //
     window.axios
       .get("/index")
       .then(response => {
         this.dataApp = response.data.data;
-        console.log(this.dataApp);
       })
       .catch(function(error) {
         console.log(error);

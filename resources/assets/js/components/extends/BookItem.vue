@@ -102,6 +102,9 @@ export default {
             id_book: this.book.id
           })
           .then(response => {
+            let favorite = this.$store.state.favorite;
+            favorite.push(this.book);
+            this.$store.dispatch("setFavorite", favorite);
             this.snackbarFavorite = true;
           })
           .catch(function(error) {

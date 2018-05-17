@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://selling-books.local'),
+    'url' => env('APP_URL', 'http://sellingbooks.local'),
 
     /*
     |--------------------------------------------------------------------------

@@ -17,9 +17,7 @@
                       <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
                       <v-text-field v-model="phone" mask="phone" :rules="emailRules" label="Số điện thoại"></v-text-field>
                       <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
-                      <v-btn @click="userOrder" dark color="green accent-4">
-                        Lưu
-                      </v-btn>
+
                     </v-form>
                   </v-container>
                 </v-card>
@@ -32,7 +30,6 @@
                     <template slot="items" slot-scope="props">
                       <td class="py-4">
                         <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
-
                       </td>
                       <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
                     </template>
@@ -46,20 +43,22 @@
                     </template>
                   </v-data-table>
                   <div class="my-3 text-xs-right ">
-                    <v-btn @click="oder" dark color="green accent-4">
+                    <v-btn slot="activator" @click="openDialog" dark color="green accent-4">
                       thanh toán
                     </v-btn>
                     <v-layout row justify-center>
-                      <v-dialog v-model="dialogDel" max-width="290">
+                      <v-dialog v-model="dialog" persistent max-width="300">
                         <v-card>
                           <v-toolbar color="green accent-4" dark>
                             <v-toolbar-title>Thông báo</v-toolbar-title>
                           </v-toolbar>
-                          <v-card-text>Bạn đã đặt hàng thành công<br>
+                          <v-card-text>
+                            Bạn có muốn đặt hàng
                           </v-card-text>
                           <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="green accent-4" flat="flat" @click="dialogDel = false">OK</v-btn>
+                            <v-btn color="green accent-4" flat @click="dialog = false">Hủy</v-btn>
+                            <v-btn color="green accent-4" flat @click="userOrder">OK</v-btn>
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
@@ -73,7 +72,7 @@
       </v-flex>
     </v-container>
     <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
-      Lưu thông tin thành công
+      Đặt hàng thành công
       <v-btn flat icon color="white" @click.native="snackbar = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -89,7 +88,7 @@
 <script>
 export default {
   data: () => ({
-    dialogDel: false,
+    dialog: false,
     snackbar: false,
     snackbarcheck: false,
     timeout: 3000,
@@ -133,27 +132,12 @@ export default {
     namepage: "Kiểm tra đơn hàng"
   }),
   methods: {
-    userOrder() {
-      if (this.$store.state.token) {
-        if (this.$refs.form.validate()) {
-          window.axios
-            .post("/check-info", {
-              name: this.name,
-              phone: this.phone,
-              address: this.address
-            })
-            .then(response => {
-              this.snackbar = true;
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-        }
-      } else {
-        this.snackbarcheck = true;
+    openDialog() {
+      if (this.$refs.form.validate()) {
+        this.dialog = true;
       }
     },
-    oder() {
+    userOrder() {
       if (this.$store.state.token) {
         if (this.$refs.form.validate()) {
           let book = this.$store.state.cart;
@@ -169,14 +153,25 @@ export default {
               quantity: qty
             })
             .then(response => {
+              this.dialog = true;
               this.$store.state.cart = [];
-              this.$store.dispatch("setCart", cart);
-              this.dialogDel = true;
-              window.location = `#/`;
+              this.$store.dispatch("setCart", this.$store.state.cart);
             })
             .catch(function(error) {
               console.log(error);
             });
+
+          window.axios
+            .post("/check-info", {
+              name: this.name,
+              phone: this.phone,
+              address: this.address
+            })
+            .then(response => {})
+            .catch(function(error) {
+              console.log(error);
+            });
+          window.location = "#/";
         }
       } else {
         this.snackbarcheck = true;

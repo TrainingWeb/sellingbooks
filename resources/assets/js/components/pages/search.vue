@@ -70,6 +70,23 @@ export default {
     }
   }),
   watch: {
+    "$route.query.name"(val) {
+      this.breadcrumbs[1].name = `${this.$route.query.name}`;
+      this.namepage = `Kết quả tìm kiếm: ${this.$route.query.name}`;
+      window.axios
+        .get(
+          "/search?name=" +
+            this.$route.query.name +
+            "&page=" +
+            (this.$route.query.page ? "&&page=" + this.$route.query.page : "") +
+            (this.$route.query.sort ? "&&sort=" + this.$route.query.sort : "")
+        )
+        .then(res => {
+          this.search = res.data.data;
+          this.panigation.page = res.data.current_page;
+          this.panigation.length = res.data.last_page;
+        });
+    },
     "$route.query.page"(val) {
       if (val) {
         window.axios
