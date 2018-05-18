@@ -268,8 +268,8 @@
     <!--  -->
     <v-footer height="auto">
       <v-card flat tile class="flex">
-        <v-container class="justify-center">
-          <v-card-text class="white">
+        <v-container class="">
+          <v-card-text class="white footer">
             <v-layout row wrap>
               <v-flex xs12 sm6 lg3>
                 <img class="mb-3" width="180" src="storage/images/logo_green.png">
