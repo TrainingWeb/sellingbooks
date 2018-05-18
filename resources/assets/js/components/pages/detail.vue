@@ -39,10 +39,10 @@
                           </div>
                           <v-divider class="my-3"></v-divider>
                           <div>
-                            <div class="seemore-description grey--text text--accent-4body-1">{{bookDetail.description}}</div>
-                            <a>
+                            <div class=" grey--text text--accent-4body-1">{{bookDetail.description}}</div>
+                            <!-- <a>
                               <span class="green--text text--accent-4">Xem thêm</span>
-                            </a>
+                            </a> -->
                           </div>
                           <v-divider class="my-3"></v-divider>
                           <div>
@@ -81,59 +81,42 @@
               </v-layout>
             </v-container>
           </v-card>
-          <v-tabs icons-and-text dark color="white" height="40px" class="my-4 ">
-            <v-tabs-slider color="green accent-4 "></v-tabs-slider>
-            <v-tab class="green accent-4 ml-4" href="#tab-1">
-              Chi tiết sản phẩm
-            </v-tab>
-            <v-tab class="green accent-4" href="#tab-2">
-              Nhận xét khách hàng
-            </v-tab>
-            <v-tabs-items class="ml-2">
-              <v-tab-item id="tab-1">
-                <v-card-text class="roboto">{{ bookDetail.description }}</v-card-text>
-              </v-tab-item>
-              <v-tab-item id="tab-2">
-                <v-card>
-                  <div class="mt-3 ml-3">
-                    <a class="grey--text text--darken-3 body-2">
-                      <span @click="loadComment(page)" label>Xem những nhận xét cũ hơn ></span>
-                    </a>
+          <div grid-list-xs class="my-3 ml-4">
+            <div class="headline grey--text text--darken-3 my-3 ">Nhận xét khách hàng</div>
+            <v-card class="mx-0">
+              <a class=" mt-3 body-2 green--text text--accent-4">
+                <span @click="loadComment(page)" label>Xem thêm...</span>
+              </a>
+              <v-list three-line>
+                <v-list-tile class="comment-tile" v-for="item in comments.data" avatar :key="item.title">
+                  <v-list-tile-avatar v-if="item.user.avatar">
+                    <img :src="'/storage/images/'+item.user.avatar">
+                  </v-list-tile-avatar>
+                  <v-list-tile-avatar v-else>
+                    <img :src="'/storage/images/author.jpg'">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="item.user.name"></v-list-tile-title>
+                    <v-list-tile-sub-title class="subtitleComment" v-html="item.content"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action class="pl-5">
+                    <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-layout row wrap>
+                  <v-text-field :append-icon="'near_me'" @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
+                  <div class="ml-0 mr-2">
+                    <v-snackbar :timeout="timeout" top v-model="snackbarComment" color="green accent-4">
+                      Vui lòng đăng nhập hoặc đăng ký trước khi nhận xét
+                      <v-btn flat icon color="white" @click.native="snackbarComment = false">
+                        <v-icon>clear</v-icon>
+                      </v-btn>
+                    </v-snackbar>
                   </div>
-                  <v-list three-line>
-                    <v-list-tile v-for="item in comments.data" avatar :key="item.title">
-                      <v-list-tile-avatar v-if="item.user.avatar">
-                        <img :src="'/storage/images/'+item.user.avatar">
-                      </v-list-tile-avatar>
-                      <v-list-tile-avatar v-else>
-                        <img :src="'/storage/images/author.jpg'">
-                      </v-list-tile-avatar>
-                      <v-list-tile-content>
-                        <v-list-tile-title v-html="item.user.name"></v-list-tile-title>
-                        <v-list-tile-sub-title class="subtitleComment" v-html="item.content"></v-list-tile-sub-title>
-                      </v-list-tile-content>
-                      <v-list-tile-action class="pl-5">
-                        <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
-                      </v-list-tile-action>
-                    </v-list-tile>
-                    <v-layout row wrap>
-                      <v-text-field class="ml-3" @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
-                      <div class="ml-0 mr-2">
-                        <v-btn @click="postComment" color="green accent-4 white--text">Gửi</v-btn>
-                        <v-snackbar :timeout="timeout" top v-model="snackbarComment" color="green accent-4">
-                          Vui lòng đăng nhập hoặc đăng ký trước khi nhận xét
-                          <v-btn flat icon color="white" @click.native="snackbarComment = false">
-                            <v-icon>clear</v-icon>
-                          </v-btn>
-                        </v-snackbar>
-                      </div>
-                    </v-layout>
-
-                  </v-list>
-                </v-card>
-              </v-tab-item>
-            </v-tabs-items>
-          </v-tabs>
+                </v-layout>
+              </v-list>
+            </v-card>
+          </div>
           <div grid-list-xs class="my-3 ml-4">
             <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
             <v-layout row wrap class="my-4 mx-0">
@@ -324,5 +307,9 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.list__tile {
+  padding: 0px;
 }
 </style>

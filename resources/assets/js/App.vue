@@ -11,7 +11,7 @@
               </span>
               <v-icon small class="green--text text--accent-4">smartphone</v-icon>
               <span class="caption grey--text  text--darken-1">
-                0123 456 789 
+                0123 456 789
               </span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -138,7 +138,7 @@
                   <v-icon color="grey">add_shopping_cart</v-icon>
                 </v-badge>
               </v-btn>
-              <v-btn flat @click="checkFavorite"  >
+              <v-btn flat @click="checkFavorite">
                 <v-badge color="indigo" class="p-0">
                   <span slot="badge" class="caption">{{$store.state.favorite.length}}</span>
                   <v-icon color="grey">favorite</v-icon>
@@ -265,8 +265,8 @@
     <!--  -->
     <v-footer height="auto">
       <v-card flat tile class="flex">
-        <v-container class="justify-center">
-          <v-card-text class="white">
+        <v-container class="">
+          <v-card-text class="white footer">
             <v-layout row wrap>
               <v-flex xs12 sm6 lg3>
                 <img class="mb-3" width="180" src="storage/images/logo_green.png">
@@ -320,7 +320,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="4000" top v-model="snackbarcheck" color="green accent-4">
-        Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn
+      Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn
       <v-btn flat icon color="white" @click.native="snackbarcheck = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -335,7 +335,7 @@ export default {
     valid: true,
     validRegiter: true,
     snackbarResgiter: false,
-    snackbarcheck:false,
+    snackbarcheck: false,
     name: "",
     nameRules: [v => !!v || "Tên là bắt buộc"],
     passLogin: "",
@@ -436,12 +436,11 @@ export default {
           });
       }
     },
-    checkFavorite(){
-      if(!this.$store.state.token){
-          this.snackbarcheck = true  
-      }
-      else{
-        window.location="#/favorite"
+    checkFavorite() {
+      if (!this.$store.state.token) {
+        this.snackbarcheck = true;
+      } else {
+        window.location = "#/favorite";
       }
     },
     logout() {
