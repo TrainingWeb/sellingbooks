@@ -94,7 +94,8 @@ export default {
             "https://www.fahasa.com/media/magentothem/banner7/NEW-ARRIVALS-915-33.png"
         },
         {
-          src: "https://www.fahasa.com/media/magentothem/banner7/huyhoang-915.jpg"
+          src:
+            "https://www.fahasa.com/media/magentothem/banner7/huyhoang-915.jpg"
         }
       ]
     };

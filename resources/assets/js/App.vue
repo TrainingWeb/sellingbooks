@@ -89,8 +89,9 @@
                 </v-avatar> -->
                 <v-menu :close-on-content-click="false" :nudge-width="150" v-model="infoUser" offset-x>
                   <v-btn flat icon slot="activator">
-                    <v-icon>account_circle</v-icon>
+                    <v-icon>account_circle</v-icon> 
                   </v-btn>
+                
                   <v-card class="text-xs-center">
                     <v-card-text class="text-xs-center">
                       <v-avatar class="mt-5" v-if="$store.state.user.avatar">
@@ -118,7 +119,9 @@
                     </v-card-actions>
                   </v-card>
                 </v-menu>
-
+                <span class="caption grey--text  text--darken-1">
+                     {{$store.state.user.name}}
+              </span>
               </v-toolbar-title>
             </template>
           </v-toolbar>
@@ -495,6 +498,20 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+    if (this.$store.state.token) {
+      window.axios
+        .get("/get-favorite-books")
+        .then(response => {
+          this.favoriteBook = response.data.books.data;
+          console.log(this.favoriteBook);
+          console.log("------", response.data.books.data);
+          let favorite = this.$store.state.favorite;
+          this.$store.dispatch("setFavorite", this.favoriteBook);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
   }
 };
 </script>

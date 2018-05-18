@@ -38190,8 +38190,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       page: 1,
       dialogDelete: false,
       snackbarCart: false,
-      timeout: 3000,
-      favoriteBook: []
+      timeout: 3000
     };
   },
   methods: {
@@ -38202,9 +38201,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     delFavorite: function delFavorite(index) {
       var _this = this;
 
-      window.axios.get("/removefavorite/" + this.favoriteBook[index].id).then(function (response) {
-        _this.favoriteBook.splice(index, 1);
+      console.log("--------index", index);
+      window.axios.get("/removefavorite/" + this.$store.state.favorite[index].id).then(function (response) {
+        var favorite = _this.$store.state.favorite;
+        favorite.splice(index, 1);
         _this.dialogDelete = false;
+        _this.$store.dispatch("setFavorite", favorite);
       }).catch(function (error) {
         console.log(error);
       });
@@ -38227,16 +38229,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$store.dispatch("setCart", cart);
       this.snackbarCart = true;
     }
-  },
-  mounted: function mounted() {
-    var _this2 = this;
-
-    window.axios.get("/get-favorite-books").then(function (response) {
-      _this2.favoriteBook = response.data.books.data;
-      console.log(response.data.books.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
   }
 });
 
@@ -38267,130 +38259,118 @@ var render = function() {
       _c(
         "v-container",
         [
-          _vm.favoriteBook
-            ? _c("v-data-table", {
-                attrs: {
-                  headers: _vm.headers,
-                  items: _vm.favoriteBook,
-                  "hide-actions": "",
-                  flat: ""
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "items",
-                    fn: function(props) {
-                      return [
-                        _c("tr", { staticClass: "py-1" }, [
+          _c("v-data-table", {
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.$store.state.favorite,
+              "hide-actions": "",
+              flat: ""
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c("tr", { staticClass: "py-1" }, [
+                      _c(
+                        "td",
+                        { staticClass: "text-xs-center layout px-0 py-5" },
+                        [
                           _c(
-                            "td",
-                            { staticClass: "text-xs-center layout px-0 py-5" },
+                            "v-layout",
+                            { attrs: { row: "", "justify-center": "" } },
                             [
                               _c(
-                                "v-layout",
-                                { attrs: { row: "", "justify-center": "" } },
+                                "v-dialog",
+                                {
+                                  attrs: {
+                                    flat: "",
+                                    persistent: "",
+                                    "max-width": "290"
+                                  },
+                                  model: {
+                                    value: _vm.dialogDelete,
+                                    callback: function($$v) {
+                                      _vm.dialogDelete = $$v
+                                    },
+                                    expression: "dialogDelete"
+                                  }
+                                },
                                 [
                                   _c(
-                                    "v-dialog",
+                                    "v-btn",
                                     {
-                                      attrs: {
-                                        flat: "",
-                                        persistent: "",
-                                        "max-width": "290"
-                                      },
-                                      model: {
-                                        value: _vm.dialogDelete,
-                                        callback: function($$v) {
-                                          _vm.dialogDelete = $$v
-                                        },
-                                        expression: "dialogDelete"
-                                      }
+                                      attrs: { slot: "activator", icon: "" },
+                                      slot: "activator"
                                     },
                                     [
                                       _c(
-                                        "v-btn",
+                                        "v-icon",
+                                        { attrs: { color: "red darken-4" } },
+                                        [_vm._v("clear")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card",
+                                    { attrs: { flat: "" } },
+                                    [
+                                      _c(
+                                        "v-card-title",
                                         {
-                                          attrs: {
-                                            slot: "activator",
-                                            icon: ""
-                                          },
-                                          slot: "activator"
+                                          staticClass:
+                                            "subheading ml-0 green accent-4 white--text"
                                         },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            {
-                                              staticClass:
-                                                "red--text text--darken-4"
-                                            },
-                                            [_vm._v("clear")]
-                                          )
-                                        ],
-                                        1
+                                        [_vm._v("Thông báo !")]
                                       ),
                                       _vm._v(" "),
                                       _c(
-                                        "v-card",
-                                        { attrs: { flat: "" } },
+                                        "v-card-text",
+                                        { staticClass: "body-1" },
                                         [
+                                          _vm._v(
+                                            "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-actions",
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
                                           _c(
-                                            "v-card-title",
+                                            "v-btn",
                                             {
-                                              staticClass:
-                                                "subheading ml-0 green accent-4 white--text"
+                                              attrs: {
+                                                color: "green darken-1",
+                                                flat: ""
+                                              },
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  _vm.dialogDelete = false
+                                                }
+                                              }
                                             },
-                                            [_vm._v("Thông báo !")]
+                                            [_vm._v("Hủy")]
                                           ),
                                           _vm._v(" "),
                                           _c(
-                                            "v-card-text",
-                                            { staticClass: "body-1" },
-                                            [
-                                              _vm._v(
-                                                "Bạn có muốn xóa sản phẩm khỏi trang yêu thích không?"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-card-actions",
-                                            [
-                                              _c("v-spacer"),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    color: "green darken-1",
-                                                    flat: ""
-                                                  },
-                                                  nativeOn: {
-                                                    click: function($event) {
-                                                      _vm.dialogDelete = false
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("Hủy")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    color: "green darken-1",
-                                                    flat: ""
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.delFavorite(
-                                                        props.index
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("Xóa")]
-                                              )
-                                            ],
-                                            1
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "green darken-1",
+                                                flat: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.delFavorite(props.index)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Xóa")]
                                           )
                                         ],
                                         1
@@ -38403,181 +38383,177 @@ var render = function() {
                               )
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "py-2" }, [
-                            _c("img", {
-                              attrs: {
-                                src: "/storage/images/" + props.item.image,
-                                alt: "",
-                                width: "80px",
-                                height: "120px"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "py-2" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/images/" + props.item.image,
+                            alt: "",
+                            width: "80px",
+                            height: "120px"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
                           _c(
-                            "td",
+                            "router-link",
+                            {
+                              staticClass:
+                                "subheading text-xs-left red--text text--darken-4",
+                              staticStyle: { "text-decoration": "none" },
+                              attrs: { to: "/detail" }
+                            },
                             [
+                              _vm._v(
+                                _vm._s(props.item.name) +
+                                  " " +
+                                  _vm._s(props.item.id) +
+                                  "\n            "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-xs-left" }, [
+                        props.item.promotion_price
+                          ? _c("div", [
                               _c(
-                                "router-link",
+                                "span",
                                 {
                                   staticClass:
-                                    "subheading text-xs-left red--text text--darken-4",
-                                  staticStyle: { "text-decoration": "none" },
-                                  attrs: { to: "/detail" }
+                                    "green--text text--accent-4 title "
                                 },
                                 [
                                   _vm._v(
-                                    _vm._s(props.item.name) +
-                                      " " +
-                                      _vm._s(props.item.id) +
-                                      "\n            "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-xs-left" }, [
-                            props.item.promotion_price
-                              ? _c("div", [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "green--text text--accent-4 title "
-                                    },
-                                    [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm.formatPrice(
-                                              props.item.promotion_price
-                                            )
-                                          ) +
-                                          "đ"
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "grey--text text--darken-1 title ml-3"
-                                    },
-                                    [
-                                      _c("del", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.formatPrice(props.item.price)
-                                          ) + "đ"
+                                    " " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          props.item.promotion_price
                                         )
-                                      ])
-                                    ]
+                                      ) +
+                                      "đ"
                                   )
-                                ])
-                              : _c("div", [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "green--text text--accent-4 title ml-3"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                " +
-                                          _vm._s(
-                                            _vm.formatPrice(props.item.price)
-                                          ) +
-                                          "đ\n              "
-                                      )
-                                    ]
-                                  )
-                                ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "mx-0 my-3",
-                                  attrs: {
-                                    color: "green accent-4 white--text"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.addCartPageFavorite(props.item)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass:
-                                        "material-icons add-shopping mr-2 white--text"
-                                    },
-                                    [_vm._v("add_shopping_cart")]
-                                  ),
-                                  _vm._v("Thêm\n            ")
                                 ]
                               ),
                               _vm._v(" "),
                               _c(
-                                "v-snackbar",
+                                "span",
                                 {
-                                  attrs: {
-                                    timeout: _vm.timeout,
-                                    top: "",
-                                    color: "green accent-4"
-                                  },
-                                  model: {
-                                    value: _vm.snackbarCart,
-                                    callback: function($$v) {
-                                      _vm.snackbarCart = $$v
-                                    },
-                                    expression: "snackbarCart"
-                                  }
+                                  staticClass:
+                                    "grey--text text--darken-1 title ml-3"
+                                },
+                                [
+                                  _c("del", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.price)
+                                      ) + "đ"
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "green--text text--accent-4 title ml-3"
                                 },
                                 [
                                   _vm._v(
-                                    "\n              Thêm vào giỏ hàng thành công\n              "
-                                  ),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        flat: "",
-                                        icon: "",
-                                        color: "white"
-                                      },
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.snackbarCart = false
-                                        }
-                                      }
-                                    },
-                                    [_c("v-icon", [_vm._v("clear")])],
-                                    1
+                                    "\n                " +
+                                      _vm._s(
+                                        _vm.formatPrice(props.item.price)
+                                      ) +
+                                      "đ\n              "
                                   )
-                                ],
+                                ]
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mx-0 my-3",
+                              attrs: { color: "green accent-4 white--text" },
+                              on: {
+                                click: function($event) {
+                                  _vm.addCartPageFavorite(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "i",
+                                {
+                                  staticClass:
+                                    "material-icons add-shopping mr-2 white--text"
+                                },
+                                [_vm._v("add_shopping_cart")]
+                              ),
+                              _vm._v("Thêm\n            ")
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-snackbar",
+                            {
+                              attrs: {
+                                timeout: _vm.timeout,
+                                top: "",
+                                color: "green accent-4"
+                              },
+                              model: {
+                                value: _vm.snackbarCart,
+                                callback: function($$v) {
+                                  _vm.snackbarCart = $$v
+                                },
+                                expression: "snackbarCart"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n              Thêm vào giỏ hàng thành công\n              "
+                              ),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { flat: "", icon: "", color: "white" },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      _vm.snackbarCart = false
+                                    }
+                                  }
+                                },
+                                [_c("v-icon", [_vm._v("clear")])],
                                 1
                               )
                             ],
                             1
                           )
-                        ])
-                      ]
-                    }
-                  }
-                ])
-              })
-            : _vm._e()
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                }
+              }
+            ])
+          })
         ],
         1
       )
@@ -41822,6 +41798,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -41953,6 +41932,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }).catch(function (error) {
       console.log(error);
     });
+    if (this.$store.state.token) {
+      window.axios.get("/get-favorite-books").then(function (response) {
+        _this3.favoriteBook = response.data.books.data;
+        console.log(_this3.favoriteBook);
+        console.log("------", response.data.books.data);
+        var favorite = _this3.$store.state.favorite;
+        _this3.$store.dispatch("setFavorite", _this3.favoriteBook);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -42595,6 +42585,21 @@ var render = function() {
                                     )
                                   ],
                                   1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "caption grey--text  text--darken-1"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                   " +
+                                        _vm._s(_vm.$store.state.user.name) +
+                                        "\n            "
+                                    )
+                                  ]
                                 )
                               ],
                               1
@@ -43621,7 +43626,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
     cart: [],
-    favorite: [],
+    favorite: {},
     token: null,
     user: {}
   },
@@ -43651,7 +43656,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       var commit = _ref2.commit;
 
       commit("SET_FAVORITE", val);
-      localStorage.favorite = JSON.stringify(val);
     },
     setToken: function setToken(_ref3, val) {
       var commit = _ref3.commit;
@@ -44712,6 +44716,8 @@ exports.push([module.i, "\n.link-book {\r\n  text-decoration: none;\r\n  color: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 //
 //
 //
@@ -44792,6 +44798,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   watch: {},
   methods: {
+    isLove: function isLove() {
+      var _this = this;
+
+      if (this.$store.state.favorite && this.$store.state.favorite.length > 0) return this.$store.state.favorite.find(function (item) {
+        console.log("--------------", item.id);
+
+        return item.id === _this.book.id;
+      });
+      return false;
+    },
     addCart: function addCart() {
       var cart = this.$store.state.cart;
       for (var index in cart) {
@@ -44811,16 +44827,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.snackbar = true;
     },
     addItemfavorite: function addItemfavorite() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.$store.state.token) {
-        window.axios.post("/add-favorite/" + this.book.id, {
-          id_book: this.book.id
-        }).then(function (response) {
-          _this.snackbarFavorite = true;
-        }).catch(function (error) {
-          console.log(error);
-        });
+        var index;
+
+        var _ret = function () {
+          var favorite = _this2.$store.state.favorite;
+          for (index in favorite) {
+            if (favorite[index].id === _this2.book.id) {
+              window.axios.get("/removefavorite/" + favorite[index].id).then(function (response) {
+                favorite.splice(index, 1);
+                _this2.love = false;
+                _this2.snackbarFavorite = true;
+                _this2.$store.dispatch("setFavorite", favorite);
+              }).catch(function (error) {
+                console.log(error);
+              });
+              return {
+                v: void 0
+              };
+            }
+          }
+          //
+          window.axios.post("/add-favorite/" + _this2.book.id, {
+            id_book: _this2.book.id
+          }).then(function (response) {
+            favorite.push(_this2.book);
+            _this2.$store.dispatch("setFavorite", favorite);
+            _this2.love = true;
+            _this2.snackbarFavorite = true;
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }();
+
+        if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
       } else {
         this.snackbarFavorite = true;
       }
@@ -44829,6 +44871,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+  },
+  mounted: function mounted() {
+    // let favorite = this.$store.state.favorite;
+    // if (favorite) {
+    //   console.log("---====---", favorite);
+    //   for (var index in favorite) {
+    //     if (favorite[index].id === this.book.id) {
+    //       this.love = true;
+    //       console.log("đã load qua");
+    //       return;
+    //     }
+    //   }
+    // }
   }
 });
 
@@ -44872,7 +44927,7 @@ var render = function() {
                       _c("v-card-media", {
                         attrs: {
                           src: "/storage/images/" + _vm.book.image,
-                          height: "205px"
+                          height: "200px"
                         }
                       })
                     ],
@@ -45076,15 +45131,17 @@ var render = function() {
                               }
                             },
                             [
-                              !_vm.love
-                                ? _c(
-                                    "v-icon",
-                                    { attrs: { color: "grey lighten-1" } },
-                                    [_vm._v("favorite")]
-                                  )
-                                : _c("v-icon", { attrs: { color: "red" } }, [
-                                    _vm._v("favorite")
-                                  ])
+                              _c(
+                                "v-icon",
+                                {
+                                  attrs: {
+                                    color: _vm.isLove()
+                                      ? "red"
+                                      : "grey lighten-1"
+                                  }
+                                },
+                                [_vm._v("favorite")]
+                              )
                             ],
                             1
                           ),
@@ -45106,15 +45163,23 @@ var render = function() {
                               }
                             },
                             [
-                              _vm.$store.state.token
+                              !_vm.$store.state.token
                                 ? _c("span", [
-                                    _vm._v("Thêm vào yêu thích thành công")
-                                  ])
-                                : _c("span", [
                                     _vm._v(
                                       "Vui lòng đăng nhập hoặc đăng ký tài khoản"
                                     )
-                                  ]),
+                                  ])
+                                : _vm.love === false
+                                  ? _c("span", [
+                                      _vm._v("Bỏ yêu thích thành công")
+                                    ])
+                                  : _vm._e(),
+                              _vm._v(" "),
+                              _vm.love === true
+                                ? _c("span", [
+                                    _vm._v("Thêm vào yêu thích thành công")
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
                                 "v-btn",
@@ -45246,7 +45311,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n}\n.url-br {\r\n  text-decoration: none !important;\n}\n.color-text a {\r\n  color: white !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.bgBnaner {\r\n  width: 100%;\n}\n.url-br {\r\n  text-decoration: none !important;\n}\n.color-text a {\r\n  color: white !important;\n}\r\n", ""]);
 
 // exports
 
@@ -45257,10 +45322,6 @@ exports.push([module.i, "\n.banner {\r\n  min-height: 350px;\r\n  width: 100%;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -45289,72 +45350,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-layout", { attrs: { xs12: "" } }, [
-    _c(
-      "div",
-      {
-        staticClass: "banner",
-        staticStyle: { "background-size": "cover" },
-        style: [{ "background-image": "url(storage/images/banner.jpg)" }]
-      },
-      [
-        _c(
-          "v-container",
-          { attrs: { fluid: "", "fill-height": "" } },
-          [
-            _c(
-              "v-layout",
-              { attrs: { "justify-center": "", "align-center": "" } },
-              [
-                _c(
-                  "v-flex",
-                  { attrs: { "text-xs-center": "" } },
-                  [
-                    _c("h1", { staticClass: "white--text display-2" }, [
-                      _vm._v(_vm._s(_vm.value.title))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "v-breadcrumbs",
-                      { attrs: { divider: "/", "justify-center": "" } },
-                      _vm._l(_vm.value.breadcrumbs, function(
-                        breadcrumb,
-                        index
-                      ) {
-                        return _c(
-                          "v-breadcrumbs-item",
-                          {
-                            key: "key-$" + index,
-                            staticClass: "color-text",
-                            attrs: { disabled: breadcrumb.disabled }
-                          },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "url-br",
-                                attrs: { to: breadcrumb.url }
-                              },
-                              [_vm._v(_vm._s(breadcrumb.name))]
-                            )
-                          ],
-                          1
-                        )
-                      })
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+  return _c(
+    "v-parallax",
+    {
+      staticClass: "bgBnaner",
+      attrs: { src: "storage/images/banner.jpg", height: "250" }
+    },
+    [
+      _c(
+        "v-layout",
+        { attrs: { column: "", "align-center": "", "justify-center": "" } },
+        [
+          _c("h1", { staticClass: "white--text display-2" }, [
+            _vm._v(_vm._s(_vm.value.title))
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-breadcrumbs",
+            { attrs: { divider: "/", "justify-center": "" } },
+            _vm._l(_vm.value.breadcrumbs, function(breadcrumb, index) {
+              return _c(
+                "v-breadcrumbs-item",
+                {
+                  key: "key-$" + index,
+                  staticClass: "color-text",
+                  attrs: { disabled: breadcrumb.disabled }
+                },
+                [
+                  _c(
+                    "router-link",
+                    { staticClass: "url-br", attrs: { to: breadcrumb.url } },
+                    [_vm._v(_vm._s(breadcrumb.name))]
+                  )
+                ],
+                1
+              )
+            })
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45373,7 +45411,9 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-var host = "http://sellingbookstore.test";
+
+var host = "http://sellingbooks.local";
+
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

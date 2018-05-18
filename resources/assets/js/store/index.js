@@ -5,7 +5,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     cart: [],
-    favorite: [],
+    favorite: {},
     token: null,
     user: {}
   },
@@ -31,7 +31,6 @@ const store = new Vuex.Store({
     },
     setFavorite({ commit }, val) {
       commit("SET_FAVORITE", val);
-      localStorage.favorite = JSON.stringify(val);
     },
 
     setToken({ commit }, val) {
