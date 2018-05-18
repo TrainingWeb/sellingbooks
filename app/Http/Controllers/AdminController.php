@@ -140,4 +140,9 @@ class AdminController extends APIBaseController
         return $this->sendMessage('Updated storage successfully !');
     }
 
+    public function newTest(Request $request)
+    {
+        return response()->json(['abc'=>123,'dfgdfgfd'=>34532,'dfgdfg'=>43534]);
+    }
+
 }
