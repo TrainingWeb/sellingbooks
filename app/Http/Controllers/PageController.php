@@ -458,7 +458,7 @@ class PageController extends APIBaseController
     public function sendMailResetPassword(Request $request)
     {
         if (!User::where('email', $request->email)->first()) {
-            return $this->sendMessage('Have no account have this email, please check it again !');
+            return response()->json(['status' => false, 'Message' => 'Have no account have this email, please check it again !']);
         }
         Mail::to($request->email)->send(new SendMailResetPassword());
         return $this->sendMessage('Send reset mail successfully !');
@@ -488,10 +488,10 @@ class PageController extends APIBaseController
         $sub5m = Carbon::now()->subMinutes(5);
         $resetpassword = ResetPassword::where('token', $token)->whereBetween('created_at', [$sub5m, $nowtime])->first();
         if (!$resetpassword) {
-            return response()->json(['status' => false, 'Message' => 'Your token has expired, please send another request reset mail !']);
+            return response()->json(['status' => false, 'message' => 'Your token has expired, please send another request reset mail !']);
         }
         if ($request->email !== $resetpassword->email) {
-            return $this->sendMessage('This email have no request reset password !');
+            return response()->json(['status' => false, 'message' => 'This email have no request reset password !']);
         } else {
             $resetpassword->delete();
         }
@@ -503,12 +503,5 @@ class PageController extends APIBaseController
         $api_token = Auth::user()->createToken('test')->accessToken;
         $user = Auth::user();
         return response()->json(['api_token' => $api_token, 'user' => $user], 200);
-    }
-
-    public function testmail()
-    {
-        $token = request()->token;
-        $email = request()->email;
-        return view('testmail', compact('token', 'email'));
     }
 }
