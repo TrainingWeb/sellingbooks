@@ -17,9 +17,9 @@
         <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in featuredbooks" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
-        <v-flex xs12 class="pt-2 mr-1">
+        <v-flex xs12 class="pt-2 mr-1 text-xs-right">
           <router-link to="/list-products?type=featuredbooks">
-            <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+            <h5 class="green--text text--accent-4">XEM THÊM</h5>
           </router-link>
         </v-flex>
       </v-layout>

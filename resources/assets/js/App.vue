@@ -11,7 +11,7 @@
               </span>
               <v-icon small class="green--text text--accent-4">smartphone</v-icon>
               <span class="caption grey--text  text--darken-1">
-                0123 456 789 
+                0123 456 789
               </span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -138,7 +138,7 @@
                   <v-icon color="grey">add_shopping_cart</v-icon>
                 </v-badge>
               </v-btn>
-              <v-btn flat @click="checkFavorite"  >
+              <v-btn flat @click="checkFavorite">
                 <v-badge color="indigo" class="p-0">
                   <span slot="badge" class="caption">{{$store.state.favorite.length}}</span>
                   <v-icon color="grey">favorite</v-icon>
@@ -320,7 +320,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="4000" top v-model="snackbarcheck" color="green accent-4">
-        Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn
+      Vui lòng đăng nhập hoặc đăng ký để xem yêu thích của bạn
       <v-btn flat icon color="white" @click.native="snackbarcheck = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -335,7 +335,7 @@ export default {
     valid: true,
     validRegiter: true,
     snackbarResgiter: false,
-    snackbarcheck:false,
+    snackbarcheck: false,
     name: "",
     nameRules: [v => !!v || "Tên là bắt buộc"],
     passLogin: "",
@@ -436,12 +436,11 @@ export default {
           });
       }
     },
-    checkFavorite(){
-      if(!this.$store.state.token){
-          this.snackbarcheck = true  
-      }
-      else{
-        window.location="#/favorite"
+    checkFavorite() {
+      if (!this.$store.state.token) {
+        this.snackbarcheck = true;
+      } else {
+        window.location = "#/favorite";
       }
     },
     logout() {
@@ -496,6 +495,20 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+    if (this.$store.state.token) {
+      window.axios
+        .get("/get-favorite-books")
+        .then(response => {
+          this.favoriteBook = response.data.books.data;
+          console.log(this.favoriteBook);
+          console.log("------", response.data.books.data);
+          let favorite = this.$store.state.favorite;
+          this.$store.dispatch("setFavorite", this.favoriteBook);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
   }
 };
 </script>

@@ -4,14 +4,14 @@
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
     <v-container>
-      <v-data-table v-if="favoriteBook" :headers="headers" :items="favoriteBook" hide-actions flat>
+      <v-data-table :headers="headers" :items="$store.state.favorite" hide-actions flat>
         <template slot="items" slot-scope="props">
           <tr class="py-1">
             <td class="text-xs-center layout px-0 py-5">
               <v-layout row justify-center>
                 <v-dialog flat v-model="dialogDelete" persistent max-width="290">
                   <v-btn icon slot="activator">
-                    <v-icon class="red--text text--darken-4">clear</v-icon>
+                    <v-icon color="red darken-4">clear</v-icon>
                   </v-btn>
                   <v-card flat>
                     <v-card-title class="subheading ml-0 green accent-4 white--text">Thông báo !</v-card-title>
@@ -94,8 +94,7 @@ export default {
     page: 1,
     dialogDelete: false,
     snackbarCart: false,
-    timeout: 3000,
-    favoriteBook: []
+    timeout: 3000
   }),
   methods: {
     formatPrice(price) {
@@ -103,11 +102,14 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     delFavorite(index) {
+      console.log("--------index", index);
       window.axios
-        .get("/removefavorite/" + this.favoriteBook[index].id)
+        .get("/removefavorite/" + this.$store.state.favorite[index].id)
         .then(response => {
-          this.favoriteBook.splice(index, 1);
+          let favorite = this.$store.state.favorite;
+          favorite.splice(index, 1);
           this.dialogDelete = false;
+          this.$store.dispatch("setFavorite", favorite);
         })
         .catch(function(error) {
           console.log(error);
@@ -131,17 +133,6 @@ export default {
       this.$store.dispatch("setCart", cart);
       this.snackbarCart = true;
     }
-  },
-  mounted() {
-    window.axios
-      .get("/get-favorite-books")
-      .then(response => {
-        this.favoriteBook = response.data.books.data;
-        console.log(response.data.books.data)
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 };
 </script>
