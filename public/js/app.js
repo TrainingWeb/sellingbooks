@@ -35092,6 +35092,38 @@ var render = function() {
                     [
                       _c(
                         "div",
+                        { staticClass: "headline grey--text text--darken-3 " },
+                        [_vm._v("Những sản phẩm liên quan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        {
+                          staticClass: "my-4 mx-0",
+                          attrs: { row: "", wrap: "" }
+                        },
+                        _vm._l(_vm.books, function(item, index) {
+                          return _c(
+                            "v-flex",
+                            {
+                              key: "Book-" + index,
+                              attrs: { xs12: "", md6: "", lg4: "" }
+                            },
+                            [_c("book-item", { attrs: { book: item } })],
+                            1
+                          )
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "my-3 ml-4", attrs: { "grid-list-xs": "" } },
+                    [
+                      _c(
+                        "div",
                         {
                           staticClass:
                             "headline grey--text text--darken-3 my-3 "
@@ -35282,38 +35314,6 @@ var render = function() {
                           )
                         ],
                         1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "my-3 ml-4", attrs: { "grid-list-xs": "" } },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "headline grey--text text--darken-3 " },
-                        [_vm._v("Những sản phẩm liên quan")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-layout",
-                        {
-                          staticClass: "my-4 mx-0",
-                          attrs: { row: "", wrap: "" }
-                        },
-                        _vm._l(_vm.books, function(item, index) {
-                          return _c(
-                            "v-flex",
-                            {
-                              key: "Book-" + index,
-                              attrs: { xs12: "", md6: "", lg4: "" }
-                            },
-                            [_c("book-item", { attrs: { book: item } })],
-                            1
-                          )
-                        })
                       )
                     ],
                     1
@@ -45412,7 +45412,7 @@ window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
 
-var host = "http://sellingbooks.local";
+var host = "http://sellingbookstore.test";
 
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;

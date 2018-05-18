@@ -82,6 +82,14 @@
             </v-container>
           </v-card>
           <div grid-list-xs class="my-3 ml-4">
+            <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
+            <v-layout row wrap class="my-4 mx-0">
+              <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`Book-${index}`">
+                <book-item :book="item"></book-item>
+              </v-flex>
+            </v-layout>
+          </div>
+          <div grid-list-xs class="my-3 ml-4">
             <div class="headline grey--text text--darken-3 my-3 ">Nhận xét khách hàng</div>
             <v-card class="mx-0">
               <a class=" mt-3 body-2 green--text text--accent-4">
@@ -116,14 +124,6 @@
                 </v-layout>
               </v-list>
             </v-card>
-          </div>
-          <div grid-list-xs class="my-3 ml-4">
-            <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
-            <v-layout row wrap class="my-4 mx-0">
-              <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`Book-${index}`">
-                <book-item :book="item"></book-item>
-              </v-flex>
-            </v-layout>
           </div>
         </v-flex>
       </v-layout>
