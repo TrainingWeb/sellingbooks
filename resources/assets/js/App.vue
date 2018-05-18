@@ -450,9 +450,11 @@ export default {
       let user = this.$store.state.user;
       let token = this.$store.state.token;
       let cart = this.$store.state.cart;
+      let favorite = this.$store.state.favorite;
       token = "";
       user = {};
       cart = [];
+      favorite ={}
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
       this.$store.dispatch("setCart", cart);
