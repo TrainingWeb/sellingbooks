@@ -36049,39 +36049,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36142,29 +36109,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.dialog = true;
       }
     },
-    editUser: function editUser() {
-      this.dialogEdit = true;
-      this.editedIndex = this.$store.state.user;
-      this.editedItem = Object.assign({}, this.editedIndex);
-      console.log(this.editedItem);
-    },
-    save: function save() {
-      var _this = this;
-
-      console.log;
-      window.axios.post("/check-info", {
-        name: this.editedItem.name,
-        phone: this.editedItem.phone,
-        address: this.editedItem.address
-      }).then(function (response) {
-        _this.data = response;
-        console.log("sửa info", response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
     userOrder: function userOrder() {
-      var _this2 = this;
+      var _this = this;
 
       if (this.$store.state.token) {
         if (this.$refs.form.validate()) {
@@ -36179,9 +36125,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             id: book_id,
             quantity: qty
           }).then(function (response) {
-            _this2.dialog = true;
-            _this2.$store.state.cart = [];
-            _this2.$store.dispatch("setCart", _this2.$store.state.cart);
+            _this.dialog = true;
+            _this.$store.state.cart = [];
+            _this.$store.dispatch("setCart", _this.$store.state.cart);
           }).catch(function (error) {
             console.log(error);
           });
@@ -36376,271 +36322,6 @@ var render = function() {
                                               ]
                                         ],
                                         2
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-layout",
-                                        {
-                                          attrs: {
-                                            row: "",
-                                            "justify-center": ""
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-dialog",
-                                            {
-                                              attrs: {
-                                                persistent: "",
-                                                "max-width": "500px"
-                                              },
-                                              model: {
-                                                value: _vm.dialogEdit,
-                                                callback: function($$v) {
-                                                  _vm.dialogEdit = $$v
-                                                },
-                                                expression: "dialogEdit"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    slot: "activator",
-                                                    dark: "",
-                                                    color: "green accent-4"
-                                                  },
-                                                  on: { click: _vm.editUser },
-                                                  slot: "activator"
-                                                },
-                                                [_vm._v("Chỉnh Sửa")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-card",
-                                                [
-                                                  _c(
-                                                    "v-toolbar",
-                                                    {
-                                                      attrs: {
-                                                        color: "green accent-4",
-                                                        dark: ""
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("v-toolbar-title", [
-                                                        _vm._v(
-                                                          "Chỉnh sửa thông tin"
-                                                        )
-                                                      ])
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-text",
-                                                    [
-                                                      _c(
-                                                        "v-container",
-                                                        {
-                                                          attrs: {
-                                                            "grid-list-md": ""
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-layout",
-                                                            {
-                                                              attrs: {
-                                                                wrap: ""
-                                                              }
-                                                            },
-                                                            [
-                                                              _c(
-                                                                "v-flex",
-                                                                {
-                                                                  attrs: {
-                                                                    xs12: ""
-                                                                  }
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "v-text-field",
-                                                                    {
-                                                                      attrs: {
-                                                                        label:
-                                                                          "Tên",
-                                                                        required:
-                                                                          ""
-                                                                      },
-                                                                      model: {
-                                                                        value:
-                                                                          _vm
-                                                                            .editedItem
-                                                                            .name,
-                                                                        callback: function(
-                                                                          $$v
-                                                                        ) {
-                                                                          _vm.$set(
-                                                                            _vm.editedItem,
-                                                                            "name",
-                                                                            $$v
-                                                                          )
-                                                                        },
-                                                                        expression:
-                                                                          "editedItem.name"
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                ],
-                                                                1
-                                                              ),
-                                                              _vm._v(" "),
-                                                              _c(
-                                                                "v-flex",
-                                                                {
-                                                                  attrs: {
-                                                                    xs12: ""
-                                                                  }
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "v-text-field",
-                                                                    {
-                                                                      attrs: {
-                                                                        label:
-                                                                          "Số điện thoại",
-                                                                        required:
-                                                                          ""
-                                                                      },
-                                                                      model: {
-                                                                        value:
-                                                                          _vm
-                                                                            .editedItem
-                                                                            .phone,
-                                                                        callback: function(
-                                                                          $$v
-                                                                        ) {
-                                                                          _vm.$set(
-                                                                            _vm.editedItem,
-                                                                            "phone",
-                                                                            $$v
-                                                                          )
-                                                                        },
-                                                                        expression:
-                                                                          "editedItem.phone"
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                ],
-                                                                1
-                                                              ),
-                                                              _vm._v(" "),
-                                                              _c(
-                                                                "v-flex",
-                                                                {
-                                                                  attrs: {
-                                                                    xs12: ""
-                                                                  }
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "v-text-field",
-                                                                    {
-                                                                      attrs: {
-                                                                        label:
-                                                                          "Địa chỉ",
-                                                                        required:
-                                                                          ""
-                                                                      },
-                                                                      model: {
-                                                                        value:
-                                                                          _vm
-                                                                            .editedItem
-                                                                            .address,
-                                                                        callback: function(
-                                                                          $$v
-                                                                        ) {
-                                                                          _vm.$set(
-                                                                            _vm.editedItem,
-                                                                            "address",
-                                                                            $$v
-                                                                          )
-                                                                        },
-                                                                        expression:
-                                                                          "editedItem.address"
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                ],
-                                                                1
-                                                              )
-                                                            ],
-                                                            1
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c("small", [
-                                                        _vm._v(
-                                                          "*indicates required field"
-                                                        )
-                                                      ])
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-card-actions",
-                                                    [
-                                                      _c("v-spacer"),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "blue darken-1",
-                                                            flat: ""
-                                                          },
-                                                          nativeOn: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.dialogEdit = false
-                                                            }
-                                                          }
-                                                        },
-                                                        [_vm._v("Hủy ")]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-btn",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "blue darken-1",
-                                                            flat: ""
-                                                          },
-                                                          on: {
-                                                            click: _vm.save
-                                                          }
-                                                        },
-                                                        [_vm._v("Lưu")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
                                       )
                                     ],
                                     1
@@ -36675,7 +36356,6 @@ var render = function() {
                                   _c(
                                     "v-data-table",
                                     {
-                                      staticClass: "mt-5",
                                       attrs: {
                                         headers: _vm.headers,
                                         items: _vm.$store.state.cart,
@@ -36766,6 +36446,7 @@ var render = function() {
                                       _c(
                                         "v-btn",
                                         {
+                                          staticClass: "my-4",
                                           attrs: {
                                             slot: "activator",
                                             dark: "",
@@ -41350,7 +41031,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -41430,7 +41111,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       password: "",
       confirm_password: "",
       e2: false,
-      status: true
+      status: true,
+      message: ""
     };
   },
   computed: {
@@ -41453,6 +41135,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).then(function (response) {
           console.log(response.data.status);
           _this.status = response.data.status;
+          _this.message = response.data.message;
           _this.dialogResetPassword = true;
           _this.data = response.data;
           _this.$store.dispatch("setToken", _this.data.api_token);
@@ -41647,10 +41330,8 @@ var render = function() {
                             [_vm._v("Thông báo !")]
                           ),
                           _vm._v(" "),
-                          _vm.status == false
-                            ? _c("v-card-text", [
-                                _vm._v("Mã của bạn đã hết hạn hoặc không đúng")
-                              ])
+                          _vm.message
+                            ? _c("v-card-text", [_vm._v(_vm._s(_vm.message))])
                             : _c("v-card-text", [
                                 _vm._v(
                                   "Bạn đã thay đổi mật khẩu thành công\n            "

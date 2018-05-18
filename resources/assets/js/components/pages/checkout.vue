@@ -24,39 +24,6 @@
                         <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
                       </template>
                     </v-form>
-
-                    <v-layout row justify-center>
-                      <v-dialog v-model="dialogEdit" persistent max-width="500px">
-                        <v-btn slot="activator" @click="editUser" dark color="green accent-4">Chỉnh Sửa</v-btn>
-                        <v-card>
-                          <v-toolbar color="green accent-4" dark>
-                            <v-toolbar-title>Chỉnh sửa thông tin</v-toolbar-title>
-                          </v-toolbar>
-                          <v-card-text>
-                            <v-container grid-list-md>
-                              <v-layout wrap>
-
-                                <v-flex xs12>
-                                  <v-text-field label="Tên" required v-model="editedItem.name"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                  <v-text-field label="Số điện thoại" required v-model="editedItem.phone"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                  <v-text-field label="Địa chỉ" required v-model="editedItem.address"></v-text-field>
-                                </v-flex>
-                              </v-layout>
-                            </v-container>
-                            <small>*indicates required field</small>
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Hủy </v-btn>
-                            <v-btn color="blue darken-1" flat @click="save">Lưu</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-layout>
                   </v-container>
                 </v-card>
               </v-flex>
@@ -64,7 +31,7 @@
                 <v-card>
                   <h1 class="headline grey--text text--darken-3 text-xs-center pt-3 "> Đơn hàng của bạn
                   </h1>
-                  <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="mt-5">
+                  <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="">
                     <template slot="items" slot-scope="props">
                       <td class="py-4">
                         <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
@@ -85,7 +52,7 @@
                     </template>
                   </v-data-table>
                   <div class="my-3 text-xs-right ">
-                    <v-btn slot="activator" @click="openDialog" dark color="green accent-4">
+                    <v-btn class="my-4" slot="activator" @click="openDialog" dark color="green accent-4">
                       thanh toán
                     </v-btn>
                     <v-layout row justify-center>
@@ -187,28 +154,7 @@ export default {
         this.dialog = true;
       }
     },
-    editUser() {
-      this.dialogEdit = true;
-      this.editedIndex = this.$store.state.user;
-      this.editedItem = Object.assign({}, this.editedIndex);
-      console.log(this.editedItem);
-    },
-    save() {
-      console.log;
-      window.axios
-        .post("/check-info", {
-          name: this.editedItem.name,
-          phone: this.editedItem.phone,
-          address: this.editedItem.address
-        })
-        .then(response => {
-          this.data = response;
-          console.log("sửa info", response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
+
     userOrder() {
       if (this.$store.state.token) {
         if (this.$refs.form.validate()) {
