@@ -23,7 +23,7 @@
       </template>
     </v-container>
     <v-container v-else>
-      <h1 class="py-5">Không có kết quả tìm kiếm phù hợp</h1>
+      <h1 class="py-5 text-xs-center">Không có tác phẩm nào thuộc tag này</h1>
     </v-container>
   </div>
 </template>

@@ -155,7 +155,6 @@ export default {
     }
   },
   mounted() {
-    this.breadcrumbs[1].name = `${this.$route.query.type}`;
     window.axios
       .get(
         "/categories/" +
@@ -167,7 +166,7 @@ export default {
       .then(res => {
         if (!res.data.Message) {
           this.listCatagory = res.data.books;
-          console.log(response.data.Message);
+          console.log(res.data.Message);
           this.category = res.data.data.name;
           this.breadcrumbs[1].name = `${this.category}`;
           this.panigation.page = res.data.books.current_page;

@@ -16,7 +16,7 @@
                       <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules" disabled></v-text-field>
                       <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
                       <template v-if="$store.state.user.phone">
-                        <v-text-field :value="$store.state.user.phone" mask="phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
+                        <v-text-field :value="$store.state.user.phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
                         <v-text-field :rules="addressRules" :value="$store.state.user.address" label="Địa chỉ" disabled></v-text-field>
                       </template>
                       <template v-else>
@@ -52,7 +52,7 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Hủy </v-btn>
-                            <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Lưu</v-btn>
+                            <v-btn color="blue darken-1" flat @click="save">Lưu</v-btn>
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
@@ -113,7 +113,6 @@
         </v-card>
       </v-flex>
     </v-container>
-
     <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
       Đặt hàng thành công
       <v-btn flat icon color="white" @click.native="snackbar = false">
@@ -121,7 +120,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="timeout" top v-model="snackbarcheck" color="green accent-4">
-      Vui lòng đăng nhập hoặc đăng kí để nhập hàngđffdf
+      Vui lòng đăng nhập hoặc đăng kí để nhập hàng
       <v-btn flat icon color="white" @click.native="snackbar = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -192,6 +191,23 @@ export default {
       this.dialogEdit = true;
       this.editedIndex = this.$store.state.user;
       this.editedItem = Object.assign({}, this.editedIndex);
+      console.log(this.editedItem);
+    },
+    save() {
+      console.log;
+      window.axios
+        .post("/check-info", {
+          name: this.editedItem.name,
+          phone: this.editedItem.phone,
+          address: this.editedItem.address
+        })
+        .then(response => {
+          this.data = response;
+          console.log("sửa info", response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     userOrder() {
       if (this.$store.state.token) {
@@ -218,6 +234,7 @@ export default {
             });
           if (this.$store.state.user.phone) {
             window.axios
+
               .post("/check-info", {
                 name: this.$store.state.user.name,
                 phone: this.$store.state.user.phone,

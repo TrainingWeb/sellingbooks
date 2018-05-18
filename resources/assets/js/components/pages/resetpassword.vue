@@ -7,7 +7,6 @@
         </v-list>
         <v-divider></v-divider>
         <v-container>
-          <template>
             <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submit">
               <v-flex xs12>
                 <v-text-field :rules="emailRules" :value="$route.query.email" disabled label="E-mail" required></v-text-field>
@@ -23,7 +22,6 @@
                 <v-btn class="ml-4 green accent-4 white--text" @click="submit">Gửi</v-btn>
               </v-card-actions>
             </v-form>
-          </template>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
