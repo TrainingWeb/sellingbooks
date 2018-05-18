@@ -3,42 +3,29 @@
     <v-layout xs12>
       <v-banner :value="{title:namepage,breadcrumbs}"></v-banner>
     </v-layout>
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <v-card>
-            <h1 class=" headline  text-xs-center" color="grey darken-3">Vui lòng xác nhận lại thông tin của bạn</h1>
-            <v-container>
-              <v-form ref="form" v-model="valid" lazy-validation>
-                <v-layout row wrap>
-                  <v-flex xs6>
-                    <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules" disabled></v-text-field>
-                  </v-flex>
-                  <v-flex xs6>
-                    <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
-                  </v-flex>
-                  <template v-if="$store.state.user.phone">
-                    <v-flex xs6>
-                      <v-text-field :value="$store.state.user.phone" mask="phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
-                    </v-flex>
-                    <v-flex>
-                      <v-text-field :rules="addressRules" :value="$store.state.user.address" label="Địa chỉ" disabled></v-text-field>
-                    </v-flex>
-                  </template>
-                  <template v-else>
-                    <v-flex xs6>
-                      <v-text-field v-model="phone" mask="phone" :rules="emailRules" label="Số điện thoại"></v-text-field>
-                    </v-flex>
-                    <v-flex xs6>
-                      <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
-                    </v-flex>
-                  </template>
+    <v-container class="px-0">
+      <v-flex xs12>
+        <v-card flat color=" darken-2" class="white--text px-1">
+          <v-container>
+            <v-layout row>
+              <v-flex xs6 class="mx-3">
+                <v-card>
+                  <h1 class=" headline grey--text text--darken-3 text-xs-center pt-3">Vui lòng xác nhận lại thông tin của bạn</h1>
+                  <v-container>
+                    <v-form ref="form" v-model="valid" lazy-validation>
+                      <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules" disabled></v-text-field>
+                      <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
+                      <template v-if="$store.state.user.phone">
+                        <v-text-field :value="$store.state.user.phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
+                        <v-text-field :rules="addressRules" :value="$store.state.user.address" label="Địa chỉ" disabled></v-text-field>
+                      </template>
+                      <template v-else>
+                        <v-text-field v-model="phone" mask="phone" :rules="emailRules" label="Số điện thoại"></v-text-field>
+                        <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
+                      </template>
+                    </v-form>
 
-                </v-layout>
-
-              </v-form>
-
-              <!-- <v-layout row justify-center>
+                    <v-layout row justify-center>
                       <v-dialog v-model="dialogEdit" persistent max-width="500px">
                         <v-btn slot="activator" @click="editUser" dark color="green accent-4">Chỉnh Sửa</v-btn>
                         <v-card>
@@ -65,41 +52,39 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Hủy </v-btn>
-                            <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Lưu</v-btn>
+                            <v-btn color="blue darken-1" flat @click="save">Lưu</v-btn>
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
-                    </v-layout> -->
-            </v-container>
-          </v-card>
-        </v-flex>
-        <v-flex xs12 class="pt-5">
-          <v-card>
-            <h1 class="headline grey--text text--darken-3 text-xs-center"> Đơn hàng của bạn</h1>
-            <v-container>
-              <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="mt-5">
-                <template slot="items" slot-scope="props">
-                  <td class="py-4">
-                    <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
-                  </td>
-                  <td class="py-4">
-                    <strong>{{props.item.quantity}}</strong>
-                  </td>
-                  <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
-                </template>
-                <template slot="footer">
-                  <td>
-                    <strong>Thanh toán</strong>
-                  </td>
-                  <td></td>
-                  <td class="text-xs-right">
-                    <strong>{{total}}</strong>
-                  </td>
-                </template>
-              </v-data-table>
-            </v-container>
-
-            <!-- <div class="my-3 text-xs-right ">
+                    </v-layout>
+                  </v-container>
+                </v-card>
+              </v-flex>
+              <v-flex xs6>
+                <v-card>
+                  <h1 class="headline grey--text text--darken-3 text-xs-center pt-3 "> Đơn hàng của bạn
+                  </h1>
+                  <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="mt-5">
+                    <template slot="items" slot-scope="props">
+                      <td class="py-4">
+                        <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
+                      </td>
+                      <td class="py-4">
+                        <strong>{{props.item.quantity}}</strong>
+                      </td>
+                      <td class="text-xs-right">{{ props.item.book.price * props.item.quantity}} </td>
+                    </template>
+                    <template slot="footer">
+                      <td>
+                        <strong>Thanh toán</strong>
+                      </td>
+                      <td></td>
+                      <td class="text-xs-right">
+                        <strong>{{total}}</strong>
+                      </td>
+                    </template>
+                  </v-data-table>
+                  <div class="my-3 text-xs-right ">
                     <v-btn slot="activator" @click="openDialog" dark color="green accent-4">
                       thanh toán
                     </v-btn>
@@ -120,12 +105,14 @@
                         </v-card>
                       </v-dialog>
                     </v-layout>
-                  </div> -->
-          </v-card>
-        </v-flex>
-      </v-layout>
+                  </div>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+      </v-flex>
     </v-container>
-
     <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
       Đặt hàng thành công
       <v-btn flat icon color="white" @click.native="snackbar = false">
@@ -133,7 +120,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="timeout" top v-model="snackbarcheck" color="green accent-4">
-      Vui lòng đăng nhập hoặc đăng kí để nhập hàngđffdf
+      Vui lòng đăng nhập hoặc đăng kí để nhập hàng
       <v-btn flat icon color="white" @click.native="snackbar = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -204,6 +191,23 @@ export default {
       this.dialogEdit = true;
       this.editedIndex = this.$store.state.user;
       this.editedItem = Object.assign({}, this.editedIndex);
+      console.log(this.editedItem);
+    },
+    save() {
+      console.log;
+      window.axios
+        .post("/check-info", {
+          name: this.editedItem.name,
+          phone: this.editedItem.phone,
+          address: this.editedItem.address
+        })
+        .then(response => {
+          this.data = response;
+          console.log("sửa info", response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     userOrder() {
       if (this.$store.state.token) {
@@ -230,6 +234,7 @@ export default {
             });
           if (this.$store.state.user.phone) {
             window.axios
+
               .post("/check-info", {
                 name: this.$store.state.user.name,
                 phone: this.$store.state.user.phone,

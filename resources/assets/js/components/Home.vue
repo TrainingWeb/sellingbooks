@@ -17,9 +17,9 @@
         <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in featuredbooks" :key="`khoa${index}`">
           <book-item :book="item"></book-item>
         </v-flex>
-        <v-flex xs12 class="pt-2 mr-1 text-xs-right">
+        <v-flex xs12 class="pt-2 mr-2">
           <router-link to="/list-products?type=featuredbooks">
-            <h5 class="green--text text--accent-4">XEM THÊM</h5>
+            <h5 style="text-decoration:none" class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
           </router-link>
         </v-flex>
       </v-layout>
@@ -40,9 +40,9 @@
             <v-flex xs12 sm6 md6 v-for="(item,index) in discountbooks" :key="`4${index}`">
               <book-item :book="item"></book-item>
             </v-flex>
-            <v-flex xs12 class="pt-2 mr-1">
+            <v-flex xs12 class="pt-2 mr-2">
               <router-link to="/list-products?type=discountbooks">
-                <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+                <h5 style="text-decoration:none" class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
               </router-link>
             </v-flex>
           </v-layout>
@@ -64,9 +64,9 @@
         <v-flex xs12 sm6 md6 lg4 v-for="(item,index) in newbooks" :key="`Book-${index}`">
           <book-item :book=item></book-item>
         </v-flex>
-        <v-flex xs12 class="pt-2 mr-1">
+        <v-flex xs12 class="pt-2 mr-2">
           <router-link to="/list-products?type=newbooks">
-            <h5 class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
+            <h5 style="text-decoration:none" class="text-xs-right  green--text text--accent-4">XEM THÊM</h5>
           </router-link>
         </v-flex>
       </v-layout>
@@ -83,18 +83,19 @@ export default {
       sliders: [
         {
           src:
-            "http://backgrounddep.com/uploads/images/tong-hop-26-hinh-nen-nhung-cuon-sach-dep-den-ngo-ngang-1489317588-22.jpg"
+            "https://bookbuy.vn/Res/Images/Album/3d7cfc29-9dfd-49df-9119-de2c9fd64a06.jpg?w=930&scale=both&h=400&quality=100"
         },
         {
           src:
-            "http://static.ybox.vn/2017/4/11/7397e6ae-1e80-11e7-a0c9-2e995a9a3302.jpg"
+            "https://www.fahasa.com/media/magentothem/banner7/Phieu-Qua-Tang-915x423.jpg"
         },
         {
           src:
-            "http://ptth-hstar.thuathienhue.edu.vn/imgs/Thu_muc_he_thong/_Nam_2014/_Thang_09/p1150951fileminimizer-.jpg"
+            "https://www.fahasa.com/media/magentothem/banner7/NEW-ARRIVALS-915-33.png"
         },
         {
-          src: "https://cafeandbooks.files.wordpress.com/2015/07/dscn4528.jpg"
+          src:
+            "https://www.fahasa.com/media/magentothem/banner7/huyhoang-915.jpg"
         }
       ]
     };

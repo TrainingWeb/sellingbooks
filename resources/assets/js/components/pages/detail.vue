@@ -81,9 +81,9 @@
               </v-layout>
             </v-container>
           </v-card>
-          <v-tabs icons-and-text dark color="white" height="40px" class="my-4">
-            <v-tabs-slider color="green accent-4"></v-tabs-slider>
-            <v-tab class="green accent-4" href="#tab-1">
+          <v-tabs icons-and-text dark color="white" height="40px" class="my-4 ">
+            <v-tabs-slider color="green accent-4 "></v-tabs-slider>
+            <v-tab class="green accent-4 ml-4" href="#tab-1">
               Chi tiết sản phẩm
             </v-tab>
             <v-tab class="green accent-4" href="#tab-2">
@@ -116,9 +116,8 @@
                         <v-list-tile-action-text>{{ item.created_at }}</v-list-tile-action-text>
                       </v-list-tile-action>
                     </v-list-tile>
-
                     <v-layout row wrap>
-                      <v-text-field @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
+                      <v-text-field class="ml-3" @keyup.enter="postComment" v-model="commenttext" name="input-1-3" label="Lời nhận xét của bạn" single-line></v-text-field>
                       <div class="ml-0 mr-2">
                         <v-btn @click="postComment" color="green accent-4 white--text">Gửi</v-btn>
                         <v-snackbar :timeout="timeout" top v-model="snackbarComment" color="green accent-4">
@@ -135,9 +134,9 @@
               </v-tab-item>
             </v-tabs-items>
           </v-tabs>
-          <div grid-list-xs class="my-3">
+          <div grid-list-xs class="my-3 ml-4">
             <div class="headline grey--text text--darken-3 ">Những sản phẩm liên quan</div>
-            <v-layout row wrap class="my-4 ml-3">
+            <v-layout row wrap class="my-4 mx-0">
               <v-flex xs12 md6 lg4 v-for="(item,index) in books" :key="`Book-${index}`">
                 <book-item :book="item"></book-item>
               </v-flex>

@@ -80,6 +80,8 @@ export default {
     isLove() {
       if (this.$store.state.favorite && this.$store.state.favorite.length > 0)
         return this.$store.state.favorite.find(item => {
+          console.log("--------------",item.id);
+          
           return item.id === this.book.id;
         });
       return false;
@@ -128,8 +130,8 @@ export default {
           })
           .then(response => {
             favorite.push(this.book);
-            this.love = true;
             this.$store.dispatch("setFavorite", favorite);
+            this.love = true;
             this.snackbarFavorite = true;
           })
           .catch(function(error) {
