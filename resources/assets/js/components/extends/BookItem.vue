@@ -146,19 +146,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
-  mounted() {
-    // let favorite = this.$store.state.favorite;
-    // if (favorite) {
-    //   console.log("---====---", favorite);
-    //   for (var index in favorite) {
-    //     if (favorite[index].id === this.book.id) {
-    //       this.love = true;
-    //       console.log("đã load qua");
-    //       return;
-    //     }
-    //   }
-    // }
-  }
+  mounted() {}
 };
 </script>
 
@@ -168,7 +156,6 @@ export default {
   color: black;
 }
 .hover-card:hover {
-  /* border: solid 1px #00c853 !important; */
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
