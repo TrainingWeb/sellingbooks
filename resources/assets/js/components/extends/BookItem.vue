@@ -4,7 +4,7 @@
       <v-layout row wrap offset-sm3 class="hover-card">
         <v-flex xs12 sm5 md5 class=" py-0 px-0">
           <router-link :to="`/detail?type=`+book.slug" class="link-book">
-            <v-card-media :src="'/storage/images/'+book.image" height="205px"></v-card-media>
+            <v-card-media :src="'/storage/images/'+book.image" height="200px"></v-card-media>
           </router-link>
         </v-flex>
         <v-flex xs12 sm7 md7 class="grey lighten-5 pl-3">
@@ -47,12 +47,12 @@
               </v-snackbar>
               <v-spacer></v-spacer>
               <v-btn flat icon color="grey" @click="addItemfavorite()">
-                <v-icon v-if="!love" color="grey lighten-1">favorite</v-icon>
-                <v-icon v-else color="red">favorite</v-icon>
+                <v-icon :color="isLove()?'red':'grey lighten-1'">favorite</v-icon>
               </v-btn>
               <v-snackbar :timeout="timeout" top v-model="snackbarFavorite" color="green accent-4">
-                <span v-if="$store.state.token">Thêm vào yêu thích thành công</span>
-                <span v-else>Vui lòng đăng nhập hoặc đăng ký tài khoản</span>
+                <span v-if="!$store.state.token">Vui lòng đăng nhập hoặc đăng ký tài khoản</span>
+                <span v-else-if="love === false">Bỏ yêu thích thành công</span>
+                <span v-if="love === true">Thêm vào yêu thích thành công</span>
                 <v-btn flat icon color="white" @click.native="snackbarFavorite = false">
                   <v-icon>clear</v-icon>
                 </v-btn>
@@ -77,6 +77,15 @@ export default {
   },
   watch: {},
   methods: {
+    isLove() {
+      if (this.$store.state.favorite && this.$store.state.favorite.length > 0)
+        return this.$store.state.favorite.find(item => {
+          console.log("--------------",item.id);
+          
+          return item.id === this.book.id;
+        });
+      return false;
+    },
     addCart() {
       let cart = this.$store.state.cart;
       for (var index in cart) {
@@ -97,11 +106,32 @@ export default {
     },
     addItemfavorite() {
       if (this.$store.state.token) {
+        let favorite = this.$store.state.favorite;
+        for (var index in favorite) {
+          if (favorite[index].id === this.book.id) {
+            window.axios
+              .get("/removefavorite/" + favorite[index].id)
+              .then(response => {
+                favorite.splice(index, 1);
+                this.love = false;
+                this.snackbarFavorite = true;
+                this.$store.dispatch("setFavorite", favorite);
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
+            return;
+          }
+        }
+        //
         window.axios
           .post("/add-favorite/" + this.book.id, {
             id_book: this.book.id
           })
           .then(response => {
+            favorite.push(this.book);
+            this.$store.dispatch("setFavorite", favorite);
+            this.love = true;
             this.snackbarFavorite = true;
           })
           .catch(function(error) {
@@ -115,6 +145,19 @@ export default {
       let val = (price / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+  },
+  mounted() {
+    // let favorite = this.$store.state.favorite;
+    // if (favorite) {
+    //   console.log("---====---", favorite);
+    //   for (var index in favorite) {
+    //     if (favorite[index].id === this.book.id) {
+    //       this.love = true;
+    //       console.log("đã load qua");
+    //       return;
+    //     }
+    //   }
+    // }
   }
 };
 </script>

@@ -23,7 +23,7 @@
       </template>
     </v-container>
     <v-container v-else class="py-5">
-      <h1>Không có tác phẩm thuộc tác giả này</h1>
+      <h1 class="py-5 text-xs-center">Không có tác phẩm nào thuộc tác giả này</h1>
     </v-container>
     
   </div>

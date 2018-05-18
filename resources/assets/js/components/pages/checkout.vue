@@ -16,7 +16,7 @@
                       <v-text-field label="Họ và tên" :value="$store.state.user.name" :rules="nameRules" disabled></v-text-field>
                       <v-text-field label="E-mail" :value="$store.state.user.email" disabled></v-text-field>
                       <template v-if="$store.state.user.phone">
-                        <v-text-field :value="$store.state.user.phone" mask="phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
+                        <v-text-field :value="$store.state.user.phone" :rules="emailRules" label="Số điện thoại" disabled></v-text-field>
                         <v-text-field :rules="addressRules" :value="$store.state.user.address" label="Địa chỉ" disabled></v-text-field>
                       </template>
                       <template v-else>
@@ -24,39 +24,6 @@
                         <v-text-field v-model="address" :rules="addressRules" label="Địa chỉ"></v-text-field>
                       </template>
                     </v-form>
-
-                    <v-layout row justify-center>
-                      <v-dialog v-model="dialogEdit" persistent max-width="500px">
-                        <v-btn slot="activator" @click="editUser" dark color="green accent-4">Chỉnh Sửa</v-btn>
-                        <v-card>
-                          <v-toolbar color="green accent-4" dark>
-                            <v-toolbar-title>Chỉnh sửa thông tin</v-toolbar-title>
-                          </v-toolbar>
-                          <v-card-text>
-                            <v-container grid-list-md>
-                              <v-layout wrap>
-
-                                <v-flex xs12>
-                                  <v-text-field label="Tên" required v-model="editedItem.name"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                  <v-text-field label="Số điện thoại" required v-model="editedItem.phone"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                  <v-text-field label="Địa chỉ" required v-model="editedItem.address"></v-text-field>
-                                </v-flex>
-                              </v-layout>
-                            </v-container>
-                            <small>*indicates required field</small>
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Hủy </v-btn>
-                            <v-btn color="blue darken-1" flat @click.native="dialogEdit = false">Lưu</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-layout>
                   </v-container>
                 </v-card>
               </v-flex>
@@ -64,7 +31,7 @@
                 <v-card>
                   <h1 class="headline grey--text text--darken-3 text-xs-center pt-3 "> Đơn hàng của bạn
                   </h1>
-                  <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="mt-5">
+                  <v-data-table :headers="headers" :items="$store.state.cart" hide-actions class="">
                     <template slot="items" slot-scope="props">
                       <td class="py-4">
                         <strong>{{ props.item.book.name }} x{{props.item.quantity}}</strong>
@@ -85,7 +52,7 @@
                     </template>
                   </v-data-table>
                   <div class="my-3 text-xs-right ">
-                    <v-btn slot="activator" @click="openDialog" dark color="green accent-4">
+                    <v-btn class="my-4" slot="activator" @click="openDialog" dark color="green accent-4">
                       thanh toán
                     </v-btn>
                     <v-layout row justify-center>
@@ -113,7 +80,6 @@
         </v-card>
       </v-flex>
     </v-container>
-
     <v-snackbar :timeout="timeout" top v-model="snackbar" color="green accent-4">
       Đặt hàng thành công
       <v-btn flat icon color="white" @click.native="snackbar = false">
@@ -121,7 +87,7 @@
       </v-btn>
     </v-snackbar>
     <v-snackbar :timeout="timeout" top v-model="snackbarcheck" color="green accent-4">
-      Vui lòng đăng nhập hoặc đăng kí để nhập hàngđffdf
+      Vui lòng đăng nhập hoặc đăng kí để nhập hàng
       <v-btn flat icon color="white" @click.native="snackbar = false">
         <v-icon>clear</v-icon>
       </v-btn>
@@ -188,11 +154,7 @@ export default {
         this.dialog = true;
       }
     },
-    editUser() {
-      this.dialogEdit = true;
-      this.editedIndex = this.$store.state.user;
-      this.editedItem = Object.assign({}, this.editedIndex);
-    },
+
     userOrder() {
       if (this.$store.state.token) {
         if (this.$refs.form.validate()) {
@@ -218,6 +180,7 @@ export default {
             });
           if (this.$store.state.user.phone) {
             window.axios
+
               .post("/check-info", {
                 name: this.$store.state.user.name,
                 phone: this.$store.state.user.phone,
