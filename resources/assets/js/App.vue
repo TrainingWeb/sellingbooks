@@ -454,7 +454,7 @@ export default {
       token = "";
       user = {};
       cart = [];
-      favorite ={}
+      favorite =[]
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
       this.$store.dispatch("setCart", cart);

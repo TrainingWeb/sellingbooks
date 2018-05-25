@@ -41886,9 +41886,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var user = this.$store.state.user;
       var token = this.$store.state.token;
       var cart = this.$store.state.cart;
+      var favorite = this.$store.state.favorite;
       token = "";
       user = {};
       cart = [];
+      favorite = [];
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setToken", token);
       this.$store.dispatch("setCart", cart);
@@ -44802,8 +44804,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var _this = this;
 
       if (this.$store.state.favorite && this.$store.state.favorite.length > 0) return this.$store.state.favorite.find(function (item) {
-        console.log("--------------", item.id);
-
         return item.id === _this.book.id;
       });
       return false;
@@ -45399,13 +45399,7 @@ if (false) {
 window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.post["Content-Type"] = "application/json";
-<<<<<<< HEAD
-var host = "http://selling-books.local";
-=======
-
-var host = "http://sellingbookstore.test";
-
->>>>>>> cc448f4efc0624e3eede86264a5a0746c58d9dd6
+var host = "http://sellingbooks.local";
 var api = "/api";
 window.axios.defaults.baseURL = "" + host + api;
 

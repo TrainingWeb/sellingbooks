@@ -80,8 +80,6 @@ export default {
     isLove() {
       if (this.$store.state.favorite && this.$store.state.favorite.length > 0)
         return this.$store.state.favorite.find(item => {
-          console.log("--------------",item.id);
-          
           return item.id === this.book.id;
         });
       return false;
